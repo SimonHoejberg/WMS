@@ -28,11 +28,112 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            this.information_pbox = new System.Windows.Forms.PictureBox();
+            this.log_pbox = new System.Windows.Forms.PictureBox();
+            this.move_pbox = new System.Windows.Forms.PictureBox();
+            this.register_pbox = new System.Windows.Forms.PictureBox();
+            this.remove_pbox = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.remove_pbox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // information_pbox
+            // 
+            this.information_pbox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("information_pbox.BackgroundImage")));
+            this.information_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.information_pbox.Location = new System.Drawing.Point(12, 12);
+            this.information_pbox.Name = "information_pbox";
+            this.information_pbox.Size = new System.Drawing.Size(96, 61);
+            this.information_pbox.TabIndex = 0;
+            this.information_pbox.TabStop = false;
+            // 
+            // log_pbox
+            // 
+            this.log_pbox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("log_pbox.BackgroundImage")));
+            this.log_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.log_pbox.Location = new System.Drawing.Point(12, 79);
+            this.log_pbox.Name = "log_pbox";
+            this.log_pbox.Size = new System.Drawing.Size(96, 61);
+            this.log_pbox.TabIndex = 1;
+            this.log_pbox.TabStop = false;
+            // 
+            // move_pbox
+            // 
+            this.move_pbox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("move_pbox.BackgroundImage")));
+            this.move_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.move_pbox.Location = new System.Drawing.Point(12, 146);
+            this.move_pbox.Name = "move_pbox";
+            this.move_pbox.Size = new System.Drawing.Size(96, 61);
+            this.move_pbox.TabIndex = 2;
+            this.move_pbox.TabStop = false;
+            // 
+            // register_pbox
+            // 
+            this.register_pbox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("register_pbox.BackgroundImage")));
+            this.register_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.register_pbox.Location = new System.Drawing.Point(12, 213);
+            this.register_pbox.Name = "register_pbox";
+            this.register_pbox.Size = new System.Drawing.Size(96, 61);
+            this.register_pbox.TabIndex = 3;
+            this.register_pbox.TabStop = false;
+            // 
+            // remove_pbox
+            // 
+            this.remove_pbox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("remove_pbox.BackgroundImage")));
+            this.remove_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.remove_pbox.Location = new System.Drawing.Point(12, 280);
+            this.remove_pbox.Name = "remove_pbox";
+            this.remove_pbox.Size = new System.Drawing.Size(96, 61);
+            this.remove_pbox.TabIndex = 4;
+            this.remove_pbox.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 347);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(96, 61);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // Main
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Main";
+            this.ClientSize = new System.Drawing.Size(120, 422);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.remove_pbox);
+            this.Controls.Add(this.register_pbox);
+            this.Controls.Add(this.move_pbox);
+            this.Controls.Add(this.log_pbox);
+            this.Controls.Add(this.information_pbox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "Main";
+            this.Load += new System.EventHandler(this.Main_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.remove_pbox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox information_pbox;
+        private System.Windows.Forms.PictureBox log_pbox;
+        private System.Windows.Forms.PictureBox move_pbox;
+        private System.Windows.Forms.PictureBox register_pbox;
+        private System.Windows.Forms.PictureBox remove_pbox;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

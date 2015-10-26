@@ -16,5 +16,11 @@ namespace WMS.GUI
         {
             InitializeComponent();
         }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+        }
     }
 }
