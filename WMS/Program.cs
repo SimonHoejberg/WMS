@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS.GUI;
+using WMS.Interfaces;
+using WMS.Core;
 
 namespace WMS
 {
@@ -14,9 +17,10 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            IGui Gui = new Gui1();
+            Core.Core Core = new WMS.Core.Core(Gui);
+            Core.Run();   
+
         }
     }
 }
