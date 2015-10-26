@@ -155,9 +155,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\information.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ImageResources\placeholder_Information.png" />
   </ItemGroup>
   <ItemGroup>
