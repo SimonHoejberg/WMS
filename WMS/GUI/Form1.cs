@@ -96,10 +96,17 @@ namespace WMS
             
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
-
+            
             gui.getInfo().Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
+            dataGridView1.Columns[2].HeaderText = "Name";
+            dataGridView1.Columns[3].HeaderText = "Date";
+            dataGridView1.Columns[4].HeaderText = "Bought";
+            dataGridView1.Columns[5].HeaderText = "Sold";
+            dataGridView1.Columns[6].HeaderText = "Sold Internal";
+            dataGridView1.Columns[7].HeaderText = "Sold Custommer";
+            dataGridView1.Columns[8].HeaderText = "Adjust";
 
             run = true;
         }
