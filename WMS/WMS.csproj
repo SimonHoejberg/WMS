@@ -113,6 +113,7 @@
     <Compile Include="GUI\Waste.Designer.cs">
       <DependentUpon>Waste.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\MainInterfaceV1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
