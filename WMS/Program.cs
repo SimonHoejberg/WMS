@@ -17,9 +17,9 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            IGui Gui = new Gui1();
+            Core.Core Core = new WMS.Core.Core(Gui);
+            Core.Run();
         }
     }
 }
