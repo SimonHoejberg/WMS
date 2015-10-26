@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WMS.Interfaces
 {
-    interface MainInterfaceV1
+    interface IMainInterfaceV1
     {
     }
 }
