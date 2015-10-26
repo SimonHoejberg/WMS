@@ -109,12 +109,6 @@
     <Compile Include="GUI\Register.Designer.cs">
       <DependentUpon>Register.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Remove.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Remove.Designer.cs">
-      <DependentUpon>Remove.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Waste.cs">
       <SubType>Form</SubType>
     </Compile>
