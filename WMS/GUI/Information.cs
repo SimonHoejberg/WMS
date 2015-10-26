@@ -13,9 +13,49 @@ namespace WMS.GUI
 {
     public partial class Information : Form
     {
+        bool run = false;
+        IGui gui;
+        
         public Information(IGui gui)
         {
             InitializeComponent();
+            this.gui = gui;
+            updateInfo();
+        }
+        private void updateInfo()
+        {
+
+            BindingSource bsource = new BindingSource();
+            DataTable data = new DataTable();
+
+            bsource.DataSource = data;
+            dataGridView1.DataSource = bsource;
+
+            gui.getInfo().Fill(data);
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].HeaderText = "Item No:";
+            dataGridView1.Columns[2].HeaderText = "Name";
+            dataGridView1.Columns[3].HeaderText = "Date";
+            dataGridView1.Columns[4].HeaderText = "Bought";
+            dataGridView1.Columns[5].HeaderText = "Sold";
+            dataGridView1.Columns[6].HeaderText = "Sold Internal";
+            dataGridView1.Columns[7].HeaderText = "Sold Custommer";
+            dataGridView1.Columns[8].HeaderText = "Adjust";
+
+            run = true;
+        }
+        private void dataGridView1_cellChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (run)
+            {
+                string coloumn = dataGridView1.Columns[e.ColumnIndex].Name.ToString();
+                string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+
+                gui.update(coloumn, value, id);
+                //gui.updateLog();
+            }
+
         }
     }
 }
