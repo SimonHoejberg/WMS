@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace WMS.Interfaces
 {
-    interface MainInterfaceV1
+    public interface IGui
     {
+
     }
 }

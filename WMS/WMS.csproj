@@ -95,6 +95,12 @@
     <Compile Include="GUI\Move.Designer.cs">
       <DependentUpon>Move.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Reduce.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Reduce.Designer.cs">
+      <DependentUpon>Reduce.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Register.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,14 +119,11 @@
     <Compile Include="GUI\Waste.Designer.cs">
       <DependentUpon>Waste.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\MainInterfaceV1.cs" />
+    <Compile Include="Interfaces\IGui.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
