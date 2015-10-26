@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS.Interfaces;
 
 namespace WMS.GUI
 {
     public partial class Remove : Form
     {
-        public Remove()
+        public Remove(IGui gui)
         {
             InitializeComponent();
         }

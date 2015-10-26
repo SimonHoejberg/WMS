@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS.Interfaces;
 
 namespace WMS.GUI
 {
     public partial class Log : Form
     {
-        public Log()
+        public Log(IGui gui)
         {
             InitializeComponent();
         }

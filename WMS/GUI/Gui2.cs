@@ -38,32 +38,32 @@ namespace WMS.GUI
 
         public void OpenInformation()
         {
-           new Information().Show();
+           new Information(this).Show();
         }
 
         public void OpenLog()
         {
-           new Log().Show();
+           new Log(this).Show();
         }
 
         public void OpenMove()
         {
-           new Move().Show();
+           new Move(this).Show();
         }
 
         public void OpenRegister()
         {
-            new Register().Show();
+            new Register(this).Show();
         }
 
         public void OpenRemove()
         {
-            new Remove().Show();
+            new Remove(this).Show();
         }
 
         public void OpenWaste()
         {
-            new Waste().Show();
+            new Waste(this).Show();
         }
 
         public void SetCore(Core.Core core)
