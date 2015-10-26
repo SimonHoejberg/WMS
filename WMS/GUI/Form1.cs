@@ -8,15 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS.Interfaces;
 
 namespace WMS
 {
     public partial class Form1 : Form
     {
-        Core.SQL sql = new Core.SQL();
+        IGui gui;
         bool run = false;
-        public Form1()
+        public Form1(IGui gui)
         {
+            this.gui = gui;
             InitializeComponent();
             updateInfo();
             registrationGrid();
@@ -65,7 +67,7 @@ namespace WMS
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 
-                sql.update(coloumn, value, id);
+                gui.update(coloumn, value, id);
                 updateLog();
             }
 
@@ -88,14 +90,14 @@ namespace WMS
         }
         private void updateInfo()
         {
-
+            
             BindingSource bsource = new BindingSource();
             DataTable data = new DataTable();
-
+            
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
-
-            sql.getInfo().Fill(data);
+            
+            gui.getInfo().Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
             dataGridView1.Columns[2].HeaderText = "Name";
@@ -117,7 +119,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            sql.getLog().Fill(data);
+            gui.getLog().Fill(data);
         }
         private void button2_Click(object sender, EventArgs e)
         {
