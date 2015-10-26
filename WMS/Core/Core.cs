@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WMS.Interfaces;
 
 namespace WMS.Core
 {
-    class Core
+    public class Core
     {
+        SQL sql = new SQL();
+
+        public Core(IGui gui)
+        {
+
+        }
+
     }
 }
