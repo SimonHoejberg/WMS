@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace WMS.GUI
 {
-    public class Gui2 : IGui
+    public class Gui2 : IBridge
     {
         Core.Core core;
 
@@ -54,11 +54,6 @@ namespace WMS.GUI
         public void OpenRegister()
         {
             new Register(this).Show();
-        }
-
-        public void OpenRemove()
-        {
-            new Remove(this).Show();
         }
 
         public void OpenWaste()

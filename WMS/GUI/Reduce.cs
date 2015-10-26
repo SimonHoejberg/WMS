@@ -13,7 +13,7 @@ namespace WMS.GUI
 {
     public partial class Reduce : Form
     {
-        public Reduce(IGui gui)
+        public Reduce(IBridge bridge)
         {
             InitializeComponent();
         }

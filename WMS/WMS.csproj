@@ -115,6 +115,7 @@
     <Compile Include="GUI\Waste.Designer.cs">
       <DependentUpon>Waste.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBridge.cs" />
     <Compile Include="Interfaces\IGui.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

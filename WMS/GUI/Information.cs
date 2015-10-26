@@ -14,12 +14,12 @@ namespace WMS.GUI
     public partial class Information : Form
     {
         bool run = false;
-        IGui gui;
+        IBridge bridge;
         
-        public Information(IGui gui)
+        public Information(IBridge bridge)
         {
             InitializeComponent();
-            this.gui = gui;
+            this.bridge = bridge;
             updateInfo();
         }
         private void updateInfo()
@@ -31,7 +31,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            gui.getInfo().Fill(data);
+            bridge.getInfo().Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
             dataGridView1.Columns[2].HeaderText = "Name";
@@ -52,7 +52,7 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                gui.update(coloumn, value, id);
+                bridge.update(coloumn, value, id);
                 //gui.updateLog();
             }
 

@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace WMS.GUI
 {
-    public class Gui1 : IGui
+    public class Gui1 : IBridge
     {
         Core.Core core;
 
@@ -52,11 +52,6 @@ namespace WMS.GUI
         }
 
         public void OpenRegister()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OpenRemove()
         {
             throw new NotImplementedException();
         }

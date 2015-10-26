@@ -14,11 +14,11 @@ namespace WMS
 {
     public partial class Form1 : Form
     {
-        IGui gui;
+        IBridge bridge;
         bool run = false;
-        public Form1(IGui gui)
+        public Form1(IBridge bridge)
         {
-            this.gui = gui;
+            this.bridge = bridge;
             InitializeComponent();
             updateInfo();
             registrationGrid();
@@ -67,7 +67,7 @@ namespace WMS
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 
-                gui.update(coloumn, value, id);
+                bridge.update(coloumn, value, id);
                 updateLog();
             }
 
@@ -97,7 +97,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
             
-            gui.getInfo().Fill(data);
+            bridge.getInfo().Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
             dataGridView1.Columns[2].HeaderText = "Name";
@@ -119,7 +119,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            gui.getLog().Fill(data);
+            bridge.getLog().Fill(data);
         }
         private void button2_Click(object sender, EventArgs e)
         {

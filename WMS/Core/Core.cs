@@ -10,9 +10,9 @@ namespace WMS.Core
     public class Core
     {
         SQL sql = new SQL();
-        IGui gui;
+        IBridge gui;
 
-        public Core(IGui gui)
+        public Core(IBridge gui)
         {
             this.gui = gui;
             gui.SetCore(this);

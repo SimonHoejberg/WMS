@@ -32,13 +32,11 @@
             this.log_pbox = new System.Windows.Forms.PictureBox();
             this.move_pbox = new System.Windows.Forms.PictureBox();
             this.register_pbox = new System.Windows.Forms.PictureBox();
-            this.remove_pbox = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.remove_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +45,7 @@
             this.information_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Information;
             this.information_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.information_pbox.Location = new System.Drawing.Point(16, 15);
-            this.information_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.information_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.information_pbox.Name = "information_pbox";
             this.information_pbox.Size = new System.Drawing.Size(128, 75);
             this.information_pbox.TabIndex = 0;
@@ -59,7 +57,7 @@
             this.log_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Log;
             this.log_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.log_pbox.Location = new System.Drawing.Point(16, 97);
-            this.log_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.log_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.log_pbox.Name = "log_pbox";
             this.log_pbox.Size = new System.Drawing.Size(128, 75);
             this.log_pbox.TabIndex = 1;
@@ -71,7 +69,7 @@
             this.move_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Move;
             this.move_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.move_pbox.Location = new System.Drawing.Point(16, 180);
-            this.move_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.move_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.move_pbox.Name = "move_pbox";
             this.move_pbox.Size = new System.Drawing.Size(128, 75);
             this.move_pbox.TabIndex = 2;
@@ -83,31 +81,19 @@
             this.register_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Register;
             this.register_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.register_pbox.Location = new System.Drawing.Point(16, 262);
-            this.register_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.register_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.register_pbox.Name = "register_pbox";
             this.register_pbox.Size = new System.Drawing.Size(128, 75);
             this.register_pbox.TabIndex = 3;
             this.register_pbox.TabStop = false;
             this.register_pbox.Click += new System.EventHandler(this.register_pbox_Click);
             // 
-            // remove_pbox
-            // 
-            this.remove_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Remove;
-            this.remove_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.remove_pbox.Location = new System.Drawing.Point(16, 345);
-            this.remove_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.remove_pbox.Name = "remove_pbox";
-            this.remove_pbox.Size = new System.Drawing.Size(128, 75);
-            this.remove_pbox.TabIndex = 4;
-            this.remove_pbox.TabStop = false;
-            this.remove_pbox.Click += new System.EventHandler(this.remove_pbox_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::WMS.Properties.Resources.placeholder_Waste;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(16, 427);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(16, 345);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(128, 75);
             this.pictureBox1.TabIndex = 5;
@@ -120,20 +106,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(160, 519);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.remove_pbox);
             this.Controls.Add(this.register_pbox);
             this.Controls.Add(this.move_pbox);
             this.Controls.Add(this.log_pbox);
             this.Controls.Add(this.information_pbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.remove_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -145,7 +129,6 @@
         private System.Windows.Forms.PictureBox log_pbox;
         private System.Windows.Forms.PictureBox move_pbox;
         private System.Windows.Forms.PictureBox register_pbox;
-        private System.Windows.Forms.PictureBox remove_pbox;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

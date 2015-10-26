@@ -13,10 +13,10 @@ namespace WMS.GUI
 {
     public partial class Main : Form
     {
-        IGui gui;
-        public Main(IGui gui)
+        IBridge bridge;
+        public Main(IBridge bridge)
         {
-            this.gui = gui;
+            this.bridge = bridge;
             InitializeComponent();
         }
 
@@ -28,32 +28,27 @@ namespace WMS.GUI
 
         private void information_pbox_Click(object sender, EventArgs e)
         {
-            gui.OpenInformation();
+            bridge.OpenInformation();
         }
 
         private void log_pbox_Click(object sender, EventArgs e)
         {
-            gui.OpenLog();
+            bridge.OpenLog();
         }
 
         private void move_pbox_Click(object sender, EventArgs e)
         {
-            gui.OpenMove();
+            bridge.OpenMove();
         }
 
         private void register_pbox_Click(object sender, EventArgs e)
         {
-            gui.OpenRegister();
-        }
-
-        private void remove_pbox_Click(object sender, EventArgs e)
-        {
-            gui.OpenRemove();
+            bridge.OpenRegister();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            gui.OpenWaste();
+            bridge.OpenWaste();
         }
     }
 }
