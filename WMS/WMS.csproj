@@ -96,12 +96,6 @@
     <Compile Include="GUI\Move.Designer.cs">
       <DependentUpon>Move.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Reduce.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Reduce.Designer.cs">
-      <DependentUpon>Reduce.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Register.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,9 +119,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Reduce.resx">
-      <DependentUpon>Reduce.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
