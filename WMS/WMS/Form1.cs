@@ -1,0 +1,130 @@
+﻿using System;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WMS
+{
+    public partial class Form1 : Form
+    {
+        Core.SQL sql = new Core.SQL();
+        bool run = false;
+        public Form1()
+        {
+            InitializeComponent();
+            updateInfo();
+            registrationGrid();
+            updateLog();
+        }
+
+        private void registerBtn_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = registerTab;
+        }
+
+        private void reduceBtn_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = reduceTab;
+        }
+
+        private void moveBtn_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = moveTab;
+        }
+
+        private void infoBtn_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = infoTab;
+        }
+
+        private void logBtn_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = logTab;
+        }
+
+        private void wasteBtn_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedTab = wasteTab;
+        }
+
+        private void dataGridView1_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void dataGridView1_cellChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (run)
+            {
+                string coloumn = dataGridView1.Columns[e.ColumnIndex].Name.ToString();
+                string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                
+                sql.update(coloumn, value, id);
+                updateLog();
+            }
+
+        }
+        private void registrationGrid()
+        {
+            DataTable data = new DataTable();
+            BindingSource source = new BindingSource();
+            
+            data.Columns.Add("Item No"); 
+            data.Columns.Add("Name");
+            data.Columns.Add("Ordered");
+            data.Columns.Add("Delivered");
+            data.Rows.Add("212158", "Tire", 8, 8);
+            source.DataSource = data;
+            dataGridView2.DataSource = source;
+            dataGridView2.Columns[1].Width = 250;
+
+            
+        }
+        private void updateInfo()
+        {
+            
+            BindingSource bsource = new BindingSource();
+            DataTable data = new DataTable();
+            
+            bsource.DataSource = data;
+            dataGridView1.DataSource = bsource;
+            
+            sql.getInfo().Fill(data);
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].HeaderText = "Item No:";
+
+            run = true;
+        }
+
+        private void updateLog()
+        {
+            BindingSource bsource = new BindingSource();
+            DataTable data = new DataTable();
+
+            bsource.DataSource = data;
+            dataGridView5.DataSource = bsource;
+
+            sql.getLog().Fill(data);
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Are you sure you want to continue!");
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            panel1.BringToFront();
+        }
+    }
+}
