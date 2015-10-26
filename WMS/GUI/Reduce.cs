@@ -15,6 +15,7 @@ namespace WMS.GUI
         public Reduce()
         {
             InitializeComponent();
+  
         }
     }
 }
