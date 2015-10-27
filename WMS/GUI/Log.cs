@@ -31,6 +31,10 @@ namespace WMS.GUI
             dataGridView5.DataSource = bsource;
 
             core.getLog().Fill(data);
+            for (int i = 0; i < dataGridView5.ColumnCount; i++)
+            {
+                dataGridView5.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
 
 

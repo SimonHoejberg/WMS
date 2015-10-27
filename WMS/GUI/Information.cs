@@ -42,6 +42,9 @@ namespace WMS.GUI
             dataGridView1.Columns[7].HeaderText = "Sold Custommer";
             dataGridView1.Columns[8].HeaderText = "Adjust";
 
+            for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
+                dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
             run = true;
         }
         private void dataGridView1_cellChanged(object sender, DataGridViewCellEventArgs e)
