@@ -41,7 +41,7 @@ namespace WMS.GUI
 
         public string GetTypeOfWindow()
         {
-            throw new NotImplementedException();
+            return "log";
         }
     }
 }

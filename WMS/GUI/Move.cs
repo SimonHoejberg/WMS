@@ -20,7 +20,7 @@ namespace WMS.GUI
 
         public string GetTypeOfWindow()
         {
-            throw new NotImplementedException();
+            return "move";
         }
 
         public void UpdateGuiElements()
