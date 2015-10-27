@@ -27,5 +27,11 @@ namespace WMS.GUI
         {
 
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //Current button event is made for testing the confirmation box. (passowd/userID)
+
+        }
     }
 }

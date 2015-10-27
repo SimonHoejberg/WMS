@@ -58,6 +58,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -77,8 +78,9 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "UserIDBox";
-            this.Text = "UserIDBox";
+            this.Text = "Confirmation";
             this.Load += new System.EventHandler(this.UserIDBox_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
