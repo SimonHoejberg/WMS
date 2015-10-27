@@ -39,9 +39,12 @@ namespace WMS.Core
 
         public void OpenInformation()
         {
-            Form temp = new Information(this);
-            windowsOpen.Add((IGui)temp);
-            temp.Show();
+            if (CanCreateForm())
+            {
+                Form temp = new Information(this);
+                windowsOpen.Add((IGui)temp);
+                temp.Show();
+            }
         }
 
         public void OpenLog()
@@ -80,6 +83,19 @@ namespace WMS.Core
         public void UpdateProduct(string coloumn, string value, string id)
         {
             sql.update(coloumn, value, id);
+        }
+
+        private bool CanCreateForm(Type type)
+        {
+            if((windowsOpen.Count(x => x.GetType().Equals(type)) < 5))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
     }

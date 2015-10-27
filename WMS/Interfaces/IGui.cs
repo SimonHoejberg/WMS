@@ -10,5 +10,6 @@ namespace WMS.Interfaces
     {
         void UpdateGuiElements();
 
+        void GetTypeOfWindow();
     }
 }
