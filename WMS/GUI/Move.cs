@@ -11,11 +11,16 @@ using WMS.Interfaces;
 
 namespace WMS.GUI
 {
-    public partial class Move : Form
+    public partial class Move : Form, IGui
     {
         public Move(IBridge bridge)
         {
             InitializeComponent();
+        }
+
+        public void UpdateGuiElements()
+        {
+
         }
     }
 }

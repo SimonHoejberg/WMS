@@ -14,6 +14,8 @@ namespace WMS.GUI
     {
         Core.Core core;
 
+        private List<IGui> windowsOpen = new List<IGui>();
+
         public Gui2()
         {
 
@@ -38,27 +40,37 @@ namespace WMS.GUI
 
         public void OpenInformation()
         {
-           new Information(this).Show();
+            Form temp = new Information(this);
+            windowsOpen.Add((IGui)temp);
+            temp.Show();
         }
 
         public void OpenLog()
         {
-           new Log(this).Show();
+            Form temp = new Log(this);
+            windowsOpen.Add((IGui)temp);
+            temp.Show();
         }
 
         public void OpenMove()
         {
-           new Move(this).Show();
+            Form temp = new Move(this);
+            windowsOpen.Add((IGui)temp);
+            temp.Show();
         }
 
         public void OpenRegister()
         {
-            new Register(this).Show();
+            Form temp = new Register(this);
+            windowsOpen.Add((IGui)temp);
+            temp.Show();
         }
 
         public void OpenWaste()
         {
-            new Waste(this).Show();
+            Form temp = new Waste(this);
+            windowsOpen.Add((IGui)temp);
+            temp.Show();
         }
 
         public void SetCore(Core.Core core)
@@ -66,7 +78,12 @@ namespace WMS.GUI
             this.core = core;
         }
 
-        public void update(string coloumn, string value, string id)
+        public void Update()
+        {
+
+        }
+
+        public void UpdateProduct(string coloumn, string value, string id)
         {
             core.SQL.update(coloumn, value, id);
         }

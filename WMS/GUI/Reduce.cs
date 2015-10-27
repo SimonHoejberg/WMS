@@ -11,11 +11,16 @@ using WMS.Interfaces;
 
 namespace WMS.GUI
 {
-    public partial class Reduce : Form
+    public partial class Reduce : Form , IGui
     {
         public Reduce(IBridge bridge)
         {
             InitializeComponent();
+        }
+
+        public void UpdateGuiElements()
+        {
+
         }
     }
 }

@@ -11,7 +11,7 @@ using WMS.Interfaces;
 
 namespace WMS.GUI
 {
-    public partial class Information : Form
+    public partial class Information : Form , IGui
     {
         bool run = false;
         IBridge bridge;
@@ -52,9 +52,13 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                bridge.update(coloumn, value, id);
+                bridge.UpdateProduct(coloumn, value, id);
                 //gui.updateLog();
             }
+
+        }
+
+        public void UpdateGuiElements(){
 
         }
     }

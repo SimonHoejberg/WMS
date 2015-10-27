@@ -11,7 +11,7 @@ using WMS.Interfaces;
 
 namespace WMS.GUI
 {
-    public partial class Log : Form
+    public partial class Log : Form , IGui
     {
         IBridge bridge;
 
@@ -31,6 +31,12 @@ namespace WMS.GUI
             dataGridView5.DataSource = bsource;
 
             bridge.getLog().Fill(data);
+        }
+
+
+        public void UpdateGuiElements()
+        {
+
         }
     }
 }

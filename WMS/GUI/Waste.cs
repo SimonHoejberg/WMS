@@ -11,11 +11,16 @@ using WMS.Interfaces;
 
 namespace WMS.GUI
 {
-    public partial class Waste : Form
+    public partial class Waste : Form , IGui
     {
         public Waste(IBridge bridge)
         {
             InitializeComponent();
+        }
+
+        public void UpdateGuiElements()
+        {
+
         }
     }
 }

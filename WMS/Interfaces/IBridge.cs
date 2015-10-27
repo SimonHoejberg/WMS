@@ -23,12 +23,14 @@ namespace WMS.Interfaces
 
         void OpenWaste();
 
-        void update(string coloumn, string value, string id);
+        void UpdateProduct(string coloumn, string value, string id);
 
         MySqlDataAdapter getInfo();
 
         MySqlDataAdapter getLog();
 
         void run();
+
+        void Update();
     }
 }

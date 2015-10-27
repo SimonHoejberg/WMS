@@ -66,9 +66,15 @@ namespace WMS.GUI
             this.core = core;
         }
 
-        public void update(string coloumn, string value, string id)
+        public void UpdateProduct(string coloumn, string value, string id)
         {
             core.SQL.update(coloumn, value, id);
         }
+
+        public void Update()
+        {
+
+        }
+
     }
 }
