@@ -114,9 +114,9 @@ namespace WMS.Core
             }
         }
 
-        public void Update()
+        public void Update(string caller)
         {
-            foreach (var item in windowsOpen)
+            foreach (var item in windowsOpen.FindAll(x => !(x.GetTypeOfWindow().Equals(caller))))
             {
                 item.UpdateGuiElements();
             }
@@ -129,7 +129,7 @@ namespace WMS.Core
 
         private bool CanCreateForm(string type)
         {
-            if((windowsOpen.Count(x => ((IGui)x).GetTypeOfWindow().Equals(type)) < 4))
+            if ((windowsOpen.Count(x => ((IGui)x).GetTypeOfWindow().Equals(type)) < 4))
             {
                 return true;
             }

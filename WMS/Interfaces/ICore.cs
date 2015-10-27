@@ -32,6 +32,6 @@ namespace WMS.Interfaces
 
         void Run();
 
-        void Update();
+        void Update(string caller);
     }
 }

@@ -40,7 +40,7 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-
+            this.updateLog();
         }
 
         public string GetTypeOfWindow()

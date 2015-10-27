@@ -35,9 +35,10 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(897, 526);
+            this.button12.Location = new System.Drawing.Point(1196, 647);
+            this.button12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 23);
+            this.button12.Size = new System.Drawing.Size(100, 28);
             this.button12.TabIndex = 3;
             this.button12.Text = "View Item";
             this.button12.UseVisualStyleBackColor = true;
@@ -45,18 +46,21 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 32);
+            this.dataGridView1.Location = new System.Drawing.Point(16, 39);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(960, 465);
+            this.dataGridView1.Size = new System.Drawing.Size(1280, 572);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_cellChanged);
             // 
             // Information
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.ClientSize = new System.Drawing.Size(1312, 690);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.dataGridView1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Information";
             this.Text = "Information";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

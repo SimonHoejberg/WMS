@@ -56,13 +56,13 @@ namespace WMS.GUI
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                 core.UpdateProduct(coloumn, value, id);
-                core.Update();
+                core.Update(GetTypeOfWindow());
             }
 
         }
 
         public void UpdateGuiElements(){
-
+            updateInfo();
         }
 
         public string GetTypeOfWindow()
