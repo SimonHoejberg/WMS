@@ -129,7 +129,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Main";
             this.Text = "Main";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).EndInit();

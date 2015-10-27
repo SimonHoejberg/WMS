@@ -14,17 +14,19 @@ namespace WMS.Core
     public class CoreSystem : ICore
     {
         private List<IGui> windowsOpen = new List<IGui>();
-        SQL sql = new SQL();
+        private SQL sql = new SQL();
+        private Form main;
 
         public CoreSystem()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            main = new Main(this);
         }
 
         public void Run()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main(this));
+            Application.Run(main);
         }
 
         public MySqlDataAdapter getInfo()
@@ -44,6 +46,7 @@ namespace WMS.Core
                 Form temp = new Information(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
+                main.BringToFront();
             }
             else
             {
@@ -58,6 +61,7 @@ namespace WMS.Core
                 Form temp = new Log(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
+                main.BringToFront();
             }
             else
             {
@@ -72,6 +76,7 @@ namespace WMS.Core
                 Form temp = new Move(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
+                main.BringToFront();
             }
             else
             {
@@ -86,6 +91,7 @@ namespace WMS.Core
                 Form temp = new Register(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
+                main.BringToFront();
             }
             else
             {
@@ -100,6 +106,7 @@ namespace WMS.Core
                 Form temp = new Waste(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
+                main.BringToFront();
             }
             else
             {
@@ -137,6 +144,7 @@ namespace WMS.Core
                 Form temp = new Reduce(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
+                main.BringToFront();
             }
             else
             {
