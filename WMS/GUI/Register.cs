@@ -18,6 +18,11 @@ namespace WMS.GUI
             InitializeComponent();
         }
 
+        public string GetTypeOfWindow()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateGuiElements()
         {
 

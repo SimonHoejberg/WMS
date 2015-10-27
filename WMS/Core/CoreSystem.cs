@@ -39,20 +39,31 @@ namespace WMS.Core
 
         public void OpenInformation()
         {
-            if (CanCreateForm())
+            if (CanCreateForm("information"))
             {
                 Form temp = new Information(this);
                 windowsOpen.Add((IGui)temp);
                 temp.Show();
             }
+            else
+            {
+                MessageBox.Show("Cannot open any more windows of the type Information", "Help");
+            }
         }
 
         public void OpenLog()
         {
-            Form temp = new Log(this);
-            windowsOpen.Add((IGui)temp);
-            temp.Show();
-        }
+            if (CanCreateForm("log"))
+            {
+                Form temp = new Log(this);
+                windowsOpen.Add((IGui)temp);
+                temp.Show();
+            }
+            else
+            {
+                MessageBox.Show("Cannot open any more windows of the type Information", "Help");
+            }
+}
 
         public void OpenMove()
         {
@@ -85,9 +96,9 @@ namespace WMS.Core
             sql.update(coloumn, value, id);
         }
 
-        private bool CanCreateForm(Type type)
+        private bool CanCreateForm(string type)
         {
-            if((windowsOpen.Count(x => x.GetType().Equals(type)) < 5))
+            if((windowsOpen.Count(x => ((IGui)x).GetTypeOfWindow().Equals(type)) < 4))
             {
                 return true;
             }

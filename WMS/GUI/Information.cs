@@ -61,5 +61,10 @@ namespace WMS.GUI
         public void UpdateGuiElements(){
 
         }
+
+        public string GetTypeOfWindow()
+        {
+            return "information";
+        }
     }
 }
