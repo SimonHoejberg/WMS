@@ -50,5 +50,10 @@ namespace WMS.GUI
         {
             core.OpenWaste();
         }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            core.OpenReduce();
+        }
     }
 }

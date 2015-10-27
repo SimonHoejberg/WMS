@@ -130,5 +130,18 @@ namespace WMS.Core
 
         }
 
+        public void OpenReduce()
+        {
+            if (CanCreateForm("reduce"))
+            {
+                Form temp = new Reduce(this);
+                windowsOpen.Add((IGui)temp);
+                temp.Show();
+            }
+            else
+            {
+                MessageBox.Show("Cannot open any more windows of the type Reduce", "Help");
+            }
+        }
     }
 }

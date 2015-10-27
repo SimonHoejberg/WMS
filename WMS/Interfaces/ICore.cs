@@ -20,6 +20,8 @@ namespace WMS.Interfaces
 
         void OpenRegister();
 
+        void OpenReduce();
+
         void OpenWaste();
 
         void UpdateProduct(string coloumn, string value, string id);

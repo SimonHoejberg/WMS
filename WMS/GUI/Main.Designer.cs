@@ -33,11 +33,13 @@
             this.move_pbox = new System.Windows.Forms.PictureBox();
             this.register_pbox = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // information_pbox
@@ -100,11 +102,24 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = global::WMS.Properties.Resources.placeholder_Remove;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(16, 428);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(128, 75);
+            this.pictureBox2.TabIndex = 6;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(160, 519);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.register_pbox);
             this.Controls.Add(this.move_pbox);
@@ -121,6 +136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -132,5 +148,6 @@
         private System.Windows.Forms.PictureBox move_pbox;
         private System.Windows.Forms.PictureBox register_pbox;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
