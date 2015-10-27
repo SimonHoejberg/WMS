@@ -61,29 +61,50 @@ namespace WMS.Core
             }
             else
             {
-                MessageBox.Show("Cannot open any more windows of the type Information", "Help");
+                MessageBox.Show("Cannot open any more windows of the type Log", "Help");
             }
 }
 
         public void OpenMove()
         {
-            Form temp = new Move(this);
-            windowsOpen.Add((IGui)temp);
-            temp.Show();
+            if (CanCreateForm("move"))
+            {
+                Form temp = new Move(this);
+                windowsOpen.Add((IGui)temp);
+                temp.Show();
+            }
+            else
+            {
+                MessageBox.Show("Cannot open any more windows of the type Move", "Help");
+            }
         }
 
         public void OpenRegister()
         {
-            Form temp = new Register(this);
-            windowsOpen.Add((IGui)temp);
-            temp.Show();
+            if (CanCreateForm("register"))
+            {
+                Form temp = new Register(this);
+                windowsOpen.Add((IGui)temp);
+                temp.Show();
+            }
+            else
+            {
+                MessageBox.Show("Cannot open any more windows of the type Register", "Help");
+            }
         }
 
         public void OpenWaste()
         {
-            Form temp = new Waste(this);
-            windowsOpen.Add((IGui)temp);
-            temp.Show();
+            if (CanCreateForm("waste"))
+            {
+                Form temp = new Waste(this);
+                windowsOpen.Add((IGui)temp);
+                temp.Show();
+            }
+            else
+            {
+                MessageBox.Show("Cannot open any more windows of the type waste", "Help");
+            }
         }
 
         public void Update()
