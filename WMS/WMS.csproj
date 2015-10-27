@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Core.cs" />
+    <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\SQL.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -71,8 +71,6 @@
     <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Gui1.cs" />
-    <Compile Include="GUI\Gui2.cs" />
     <Compile Include="GUI\Information.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,7 +113,7 @@
     <Compile Include="GUI\Waste.Designer.cs">
       <DependentUpon>Waste.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IBridge.cs" />
+    <Compile Include="Interfaces\ICore.cs" />
     <Compile Include="Interfaces\IGui.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

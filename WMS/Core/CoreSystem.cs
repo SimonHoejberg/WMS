@@ -5,23 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using WMS.Core;
 using WMS.Interfaces;
+using WMS.GUI;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
-namespace WMS.GUI
+namespace WMS.Core
 {
-    public class Gui2 : IBridge
+    public class CoreSystem : ICore
     {
-        Core.Core core;
-
         private List<IGui> windowsOpen = new List<IGui>();
+        SQL sql = new SQL();
 
-        public Gui2()
+        public CoreSystem()
         {
-
         }
 
-        public void run()
+        public void Run()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -30,12 +29,12 @@ namespace WMS.GUI
 
         public MySqlDataAdapter getInfo()
         {
-            return core.SQL.getInfo();
+            return sql.getInfo();
         }
 
         public MySqlDataAdapter getLog()
         {
-            return core.SQL.getLog();
+            return sql.getLog();
         }
 
         public void OpenInformation()
@@ -73,11 +72,6 @@ namespace WMS.GUI
             temp.Show();
         }
 
-        public void SetCore(Core.Core core)
-        {
-            this.core = core;
-        }
-
         public void Update()
         {
 
@@ -85,7 +79,8 @@ namespace WMS.GUI
 
         public void UpdateProduct(string coloumn, string value, string id)
         {
-            core.SQL.update(coloumn, value, id);
+            sql.update(coloumn, value, id);
         }
+
     }
 }

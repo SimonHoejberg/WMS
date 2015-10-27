@@ -9,9 +9,8 @@ using MySql.Data.MySqlClient;
 
 namespace WMS.Interfaces
 {
-    public interface IBridge
+    public interface ICore
     {
-        void SetCore(Core.Core core);
 
         void OpenInformation();
 
@@ -29,7 +28,7 @@ namespace WMS.Interfaces
 
         MySqlDataAdapter getLog();
 
-        void run();
+        void Run();
 
         void Update();
     }

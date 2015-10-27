@@ -13,7 +13,7 @@ namespace WMS.GUI
 {
     public partial class Waste : Form , IGui
     {
-        public Waste(IBridge bridge)
+        public Waste(ICore core)
         {
             InitializeComponent();
         }

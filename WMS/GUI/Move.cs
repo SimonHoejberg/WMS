@@ -13,7 +13,7 @@ namespace WMS.GUI
 {
     public partial class Move : Form, IGui
     {
-        public Move(IBridge bridge)
+        public Move(ICore core)
         {
             InitializeComponent();
         }

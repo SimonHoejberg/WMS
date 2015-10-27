@@ -14,9 +14,9 @@ namespace WMS
 {
     public partial class Form1 : Form
     {
-        IBridge bridge;
+        ICore bridge;
         bool run = false;
-        public Form1(IBridge bridge)
+        public Form1(ICore bridge)
         {
             this.bridge = bridge;
             InitializeComponent();

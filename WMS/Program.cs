@@ -17,8 +17,7 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-            IBridge Bridge = new Gui2();
-            Core.Core Core = new Core.Core(Bridge);
+            CoreSystem Core = new CoreSystem();
             Core.Run();
         }
     }

@@ -13,7 +13,7 @@ namespace WMS.GUI
 {
     public partial class Register : Form, IGui
     {
-        public Register(IBridge bridge)
+        public Register(ICore core)
         {
             InitializeComponent();
         }

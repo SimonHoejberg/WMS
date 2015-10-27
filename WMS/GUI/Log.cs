@@ -13,11 +13,11 @@ namespace WMS.GUI
 {
     public partial class Log : Form , IGui
     {
-        IBridge bridge;
+        ICore core;
 
-        public Log(IBridge bridge)
+        public Log(ICore core)
         {
-            this.bridge = bridge;
+            this.core = core;
             InitializeComponent();
             updateLog();
         }
@@ -30,7 +30,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            bridge.getLog().Fill(data);
+            core.getLog().Fill(data);
         }
 
 
