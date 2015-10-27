@@ -116,7 +116,10 @@ namespace WMS.Core
 
         public void Update()
         {
-
+            foreach (var item in windowsOpen)
+            {
+                item.UpdateGuiElements();
+            }
         }
 
         public void UpdateProduct(string coloumn, string value, string id)

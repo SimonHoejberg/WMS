@@ -53,7 +53,7 @@ namespace WMS.GUI
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                 core.UpdateProduct(coloumn, value, id);
-                //gui.updateLog();
+                core.Update();
             }
 
         }
