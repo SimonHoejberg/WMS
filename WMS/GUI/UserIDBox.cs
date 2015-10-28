@@ -8,13 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS;
+using WMS.Interfaces;
 
 namespace WMS.GUI
 {
     public partial class UserIDBox : Form
     {
-        public UserIDBox()
+        private ICore core;
+        public UserIDBox(ICore core)
         {
+            this.core = core;
             InitializeComponent();
         }
 
@@ -31,6 +34,7 @@ namespace WMS.GUI
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
+            //if(core.)
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
     }

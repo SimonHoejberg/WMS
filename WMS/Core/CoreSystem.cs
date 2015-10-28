@@ -143,5 +143,10 @@ namespace WMS.Core
             }
             return temp;
         }
+
+        public void doStuff()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
