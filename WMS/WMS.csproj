@@ -68,6 +68,9 @@
     <Compile Include="Core\Location.cs" />
     <Compile Include="Core\SQL.cs" />
     <Compile Include="Core\UserData.cs" />
+    <Compile Include="FindClass\Find_free_space.cs" />
+    <Compile Include="FindClass\Find_item.cs" />
+    <Compile Include="FindClass\Find_Place.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
