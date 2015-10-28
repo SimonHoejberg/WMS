@@ -60,9 +60,9 @@ namespace WMS.Core
             CreateWindow(new Waste(this));
         }
 
-        public void Update(string caller)
+        public void Update(object caller)
         {
-            foreach (var item in windowsOpen.FindAll(x => !(x.GetTypeOfWindow().Equals(caller))))
+            foreach (var item in windowsOpen.FindAll(x => !(x.Equals(caller))))
             {
                 item.UpdateGuiElements();
             }
