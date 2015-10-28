@@ -8,12 +8,12 @@ namespace WMS.Warehouse
 {
     class Warehouse
     {
-        FindClass.Find_Item ret = new FindClass.Find_Item();
+        /*FindClass.Find_Item ret = new FindClass.Find_Item();
         public void GetItemInformation()
         {
             bool set = ret.Find_item("adolfH");
             Console.WriteLine(set);
-        }
+        }*/
 
  /*       
         //Registering:trukket alle informationer ind i registrering for at bruge algorithm og få lister tilbage
