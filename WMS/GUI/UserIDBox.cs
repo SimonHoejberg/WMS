@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WMS;
+using WMS.Core;
+using WMS.Interfaces;
 
 namespace WMS.GUI
 {
     public partial class UserIDBox : Form
     {
-        public UserIDBox()
+        private ICore core;
+        public UserIDBox(ICore core)
         {
+            this.core = core;
             InitializeComponent();
         }
 
@@ -31,7 +34,19 @@ namespace WMS.GUI
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            UserData user_obj = core.getUserDataObj();
+            int a;
+            bool b = Int32.TryParse(this.getInputFromTextbox, out a);
+            if (b && core.getUserDataObj().doesUserExist(a))
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                userIDError_lbl.Text = "";
+            }
+            else
+            {
+                userIDError_lbl.Text = "Invalid user ID";
+            }
+            
         }
     }
 }
