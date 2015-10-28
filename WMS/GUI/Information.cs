@@ -33,10 +33,10 @@ namespace WMS.GUI
 
             core.getData(GetTypeOfWindow()).Fill(data);
 
-            dataGridView1.Columns[0].Name = "Item No";
-            dataGridView1.Columns[1].Name = "Description";
-            dataGridView1.Columns[2].Name = "In stock";
-            dataGridView1.Columns[3].Name = "Location";
+            dataGridView1.Columns[0].HeaderText = "Item No";
+            dataGridView1.Columns[1].HeaderText = "Description";
+            dataGridView1.Columns[2].HeaderText = "In stock";
+            dataGridView1.Columns[3].HeaderText = "Location";
             for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
