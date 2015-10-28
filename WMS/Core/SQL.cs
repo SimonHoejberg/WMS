@@ -16,7 +16,6 @@ namespace WMS.Core
         protected string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
         private MySqlConnection connection;
         
-        //string sql = "SELECT * FROM products";
         public SQL()
         {
             connection = new MySqlConnection(mysqlConnectionString);
@@ -35,12 +34,20 @@ namespace WMS.Core
                 command.CommandText = sql;
             }
 
-           
-            
-
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public MySqlDataReader getDataForList(string db)
+        {
+            
+            MySqlCommand command = connection.CreateCommand();
+            connection.Open();
+            string sql = "SELECT * FROM " + db;
+            command.CommandText = sql;
+            connection.Close();
+            return command.ExecuteReader();
         }
 
         public MySqlDataAdapter getData(string db)

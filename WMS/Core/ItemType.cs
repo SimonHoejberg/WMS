@@ -8,68 +8,30 @@ namespace WMS.Core
 {
     class ItemType
     {
-        public int itemNumber;
-        public string name;
-        public List<Location> location;
-        public int totalQuantity;
-        public int usage;
-        public int quantityToFull;
+        private int itemNo;
+        private string description;
+        private int inStock;
+        private int location;
+        private int size;
 
-        public ItemType(int ItemNumber, string ItemName, int ItemUsage, int ItemQuantityToFull)
+        public ItemType(int itemNo, string description, int inStock, int location, int size)
         {
-            itemNumber = ItemNumber;
-            name = ItemName;
-            usage = ItemUsage;
-            quantityToFull = ItemQuantityToFull;
+            this.itemNo = itemNo;
+            this.description = description;
+            this.inStock = inStock;
+            this.location = location;
+            this.size = size;
 
         }
 
-        public int ItemNumber
-        {    
-           get { return itemNumber; }
-           set { itemNumber = value; }
-        }
+        public int ItemNo{ get { return itemNo; }}
 
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        } 
+        public string Description { get { return description; }} 
 
-        public List<Location> Location
-        {
-            get { return location; }
-            set
-            {
-                location = value;
-            }
-        }
+        public int Location {get { return location; }}
 
-        public int TotalQuantity
-        {
-            get
-            {
-                int tempTotalQuantity = 0;
+        public int InStock { get { return inStock; } }
 
-                for (int i = 0; i < location.Count; i++)
-                {
-                    tempTotalQuantity += location[i].itemQuantity;
-                }
-
-                return tempTotalQuantity;
-            }
-        }
-
-        public int Usage
-        {
-            get { return usage; }
-            set { usage = value; }
-        }
-
-        public int QuantityToFull
-        {
-            get { return quantityToFull; }
-            set { quantityToFull = value; }
-        }
+        public int Size { get { return size; }}
     }
 }
