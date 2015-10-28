@@ -65,6 +65,9 @@
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\SQL.cs" />
+    <Compile Include="FindClass\Find_free_space.cs" />
+    <Compile Include="FindClass\Find_item.cs" />
+    <Compile Include="FindClass\Find_Place.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +126,7 @@
     <Compile Include="Interfaces\IGui.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Warehouse\Warehouse.cs" />
     <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
