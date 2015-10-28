@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WMS.Core;
 using WMS.Interfaces;
 using WMS.GUI;
 using System.Windows.Forms;
@@ -41,77 +38,27 @@ namespace WMS.Core
 
         public void OpenInformation()
         {
-            if (CanCreateForm("information"))
-            {
-                Form temp = new Information(this);
-                windowsOpen.Add((IGui)temp);
-                temp.Show();
-                main.BringToFront();
-            }
-            else
-            {
-                MessageBox.Show("Cannot open any more windows of the type Information", "Help");
-            }
+            CreateWindow(new Information(this));
         }
 
         public void OpenLog()
         {
-            if (CanCreateForm("log"))
-            {
-                Form temp = new Log(this);
-                windowsOpen.Add((IGui)temp);
-                temp.Show();
-                main.BringToFront();
-            }
-            else
-            {
-                MessageBox.Show("Cannot open any more windows of the type Log", "Help");
-            }
-}
+            CreateWindow(new Log(this));
+        }
 
         public void OpenMove()
         {
-            if (CanCreateForm("move"))
-            {
-                Form temp = new Move(this);
-                windowsOpen.Add((IGui)temp);
-                temp.Show();
-                main.BringToFront();
-            }
-            else
-            {
-                MessageBox.Show("Cannot open any more windows of the type Move", "Help");
-            }
+            CreateWindow(new Move(this));
         }
 
         public void OpenRegister()
         {
-            if (CanCreateForm("register"))
-            {
-                Form temp = new Register(this);
-                windowsOpen.Add((IGui)temp);
-                temp.Show();
-                main.BringToFront();
-            }
-            else
-            {
-                MessageBox.Show("Cannot open any more windows of the type Register", "Help");
-            }
+            CreateWindow(new Register(this));
         }
 
         public void OpenWaste()
         {
-            if (CanCreateForm("waste"))
-            {
-                Form temp = new Waste(this);
-                windowsOpen.Add((IGui)temp);
-                temp.Show();
-                main.BringToFront();
-            }
-            else
-            {
-                MessageBox.Show("Cannot open any more windows of the type waste", "Help");
-            }
+            CreateWindow(new Waste(this));
         }
 
         public void Update(string caller)
@@ -122,9 +69,9 @@ namespace WMS.Core
             }
         }
 
-        public void UpdateProduct(string coloumn, string value, string id)
+        public void UpdateProduct(string coloumn, string value, string id, string db)
         {
-            sql.update(coloumn, value, id);
+            sql.update(coloumn, value, id,db);
         }
 
         private bool CanCreateForm(string type)
@@ -142,17 +89,37 @@ namespace WMS.Core
 
         public void OpenReduce()
         {
-            if (CanCreateForm("reduce"))
+            CreateWindow(new Reduce(this));
+        }
+
+        private void CreateWindow(IGui gui)
+        {
+            if (CanCreateForm(gui.GetTypeOfWindow()))
             {
-                Form temp = new Reduce(this);
-                windowsOpen.Add((IGui)temp);
+                Form temp = (Form)gui;
+                temp.FormClosing += Temp_FormClosing;
+                windowsOpen.Add(gui);
                 temp.Show();
                 main.BringToFront();
             }
             else
             {
-                MessageBox.Show("Cannot open any more windows of the type Reduce", "Help");
+                String tempStrng = String.Format("Cannot open any more windows of the type {0}", gui.GetTypeOfWindow());
+                MessageBox.Show(tempStrng, "Help");
             }
+        }
+
+        private void Temp_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sender is IGui)
+            {
+                windowsOpen.Remove((IGui)sender);
+            }
+        }
+
+        public MySqlDataAdapter getData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

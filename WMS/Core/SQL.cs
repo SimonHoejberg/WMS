@@ -45,6 +45,7 @@ namespace WMS.Core
             return MyDA;
         }
 
+        [Obsolete("getInfo is deprecated, please use getData instead")]
         public MySqlDataAdapter getInfo()
         {
             
@@ -56,6 +57,7 @@ namespace WMS.Core
             return MyDA;
         }
 
+        [Obsolete("getLog is deprecated, please use getData instead")]
         public MySqlDataAdapter getLog()
         {
             connection.Open();
