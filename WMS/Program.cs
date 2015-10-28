@@ -17,7 +17,10 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-            CoreSystem Core = new CoreSystem();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            IMain main = new Main();
+            CoreSystem Core = new CoreSystem(main);
             Core.Run();
         }
     }

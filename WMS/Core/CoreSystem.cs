@@ -14,11 +14,10 @@ namespace WMS.Core
         private SQL sql = new SQL();
         private Form main;
 
-        public CoreSystem()
+        public CoreSystem(IMain main)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            main = new Main(this);
+            main.Core = this;
+            this.main = (Form)main;
         }
 
         public void Run()
@@ -117,9 +116,9 @@ namespace WMS.Core
             }
         }
 
-        public MySqlDataAdapter getData()
+        public MySqlDataAdapter getData(string db)
         {
-            throw new NotImplementedException();
+            return sql.getData(db);
         }
     }
 }
