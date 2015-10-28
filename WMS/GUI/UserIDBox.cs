@@ -27,5 +27,12 @@ namespace WMS.GUI
         {
             this.Close();
         }
+
+        private void userConfirm_btn_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        
     }
 }
