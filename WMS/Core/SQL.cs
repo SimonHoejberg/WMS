@@ -23,12 +23,20 @@ namespace WMS.Core
         }
         public void update(string coloumn, string value, string id, string db)
         {
-            
-            string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE id = {2}", coloumn, value, id, db);
-
-
             MySqlCommand command = connection.CreateCommand();
-            command.CommandText = sql;
+            if (db.Equals("information"))
+            {
+                string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE itemNo = {2}", coloumn, value, id, db);
+                command.CommandText = sql;
+            }
+            else
+            {
+                string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE id = {2}", coloumn, value, id, db);
+                command.CommandText = sql;
+            }
+
+           
+            
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -66,11 +74,6 @@ namespace WMS.Core
             MyDA2.SelectCommand = new MySqlCommand(sqlG, connection);
             connection.Close();
             return MyDA2;
-        }
-
-        public void inserData()
-        {
-
         }
     }
     
