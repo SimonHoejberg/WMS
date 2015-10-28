@@ -21,10 +21,10 @@ namespace WMS.Core
         {
             connection = new MySqlConnection(mysqlConnectionString);
         }
-        public void update(string coloumn, string value, string id)
+        public void update(string coloumn, string value, string id, string db)
         {
             
-            string sql = string.Format("UPDATE products SET {0} = '{1}' WHERE id = {2}", coloumn, value, id);
+            string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE id = {2}", coloumn, value, id, db);
 
 
             MySqlCommand command = connection.CreateCommand();
@@ -33,6 +33,16 @@ namespace WMS.Core
             connection.Open();
             command.ExecuteNonQuery();
             connection.Close();
+        }
+
+        public MySqlDataAdapter getData(string db)
+        {
+            connection.Open();
+            MySqlDataAdapter MyDA = new MySqlDataAdapter();
+            string sqlCom = string.Format("SELECT * FROM {0}", db);
+            MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
+            connection.Close();
+            return MyDA;
         }
 
         public MySqlDataAdapter getInfo()
@@ -54,6 +64,11 @@ namespace WMS.Core
             MyDA2.SelectCommand = new MySqlCommand(sqlG, connection);
             connection.Close();
             return MyDA2;
+        }
+
+        public void inserData()
+        {
+
         }
     }
     
