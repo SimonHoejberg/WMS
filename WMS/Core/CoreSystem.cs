@@ -60,6 +60,8 @@ namespace WMS.Core
             CreateWindow(new Waste(this));
         }
 
+
+
         public void Update(object caller)
         {
             foreach (var item in windowsOpen.FindAll(x => !(x.Equals(caller))))
@@ -119,6 +121,27 @@ namespace WMS.Core
         public MySqlDataAdapter getData(string db)
         {
             return sql.getData(db);
+        }
+
+        public List<object> dataToList(string db)
+        {
+            if (db.Equals("information"))
+            {
+                return infoToList().ToList<object>();
+            }
+            return null;
+        }
+
+        private List<ItemType> infoToList()
+        {
+            List<ItemType> temp = new List<ItemType>();
+            MySqlDataReader reader = sql.getDataForList("information");
+            while (reader.Read())
+            {
+                temp.Add(new ItemType(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
+                                        int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
+            }
+            return temp;
         }
     }
 }

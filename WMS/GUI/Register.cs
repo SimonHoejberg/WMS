@@ -27,5 +27,16 @@ namespace WMS.GUI
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UserIDBox user_dialog = new UserIDBox();
+
+            DialogResult a = user_dialog.ShowDialog();
+
+            
+
+            Console.WriteLine(a);
+        }
     }
 }
