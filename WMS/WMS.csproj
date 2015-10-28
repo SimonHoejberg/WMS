@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\ItemType.cs" />
+    <Compile Include="Core\Location.cs" />
     <Compile Include="Core\SQL.cs" />
     <Compile Include="Core\UserData.cs" />
     <Compile Include="GUI\Form1.cs">
