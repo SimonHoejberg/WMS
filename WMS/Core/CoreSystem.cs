@@ -13,6 +13,7 @@ namespace WMS.Core
         private List<IGui> windowsOpen = new List<IGui>();
         private SQL sql = new SQL();
         private Form main;
+        private UserData user_data_obj = new UserData();
 
         public CoreSystem(IMain main)
         {
@@ -120,5 +121,7 @@ namespace WMS.Core
         {
             return sql.getData(db);
         }
+
+        public UserData getUserDataObj { get { return user_data_obj; } }
     }
 }
