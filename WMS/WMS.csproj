@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Interfaces\ICore.cs" />
     <Compile Include="Interfaces\IGui.cs" />
+    <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Form1.resx">

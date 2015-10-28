@@ -31,17 +31,12 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.getInfo().Fill(data);
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].HeaderText = "Item No:";
-            dataGridView1.Columns[2].HeaderText = "Name";
-            dataGridView1.Columns[3].HeaderText = "Date";
-            dataGridView1.Columns[4].HeaderText = "Bought";
-            dataGridView1.Columns[5].HeaderText = "Sold";
-            dataGridView1.Columns[6].HeaderText = "Sold Internal";
-            dataGridView1.Columns[7].HeaderText = "Sold Custommer";
-            dataGridView1.Columns[8].HeaderText = "Adjust";
+            core.getData(GetTypeOfWindow()).Fill(data);
 
+            dataGridView1.Columns[0].HeaderText = "Item No";
+            dataGridView1.Columns[1].HeaderText = "Description";
+            dataGridView1.Columns[2].HeaderText = "In stock";
+            dataGridView1.Columns[3].HeaderText = "Location";
             for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
@@ -55,14 +50,14 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                core.UpdateProduct(coloumn, value, id);
-                core.Update();
+                core.UpdateProduct(coloumn, value, id,GetTypeOfWindow());
+                core.Update(this);
             }
 
         }
 
         public void UpdateGuiElements(){
-
+            updateInfo();
         }
 
         public string GetTypeOfWindow()

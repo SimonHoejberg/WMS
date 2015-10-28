@@ -30,7 +30,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            core.getLog().Fill(data);
+            core.getData(GetTypeOfWindow()).Fill(data);
             for (int i = 0; i < dataGridView5.ColumnCount; i++)
             {
                 dataGridView5.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -40,7 +40,7 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-
+            updateLog();
         }
 
         public string GetTypeOfWindow()
