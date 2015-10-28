@@ -125,7 +125,7 @@ namespace WMS.Core
 
         public List<object> dataToList(string db)
         {
-            if (db.Equals("information"))
+            if (db.Equals("information")) 
             {
                 return infoToList().ToList<object>();
             }
