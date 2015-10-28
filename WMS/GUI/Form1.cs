@@ -12,18 +12,20 @@ using WMS.Interfaces;
 
 namespace WMS
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form , IMain
     {
-        ICore bridge;
+        ICore core;
         bool run = false;
-        public Form1(ICore bridge)
+
+        public Form1()
         {
-            this.bridge = bridge;
             InitializeComponent();
             updateInfo();
             registrationGrid();
             updateLog();
         }
+
+        public ICore Core {set { core = value; } }
 
         private void registerBtn_Click(object sender, EventArgs e)
         {
@@ -67,7 +69,7 @@ namespace WMS
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 
-                bridge.UpdateProduct(coloumn, value, id);
+                core.UpdateProduct(coloumn, value, id,"information");
                 updateLog();
             }
 
@@ -97,7 +99,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
             
-            bridge.getInfo().Fill(data);
+            core.getInfo().Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
             dataGridView1.Columns[2].HeaderText = "Name";
@@ -119,7 +121,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            bridge.getLog().Fill(data);
+            core.getLog().Fill(data);
         }
         private void button2_Click(object sender, EventArgs e)
         {

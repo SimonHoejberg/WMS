@@ -11,12 +11,11 @@ using WMS.Interfaces;
 
 namespace WMS.GUI
 {
-    public partial class Main : Form
+    public partial class Main : Form , IMain
     {
         ICore core;
-        public Main(ICore core)
+        public Main()
         {
-            this.core = core;
             InitializeComponent();
         }
 
@@ -25,6 +24,8 @@ namespace WMS.GUI
             this.MaximizeBox = false;
             this.MinimizeBox = false;
         }
+
+        public ICore Core { set { this.core = value; } }
 
         private void information_pbox_Click(object sender, EventArgs e)
         {
