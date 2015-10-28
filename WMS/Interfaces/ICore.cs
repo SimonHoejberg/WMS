@@ -40,6 +40,6 @@ namespace WMS.Interfaces
 
         void Update(object caller);
 
-        void doStuff();
+        UserData getUserDataObj();
     }
 }

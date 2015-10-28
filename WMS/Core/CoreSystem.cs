@@ -13,6 +13,7 @@ namespace WMS.Core
         private List<IGui> windowsOpen = new List<IGui>();
         private SQL sql = new SQL();
         private Form main;
+        private UserData user_data_obj = new UserData();
 
         public CoreSystem(IMain main)
         {
@@ -144,9 +145,9 @@ namespace WMS.Core
             return temp;
         }
 
-        public void doStuff()
+        public UserData getUserDataObj()
         {
-            throw new NotImplementedException();
+            return user_data_obj;
         }
     }
 }
