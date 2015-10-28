@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
+    <Compile Include="Core\ItemType.cs" />
     <Compile Include="Core\SQL.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
