@@ -10,10 +10,19 @@ namespace WMS.Core
     {
         public int itemNumber;
         public string name;
-        public List<List<int>> location;
+        public List<Location> location;
         public int totalQuantity;
         public int usage;
         public int quantityToFull;
+
+        public ItemType(int ItemNumber, string ItemName, int ItemUsage, int ItemQuantityToFull)
+        {
+            itemNumber = ItemNumber;
+            name = ItemName;
+            usage = ItemUsage;
+            quantityToFull = ItemQuantityToFull;
+
+        }
 
         public int ItemNumber
         {    
@@ -27,7 +36,7 @@ namespace WMS.Core
             set { name = value; }
         } 
 
-        public List<List<int>> Location
+        public List<Location> Location
         {
             get { return location; }
             set
@@ -44,7 +53,7 @@ namespace WMS.Core
 
                 for (int i = 0; i < location.Count; i++)
                 {
-                    tempTotalQuantity += location[i][3];
+                    tempTotalQuantity += location[i].itemQuantity;
                 }
 
                 return tempTotalQuantity;
@@ -62,15 +71,5 @@ namespace WMS.Core
             get { return quantityToFull; }
             set { quantityToFull = value; }
         }
-
-        public ItemType(int itemnumber, string itemname, int itemusage, int itemquantityToFull)
-        {
-            itemNumber = itemnumber;
-            name = itemname;
-            usage = itemusage;
-            quantityToFull = itemquantityToFull;
-
-        }
-
     }
 }
