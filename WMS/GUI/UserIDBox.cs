@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS;
 
 namespace WMS.GUI
 {
@@ -30,9 +31,7 @@ namespace WMS.GUI
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
-            
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
-
-        
     }
 }
