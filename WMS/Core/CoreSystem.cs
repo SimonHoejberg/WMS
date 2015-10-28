@@ -60,6 +60,8 @@ namespace WMS.Core
             CreateWindow(new Waste(this));
         }
 
+
+
         public void Update(object caller)
         {
             foreach (var item in windowsOpen.FindAll(x => !(x.Equals(caller))))

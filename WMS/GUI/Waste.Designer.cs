@@ -36,6 +36,7 @@
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,7 +74,8 @@
             this.Column11,
             this.Column12,
             this.Column13,
-            this.Column14});
+            this.Column14,
+            this.Column15});
             this.dataGridView6.Location = new System.Drawing.Point(12, 50);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.Size = new System.Drawing.Size(960, 446);
@@ -98,6 +100,12 @@
             // 
             this.Column14.HeaderText = "Quantity";
             this.Column14.Name = "Column14";
+
+            /////////
+            this.Column15.HeaderText = "test";
+            this.Column15.Name = "Column15";
+
+
             // 
             // Waste
             // 
@@ -125,5 +133,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        /// <summary>
+        ///
+        /// </summary>
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
     }
 }

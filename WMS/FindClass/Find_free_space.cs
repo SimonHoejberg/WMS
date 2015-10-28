@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace WMS.FindClass
 {
-    List<location> LocationList = new List<location>();
-    class Find_free_space
+    class FindFreeSpace
     {
+        /*    List<location> LocationList = new List<location>();
+            class Find_free_space
+            {
 
-         
-        public int EmptySpace(int shelfID)
-        {
-            location
-        }
 
-        } 
+                public int EmptySpace(int shelfID)
+                {
+                    location
+                }
+
+                }*/
+    }
     }
 

@@ -6,28 +6,37 @@ using System.Threading.Tasks;
 
 namespace WMS.FindClass
 {
+    class Find_Item{
+        List<Core.ItemType> ItemList = new List<Core.ItemType>();
+        Core.ItemType Item = new Core.ItemType(1564, "adolf", 2 ,5);
+        Core.ItemType Item2 = new Core.ItemType(1534, "hitler", 21, 55);
 
-    List<item> ItemList = new List<item>();
-    public void LoadItemList()
+
+        public void LoadItemList()
     {
+            ItemList.Add(Item);
+            ItemList.Add(Item2);
 
-    }
-    
+        }
 
 
 
 
-    public item Find_item(string name)
+
+    public bool Find_item(string name)
     {
-        foreach(item in Itemlist)
+            LoadItemList();
+        foreach (Core.ItemType ite in ItemList)
         {
-            if (name.Equals(ItemList.name))
+            if (name.Equals(ite.name))
             {
-                return item;
+                   
+                    return true; 
             }
         }
-        return null;
+        return false;
 
         //methoder til at finde list over item eller broken item, return list()
     }
+}
 }
