@@ -117,9 +117,9 @@ namespace WMS.Core
             }
         }
 
-        public MySqlDataAdapter getData()
+        public MySqlDataAdapter getData(string db)
         {
-            throw new NotImplementedException();
+            return sql.getData(db);
         }
     }
 }
