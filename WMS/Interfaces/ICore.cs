@@ -24,7 +24,7 @@ namespace WMS.Interfaces
 
         void OpenWaste();
 
-        List<ItemType> dataToList();
+        List<object> dataToList(string db);
 
         void UpdateProduct(string coloumn, string value, string id, string db);
 
