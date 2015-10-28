@@ -24,6 +24,8 @@ namespace WMS.Interfaces
 
         void OpenWaste();
 
+        List<ItemType> dataToList();
+
         void UpdateProduct(string coloumn, string value, string id, string db);
 
         [Obsolete("Use getData instead")]
