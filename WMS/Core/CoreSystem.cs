@@ -29,7 +29,7 @@ namespace WMS.Core
         {
             return sql.getInfo();
         }
-
+        
         public MySqlDataAdapter getLog()
         {
             return sql.getLog();
