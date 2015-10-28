@@ -32,8 +32,11 @@ namespace WMS.GUI
             dataGridView1.DataSource = bsource;
 
             core.getData(GetTypeOfWindow()).Fill(data);
-            
 
+            dataGridView1.Columns[0].Name = "Item No";
+            dataGridView1.Columns[1].Name = "Description";
+            dataGridView1.Columns[2].Name = "In stock";
+            dataGridView1.Columns[3].Name = "Location";
             for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
@@ -48,7 +51,7 @@ namespace WMS.GUI
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
                 core.UpdateProduct(coloumn, value, id,GetTypeOfWindow());
-                core.Update(GetTypeOfWindow());
+                core.Update(this);
             }
 
         }
