@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using WMS.Core;
+using WMS.FindClass;
 
 namespace WMS.Warehouse
 {
     public class Warehouse
     {
-        FindClass.FindFreeSpace freespace = new FindClass.FindFreeSpace();
-        FindClass.WarehouseLayout Layout = new FindClass.WarehouseLayout();
-        FindClass.Find_Item item = new FindClass.Find_Item();
+        FindFreeSpace freespace = new FindFreeSpace();
+        WarehouseLayout Layout = new WarehouseLayout();
+        FindItem item = new FindItem();
 
         List<ItemType> ItemNotPlaced = new List<ItemType>();
         

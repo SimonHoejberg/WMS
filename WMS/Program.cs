@@ -17,7 +17,7 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-            FindClass.Find_Item item = new FindClass.Find_Item();
+            FindClass.FindItem item = new FindClass.FindItem();
             
          Warehouse.Warehouse test = new Warehouse.Warehouse();
             item.LoadItemList();
