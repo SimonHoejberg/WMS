@@ -17,9 +17,9 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-            ItemType i1 = new ItemType(4224, "test", 5, 8, 2, 400);
-            Localization l1 = new Localization();
-            Console.WriteLine(l1.Localizer(i1));
+            //ItemType i1 = new ItemType(4224, "test", 5, 8, 400);
+            //Localization l1 = new Localization();
+            //Console.WriteLine(l1.Localizer(i1));
 
             FindClass.FindItem item = new FindClass.FindItem();
             

@@ -15,14 +15,14 @@ namespace WMS.Core
             B1, B2, B3, B4, B5, B6
         };
 
-        public string FastLocalizer (ItemType product)
-        {
-            return product.LocationShelfUnit.ToString() + ";" + product.LocationShelfHeight.ToString();
-        }
+        //public string FastLocalizer (ItemType product)
+        //{
+        //    return product.LocationShelfUnit.ToString() + ";" + product.LocationShelfDepth.ToString();
+        //}
 
         public string Localizer (ItemType product)
         {
-            return ((Shelf)product.LocationShelfUnit).ToString() + ";" + product.LocationShelfHeight.ToString();
+            return ((Shelf)product.LocationShelf).ToString() + ";" + product.LocationShelfDepth.ToString();
         }
 
     }
