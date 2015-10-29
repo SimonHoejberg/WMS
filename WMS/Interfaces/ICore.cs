@@ -36,6 +36,5 @@ namespace WMS.Interfaces
 
         void Update(object caller);
 
-        UserData getUserDataObj();
     }
 }

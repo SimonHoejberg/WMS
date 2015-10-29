@@ -150,13 +150,13 @@ namespace WMS.Core
             return temp;
         }
 
-        public List<UserData> userToList()
+        public List<string> userToList()
         {
-            List<UserData> temp = new List<UserData>();
+            List<string> temp = new List<string>();
             MySqlDataReader reader = sql.getDataForList("user");
             while (reader.Read())
             {
-                temp.Add(new UserData(int.Parse(reader["userId"].ToString(), reader["name"].ToString())));
+                temp.Add(reader["userId"].ToString());
             }
             return temp;
         }
