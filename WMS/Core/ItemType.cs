@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WMS.Core
 {
-    class ItemType
+    public class ItemType : IComparable
     {
         private int itemNo;
         private string description;
@@ -22,6 +22,21 @@ namespace WMS.Core
             this.location = location;
             this.size = size;
 
+        }
+
+        public override string ToString()
+        {
+            return "Item: " + this.ItemNo + "  description: " + this.Description;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+            ItemType otherItem = obj as ItemType;
+            if (obj != null)
+                return otherItem.inStock.CompareTo(this.inStock);
+            else
+                throw new ArgumentException("Object is not a Item");
         }
 
         public int ItemNo{ get { return itemNo; }}

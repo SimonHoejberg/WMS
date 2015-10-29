@@ -8,35 +8,28 @@ namespace WMS.Warehouse
 {
     class Warehouse
     {
-        /*FindClass.Find_Item ret = new FindClass.Find_Item();
-        public void GetItemInformation()
-        {
-            bool set = ret.Find_item("adolfH");
-            Console.WriteLine(set);
-        }*/
 
- /*       
         //Registering:trukket alle informationer ind i registrering for at bruge algorithm og få lister tilbage
-        public List<T> algorithm(List<T> Product)
+        public List<Core.ItemType> algorithm(List<Core.ItemType> Product)
         {
-            List<T> ItemNotPlaced = new List<T>();
+            List<Core.ItemType> ItemNotPlaced = new List<Core.ItemType>();
             int i = 0;
             bool j = true;
-            int x;
+            int x = 0;
             bool f;
-            Sort(Product);
+            Product.Sort();
             while (j)
             {
-                if (Product[i].frekvense == null)
+                if (Product[i].Description == null)
                 {
                     j = false;
                 }
 
-                x = FindShelfNumber(product[i]);
-                f = FindAvaliableSpace(product[i], x);
-                if(f == false)
+                x = FindShelfNumber(Product[i]);
+                f = FindAvaliableSpace(Product[i], x);
+                if (f == false)
                 {
-                    Product.Add;
+                    ItemNotPlaced.Add(Product[i]);
                 }
                 i++;
             }
@@ -48,21 +41,24 @@ namespace WMS.Warehouse
         {
 
         }
-            
-            
-            
-            
-            
+
+
+        public int FindShelfNumber()
+        {
+
+        }
+
+
         //Reduced: find_item to reduce and update
         public bool reduceItem(item)
         {
-             = FindItem()
-        }
+                    = FindItem()
+               }
         //Waste: find item and remove from system
 
-        public bool FindAvaliableSpace(Product[i], x)
+        public bool FindAvaliableSpace(Core.ItemType Product, int x)
         {
-            if (Product[i].size <= Findfreespace.EmptySpace(x))
+            if (Product.Size <= Findfreespace.EmptySpace(x))
             {
                 placeitem(Product[i], x);
                 return true;
@@ -71,12 +67,13 @@ namespace WMS.Warehouse
             {
                 return FindSpace(Product[i], x + 1);
             }
-            else (x > max_size)
-            {
+            else
+                (x > max_size)
+                   {
                 return false;
             }
         }
 
-            public void placeItem()*/
+        public void placeItem()*/
     }
 }
