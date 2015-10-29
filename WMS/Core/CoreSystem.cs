@@ -130,6 +130,11 @@ namespace WMS.Core
             {
                 return infoToList().ToList<object>();
             }
+
+            else if (db.Equals("user"))
+            {
+                return userToList().ToList<object>();
+            }
             return null;
         }
 
@@ -145,9 +150,15 @@ namespace WMS.Core
             return temp;
         }
 
-        public UserData getUserDataObj()
+        public List<UserData> userToList()
         {
-            return user_data_obj;
+            List<UserData> temp = new List<UserData>();
+            MySqlDataReader reader = sql.getDataForList("user");
+            while (reader.Read())
+            {
+                temp.Add(new UserData(int.Parse(reader["userId"].ToString(), reader["name"].ToString())));
+            }
+            return temp;
         }
     }
 }
