@@ -39,10 +39,13 @@ namespace WMS.Core
             string sql = "SELECT * FROM " + db;
             command.CommandText = sql;
             MySqlDataReader reader = command.ExecuteReader();
-            connection.Close();
             return reader;
         }
 
+        public void CloseConnection()
+        {
+            connection.Close();
+        }
         public MySqlDataAdapter getData(string db)
         {
             connection.Open();

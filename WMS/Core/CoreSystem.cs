@@ -13,7 +13,6 @@ namespace WMS.Core
         private List<IGui> windowsOpen = new List<IGui>();
         private SQL sql = new SQL();
         private Form main;
-        private UserData user_data_obj = new UserData();
 
         public CoreSystem(IMain main)
         {
@@ -147,10 +146,11 @@ namespace WMS.Core
                 temp.Add(new ItemType(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
                                         int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
             }
+            sql.CloseConnection();
             return temp;
         }
 
-        public List<string> userToList()
+        private List<string> userToList()
         {
             List<string> temp = new List<string>();
             MySqlDataReader reader = sql.getDataForList("user");
@@ -158,6 +158,7 @@ namespace WMS.Core
             {
                 temp.Add(reader["userId"].ToString());
             }
+            sql.CloseConnection();
             return temp;
         }
     }
