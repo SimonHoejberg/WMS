@@ -17,8 +17,8 @@ namespace WMS
         [STAThread]
         static void Main()
         {
-         Warehouse.Warehouse test = new Warehouse.Warehouse();
-          test.GetItemInformation();
+        // Warehouse.Warehouse test = new Warehouse.Warehouse();
+         // test.GetItemInformation();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             IMain main = new Main();

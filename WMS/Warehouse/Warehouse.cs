@@ -8,7 +8,7 @@ namespace WMS.Warehouse
 {
     class Warehouse
     {
-
+/*
         //Registering:trukket alle informationer ind i registrering for at bruge algorithm og få lister tilbage
         public List<Core.ItemType> algorithm(List<Core.ItemType> Product)
         {
@@ -37,18 +37,14 @@ namespace WMS.Warehouse
         }
         //gui classer sender information
         //Move: find item til at flytte,find itemplacering, find alle freespace, og derefter tildel ny placering
-        public List<T> moveItem(item.size)
-        {
-
-        }
-
+     
 
         public int FindShelfNumber()
         {
 
         }
 
-
+/*
         //Reduced: find_item to reduce and update
         public bool reduceItem(item)
         {
