@@ -46,7 +46,7 @@ namespace WMS.Core
             connection.Open();
             string sql = "SELECT * FROM " + db;
             command.CommandText = sql;
-            connection.Close();
+            //connection.Close();
             return command.ExecuteReader();
         }
 

@@ -13,6 +13,7 @@ namespace WMS.Core
         private List<IGui> windowsOpen = new List<IGui>();
         private SQL sql = new SQL();
         private Form main;
+        private UserData user_data_obj = new UserData();
 
         public CoreSystem(IMain main)
         {
@@ -125,7 +126,7 @@ namespace WMS.Core
 
         public List<object> dataToList(string db)
         {
-            if (db.Equals("information"))
+            if (db.Equals("information")) 
             {
                 return infoToList().ToList<object>();
             }
@@ -142,6 +143,11 @@ namespace WMS.Core
                                         int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
             }
             return temp;
+        }
+
+        public UserData getUserDataObj()
+        {
+            return user_data_obj;
         }
     }
 }
