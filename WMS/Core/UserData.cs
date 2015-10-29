@@ -13,6 +13,7 @@ namespace WMS.Core
         public UserData()
         {
             user_data = new Dictionary<int, string>();
+            user_data.Add(1234, "Louise Taber"); //Test person. In the final program, the people will be stored on the database.
         }
 
         public bool doesUserExist(int a)
