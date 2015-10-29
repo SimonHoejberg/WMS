@@ -37,7 +37,6 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,9 +77,9 @@
             this.Column7,
             this.Quantity,
             this.Column8});
-            this.dataGridView4.Location = new System.Drawing.Point(161, 187);
+            this.dataGridView4.Location = new System.Drawing.Point(12, 12);
             this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(811, 308);
+            this.dataGridView4.Size = new System.Drawing.Size(960, 483);
             this.dataGridView4.TabIndex = 4;
             // 
             // Column5
@@ -108,20 +107,11 @@
             this.Column8.HeaderText = "New Location";
             this.Column8.Name = "Column8";
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(59, 60);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(414, 95);
-            this.listBox1.TabIndex = 8;
-            // 
             // Move
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -144,6 +134,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.ListBox listBox1;
     }
 }
