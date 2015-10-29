@@ -10,23 +10,25 @@ namespace WMS.Warehouse
     {
         FindClass.FindFreeSpace freespace = new FindClass.FindFreeSpace();
         FindClass.WarehouseLayout Layout = new FindClass.WarehouseLayout();
+        FindClass.Find_Item item = new FindClass.Find_Item();
 
         List<Core.ItemType> ItemNotPlaced = new List<Core.ItemType>();
-
+        
 
         public List<Core.ItemType> algorithm(List<Core.ItemType> Product)
         {
+            freespace.add();
             int i = 0;
             bool j = true;
             int r = 0;
             bool f;
             Product.Sort();
-            while (j)
+            while (j && i<2)
             {
-                if (Product[i].Description == null)
+            /*    if (Product[i].Description == null)
                 {
                     j = false;
-                }
+                }*/
                 r = FindShelfNumber(Product[i]);
                 f = FindAvaliableSpace(Product[i],freespace.Space, r);
                 if (f == false)
@@ -43,7 +45,7 @@ namespace WMS.Warehouse
 
         public int FindShelfNumber(Core.ItemType Product)
         {    
-            var shelfID = freespace.FinditemNumber(Product.Description);
+            var shelfID = item.FinditemNumber(Product.Description);
             return shelfID;
         }
 
@@ -60,16 +62,20 @@ namespace WMS.Warehouse
             if (Product.Size <= freespace.EmptySpace(x[i], Layout.shelfsize, i))
             {
                 freespace.PlaceItem(Product, x[i]);
+                Console.WriteLine("Yes");
                 return true;
             }
             else if (Product.Size > freespace.EmptySpace(x[i], Layout.shelfsize, i))
             {
+                Console.WriteLine("ok");
                 return FindAvaliableSpace(Product, x, i++);
             }
             else if (Layout.racks > 6)
             {
+                Console.WriteLine("whyyyyyy");
                 return false;
             }
+            Console.WriteLine("no");
             return false;
         }
 

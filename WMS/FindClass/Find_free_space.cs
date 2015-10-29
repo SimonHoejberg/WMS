@@ -8,21 +8,30 @@ namespace WMS.FindClass
 {
     class FindFreeSpace
     {
+        
         public List<Core.Location> Space = new List<Core.Location>();
 
-        public int FinditemNumber(string name)
-        {
-            int i = 0;
-            foreach(Core.Location number in Space)
-            {
-                if (name.Equals(number.itemName))
-                {
-                    return i;
-                }
-                i++;
-            }
-            return 0;
+        Core.Location locale = new Core.Location("mike1", 2, 5 , 9, 100, 1564);
+        Core.Location locale1 = new Core.Location("mike", 2, 5, 9, 100, 1564);
+        Core.Location locale2 = new Core.Location("mike2", 2, 5, 9, 100, 1564);
+        Core.Location locale3 = new Core.Location("mike3", 2, 5, 9, 100, 1564);
+        Core.Location locale4 = new Core.Location("mike4", 2, 6, 9, 100, 1564);
+        Core.Location locale5 = new Core.Location("mike5", 2, 6, 9, 100, 1564);
+        Core.Location locale6 = new Core.Location("mike6", 2, 6, 9, 100, 1564);
+
+        public void add() {
+            Space.Add(locale);
+            Space.Add(locale1);
+            Space.Add(locale2);
+            Space.Add(locale3);
+            Space.Add(locale4);
+            Space.Add(locale5);
+            Space.Add(locale6);
+
         }
+
+
+
 
         public int EmptySpace(Core.Location ShelfID, int Max, int i)
         {

@@ -11,7 +11,7 @@ namespace WMS.Core
         public int shelfUnit;
         public int shelfNumber;
         public int shelfPosition;
-        public string  itemName;
+        public string itemName;
         public int itemQuantity = 0;
         public int itemNumber = 0;
         

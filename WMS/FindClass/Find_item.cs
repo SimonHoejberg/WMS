@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace WMS.FindClass
 {
     class Find_Item{
-        List<Core.ItemType> ItemList = new List<Core.ItemType>();
-        Core.ItemType Item = new Core.ItemType(1564, "adolf", 2, 4 ,5);
-        Core.ItemType Item2 = new Core.ItemType(1534, "hitler", 21,56, 55);
+        public List<Core.ItemType> ItemList = new List<Core.ItemType>();
+        Core.ItemType Item = new Core.ItemType(1564, "adolf", 2, 5 ,5);
+        Core.ItemType Item2 = new Core.ItemType(1534, "hitler", 21,6, 55);
 
 
         public void LoadItemList()
@@ -21,12 +21,24 @@ namespace WMS.FindClass
         }
 
 
-
+        public int FinditemNumber(string name)
+        {
+            
+            foreach (Core.ItemType number in ItemList)
+            {
+                if (name.Equals(number.Description))
+                {
+                    return number.Location;
+                }
+                
+            }
+            return 0;
+        }
 
 
         public Core.ItemType Find_item(string name)
     {
-            LoadItemList();
+
         foreach (Core.ItemType ite in ItemList)
         {
             if (name.Equals(ite.Description))
