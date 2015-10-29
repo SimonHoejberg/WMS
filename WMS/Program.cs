@@ -18,8 +18,7 @@ namespace WMS
         static void Main()
         {
             FindClass.FindItem item = new FindClass.FindItem();
-            
-         Warehouse.Warehouse test = new Warehouse.Warehouse();
+            Warehouse.Warehouse test = new Warehouse.Warehouse();
             item.LoadItemList();
             test.algorithm(item.ItemList);
             Application.EnableVisualStyles();
