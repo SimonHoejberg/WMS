@@ -74,6 +74,7 @@
     <Compile Include="FindClass\Find_free_space.cs" />
     <Compile Include="FindClass\Find_item.cs" />
     <Compile Include="FindClass\Find_Place.cs" />
+    <Compile Include="FindClass\WarehouseLayout.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

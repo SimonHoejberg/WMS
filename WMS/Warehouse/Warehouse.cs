@@ -8,14 +8,17 @@ namespace WMS.Warehouse
 {
     class Warehouse
     {
-/*
-        //Registering:trukket alle informationer ind i registrering for at bruge algorithm og få lister tilbage
+        FindClass.FindFreeSpace freespace = new FindClass.FindFreeSpace();
+        FindClass.WarehouseLayout Layout = new FindClass.WarehouseLayout();
+
+        List<Core.ItemType> ItemNotPlaced = new List<Core.ItemType>();
+
+
         public List<Core.ItemType> algorithm(List<Core.ItemType> Product)
         {
-            List<Core.ItemType> ItemNotPlaced = new List<Core.ItemType>();
             int i = 0;
             bool j = true;
-            int x = 0;
+            int r = 0;
             bool f;
             Product.Sort();
             while (j)
@@ -24,9 +27,8 @@ namespace WMS.Warehouse
                 {
                     j = false;
                 }
-
-                x = FindShelfNumber(Product[i]);
-                f = FindAvaliableSpace(Product[i], x);
+                r = FindShelfNumber(Product[i]);
+                f = FindAvaliableSpace(Product[i],freespace.Space, r);
                 if (f == false)
                 {
                     ItemNotPlaced.Add(Product[i]);
@@ -37,39 +39,40 @@ namespace WMS.Warehouse
         }
         //gui classer sender information
         //Move: find item til at flytte,find itemplacering, find alle freespace, og derefter tildel ny placering
-     
+        
 
-        public int FindShelfNumber()
-        {
-
+        public int FindShelfNumber(Core.ItemType Product)
+        {    
+            var shelfID = freespace.FinditemNumber(Product.Description);
+            return shelfID;
         }
 
-/*
+        /*
         //Reduced: find_item to reduce and update
         public bool reduceItem(item)
         {
                     = FindItem()
                }
         //Waste: find item and remove from system
-
-        public bool FindAvaliableSpace(Core.ItemType Product, int x)
+*/
+        public bool FindAvaliableSpace(Core.ItemType Product, List<Core.Location> x, int i)
         {
-            if (Product.Size <= Findfreespace.EmptySpace(x))
+            if (Product.Size <= freespace.EmptySpace(x[i], Layout.shelfsize, i))
             {
-                placeitem(Product[i], x);
+                freespace.PlaceItem(Product, x[i]);
                 return true;
             }
-            else if (Product[i].size > Findfreespace.EmptySpace(x))
+            else if (Product.Size > freespace.EmptySpace(x[i], Layout.shelfsize, i))
             {
-                return FindSpace(Product[i], x + 1);
+                return FindAvaliableSpace(Product, x, i++);
             }
-            else
-                (x > max_size)
-                   {
+            else if (Layout.racks > 6)
+            {
                 return false;
             }
+            return false;
         }
 
-        public void placeItem()*/
+        
     }
 }
