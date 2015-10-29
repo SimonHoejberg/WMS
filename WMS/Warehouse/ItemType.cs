@@ -16,7 +16,6 @@ namespace WMS.Core
             this.description = description;
             this.inStock = inStock;
             this.location = location;
-
             this.size = size;
 
         }
