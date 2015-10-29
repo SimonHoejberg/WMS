@@ -34,18 +34,15 @@ namespace WMS.GUI
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
-            UserData user_obj = core.getUserDataObj();
+            //UserData user_obj = core.getUserDataObj();
             int a;
             bool b = Int32.TryParse(this.getInputFromTextbox, out a);
-            if (b && core.getUserDataObj().doesUserExist(a))
-            {
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
-                userIDError_lbl.Text = "";
+            /*userIDError_lbl.Text = "";
             }
             else
             {
                 userIDError_lbl.Text = "Invalid user ID";
-            }
+            }*/
             
         }
     }
