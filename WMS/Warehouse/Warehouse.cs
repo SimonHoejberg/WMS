@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using WMS.Core;
 
 namespace WMS.Warehouse
 {
-    class Warehouse
+    public class Warehouse
     {
         FindClass.FindFreeSpace freespace = new FindClass.FindFreeSpace();
         FindClass.WarehouseLayout Layout = new FindClass.WarehouseLayout();
         FindClass.Find_Item item = new FindClass.Find_Item();
 
-        List<Core.ItemType> ItemNotPlaced = new List<Core.ItemType>();
+        List<ItemType> ItemNotPlaced = new List<ItemType>();
         
 
-        public List<Core.ItemType> algorithm(List<Core.ItemType> Product)
+        public List<ItemType> algorithm(List<ItemType> Product)
         {
             freespace.add();
             int i = 0;
@@ -40,7 +41,7 @@ namespace WMS.Warehouse
         //Move: find item til at flytte,find itemplacering, find alle freespace, og derefter tildel ny placering
         
 
-        public int FindShelfNumber(Core.ItemType Product)
+        public int FindShelfNumber(ItemType Product)
         {    
             var shelfID = item.FinditemNumber(Product.Description);
             return shelfID;
@@ -54,7 +55,7 @@ namespace WMS.Warehouse
                }
         //Waste: find item and remove from system
 */
-        public bool FindAvaliableSpace(Core.ItemType Product, List<Core.Location> x, int i)
+        public bool FindAvaliableSpace(ItemType Product, List<Core.Location> x, int i)
         {
             if (Product.Size <= freespace.EmptySpace(x[i], Layout.shelfsize, i))
             {
