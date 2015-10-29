@@ -18,7 +18,6 @@ namespace WMS.GUI
         {
             InitializeComponent();
             this.core = core;
-            test();
         }
 
         public string GetTypeOfWindow()
@@ -30,10 +29,7 @@ namespace WMS.GUI
         {
 
         }
-        public void test()
-        {
-            listBox1.DataSource = core.dataToList("information");
-        }
+        
         private void button5_Click(object sender, EventArgs e)
         {
             //Current button event is made for testing the confirmation box. (passowd/userID)
