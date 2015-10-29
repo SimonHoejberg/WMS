@@ -150,7 +150,7 @@ namespace WMS.Core
             return temp;
         }
 
-        public List<UserData> userToList()
+        private List<UserData> userToList()
         {
             List<UserData> temp = new List<UserData>();
             MySqlDataReader reader = sql.getDataForList("user");
