@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql;
 using MySql.Data.MySqlClient;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 
 namespace WMS.Core
 {
@@ -46,10 +38,14 @@ namespace WMS.Core
             connection.Open();
             string sql = "SELECT * FROM " + db;
             command.CommandText = sql;
-            //connection.Close();
-            return command.ExecuteReader();
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
         }
 
+        public void CloseConnection()
+        {
+            connection.Close();
+        }
         public MySqlDataAdapter getData(string db)
         {
             connection.Open();

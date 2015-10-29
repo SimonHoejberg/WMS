@@ -3,7 +3,7 @@ using WMS.Core;
 
 namespace WMS.FindClass
 {
-    public class Find_Item
+    public class FindItem
     {
         public List<ItemType> ItemList = new List<ItemType>();
         ItemType Item = new ItemType(1564, "adolf", 2, 5, 5);

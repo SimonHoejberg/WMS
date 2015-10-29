@@ -70,7 +70,6 @@
     <Compile Include="Warehouse\ItemType.cs" />
     <Compile Include="Warehouse\Location.cs" />
     <Compile Include="Core\SQL.cs" />
-    <Compile Include="Core\UserData.cs" />
     <Compile Include="FindClass\FindFreeSpace.cs" />
     <Compile Include="FindClass\FindItem.cs" />
     <Compile Include="FindClass\FindPlace.cs" />
