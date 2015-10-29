@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WMS.Core
 {
@@ -24,9 +20,19 @@ namespace WMS.Core
 
         }
 
+        public int ItemNo{ get { return itemNo; }}
+
+        public string Description { get { return description; }} 
+
+        public int Location {get { return location; }}
+
+        public int InStock { get { return inStock; } }
+
+        public int Size { get { return size; }}
+
         public override string ToString()
         {
-            return "Item: " + this.ItemNo + "  description: " + this.Description;
+            return "Item: " + ItemNo + "  Description: " + Description;
         }
 
         public int CompareTo(object obj)
@@ -38,15 +44,5 @@ namespace WMS.Core
             else
                 throw new ArgumentException("Object is not a Item");
         }
-
-        public int ItemNo{ get { return itemNo; }}
-
-        public string Description { get { return description; }} 
-
-        public int Location {get { return location; }}
-
-        public int InStock { get { return inStock; } }
-
-        public int Size { get { return size; }}
     }
 }

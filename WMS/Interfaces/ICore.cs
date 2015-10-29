@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WMS.Core;
-using MySql;
 using MySql.Data.MySqlClient;
 
 namespace WMS.Interfaces
