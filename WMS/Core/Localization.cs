@@ -22,7 +22,7 @@ namespace WMS.Core
 
         public string Localizer (ItemType product)
         {
-            return ((Shelf)product.LocationShelf).ToString() + ";" + product.LocationShelfDepth.ToString();
+            return ((Shelf)product.Shelf).ToString() + ";" + product.Space.ToString();
         }
 
     }

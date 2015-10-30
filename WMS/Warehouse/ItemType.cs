@@ -7,16 +7,16 @@ namespace WMS.Core
         private int itemNo;
         private string description;
         private int inStock;
-        private int locationShelf;
-        private int locationShelfDepth;
+        private int shelf;
+        private int space;
         private int size;
 
-        public ItemType(int itemNo, string description, int inStock, int locationShelf, int size)
+        public ItemType(int itemNo, string description, int inStock, int shelf, int size)
         {
             this.itemNo = itemNo;
             this.description = description;
             this.inStock = inStock;
-            this.locationShelf = locationShelf;
+            this.shelf = shelf;
             this.size = size;
 
         }
@@ -25,9 +25,9 @@ namespace WMS.Core
 
         public string Description { get { return description; }} 
 
-        public int LocationShelf {get { return locationShelf; }}
+        public int Shelf {get { return shelf; }}
 
-        public int LocationShelfDepth { get { return locationShelfDepth; } }
+        public int Space { get { return space; } }
 
         public int InStock { get { return inStock; } }
 
