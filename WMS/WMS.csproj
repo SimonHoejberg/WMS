@@ -68,12 +68,10 @@
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\Localization.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
     <Compile Include="Core\SQL.cs" />
-    <Compile Include="Helper\FindFreeSpace.cs" />
-    <Compile Include="Helper\FindItem.cs" />
-    <Compile Include="Helper\FindPlace.cs" />
     <Compile Include="Reference\WarehouseLayout.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>

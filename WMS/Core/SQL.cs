@@ -41,9 +41,18 @@ namespace WMS.Core
             return MyDA;
         }
 
+        public MySqlDataReader GetLatestLog(string itemNo)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            connection.Open();
+            string sql = "SELECT * FROM log WHERE itemNo = " + itemNo;
+            command.CommandText = sql;
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
+        }
+
         public MySqlDataReader getDataForList(string db)
         {
-            
             MySqlCommand command = connection.CreateCommand();
             connection.Open();
             string sql = "SELECT * FROM " + db;

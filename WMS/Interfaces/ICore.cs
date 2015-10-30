@@ -12,6 +12,8 @@ namespace WMS.Interfaces
 
         void OpenLog();
 
+        void OpenLog(string itemNo);
+
         void OpenMove();
 
         void OpenRegister();

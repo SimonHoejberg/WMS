@@ -126,11 +126,15 @@ namespace WMS.Core
 
         public List<object> dataToList(string db)
         {
+            int a = 0;
             if (db.Equals("information")) 
             {
                 return infoToList().ToList<object>();
             }
-
+            else if (int.TryParse(db,out a))
+            {
+                return LogToList(db).ToList<object>();
+            }
             else if (db.Equals("user"))
             {
                 return userToList().ToList<object>();
@@ -163,9 +167,26 @@ namespace WMS.Core
             return temp;
         }
 
+        private List<string> LogToList(string itemNo)
+        {
+            List<string> temp = new List<string>();
+            MySqlDataReader reader = sql.getDataForList(itemNo);
+            while (reader.Read())
+            {
+                temp.Add(reader["userId"].ToString());
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
         public MySqlDataAdapter GetFilterLog(string itemNo)
         {
             return sql.GetFilterLog(itemNo);
+        }
+
+        public void OpenLog(string itemNo)
+        {
+            CreateWindow(new Log(this,itemNo));
         }
     }
 }
