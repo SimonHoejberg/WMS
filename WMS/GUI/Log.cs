@@ -64,7 +64,7 @@ namespace WMS.GUI
 
         private void button8_Click(object sender, EventArgs e)
         {
-
+            itemInfoPnl.Visible = true;
         }
 
         private void Sort_Click(object sender, EventArgs e)
@@ -82,6 +82,11 @@ namespace WMS.GUI
                 UpdateLog();
                 button9.Text = "Sort";
             }
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            itemInfoPnl.Visible = false;
         }
     }
 }
