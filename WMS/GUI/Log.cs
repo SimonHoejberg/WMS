@@ -24,6 +24,13 @@ namespace WMS.GUI
             UpdateLog();
         }
 
+        public Log(ICore core, string itemNo)
+        {
+            this.core = core;
+            InitializeComponent();
+            UpdateLog(core.GetFilterLog(itemNo));
+        }
+
         private void UpdateLog()
         {
             UpdateLog(core.getData(GetTypeOfWindow()));
