@@ -14,9 +14,11 @@ namespace WMS.Core
         public string itemName;
         public int itemQuantity = 0;
         public int itemNumber = 0;
+        public int productSize;
         
-        public Location(string ItemName, int ShelfUnit, int ShelfNumber, int ShelfPosition, int ItemQuantity, int ItemNumber)
+        public Location(int ProductSize, string ItemName, int ShelfUnit, int ShelfNumber, int ShelfPosition, int ItemQuantity, int ItemNumber)
         {
+            productSize = ProductSize;
             itemName = ItemName;
             shelfUnit = ShelfUnit;
             shelfNumber = ShelfNumber;

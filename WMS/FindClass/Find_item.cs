@@ -8,8 +8,9 @@ namespace WMS.FindClass
 {
     class Find_Item{
         public List<Core.ItemType> ItemList = new List<Core.ItemType>();
-        Core.ItemType Item = new Core.ItemType(1564, "adolf", 2, 5 ,5);
+        Core.ItemType Item = new Core.ItemType(1564, "adolf", 2, 5 ,55);
         Core.ItemType Item2 = new Core.ItemType(1534, "hitler", 21,6, 55);
+        Core.ItemType Item3 = new Core.ItemType(1534, "hit", 23, 6, 95);
 
 
         public void LoadItemList()
@@ -17,7 +18,7 @@ namespace WMS.FindClass
             // data from DB
             ItemList.Add(Item);
             ItemList.Add(Item2);
-
+            ItemList.Add(Item3);
         }
 
 

@@ -11,13 +11,13 @@ namespace WMS.FindClass
         
         public List<Core.Location> Space = new List<Core.Location>();
 
-        Core.Location locale = new Core.Location("mike1", 2, 5 , 9, 100, 1564);
-        Core.Location locale1 = new Core.Location("mike", 2, 5, 9, 100, 1564);
-        Core.Location locale2 = new Core.Location("mike2", 2, 5, 9, 100, 1564);
-        Core.Location locale3 = new Core.Location("mike3", 2, 5, 9, 100, 1564);
-        Core.Location locale4 = new Core.Location("mike4", 2, 6, 9, 100, 1564);
-        Core.Location locale5 = new Core.Location("mike5", 2, 6, 9, 100, 1564);
-        Core.Location locale6 = new Core.Location("mike6", 2, 6, 9, 100, 1564);
+        Core.Location locale = new Core.Location(8, "mike1", 2, 5 , 9, 100, 1564);
+        Core.Location locale1 = new Core.Location(8, "mike", 2, 5, 9, 100, 1564);
+        Core.Location locale2 = new Core.Location(8, "mike2", 2, 5, 9, 100, 1564);
+        Core.Location locale3 = new Core.Location(8, "mike3", 2, 5, 9, 100, 1564);
+        Core.Location locale4 = new Core.Location(1, "mike4", 2, 6, 9, 100, 1564);
+        Core.Location locale5 = new Core.Location(1, "mike5", 2, 6, 9, 100, 1564);
+        Core.Location locale6 = new Core.Location(1, "mike6", 2, 6, 9, 100, 1564);
 
         public void add() {
             Space.Add(locale);
@@ -40,7 +40,8 @@ namespace WMS.FindClass
             {
                 if(ShelfID.shelfNumber == space.shelfNumber)
                 {
-                    x = x + space.itemQuantity;
+                    x = x + space.productSize;
+                    Console.WriteLine(x);
                 }
             }
             return x;
@@ -51,7 +52,7 @@ namespace WMS.FindClass
         {
             if (Product != null)
             {
-                var NewPlace = new Core.Location(Product.Description, ShelfID.shelfUnit, ShelfID.shelfNumber, ShelfID.shelfPosition + Product.Size, ShelfID.itemQuantity, Product.ItemNo);
+                var NewPlace = new Core.Location(Product.Size, Product.Description, ShelfID.shelfUnit, ShelfID.shelfNumber, ShelfID.shelfPosition + Product.Size, ShelfID.itemQuantity, Product.ItemNo);
                 return true;
             }
             else

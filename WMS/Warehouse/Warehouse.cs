@@ -14,7 +14,6 @@ namespace WMS.Warehouse
 
         List<Core.ItemType> ItemNotPlaced = new List<Core.ItemType>();
         
-
         public List<Core.ItemType> algorithm(List<Core.ItemType> Product)
         {
             freespace.add();
@@ -23,7 +22,7 @@ namespace WMS.Warehouse
             int r = 0;
             bool f;
             Product.Sort();
-            while (j && i<2)
+            while (j && i<3)
             {
             /*    if (Product[i].Description == null)
                 {
@@ -45,7 +44,7 @@ namespace WMS.Warehouse
 
         public int FindShelfNumber(Core.ItemType Product)
         {    
-            var shelfID = item.FinditemNumber(Product.Description);
+            int shelfID = item.FinditemNumber(Product.Description);
             return shelfID;
         }
 
@@ -59,16 +58,18 @@ namespace WMS.Warehouse
 */
         public bool FindAvaliableSpace(Core.ItemType Product, List<Core.Location> x, int i)
         {
-            if (Product.Size <= freespace.EmptySpace(x[i], Layout.shelfsize, i))
+            int empty = (freespace.EmptySpace(x[i], Layout.shelfsize, i));
+            Console.WriteLine(empty + ":" + Product.Size);
+            if (Product.Size <= (Layout.shelfsize - empty) && i < 3)
             {
                 freespace.PlaceItem(Product, x[i]);
                 Console.WriteLine("Yes");
                 return true;
             }
-            else if (Product.Size > freespace.EmptySpace(x[i], Layout.shelfsize, i))
+            else if (Product.Size > (Layout.shelfsize - empty) && i < 3)
             {
                 Console.WriteLine("ok");
-                return FindAvaliableSpace(Product, x, i++);
+                return FindAvaliableSpace(Product, x, i+1);
             }
             else if (Layout.racks > 6)
             {
