@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using WMS.Core;
-using WMS.FindClass;
+using WMS.Helper;
+using WMS.Reference;
 
-namespace WMS.Warehouse
+namespace WMS.WH
 {
     public class Warehouse
     {
         FindFreeSpace freespace = new FindFreeSpace();
-        WarehouseLayout Layout = new WarehouseLayout();
         FindItem item = new FindItem();
 
-        List<ItemType> ItemNotPlaced = new List<ItemType>();
+        List<Item> ItemNotPlaced = new List<Item>();
         
 
-        public List<ItemType> algorithm(List<ItemType> Product)
+        public List<Item> algorithm(List<Item> Product)
         {
             freespace.add();
             int i = 0;
@@ -42,7 +41,7 @@ namespace WMS.Warehouse
         //Move: find item til at flytte,find itemplacering, find alle freespace, og derefter tildel ny placering
         
 
-        public int FindShelfNumber(ItemType Product)
+        public int FindShelfNumber(Item Product)
         {    
             var shelfID = item.FinditemNumber(Product.Description);
             return shelfID;
@@ -56,20 +55,20 @@ namespace WMS.Warehouse
                }
         //Waste: find item and remove from system
 */
-        public bool FindAvaliableSpace(ItemType Product, List<Core.Location> x, int i)
+        public bool FindAvaliableSpace(Item Product, List<Location> x, int i)
         {
-            if (Product.Size <= freespace.EmptySpace(x[i], Layout.shelfsize, i))
+            if (Product.Size <= freespace.EmptySpace(x[i], WarehouseLayout.shelfsize, i))
             {
                 freespace.PlaceItem(Product, x[i]);
                 Console.WriteLine("Yes");
                 return true;
             }
-            else if (Product.Size > freespace.EmptySpace(x[i], Layout.shelfsize, i))
+            else if (Product.Size > freespace.EmptySpace(x[i], WarehouseLayout.shelfsize, i))
             {
                 Console.WriteLine("ok");
                 return FindAvaliableSpace(Product, x, i++);
             }
-            else if (Layout.racks > 6)
+            else if (WarehouseLayout.racks > 6)
             {
                 Console.WriteLine("whyyyyyy");
                 return false;

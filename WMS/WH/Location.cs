@@ -1,5 +1,5 @@
 ﻿
-namespace WMS.Core
+namespace WMS.WH
 {
     public class Location
     {
