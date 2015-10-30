@@ -32,6 +32,8 @@ namespace WMS.Interfaces
 
         MySqlDataAdapter getData(string db);
 
+        MySqlDataAdapter GetFilterLog(string itemNo);
+
         void Run();
 
         void Update(object caller);

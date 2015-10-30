@@ -31,6 +31,16 @@ namespace WMS.Core
             connection.Close();
         }
 
+        public MySqlDataAdapter GetFilterLog(string itemNo)
+        {
+            connection.Open();
+            MySqlDataAdapter MyDA = new MySqlDataAdapter();
+            string sqlC = "SELECT * FROM log WHERE itemNo = " + itemNo;
+            MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
+            connection.Close();
+            return MyDA;
+        }
+
         public MySqlDataReader getDataForList(string db)
         {
             
@@ -62,7 +72,7 @@ namespace WMS.Core
             
             connection.Open();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlC = "SELECT * FROM products WHERE date = 1409";
+            string sqlC = "SELECT * FROM information WHERE date = 1409";
             MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             connection.Close();
             return MyDA;
@@ -73,7 +83,7 @@ namespace WMS.Core
         {
             connection.Open();
             MySqlDataAdapter MyDA2 = new MySqlDataAdapter();
-            string sqlG = "SELECT * FROM products";
+            string sqlG = "SELECT * FROM log";
             MyDA2.SelectCommand = new MySqlCommand(sqlG, connection);
             connection.Close();
             return MyDA2;

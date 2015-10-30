@@ -162,5 +162,10 @@ namespace WMS.Core
             sql.CloseConnection();
             return temp;
         }
+
+        public MySqlDataAdapter GetFilterLog(string itemNo)
+        {
+            return sql.GetFilterLog(itemNo);
+        }
     }
 }
