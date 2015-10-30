@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WMS
 {
-    public class Log
+    public class LogItem
     {
-        public Log(string itemNo, string name, string date, string operation, string howMany)
+        public LogItem(string itemNo, string name, string date, string operation, string howMany)
         {
 
         }

@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using WMS.GUI;
 using WMS.Interfaces;
 using WMS.Core;
-using WMS.Helper;
 using WMS.WH;
 
 namespace WMS
@@ -20,10 +19,10 @@ namespace WMS
             //Localization l1 = new Localization();
             //Console.WriteLine(l1.Localizer(i1));
 
-            FindItem item = new FindItem();
+            /*FindItem item = new FindItem();
             Warehouse test = new Warehouse();
             item.LoadItemList();
-            test.algorithm(item.ItemList);
+            test.algorithm(item.ItemList);*/
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             IMain main = new Main();

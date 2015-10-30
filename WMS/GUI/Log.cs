@@ -29,6 +29,8 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             UpdateLog(core.GetFilterLog(itemNo));
+            sortToggle = true;
+            button9.Text = "Unsort";
         }
 
         private void UpdateLog()

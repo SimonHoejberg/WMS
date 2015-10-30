@@ -6,8 +6,9 @@ namespace WMS.GUI
 {
     public partial class Information : Form , IGui
     {
-        bool run = false;
-        ICore core;
+        private bool run = false;
+        private ICore core;
+        private string itemNo;
         
         public Information(ICore core)
         {
@@ -65,6 +66,7 @@ namespace WMS.GUI
             
             itemInfoPnl.Visible = true;
             int test = dataGridView1.CurrentCell.RowIndex;
+            itemNo = dataGridView1[0, test].Value.ToString();
             sizeLbl.Text = dataGridView1[4, test].Value.ToString();
             locationLbl.Text = dataGridView1[3, test].Value.ToString();
             usageLbl.Text = dataGridView1[5, test].Value.ToString();
@@ -81,7 +83,7 @@ namespace WMS.GUI
 
         private void logBtn_Click(object sender, System.EventArgs e)
         {
-            core.OpenLog();
+            core.OpenLog(itemNo);
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
