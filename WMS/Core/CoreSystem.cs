@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WMS.Interfaces;
 using WMS.GUI;
+using WMS.WH;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -137,13 +138,13 @@ namespace WMS.Core
             return null;
         }
 
-        private List<ItemType> infoToList()
+        private List<Item> infoToList()
         {
-            List<ItemType> temp = new List<ItemType>();
+            List<Item> temp = new List<Item>();
             MySqlDataReader reader = sql.getDataForList("information");
             while (reader.Read())
             {
-                temp.Add(new ItemType(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
+                temp.Add(new Item(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
                                         int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
             }
             sql.CloseConnection();

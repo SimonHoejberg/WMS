@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WMS.Core;
+using WMS.WH;
 
-namespace WMS.FindClass
+namespace WMS.Helper
 {
     public class FindFreeSpace
     {
@@ -44,7 +44,7 @@ namespace WMS.FindClass
 
         }
 
-        public bool PlaceItem(Core.ItemType Product, Location ShelfID)
+        public bool PlaceItem(Item Product, Location ShelfID)
         {
             if (Product != null)
             {

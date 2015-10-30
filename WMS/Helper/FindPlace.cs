@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WMS.FindClass
+namespace WMS.Helper
 {
     public class FindPlace
     {

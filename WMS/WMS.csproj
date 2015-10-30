@@ -68,13 +68,13 @@
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\Localization.cs" />
-    <Compile Include="Warehouse\ItemType.cs" />
-    <Compile Include="Warehouse\Location.cs" />
+    <Compile Include="WH\Item.cs" />
+    <Compile Include="WH\Location.cs" />
     <Compile Include="Core\SQL.cs" />
-    <Compile Include="FindClass\FindFreeSpace.cs" />
-    <Compile Include="FindClass\FindItem.cs" />
-    <Compile Include="FindClass\FindPlace.cs" />
-    <Compile Include="FindClass\WarehouseLayout.cs" />
+    <Compile Include="Helper\FindFreeSpace.cs" />
+    <Compile Include="Helper\FindItem.cs" />
+    <Compile Include="Helper\FindPlace.cs" />
+    <Compile Include="Reference\WarehouseLayout.cs" />
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,7 +134,7 @@
     <Compile Include="Interfaces\IMain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Warehouse\Warehouse.cs" />
+    <Compile Include="WH\Warehouse.cs" />
     <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

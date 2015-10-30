@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.GUI;
 using WMS.Interfaces;
 using WMS.Core;
+using WMS.Helper;
+using WMS.WH;
 
 namespace WMS
 {
@@ -21,8 +20,8 @@ namespace WMS
             //Localization l1 = new Localization();
             //Console.WriteLine(l1.Localizer(i1));
 
-            FindClass.FindItem item = new FindClass.FindItem();
-            Warehouse.Warehouse test = new Warehouse.Warehouse();
+            FindItem item = new FindItem();
+            Warehouse test = new Warehouse();
             item.LoadItemList();
             test.algorithm(item.ItemList);
             Application.EnableVisualStyles();

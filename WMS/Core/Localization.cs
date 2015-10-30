@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WMS.Warehouse;
+﻿using WMS.WH;
 
 namespace WMS.Core
 {
@@ -20,7 +15,7 @@ namespace WMS.Core
         //    return product.LocationShelfUnit.ToString() + ";" + product.LocationShelfDepth.ToString();
         //}
 
-        public string Localizer (ItemType product)
+        public string Localizer (Item product)
         {
             return ((Shelf)product.Shelf).ToString() + ";" + product.Space.ToString();
         }

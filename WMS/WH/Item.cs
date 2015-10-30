@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WMS.Core
+namespace WMS.WH
 {
-    public class ItemType : IComparable
+    public class Item : IComparable
     {
         private int itemNo;
         private string description;
@@ -11,7 +11,7 @@ namespace WMS.Core
         private int space;
         private int size;
 
-        public ItemType(int itemNo, string description, int inStock, int shelf, int size)
+        public Item(int itemNo, string description, int inStock, int shelf, int size)
         {
             this.itemNo = itemNo;
             this.description = description;
@@ -41,7 +41,7 @@ namespace WMS.Core
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
-            ItemType otherItem = obj as ItemType;
+            Item otherItem = obj as Item;
             if (obj != null)
                 return otherItem.inStock.CompareTo(this.inStock);
             else
