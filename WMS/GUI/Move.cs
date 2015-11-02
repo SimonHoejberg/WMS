@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS.Core;
 using WMS.Interfaces;
+using WMS.WH;
 
 namespace WMS.GUI
 {
@@ -18,6 +21,26 @@ namespace WMS.GUI
         {
             InitializeComponent();
             this.core = core;
+
+            DataGridViewComboBoxColumn ComboColumn = new DataGridViewComboBoxColumn();
+
+            ArrayList row1 = new ArrayList();
+
+            foreach (Item a in core.getDataForList())
+                row1.Add()
+
+            dataGridView4.Columns.Add(ComboColumn);
+
+            
+
+
+
+
+        }
+
+        public void FilterColumn(string a)
+        {
+
         }
 
         public string GetTypeOfWindow()
@@ -27,7 +50,7 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-
+            
         }
         
         private void button5_Click(object sender, EventArgs e)

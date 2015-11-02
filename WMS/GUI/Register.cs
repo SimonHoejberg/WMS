@@ -26,11 +26,7 @@ namespace WMS.GUI
         private void button2_Click(object sender, EventArgs e)
         {
             UserIDBox user_dialog = new UserIDBox(core);
-            DialogResult a = user_dialog.ShowDialog();
-
-            
-
-            Console.WriteLine(a);
+            DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
         }
     }
 }
