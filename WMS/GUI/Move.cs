@@ -58,5 +58,19 @@ namespace WMS.GUI
             //Current button event is made for testing the confirmation box. (passowd/userID)
 
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewCell cell in dataGridView4.SelectedCells)
+            {
+                if(cell.ColumnIndex == 0)
+                {
+                    //hent resten af info fra DB
+                    //brug itemNo, current location og itemQuantity
+                    //smid ind i algoritmen og find en ny spot
+                }
+            }
+
+        }
     }
 }
