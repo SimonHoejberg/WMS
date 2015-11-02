@@ -26,10 +26,10 @@ namespace WMS.GUI
 
             ArrayList row1 = new ArrayList();
 
-            foreach (Item a in core.getDataForList())
+            /*foreach (Item a in core.getDataForList())
                 row1.Add()
 
-            dataGridView4.Columns.Add(ComboColumn);
+            dataGridView4.Columns.Add(ComboColumn);*/
 
             
 
