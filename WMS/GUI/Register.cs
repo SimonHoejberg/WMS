@@ -32,5 +32,25 @@ namespace WMS.GUI
 
             Console.WriteLine(a);
         }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

@@ -139,6 +139,10 @@ namespace WMS.Core
             {
                 return userToList().ToList<object>();
             }
+            else if (db.Equals("register"))
+            {
+                return orderToList().ToList<object>();
+            }
             return null;
         }
 
@@ -162,6 +166,26 @@ namespace WMS.Core
             while (reader.Read())
             {
                 temp.Add(reader["userId"].ToString());
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
+        private List<Order> orderToList()
+        {
+            List<Order> temp = new List<Order>();
+            MySqlDataReader reader = sql.getDataForList("register");
+            while (reader.Read())
+            {
+                int tempOrderNo = 0;
+                if (int.TryParse(reader["orderNr"].ToString(), out tempOrderNo))
+                {
+                    if (temp.Count(x => ((Order)x).OrderNo.Equals(tempOrderNo))> 0)
+                    {
+                        temp.Add(new Order(tempOrderNo));
+                    }
+                }
+
             }
             sql.CloseConnection();
             return temp;
