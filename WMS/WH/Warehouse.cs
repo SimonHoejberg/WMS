@@ -78,13 +78,13 @@ namespace WMS.WH
 
         public List<Location> Space = new List<Location>();
 
-        Location locale = new Location("mike1", 2, 5, 9, 100, 1564);
-        Location locale1 = new Location("mike", 2, 5, 9, 100, 1564);
-        Location locale2 = new Location("mike2", 2, 5, 9, 100, 1564);
-        Location locale3 = new Location("mike3", 2, 5, 9, 100, 1564);
-        Location locale4 = new Location("mike4", 2, 6, 9, 100, 1564);
-        Location locale5 = new Location("mike5", 2, 6, 9, 100, 1564);
-        Location locale6 = new Location("mike6", 2, 6, 9, 100, 1564);
+        Location locale = new Location(0, "mike1", 2, 5, 9, 100, 1564);
+        Location locale1 = new Location(0, "mike", 2, 5, 9, 100, 1564);
+        Location locale2 = new Location(0, "mike2", 2, 5, 9, 100, 1564);
+        Location locale3 = new Location(0, "mike3", 2, 5, 9, 100, 1564);
+        Location locale4 = new Location(0, "mike4", 2, 6, 9, 100, 1564);
+        Location locale5 = new Location(0, "mike5", 2, 6, 9, 100, 1564);
+        Location locale6 = new Location(0, "mike6", 2, 6, 9, 100, 1564);
 
         public void add()
         {
@@ -119,7 +119,7 @@ namespace WMS.WH
         {
             if (Product != null)
             {
-                var NewPlace = new Location(Product.Description, ShelfID.shelfUnit, ShelfID.shelfNumber, ShelfID.shelfPosition + Product.Size, ShelfID.itemQuantity, Product.ItemNo);
+                var NewPlace = new Location(0, Product.Description, ShelfID.shelfUnit, ShelfID.shelfNumber, ShelfID.shelfPosition + Product.Size, ShelfID.itemQuantity, Product.ItemNo);
                 return true;
             }
             else
