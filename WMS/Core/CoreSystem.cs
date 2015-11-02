@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WMS.Interfaces;
 using WMS.GUI;
+using WMS.WH;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -13,7 +14,6 @@ namespace WMS.Core
         private List<IGui> windowsOpen = new List<IGui>();
         private SQL sql = new SQL();
         private Form main;
-        private UserData user_data_obj = new UserData();
 
         public CoreSystem(IMain main)
         {
@@ -126,28 +126,67 @@ namespace WMS.Core
 
         public List<object> dataToList(string db)
         {
+            int a = 0;
             if (db.Equals("information")) 
             {
                 return infoToList().ToList<object>();
             }
+            else if (int.TryParse(db,out a))
+            {
+                return LogToList(db).ToList<object>();
+            }
+            else if (db.Equals("user"))
+            {
+                return userToList().ToList<object>();
+            }
             return null;
         }
 
-        private List<ItemType> infoToList()
+        private List<Item> infoToList()
         {
-            List<ItemType> temp = new List<ItemType>();
+            List<Item> temp = new List<Item>();
             MySqlDataReader reader = sql.getDataForList("information");
             while (reader.Read())
             {
-                temp.Add(new ItemType(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
+                temp.Add(new Item(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
                                         int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
             }
+            sql.CloseConnection();
             return temp;
         }
 
-        public UserData getUserDataObj()
+        private List<string> userToList()
         {
-            return user_data_obj;
+            List<string> temp = new List<string>();
+            MySqlDataReader reader = sql.getDataForList("user");
+            while (reader.Read())
+            {
+                temp.Add(reader["userId"].ToString());
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
+        private List<string> LogToList(string itemNo)
+        {
+            List<string> temp = new List<string>();
+            MySqlDataReader reader = sql.getDataForList(itemNo);
+            while (reader.Read())
+            {
+                temp.Add(reader["userId"].ToString());
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
+        public MySqlDataAdapter GetFilterLog(string itemNo)
+        {
+            return sql.GetFilterLog(itemNo);
+        }
+
+        public void OpenLog(string itemNo)
+        {
+            CreateWindow(new Log(this,itemNo));
         }
     }
 }

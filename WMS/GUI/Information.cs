@@ -6,8 +6,9 @@ namespace WMS.GUI
 {
     public partial class Information : Form , IGui
     {
-        bool run = false;
-        ICore core;
+        private bool run = false;
+        private ICore core;
+        private string itemNo;
         
         public Information(ICore core)
         {
@@ -30,6 +31,8 @@ namespace WMS.GUI
             dataGridView1.Columns[1].HeaderText = "Description";
             dataGridView1.Columns[2].HeaderText = "In stock";
             dataGridView1.Columns[3].HeaderText = "Location";
+            dataGridView1.Columns[4].Visible = false;
+            dataGridView1.Columns[5].Visible = false;
             for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
@@ -56,6 +59,36 @@ namespace WMS.GUI
         public string GetTypeOfWindow()
         {
             return "information";
+        }
+
+        private void viewItemBtn_Click(object sender, System.EventArgs e)
+        {
+            
+            itemInfoPnl.Visible = true;
+            int test = dataGridView1.CurrentCell.RowIndex;
+            itemNo = dataGridView1[0, test].Value.ToString();
+            sizeLbl.Text = dataGridView1[4, test].Value.ToString();
+            locationLbl.Text = dataGridView1[3, test].Value.ToString();
+            usageLbl.Text = dataGridView1[5, test].Value.ToString();
+            nameLbl.Text = dataGridView1[1, test].Value.ToString();
+        }
+
+        private void closeBtn_Click(object sender, System.EventArgs e)
+        {
+            itemInfoPnl.Visible = false;
+            sizeLbl.Text = "";
+            locationLbl.Text = "";
+            usageLbl.Text = "";
+        }
+
+        private void logBtn_Click(object sender, System.EventArgs e)
+        {
+            core.OpenLog(itemNo);
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

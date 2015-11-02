@@ -8,21 +8,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
+using MySql.Data.MySqlClient;
 
 namespace WMS.GUI
 {
     public partial class Log : Form , IGui
     {
-        ICore core;
+        private ICore core;
+        private bool sortToggle = false;
 
         public Log(ICore core)
         {
             this.core = core;
             InitializeComponent();
-            updateLog();
+            UpdateLog();
         }
 
-        private void updateLog()
+        public Log(ICore core, string itemNo)
+        {
+            this.core = core;
+            InitializeComponent();
+            UpdateLog(core.GetFilterLog(itemNo));
+            sortToggle = true;
+            button9.Text = "Unsort";
+        }
+
+        private void UpdateLog()
+        {
+            UpdateLog(core.getData(GetTypeOfWindow()));
+        }
+
+        private void UpdateLog(MySqlDataAdapter mysqlData)
         {
             BindingSource bsource = new BindingSource();
             DataTable data = new DataTable();
@@ -30,7 +46,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            core.getData(GetTypeOfWindow()).Fill(data);
+            mysqlData.Fill(data);
             for (int i = 0; i < dataGridView5.ColumnCount; i++)
             {
                 dataGridView5.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -40,12 +56,39 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-            updateLog();
+            UpdateLog();
         }
 
         public string GetTypeOfWindow()
         {
             return "log";
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            itemInfoPnl.Visible = true;
+        }
+
+        private void Sort_Click(object sender, EventArgs e)
+        {
+            if(dataGridView5.CurrentCell != null && !sortToggle)
+            {
+                sortToggle = true;
+                string temp = dataGridView5[1, dataGridView5.CurrentCell.RowIndex].Value.ToString();
+                UpdateLog(core.GetFilterLog(temp));
+                button9.Text = "Unsort";
+            }
+            else if(sortToggle)
+            {
+                sortToggle = false;
+                UpdateLog();
+                button9.Text = "Sort";
+            }
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            itemInfoPnl.Visible = false;
         }
     }
 }

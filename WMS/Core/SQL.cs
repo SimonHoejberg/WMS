@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql;
 using MySql.Data.MySqlClient;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 
 namespace WMS.Core
 {
@@ -39,17 +31,40 @@ namespace WMS.Core
             connection.Close();
         }
 
+        public MySqlDataAdapter GetFilterLog(string itemNo)
+        {
+            connection.Open();
+            MySqlDataAdapter MyDA = new MySqlDataAdapter();
+            string sqlC = "SELECT * FROM log WHERE itemNo = " + itemNo;
+            MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
+            connection.Close();
+            return MyDA;
+        }
+
+        public MySqlDataReader GetLatestLog(string itemNo)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            connection.Open();
+            string sql = "SELECT * FROM log WHERE itemNo = " + itemNo;
+            command.CommandText = sql;
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
+        }
+
         public MySqlDataReader getDataForList(string db)
         {
-            
             MySqlCommand command = connection.CreateCommand();
             connection.Open();
             string sql = "SELECT * FROM " + db;
             command.CommandText = sql;
-            //connection.Close();
-            return command.ExecuteReader();
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
         }
 
+        public void CloseConnection()
+        {
+            connection.Close();
+        }
         public MySqlDataAdapter getData(string db)
         {
             connection.Open();
@@ -66,7 +81,7 @@ namespace WMS.Core
             
             connection.Open();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlC = "SELECT * FROM products WHERE date = 1409";
+            string sqlC = "SELECT * FROM information WHERE date = 1409";
             MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             connection.Close();
             return MyDA;
@@ -77,7 +92,7 @@ namespace WMS.Core
         {
             connection.Open();
             MySqlDataAdapter MyDA2 = new MySqlDataAdapter();
-            string sqlG = "SELECT * FROM products";
+            string sqlG = "SELECT * FROM log";
             MyDA2.SelectCommand = new MySqlCommand(sqlG, connection);
             connection.Close();
             return MyDA2;

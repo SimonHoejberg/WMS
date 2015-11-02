@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WMS.Core;
-using MySql;
 using MySql.Data.MySqlClient;
 
 namespace WMS.Interfaces
@@ -15,6 +11,8 @@ namespace WMS.Interfaces
         void OpenInformation();
 
         void OpenLog();
+
+        void OpenLog(string itemNo);
 
         void OpenMove();
 
@@ -36,10 +34,11 @@ namespace WMS.Interfaces
 
         MySqlDataAdapter getData(string db);
 
+        MySqlDataAdapter GetFilterLog(string itemNo);
+
         void Run();
 
         void Update(object caller);
 
-        UserData getUserDataObj();
     }
 }

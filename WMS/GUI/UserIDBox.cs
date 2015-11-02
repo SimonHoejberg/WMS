@@ -34,10 +34,9 @@ namespace WMS.GUI
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
-            UserData user_obj = core.getUserDataObj();
-            int a;
-            bool b = Int32.TryParse(this.getInputFromTextbox, out a);
-            if (b && core.getUserDataObj().doesUserExist(a))
+            var stringList = core.dataToList("user").OfType<string>();
+            
+            if (stringList.Contains<string>(this.getInputFromTextbox))
             {
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 userIDError_lbl.Text = "";
