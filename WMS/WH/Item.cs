@@ -45,7 +45,7 @@ namespace WMS.WH
             if (obj != null)
                 return otherItem.inStock.CompareTo(this.inStock);
             else
-                throw new ArgumentException("Object is not a Item");
+                throw new ArgumentException("Object is not an Item");
         }
     }
 }

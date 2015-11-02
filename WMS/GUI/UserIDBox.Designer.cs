@@ -41,6 +41,7 @@
             this.userID_tbx.Name = "userID_tbx";
             this.userID_tbx.Size = new System.Drawing.Size(197, 20);
             this.userID_tbx.TabIndex = 1;
+            this.userID_tbx.KeyDown += new System.Windows.Forms.KeyEventHandler(this.userID_tbx_KeyDown);
             // 
             // userConfirm_btn
             // 

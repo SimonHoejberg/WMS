@@ -36,16 +36,27 @@ namespace WMS.GUI
         {
             var stringList = core.dataToList("user").OfType<string>();
             
-            if (stringList.Contains<string>(this.getInputFromTextbox))
+            if (stringList.Contains(this.getInputFromTextbox))
             {
-                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                this.DialogResult = DialogResult.OK;
                 userIDError_lbl.Text = "";
             }
             else
             {
                 userIDError_lbl.Text = "Invalid user ID";
             }
-            
+        }
+
+        private void userID_tbx_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                userConfirm_btn_Click(this, new EventArgs());
+            }
+            else if(e.KeyCode == Keys.Escape)
+            {
+                button2_Click(this, new EventArgs());
+            }
         }
     }
 }
