@@ -57,6 +57,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = "Load optimal";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button5
             // 
