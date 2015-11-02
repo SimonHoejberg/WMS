@@ -69,6 +69,7 @@
     <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\Localization.cs" />
     <Compile Include="LogItem.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
     <Compile Include="Core\SQL.cs" />
