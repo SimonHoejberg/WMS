@@ -21,7 +21,7 @@ namespace WMS.Interfaces
         void OpenReduce();
 
         void OpenWaste();
-
+        MySqlDataAdapter GetInfoForReduce(string itemNo);
         List<object> dataToList(string db);
 
         void UpdateProduct(string coloumn, string value, string id, string db);
