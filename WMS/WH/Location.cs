@@ -9,9 +9,11 @@ namespace WMS.WH
         public string itemName;
         public int itemQuantity = 0;
         public int itemNumber = 0;
-        
-        public Location(string itemName, int shelfUnit, int shelfNumber, int shelfPosition, int itemQuantity, int itemNumber)
+        public int productSize;
+
+        public Location(int productSize, string itemName, int shelfUnit, int shelfNumber, int shelfPosition, int itemQuantity, int itemNumber)
         {
+            this.productSize = productSize;
             this.itemName = itemName;
             this.shelfUnit = shelfUnit;
             this.shelfNumber = shelfNumber;
