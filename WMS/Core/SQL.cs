@@ -31,6 +31,15 @@ namespace WMS.Core
             connection.Close();
         }
 
+        public MySqlDataAdapter GetInfoForReduce(string itemNo)
+        {
+            connection.Open();
+            MySqlDataAdapter MyDA = new MySqlDataAdapter();
+            string sqlC = "SELECT * FROM information WHERE itemNo = " + itemNo;
+            MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
+            connection.Close();
+            return MyDA;
+        }
         public MySqlDataAdapter GetFilterLog(string itemNo)
         {
             connection.Open();
