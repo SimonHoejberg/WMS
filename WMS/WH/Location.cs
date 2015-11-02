@@ -10,14 +10,14 @@ namespace WMS.WH
         public int itemQuantity = 0;
         public int itemNumber = 0;
         
-        public Location(string ItemName, int ShelfUnit, int ShelfNumber, int ShelfPosition, int ItemQuantity, int ItemNumber)
+        public Location(string itemName, int shelfUnit, int shelfNumber, int shelfPosition, int itemQuantity, int itemNumber)
         {
-            itemName = ItemName;
-            shelfUnit = ShelfUnit;
-            shelfNumber = ShelfNumber;
-            shelfPosition = ShelfPosition;
-            itemQuantity = ItemQuantity;
-            itemNumber = ItemNumber;
+            this.itemName = itemName;
+            this.shelfUnit = shelfUnit;
+            this.shelfNumber = shelfNumber;
+            this.shelfPosition = shelfPosition;
+            this.itemQuantity = itemQuantity;
+            this.itemNumber = itemNumber;
         }
 
 

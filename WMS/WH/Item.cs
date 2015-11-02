@@ -18,7 +18,6 @@ namespace WMS.WH
             this.inStock = inStock;
             this.shelf = shelf;
             this.size = size;
-
         }
 
         public int ItemNo{ get { return itemNo; }}
