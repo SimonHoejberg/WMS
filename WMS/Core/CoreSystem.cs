@@ -188,5 +188,10 @@ namespace WMS.Core
         {
             CreateWindow(new Log(this,itemNo));
         }
+
+        public MySqlDataAdapter GetInfoForReduce(string itemNo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
