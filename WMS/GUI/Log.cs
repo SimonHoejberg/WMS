@@ -28,7 +28,7 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
-            UpdateLog(core.GetFilterLog(itemNo));
+            UpdateLog(core.GetDataFromItemNo(itemNo,GetTypeOfWindow()));
             sortToggle = true;
             button9.Text = "Unsort";
         }
@@ -75,7 +75,7 @@ namespace WMS.GUI
             {
                 sortToggle = true;
                 string temp = dataGridView5[1, dataGridView5.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.GetFilterLog(temp));
+                UpdateLog(core.GetDataFromItemNo(temp,GetTypeOfWindow()));
                 button9.Text = "Unsort";
             }
             else if(sortToggle)

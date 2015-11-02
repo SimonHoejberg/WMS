@@ -11,6 +11,7 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
+            updateComboBox();
         }
 
         public string GetTypeOfWindow()
@@ -21,6 +22,16 @@ namespace WMS.GUI
         public void UpdateGuiElements()
         {
 
+        }
+
+        private void updateDataGridView()
+        {
+
+        }
+
+        private void updateComboBox()
+        {
+            comboBox1.DataSource = core.dataToList(GetTypeOfWindow());
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -203,9 +203,9 @@ namespace WMS.Core
             return temp;
         }
 
-        public MySqlDataAdapter GetFilterLog(string itemNo)
+        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
         {
-            return sql.GetFilterLog(itemNo);
+            return sql.GetDataForItemNo(itemNo, db);
         }
 
         public void OpenLog(string itemNo)
