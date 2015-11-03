@@ -52,7 +52,7 @@ namespace WMS.Core
         }
 
 
-        public MySqlDataReader getDataForList(string db)
+        public MySqlDataReader GetDataForList(string db)
         {
             MySqlCommand command = connection.CreateCommand();
             connection.Open();
@@ -66,7 +66,7 @@ namespace WMS.Core
         {
             connection.Close();
         }
-        public MySqlDataAdapter getData(string db)
+        public MySqlDataAdapter GetData(string db)
         {
             connection.Open();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
@@ -77,7 +77,7 @@ namespace WMS.Core
         }
 
         [Obsolete("getInfo is deprecated, please use getData instead")]
-        public MySqlDataAdapter getInfo()
+        public MySqlDataAdapter GetInfo()
         {
             
             connection.Open();
@@ -89,7 +89,7 @@ namespace WMS.Core
         }
 
         [Obsolete("getLog is deprecated, please use getData instead")]
-        public MySqlDataAdapter getLog()
+        public MySqlDataAdapter GetLog()
         {
             connection.Open();
             MySqlDataAdapter MyDA2 = new MySqlDataAdapter();

@@ -16,6 +16,7 @@ namespace WMS.GUI
     {
         private ICore core;
         private bool Run = false;
+        private bool First = true;
         public Reduce(ICore core)
         {
             this.core = core;
@@ -49,12 +50,39 @@ namespace WMS.GUI
         {
             if (Run)
             {
-                string[] test = new string[5];
+                string[] itemNo = new string[5];
                 string output = comboBox2.SelectedItem.ToString();
-                test = output.Split(' ');
+                itemNo = output.Split(' ');
+
                 BindingSource bsource = new BindingSource();
                 DataTable data = new DataTable();
-                
+
+                bsource.DataSource = data;
+                dataGridView3.DataSource = bsource;
+                /*for (int i = 0; i < 10; i++)
+                {
+                    data.Rows[i].Add(" ");
+                }*/
+
+                if (First)
+                {
+                    core.GetDataFromItemNo(itemNo[1], "information").Fill(data);
+                    First = false;
+                }
+                else
+                {
+                    data.Rows.Add(core.GetDataFromItemNo(itemNo[1], "information"));
+                }
+                core.GetDataFromItemNo(itemNo[1], "information").Fill(data);
+
+                dataGridView3.Columns[2].Visible = false;
+                dataGridView3.Columns[4].Visible = false;
+                dataGridView3.Columns[5].Visible = false;
+                data.Columns.Add("Quantity");
+                for (int i = 0; i < dataGridView3.ColumnCount; i++)
+                {
+                    dataGridView3.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
             }
             
         }

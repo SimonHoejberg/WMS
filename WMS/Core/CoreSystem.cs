@@ -28,12 +28,12 @@ namespace WMS.Core
 
         public MySqlDataAdapter getInfo()
         {
-            return sql.getInfo();
+            return sql.GetInfo();
         }
         
         public MySqlDataAdapter getLog()
         {
-            return sql.getLog();
+            return sql.GetLog();
         }
 
         public void OpenInformation()
@@ -121,7 +121,7 @@ namespace WMS.Core
 
         public MySqlDataAdapter getData(string db)
         {
-            return sql.getData(db);
+            return sql.GetData(db);
         }
 
         public List<object> dataToList(string db)
@@ -149,7 +149,7 @@ namespace WMS.Core
         private List<Item> infoToList()
         {
             List<Item> temp = new List<Item>();
-            MySqlDataReader reader = sql.getDataForList("information");
+            MySqlDataReader reader = sql.GetDataForList("information");
             while (reader.Read())
             {
                 temp.Add(new Item(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), 
@@ -162,7 +162,7 @@ namespace WMS.Core
         private List<string> userToList()
         {
             List<string> temp = new List<string>();
-            MySqlDataReader reader = sql.getDataForList("user");
+            MySqlDataReader reader = sql.GetDataForList("user");
             while (reader.Read())
             {
                 temp.Add(reader["userId"].ToString());
@@ -174,7 +174,7 @@ namespace WMS.Core
         private List<Order> orderToList()
         {
             List<Order> temp = new List<Order>();
-            MySqlDataReader reader = sql.getDataForList("register");
+            MySqlDataReader reader = sql.GetDataForList("register");
             while (reader.Read())
             {
                 int tempOrderNo = 0;
@@ -194,7 +194,7 @@ namespace WMS.Core
         private List<string> LogToList(string itemNo)
         {
             List<string> temp = new List<string>();
-            MySqlDataReader reader = sql.getDataForList(itemNo);
+            MySqlDataReader reader = sql.GetDataForList(itemNo);
             while (reader.Read())
             {
                 temp.Add(reader["userId"].ToString());
