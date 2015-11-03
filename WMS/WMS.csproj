@@ -68,17 +68,21 @@
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
     <Compile Include="Core\Localization.cs" />
+    <Compile Include="Handlers\DataHandler.cs" />
+    <Compile Include="Handlers\WindowHandler.cs" />
+    <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
-    <Compile Include="Core\SQL.cs" />
+    <Compile Include="Handlers\SqlHandler.cs" />
     <Compile Include="Reference\WarehouseLayout.cs" />
-    <Compile Include="GUI\Form1.cs">
+    <Compile Include="GUI\Program.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GUI\Program.Designer.cs">
+      <DependentUpon>Program.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Information.cs">
       <SubType>Form</SubType>
@@ -134,8 +138,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WH\Warehouse.cs" />
-    <EmbeddedResource Include="GUI\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\Program.resx">
+      <DependentUpon>Program.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Information.resx">
       <DependentUpon>Information.cs</DependentUpon>
