@@ -29,32 +29,32 @@ namespace WMS.GUI
 
         private void information_pbox_Click(object sender, EventArgs e)
         {
-            core.OpenInformation();
+            core.WindowHandler.OpenInformation();
         }
 
         private void log_pbox_Click(object sender, EventArgs e)
         {
-            core.OpenLog();
+            core.WindowHandler.OpenLog();
         }
 
         private void move_pbox_Click(object sender, EventArgs e)
         {
-            core.OpenMove();
+            core.WindowHandler.OpenMove();
         }
 
         private void register_pbox_Click(object sender, EventArgs e)
         {
-            core.OpenRegister();
+            core.WindowHandler.OpenRegister();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            core.OpenWaste();
+            core.WindowHandler.OpenWaste();
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            core.OpenReduce();
+            core.WindowHandler.OpenReduce();
         }
     }
 }

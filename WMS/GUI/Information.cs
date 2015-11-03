@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Windows.Forms;
 using WMS.Interfaces;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -25,7 +26,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.getData(GetTypeOfWindow()).Fill(data);
+            core.DataHandler.getData(GetTypeOfWindow()).Fill(data);
 
             dataGridView1.Columns[0].HeaderText = "Item No";
             dataGridView1.Columns[1].HeaderText = "Description";
@@ -46,8 +47,8 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                core.UpdateProduct(coloumn, value, id,GetTypeOfWindow());
-                core.Update(this);
+                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow());
+                core.DataHandler.Update(this);
             }
 
         }
@@ -58,7 +59,7 @@ namespace WMS.GUI
 
         public string GetTypeOfWindow()
         {
-            return "information";
+            return WindowTypes.INFO;
         }
 
         private void viewItemBtn_Click(object sender, System.EventArgs e)
@@ -83,7 +84,7 @@ namespace WMS.GUI
 
         private void logBtn_Click(object sender, System.EventArgs e)
         {
-            core.OpenLog(itemNo);
+            core.WindowHandler.OpenLog(itemNo);
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

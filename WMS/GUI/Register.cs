@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using WMS.Interfaces;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -16,7 +17,7 @@ namespace WMS.GUI
 
         public string GetTypeOfWindow()
         {
-            return "register";
+            return WindowTypes.REGISTER;
         }
 
         public void UpdateGuiElements()
@@ -31,7 +32,7 @@ namespace WMS.GUI
 
         private void updateComboBox()
         {
-            comboBox1.DataSource = core.dataToList(GetTypeOfWindow());
+            comboBox1.DataSource = core.DataHandler.dataToList(GetTypeOfWindow());
         }
 
         private void button2_Click(object sender, EventArgs e)
