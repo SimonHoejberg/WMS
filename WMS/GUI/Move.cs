@@ -61,16 +61,69 @@ namespace WMS.GUI
 
         private void button6_Click(object sender, EventArgs e)
         {
+/*
+            int tempInt = 0;
+
             foreach (DataGridViewCell cell in dataGridView4.SelectedCells)
             {
-                if(cell.ColumnIndex == 0)
+                if (cell.ColumnIndex == 0)
+                {
+
+                }
+                if (cell.ColumnIndex == 4)
+                {
+                    Console.WriteLine("column: " + cell.Value.ToString());
+                    ManualMove(cell.Value.ToString());
+                }
+            }
+            /*    if(cell.ColumnIndex == 0)
                 {
                     //hent resten af info fra DB
                     //brug itemNo, current location og itemQuantity
                     //smid ind i algoritmen og find en ny spot
+
+                      
+                }
+
+                if(cell.ColumnIndex == 4 && tempItemExist)
+                {
+                    foreach (Item item in core.dataToList("information"))
+                    {
+
+                    }
+                } 
+            }*/
+        }
+
+        // ManualMove should either receive an itemNo or an item.
+        public void ManualMove(string newPosition)
+        {
+            Item tempItem = new Item(42, "test", 30, 2, 30);
+            bool tempItemExist = false;
+            int nPos = Int32.Parse(newPosition);
+
+            foreach (Item item in core.dataToList("information"))
+            {
+                //Needs to be able to check something about weight
+                if (item.Shelf == nPos)
+                {
+                    tempItemExist = true;
                 }
             }
+            tempItem.Shelf = nPos;
+            Console.WriteLine(tempItem.Shelf.ToString());
+        }
 
+        public Item FindItem(int itemNo)
+        {
+            foreach (Item item in core.dataToList("information"))
+            {
+                if (item.ItemNo == itemNo)
+                {
+                    return item;
+                }
+            }
+            return (new Item(3, "bad item", 0, 1, 1));
         }
     }
 }
