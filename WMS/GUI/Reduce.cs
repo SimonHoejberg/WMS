@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Core;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -26,7 +26,7 @@ namespace WMS.GUI
 
         public string GetTypeOfWindow()
         {
-            return "reduce";
+            return WindowTypes.REDUCE;
         }
 
         public void UpdateGuiElements()
@@ -41,7 +41,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.dataToList("information");
+            comboBox2.DataSource = core.DataHandler.dataToList(WindowTypes.INFO);
             Run = true;
 
         }
@@ -66,14 +66,14 @@ namespace WMS.GUI
 
                 if (First)
                 {
-                    core.GetDataFromItemNo(itemNo[1], "information").Fill(data);
+                    core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
                     First = false;
                 }
                 else
                 {
-                    data.Rows.Add(core.GetDataFromItemNo(itemNo[1], "information"));
+                    data.Rows.Add(core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO));
                 }
-                core.GetDataFromItemNo(itemNo[1], "information").Fill(data);
+                core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
 
                 dataGridView3.Columns[2].Visible = false;
                 dataGridView3.Columns[4].Visible = false;

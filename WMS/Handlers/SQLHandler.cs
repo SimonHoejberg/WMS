@@ -1,21 +1,22 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
+using WMS.Reference;
 
-namespace WMS.Core
+namespace WMS.Handlers
 {
-    public class SQL
+    public class SqlHandler
     {
-        protected string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
+        private string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
         private MySqlConnection connection;
         
-        public SQL()
+        public SqlHandler()
         {
             connection = new MySqlConnection(mysqlConnectionString);
         }
         public void update(string coloumn, string value, string id, string db)
         {
             MySqlCommand command = connection.CreateCommand();
-            if (db.Equals("information"))
+            if (db.Equals(WindowTypes.INFO))
             {
                 string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE itemNo = {2}", coloumn, value, id, db);
                 command.CommandText = sql;
