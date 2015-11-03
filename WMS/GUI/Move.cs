@@ -28,7 +28,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
-            foreach (Item a in core.dataToList("information"))
+            foreach (Item a in core.DataHandler.dataToList("information"))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -79,6 +79,11 @@ namespace WMS.GUI
                     //smid ind i algoritmen og find en ny spot
                 }
             }
+
+        }
+
+        private void dataGridView4_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
 
         }
     }
