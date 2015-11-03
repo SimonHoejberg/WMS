@@ -22,17 +22,26 @@ namespace WMS.GUI
             InitializeComponent();
             this.core = core;
 
-            DataGridViewComboBoxColumn ComboColumn = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnName = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
-            ArrayList row1 = new ArrayList();
+            foreach (Item a in core.dataToList("information"))
+            {
+                ComboColumnItemNo.Items.Add(a);
+                ComboColumnName.Items.Add(a);
+                ComboColumnLocation.Items.Add(a);
+            }
 
-            /*foreach (Item a in core.getDataForList())
-                row1.Add()
+            ComboColumnItemNo.DisplayMember = "ItemNo";
+            ComboColumnName.DisplayMember = "Description";
+            ComboColumnLocation.DisplayMember = "";
 
-            dataGridView4.Columns.Add(ComboColumn);*/
+            dataGridView4.Columns.Add(ComboColumnItemNo);
 
             
-
 
 
 

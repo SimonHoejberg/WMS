@@ -24,7 +24,7 @@ namespace WMS.WH
 
         public string Description { get { return description; }} 
 
-        public int Shelf {get { return shelf; }}
+        public int Shelf { get { return shelf; }}
 
         public int Space { get { return space; } }
 
