@@ -13,9 +13,9 @@ namespace WMS.Core
 {
     public class CoreSystem : ICore
     {
-        private SqlHandler sql = new SqlHandler();
         private IWindowHandler windowHandler;
         private DataHandler dataHandler;
+
         public CoreSystem(IMain main)
         {
             dataHandler = new DataHandler(this);

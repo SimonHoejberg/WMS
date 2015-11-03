@@ -14,7 +14,7 @@ namespace WMS.Handlers
     public class DataHandler
     {
         private ICore core;
-        private SqlHandler sql;
+        private SqlHandler sql = new SqlHandler();
         public DataHandler(ICore core)
         {
             this.core = core;
