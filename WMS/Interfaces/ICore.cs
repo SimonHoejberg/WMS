@@ -26,12 +26,6 @@ namespace WMS.Interfaces
 
         void UpdateProduct(string coloumn, string value, string id, string db);
 
-        [Obsolete("Use getData instead")]
-        MySqlDataAdapter getInfo();
-
-        [Obsolete("Use getData instead")]
-        MySqlDataAdapter getLog();
-
         MySqlDataAdapter getData(string db);
 
         MySqlDataAdapter GetDataFromItemNo(string itemNo,string db);

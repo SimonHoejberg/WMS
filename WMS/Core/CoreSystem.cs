@@ -26,16 +26,6 @@ namespace WMS.Core
             Application.Run(main);
         }
 
-        public MySqlDataAdapter getInfo()
-        {
-            return sql.GetInfo();
-        }
-        
-        public MySqlDataAdapter getLog()
-        {
-            return sql.GetLog();
-        }
-
         public void OpenInformation()
         {
             CreateWindow(new Information(this));

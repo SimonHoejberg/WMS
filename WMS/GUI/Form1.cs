@@ -99,7 +99,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
             
-            core.getInfo().Fill(data);
+            core.getData("information").Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
             dataGridView1.Columns[2].HeaderText = "Name";
@@ -121,7 +121,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            core.getLog().Fill(data);
+            core.getData("log").Fill(data);
         }
         private void button2_Click(object sender, EventArgs e)
         {
