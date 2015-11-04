@@ -57,6 +57,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = "Load optimal";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button5
             // 
@@ -81,6 +82,7 @@
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.Size = new System.Drawing.Size(960, 483);
             this.dataGridView4.TabIndex = 4;
+            this.dataGridView4.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView4_RowsAdded);
             // 
             // Column5
             // 

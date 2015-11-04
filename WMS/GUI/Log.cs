@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -28,14 +29,14 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
-            UpdateLog(core.GetFilterLog(itemNo));
+            UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,GetTypeOfWindow()));
             sortToggle = true;
             button9.Text = "Unsort";
         }
 
         private void UpdateLog()
         {
-            UpdateLog(core.getData(GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.getData(GetTypeOfWindow()));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
@@ -61,7 +62,7 @@ namespace WMS.GUI
 
         public string GetTypeOfWindow()
         {
-            return "log";
+            return WindowTypes.LOG;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -75,7 +76,7 @@ namespace WMS.GUI
             {
                 sortToggle = true;
                 string temp = dataGridView5[1, dataGridView5.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.GetFilterLog(temp));
+                UpdateLog(core.DataHandler.GetDataFromItemNo(temp,GetTypeOfWindow()));
                 button9.Text = "Unsort";
             }
             else if(sortToggle)

@@ -1,21 +1,22 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
+using WMS.Reference;
 
-namespace WMS.Core
+namespace WMS.Handlers
 {
-    public class SQL
+    public class SqlHandler
     {
-        protected string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
+        private string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
         private MySqlConnection connection;
         
-        public SQL()
+        public SqlHandler()
         {
             connection = new MySqlConnection(mysqlConnectionString);
         }
         public void update(string coloumn, string value, string id, string db)
         {
             MySqlCommand command = connection.CreateCommand();
-            if (db.Equals("information"))
+            if (db.Equals(WindowTypes.INFO))
             {
                 string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE itemNo = {2}", coloumn, value, id, db);
                 command.CommandText = sql;
@@ -31,11 +32,11 @@ namespace WMS.Core
             connection.Close();
         }
 
-        public MySqlDataAdapter GetFilterLog(string itemNo)
+        public MySqlDataAdapter GetDataForItemNo(string itemNo, string db)
         {
             connection.Open();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlC = "SELECT * FROM log WHERE itemNo = " + itemNo;
+            string sqlC = "SELECT * FROM "+ db +" WHERE itemNo = " + itemNo;
             MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             connection.Close();
             return MyDA;
@@ -51,7 +52,8 @@ namespace WMS.Core
             return reader;
         }
 
-        public MySqlDataReader getDataForList(string db)
+
+        public MySqlDataReader GetDataForList(string db)
         {
             MySqlCommand command = connection.CreateCommand();
             connection.Open();
@@ -65,7 +67,7 @@ namespace WMS.Core
         {
             connection.Close();
         }
-        public MySqlDataAdapter getData(string db)
+        public MySqlDataAdapter GetData(string db)
         {
             connection.Open();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
@@ -73,29 +75,6 @@ namespace WMS.Core
             MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
             connection.Close();
             return MyDA;
-        }
-
-        [Obsolete("getInfo is deprecated, please use getData instead")]
-        public MySqlDataAdapter getInfo()
-        {
-            
-            connection.Open();
-            MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlC = "SELECT * FROM information WHERE date = 1409";
-            MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
-            connection.Close();
-            return MyDA;
-        }
-
-        [Obsolete("getLog is deprecated, please use getData instead")]
-        public MySqlDataAdapter getLog()
-        {
-            connection.Open();
-            MySqlDataAdapter MyDA2 = new MySqlDataAdapter();
-            string sqlG = "SELECT * FROM log";
-            MyDA2.SelectCommand = new MySqlCommand(sqlG, connection);
-            connection.Close();
-            return MyDA2;
         }
     }
     
