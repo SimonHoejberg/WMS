@@ -68,71 +68,50 @@ namespace WMS.GUI
 
         }
 
+        //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-/*
-            int tempInt = 0;
-
-            foreach (DataGridViewCell cell in dataGridView4.SelectedCells)
+            foreach (DataGridViewRow row in dataGridView4.Rows)
             {
-                if (cell.ColumnIndex == 0)
+                if (row.Cells[0].Value != null && row.Cells[4].Value == null)
                 {
-
-                }
-                if (cell.ColumnIndex == 4)
-                {
-                    Console.WriteLine("column: " + cell.Value.ToString());
-                    ManualMove(cell.Value.ToString());
+                    //use algorithm here
+                    //send itemNo, current location and itemQuantity
+                    row.Cells[4].Value = 3;
                 }
             }
-            /*    if(cell.ColumnIndex == 0)
-                {
-                    //hent resten af info fra DB
-                    //brug itemNo, current location og itemQuantity
-                    //smid ind i algoritmen og find en ny spot
-
-                      
-                }
-
-                if(cell.ColumnIndex == 4 && tempItemExist)
-                {
-                    foreach (Item item in core.dataToList("information"))
-                    {
-
-                    }
-                } 
-            }*/
         }
-        /*
-        // ManualMove should either receive an itemNo or an item.
-        public void ManualMove(string newPosition)
+        
+        public void ManualMove(DataGridViewRow row)
         {
-            Item tempItem = new Item(42, "test", 30, 2, 30);
-            bool tempItemExist = false;
-            int nPos = Int32.Parse(newPosition);
-
-            foreach (Item item in core.dataToList("information"))
+            //Searches for empty cells
+            foreach (DataGridViewCell cell in row.Cells)
             {
-                //Needs to be able to check something about weight
-                if (item.Shelf == nPos)
+                if (cell.Value == null)
                 {
-                    tempItemExist = true;
+                    TryAgain();
                 }
             }
-            tempItem.Shelf = nPos;
-            Console.WriteLine(tempItem.Shelf.ToString());
+
+            //Searches for items with the same location as the new location
+            foreach (Item item in core.DataHandler.dataToList("information"))
+            {
+                if (item.Shelf == (int)row.Cells[4].Value && item.ItemNo != (int)row.Cells[0].Value)
+                {
+                    TryAgain();
+                }
+                else if (item.Size - item.InStock >= (int)row.Cells[3].Value)
+                {
+                    //add (int)row.Cells[3].value to item.InStock
+                }
+                // something for when shelf and cells[4] are not equal
+            }
         }
 
-        public Item FindItem(int itemNo)
+        //for when errors occur
+        private void TryAgain()
         {
-            foreach (Item item in core.dataToList("information"))
-            {
-                if (item.ItemNo == itemNo)
-                {
-                    return item;
-                }
-            }
-            return (new Item(3, "bad item", 0, 1, 1));
-        }*/
+
+        }
     }
 }
