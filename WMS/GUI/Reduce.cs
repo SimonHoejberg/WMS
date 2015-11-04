@@ -17,11 +17,21 @@ namespace WMS.GUI
         private ICore core;
         private bool Run = false;
         private bool First = true;
+        BindingSource bsource;
+        DataTable data;
+
+       
         public Reduce(ICore core)
         {
             this.core = core;
             InitializeComponent();
             MakeComboBox();
+            bsource = new BindingSource();
+            data = new DataTable();
+            bsource.DataSource = data;
+            reduceDataGridView.DataSource = bsource;
+
+
         }
 
         public string GetTypeOfWindow()
@@ -48,43 +58,37 @@ namespace WMS.GUI
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+
             if (Run)
             {
                 string[] itemNo = new string[5];
                 string output = comboBox2.SelectedItem.ToString();
                 itemNo = output.Split(' ');
 
-                BindingSource bsource = new BindingSource();
-                DataTable data = new DataTable();
-
-                bsource.DataSource = data;
-                dataGridView3.DataSource = bsource;
-                /*for (int i = 0; i < 10; i++)
-                {
-                    data.Rows[i].Add(" ");
-                }*/
-
+                
+                core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
                 if (First)
                 {
-                    core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
+                    reduceDataGridView.Columns[2].Visible = false;
+                    reduceDataGridView.Columns[4].Visible = false;
+                    reduceDataGridView.Columns[5].Visible = false;
+                    data.Columns.Add("Quantity");
                     First = false;
                 }
-                else
-                {
-                    data.Rows.Add(core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO));
-                }
-                core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
 
-                dataGridView3.Columns[2].Visible = false;
-                dataGridView3.Columns[4].Visible = false;
-                dataGridView3.Columns[5].Visible = false;
-                data.Columns.Add("Quantity");
-                for (int i = 0; i < dataGridView3.ColumnCount; i++)
+                for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
                 {
-                    dataGridView3.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             
+        }
+
+        private void reduceConfirmBtn_Click(object sender, EventArgs e)
+        {
+            UserIDBox user_dialog = new UserIDBox(core);
+            DialogResult a = user_dialog.ShowDialog();
         }
     }
 }
