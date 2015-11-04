@@ -99,7 +99,7 @@
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.comboBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4); 
             this.Name = "Register";
             this.Text = "Register";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
