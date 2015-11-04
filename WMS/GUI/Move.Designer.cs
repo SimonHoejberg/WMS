@@ -82,7 +82,6 @@
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.Size = new System.Drawing.Size(960, 483);
             this.dataGridView4.TabIndex = 4;
-            //this.dataGridView4.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView4_RowsAdded);
             // 
             // Column5
             // 
