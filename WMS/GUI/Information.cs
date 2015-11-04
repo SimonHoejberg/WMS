@@ -91,5 +91,10 @@ namespace WMS.GUI
         {
 
         }
+
+        private void Information_Enter(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }
