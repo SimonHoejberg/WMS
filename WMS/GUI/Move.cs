@@ -39,6 +39,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
+
             foreach (Item a in core.DataHandler.dataToList("information"))
             {
                 ComboColumnItemNo.Items.Add(a);
