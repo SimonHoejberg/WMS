@@ -16,11 +16,22 @@ namespace WMS.GUI
 {
     public partial class Move : Form, IGui
     {
+        
         private ICore core;
+        public List<Location> locationList;
+
         public Move(ICore core)
         {
             InitializeComponent();
             this.core = core;
+
+            //List of locations. Not supposed to be in the final implementation. I can't database, thats why!
+            locationList = new List<Location>();
+            for(int a = 1; a <= 15; a++)
+            {
+                string b = a.ToString();
+                locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
+            }
 
             DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnName = new DataGridViewComboBoxColumn();
@@ -40,6 +51,7 @@ namespace WMS.GUI
             ComboColumnLocation.DisplayMember = "";
 
             dataGridView4.Columns.Add(ComboColumnItemNo);
+            dataGridView4.Columns.Add(ComboColumnName);
 
             
 
