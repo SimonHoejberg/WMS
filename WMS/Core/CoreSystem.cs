@@ -8,6 +8,7 @@ using WMS.Handlers;
 using WMS.Reference;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using WMS.WH;
 
 namespace WMS.Core
 {
@@ -15,9 +16,11 @@ namespace WMS.Core
     {
         private IWindowHandler windowHandler;
         private DataHandler dataHandler;
+        private Warehouse wh;
 
         public CoreSystem(IMain main)
         {
+            wh = new Warehouse(this);
             dataHandler = new DataHandler(this);
             windowHandler = new WindowHandler(this, main);
         }

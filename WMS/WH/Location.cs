@@ -11,15 +11,20 @@ namespace WMS.WH
         public int itemNumber = 0;
         public int productSize;
 
-        public Location(int productSize, string itemName, int shelfUnit, int shelfNumber, int shelfPosition, int itemQuantity, int itemNumber)
+        public Location(int productSize, string itemName, int shelfNumber, int itemNumber)
         {
             this.productSize = productSize;
             this.itemName = itemName;
-            this.shelfUnit = shelfUnit;
+          //  this.shelfUnit = shelfUnit;
             this.shelfNumber = shelfNumber;
-            this.shelfPosition = shelfPosition;
-            this.itemQuantity = itemQuantity;
+          //  this.shelfPosition = shelfPosition;
+           // this.itemQuantity = itemQuantity;
             this.itemNumber = itemNumber;
+        }
+
+        public override string ToString()
+        {
+            return "  " + productSize;
         }
 
 
