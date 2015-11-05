@@ -51,7 +51,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.dataToList(WindowTypes.INFO);
+            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
             Run = true;
 
         }

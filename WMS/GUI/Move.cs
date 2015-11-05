@@ -40,7 +40,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
 
-            foreach (Item a in core.DataHandler.dataToList("information"))
+            foreach (Item a in core.DataHandler.DataToList("information"))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -84,7 +84,7 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.dataToList("information"))
+            foreach (Item item in core.DataHandler.DataToList("information"))
             {
                 Console.Write("4");
             }
@@ -119,7 +119,7 @@ namespace WMS.GUI
 
                 //Searches for items with the same location as the new location
                 //could use a location search
-                foreach (Item item in core.DataHandler.dataToList("information"))
+                foreach (Item item in core.DataHandler.DataToList("information"))
                 {
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {

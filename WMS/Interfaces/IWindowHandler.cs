@@ -10,6 +10,8 @@ namespace WMS.Interfaces
     {
         List<IGui> WindowsOpen { get; }
 
+        void Update(object caller);
+
         void Run();
     }
 }

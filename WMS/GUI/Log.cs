@@ -36,7 +36,7 @@ namespace WMS.GUI
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.getData(GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.GetData(GetTypeOfWindow()));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)

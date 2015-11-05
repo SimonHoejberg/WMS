@@ -116,5 +116,13 @@ namespace WMS.Handlers
             }
 
         }
+
+        public void Update(object caller)
+        {
+            foreach (var item in WindowsOpen.FindAll(x => !(x.Equals(caller))))
+            {
+                item.UpdateGuiElements();
+            }
+        }
     }
 }
