@@ -16,7 +16,7 @@ namespace WMS.GUI
 {
     public partial class Move : Form, IGui
     {
-        
+
         private ICore core;
         public List<Location> locationList;
 
@@ -27,7 +27,7 @@ namespace WMS.GUI
 
             //List of locations. Not supposed to be in the final implementation. I can't database, thats why!
             locationList = new List<Location>();
-            for(int a = 1; a <= 15; a++)
+            for (int a = 1; a <= 15; a++)
             {
                 string b = a.ToString();
                 locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
@@ -54,7 +54,7 @@ namespace WMS.GUI
             dataGridView4.Columns.Add(ComboColumnItemNo);
             dataGridView4.Columns.Add(ComboColumnName);
 
-            
+
 
 
 
@@ -72,9 +72,9 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-            
+
         }
-        
+
         private void button5_Click(object sender, EventArgs e)
         {
             //Current button event is made for testing the confirmation box. (passowd/userID)
@@ -98,10 +98,10 @@ namespace WMS.GUI
                     row.Cells[4].Value = 3;
 
                 }
-                }
             }
+        }
 
-                      
+
         public void ManualMove()
         {
             //Searches for empty cells in a row
@@ -112,31 +112,30 @@ namespace WMS.GUI
                     if (cell.Value == null)
                     {
                         TryAgain();
-                } 
+                    }
+                }
+            }
         }
-        /*
         // ManualMove should either receive an itemNo or an item.
         public void ManualMove(string newPosition)
         {
-                    if (item.Shelf == (int)row.Cells[4].Value)
+            if (item.Shelf == (int)row.Cells[4].Value)
             {
-                        // Sees if the items are the same and if there's room
-                        if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
+                // Sees if the items are the same and if there's room
+                if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
                 {
-                            //moves quantity to location
-                            //add (int)row.Cells[3].value to item.InStock
-                        }
-                        else { TryAgain(); }
-                    }
-                    // something for when shelf and cells[4] are not equal
+                    //moves quantity to location
+                    //add (int)row.Cells[3].value to item.InStock
                 }
+                else { TryAgain(); }
             }
+            // something for when shelf and cells[4] are not equal
         }
 
         //for when errors occur
         private void TryAgain()
-                {
-            
-            }
+        {
+
+        }
     }
 }
