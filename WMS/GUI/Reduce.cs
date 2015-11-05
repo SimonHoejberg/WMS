@@ -90,5 +90,11 @@ namespace WMS.GUI
             UserIDBox user_dialog = new UserIDBox(core);
             DialogResult a = user_dialog.ShowDialog();
         }
+
+        private void Reduce_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+        }
     }
 }
