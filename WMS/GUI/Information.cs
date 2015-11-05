@@ -96,5 +96,11 @@ namespace WMS.GUI
         {
 
         }
+
+        private void Information_Load(object sender, System.EventArgs e)
+        {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+        }
     }
 }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{444EDA27-4F44-4177-A1C3-AC4F585E98A6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WMS</RootNamespace>
     <AssemblyName>WMS</AssemblyName>
@@ -70,6 +70,7 @@
     <Compile Include="Core\Localization.cs" />
     <Compile Include="Handlers\DataHandler.cs" />
     <Compile Include="Handlers\WindowHandler.cs" />
+    <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
@@ -161,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserIDBox.resx">
       <DependentUpon>UserIDBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Waste.resx">
+      <DependentUpon>Waste.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -103,36 +103,42 @@ namespace WMS.GUI
                 } 
             }*/
         }
-        /*
-        // ManualMove should either receive an itemNo or an item.
-        public void ManualMove(string newPosition)
-        {
-            Item tempItem = new Item(42, "test", 30, 2, 30);
-            bool tempItemExist = false;
-            int nPos = Int32.Parse(newPosition);
 
-            foreach (Item item in core.dataToList("information"))
-            {
-                //Needs to be able to check something about weight
-                if (item.Shelf == nPos)
-                {
-                    tempItemExist = true;
-                }
-            }
-            tempItem.Shelf = nPos;
-            Console.WriteLine(tempItem.Shelf.ToString());
+        private void Move_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
+        /*
+// ManualMove should either receive an itemNo or an item.
+public void ManualMove(string newPosition)
+{
+   Item tempItem = new Item(42, "test", 30, 2, 30);
+   bool tempItemExist = false;
+   int nPos = Int32.Parse(newPosition);
 
-        public Item FindItem(int itemNo)
-        {
-            foreach (Item item in core.dataToList("information"))
-            {
-                if (item.ItemNo == itemNo)
-                {
-                    return item;
-                }
-            }
-            return (new Item(3, "bad item", 0, 1, 1));
-        }*/
+   foreach (Item item in core.dataToList("information"))
+   {
+       //Needs to be able to check something about weight
+       if (item.Shelf == nPos)
+       {
+           tempItemExist = true;
+       }
+   }
+   tempItem.Shelf = nPos;
+   Console.WriteLine(tempItem.Shelf.ToString());
+}
+
+public Item FindItem(int itemNo)
+{
+   foreach (Item item in core.dataToList("information"))
+   {
+       if (item.ItemNo == itemNo)
+       {
+           return item;
+       }
+   }
+   return (new Item(3, "bad item", 0, 1, 1));
+}*/
     }
 }

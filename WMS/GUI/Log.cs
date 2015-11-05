@@ -91,5 +91,11 @@ namespace WMS.GUI
         {
             itemInfoPnl.Visible = false;
         }
+
+        private void Log_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+        }
     }
 }

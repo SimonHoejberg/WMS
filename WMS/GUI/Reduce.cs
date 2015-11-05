@@ -86,5 +86,11 @@ namespace WMS.GUI
             }
             
         }
+
+        private void Reduce_Load(object sender, EventArgs e)
+        {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+        }
     }
 }

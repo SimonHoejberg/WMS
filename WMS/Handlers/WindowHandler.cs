@@ -19,6 +19,7 @@ namespace WMS.Handlers
             this.core = core;
             main.Core = core;
             this.main = (Form)main;
+            this.main.LocationChanged += MainLocationChanged;
         }
 
         public List<IGui> WindowsOpen { get { return windowsOpen; } }
@@ -68,10 +69,13 @@ namespace WMS.Handlers
             if (CanCreateForm(gui.GetTypeOfWindow()))
             {
                 Form temp = (Form)gui;
-                temp.FormClosing += Temp_FormClosing;
+                temp.FormClosing += FormClosing;
                 windowsOpen.Add(gui);
+                temp.Activated += ChangeLocationOnMain;
+                temp.LocationChanged += ChangeLocationOnMain;
+                temp.Validating += ChangeLocationOnMain;
                 temp.Show();
-                main.BringToFront();
+                temp.Focus();
             }
             else
             {
@@ -80,7 +84,14 @@ namespace WMS.Handlers
             }
         }
 
-        private void Temp_FormClosing(object sender, FormClosingEventArgs e)
+        private void ChangeLocationOnMain(object sender, EventArgs e)
+        {
+            System.Drawing.Point location = ((Form)sender).Location;
+            location.X -= 178;
+            main.Location = location;
+        }
+
+        private void FormClosing(object sender, FormClosingEventArgs e)
         {
             if (sender is IGui)
             {
@@ -88,6 +99,10 @@ namespace WMS.Handlers
             }
         }
 
+        private void MainLocationChanged(object sender, EventArgs e)
+        {
+            main.BringToFront();
+        }
 
         private bool CanCreateForm(string type)
         {
