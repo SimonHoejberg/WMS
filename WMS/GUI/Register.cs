@@ -60,5 +60,10 @@ namespace WMS.GUI
         {
             
         }
+
+        private void Register_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
     }
 }

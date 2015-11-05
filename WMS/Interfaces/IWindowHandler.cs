@@ -6,26 +6,10 @@ using System.Threading.Tasks;
 
 namespace WMS.Interfaces
 {
-    public interface IWindowHandler
+    public interface IWindowHandler : IMenuWindows
     {
         List<IGui> WindowsOpen { get; }
 
         void Run();
-
-        void OpenInformation();
-
-        void OpenLog();
-
-        void OpenLog(string itemNo);
-
-        void OpenMove();
-
-        void OpenRegister();
-
-        void OpenReduce();
-
-        void OpenWaste();
-
-
     }
 }
