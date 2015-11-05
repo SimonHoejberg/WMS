@@ -1,5 +1,4 @@
-﻿
-namespace WMS.WH
+﻿namespace WMS.WH
 {
     public class Location
     {
@@ -21,7 +20,5 @@ namespace WMS.WH
             this.itemQuantity = itemQuantity;
             this.itemNumber = itemNumber;
         }
-
-
     }
 }
