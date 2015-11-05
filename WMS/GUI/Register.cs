@@ -32,7 +32,7 @@ namespace WMS.GUI
 
         private void updateComboBox()
         {
-            comboBox1.DataSource = core.DataHandler.dataToList(GetTypeOfWindow());
+            comboBox1.DataSource = core.DataHandler.DataToList(GetTypeOfWindow());
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -59,6 +59,11 @@ namespace WMS.GUI
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             
+        }
+
+        private void Register_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
         }
     }
 }

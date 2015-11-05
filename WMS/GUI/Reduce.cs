@@ -52,7 +52,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.dataToList(WindowTypes.INFO);
+            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
             Run = true;
 
         }
@@ -125,6 +125,11 @@ namespace WMS.GUI
                     DataGridViewMake();
                 }
             }
+        }
+
+        private void Reduce_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
         }
     }
 }
