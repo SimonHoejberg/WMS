@@ -131,6 +131,8 @@ namespace WMS.GUI
                             itemInStockIncrease = item.InStock + (int)row.Cells[3].Value - ((item.InStock + (int)row.Cells[3].Value) % item.Size);
                             itemInStockDecrease = (item.InStock + (int)row.Cells[3].Value) % item.Size;
 
+
+                            //use an updatefunction to either update the item or location
                             core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO);
                             
                             //moves quantity to location
