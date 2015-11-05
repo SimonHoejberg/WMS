@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Core;
 using WMS.Interfaces;
+using WMS.Reference;
 using WMS.WH;
 
 namespace WMS.GUI
@@ -119,17 +120,18 @@ namespace WMS.GUI
 
                 //Searches for items with the same location as the new location
                 //could use a location search
-                foreach (Item item in core.DataHandler.dataToList("information"))
+                foreach (Item item in core.DataHandler.dataToList(WindowTypes.INFO))
                 {
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {
                         // Sees if the items are the same and if there's room
                         if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
                         {
-                            itemInStockIncrease = item.InStock + (int)row.Cells[3].Value;
-                            //itemInStockDecrease = 
 
-                            //core.DataHandler.UpdateProduct(4,,
+                            itemInStockIncrease = item.InStock + (int)row.Cells[3].Value - ((item.InStock + (int)row.Cells[3].Value) % item.Size);
+                            itemInStockDecrease = (item.InStock + (int)row.Cells[3].Value) % item.Size;
+
+                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO);
                             
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock
