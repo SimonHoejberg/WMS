@@ -91,6 +91,8 @@ namespace WMS.GUI
         
         public void ManualMove()
         {
+            int itemInStockIncrease = 0;
+            int itemInStockDecrease = 0;
             //Searches for empty cells in a row
             foreach (DataGridViewRow row in dataGridView4.Rows)
             {
@@ -111,6 +113,11 @@ namespace WMS.GUI
                         // Sees if the items are the same and if there's room
                         if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
                         {
+                            itemInStockIncrease = item.InStock + (int)row.Cells[3].Value;
+                            //itemInStockDecrease = 
+
+                            //core.DataHandler.UpdateProduct(4,,
+                            
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock
                         }
