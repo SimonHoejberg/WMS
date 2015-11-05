@@ -95,12 +95,12 @@ namespace WMS.GUI
                     //use algorithm here
                     //send itemNo, current location and itemQuantity
                     row.Cells[4].Value = 3;
-                    
+
+                }
                 }
             }
-        }
-        
-        
+
+                      
         public void ManualMove()
         {
             //Searches for empty cells in a row
@@ -111,18 +111,17 @@ namespace WMS.GUI
                     if (cell.Value == null)
                     {
                         TryAgain();
-                    }
-                }
-
-                //Searches for items with the same location as the new location
-                //could use a location search
-                foreach (Item item in core.DataHandler.dataToList("information"))
-                {
+                } 
+        }
+        /*
+        // ManualMove should either receive an itemNo or an item.
+        public void ManualMove(string newPosition)
+        {
                     if (item.Shelf == (int)row.Cells[4].Value)
-                    {
+            {
                         // Sees if the items are the same and if there's room
                         if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
-                        {
+                {
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock
                         }
@@ -135,8 +134,8 @@ namespace WMS.GUI
 
         //for when errors occur
         private void TryAgain()
-        {
+                {
             
-        }
+            }
     }
 }
