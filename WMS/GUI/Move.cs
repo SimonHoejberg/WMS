@@ -77,74 +77,66 @@ namespace WMS.GUI
         private void button5_Click(object sender, EventArgs e)
         {
             //Current button event is made for testing the confirmation box. (passowd/userID)
-
+            ManualMove();
         }
 
+        //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-/*
-            int tempInt = 0;
-
-            foreach (DataGridViewCell cell in dataGridView4.SelectedCells)
+            foreach (Item item in core.DataHandler.dataToList("information"))
             {
-                if (cell.ColumnIndex == 0)
-                {
+                Console.Write("4");
+            }
 
-                }
-                if (cell.ColumnIndex == 4)
+            foreach (DataGridViewRow row in dataGridView4.Rows)
+            {
+                if (row.Cells[0].Value != null && row.Cells[4].Value == null)
                 {
-                    Console.WriteLine("column: " + cell.Value.ToString());
-                    ManualMove(cell.Value.ToString());
+                    //use algorithm here
+                    //send itemNo, current location and itemQuantity
+                    row.Cells[4].Value = 3;
+                    
                 }
             }
-            /*    if(cell.ColumnIndex == 0)
+        }
+        
+        
+        public void ManualMove()
+        {
+            //Searches for empty cells in a row
+            foreach (DataGridViewRow row in dataGridView4.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
                 {
-                    //hent resten af info fra DB
-                    //brug itemNo, current location og itemQuantity
-                    //smid ind i algoritmen og find en ny spot
-
-                      
-                }
-
-                if(cell.ColumnIndex == 4 && tempItemExist)
-                {
-                    foreach (Item item in core.dataToList("information"))
+                    if (cell.Value == null)
                     {
-
+                        TryAgain();
                     }
-                } 
-            }*/
-        }
-        /*
-        // ManualMove should either receive an itemNo or an item.
-        public void ManualMove(string newPosition)
-        {
-            Item tempItem = new Item(42, "test", 30, 2, 30);
-            bool tempItemExist = false;
-            int nPos = Int32.Parse(newPosition);
+                }
 
-            foreach (Item item in core.dataToList("information"))
-            {
-                //Needs to be able to check something about weight
-                if (item.Shelf == nPos)
+                //Searches for items with the same location as the new location
+                //could use a location search
+                foreach (Item item in core.DataHandler.dataToList("information"))
                 {
-                    tempItemExist = true;
+                    if (item.Shelf == (int)row.Cells[4].Value)
+                    {
+                        // Sees if the items are the same and if there's room
+                        if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
+                        {
+                            //moves quantity to location
+                            //add (int)row.Cells[3].value to item.InStock
+                        }
+                        else { TryAgain(); }
+                    }
+                    // something for when shelf and cells[4] are not equal
                 }
             }
-            tempItem.Shelf = nPos;
-            Console.WriteLine(tempItem.Shelf.ToString());
         }
 
-        public Item FindItem(int itemNo)
+        //for when errors occur
+        private void TryAgain()
         {
-            foreach (Item item in core.dataToList("information"))
-            {
-                if (item.ItemNo == itemNo)
-                {
-                    return item;
-                }
-            }
-            return (new Item(3, "bad item", 0, 1, 1));
-        }*/
+            
+        }
     }
 }
