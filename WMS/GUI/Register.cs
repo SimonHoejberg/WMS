@@ -63,8 +63,7 @@ namespace WMS.GUI
 
         private void Register_Load(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
         }
     }
 }

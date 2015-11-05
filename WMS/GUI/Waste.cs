@@ -30,8 +30,7 @@ namespace WMS.GUI
 
         private void Waste_Load(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
         }
     }
 }

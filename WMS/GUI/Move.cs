@@ -149,8 +149,7 @@ namespace WMS.GUI
 
         private void Move_Load(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
         }
     }
 }

@@ -94,8 +94,7 @@ namespace WMS.GUI
 
         private void Log_Load(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
         }
     }
 }
