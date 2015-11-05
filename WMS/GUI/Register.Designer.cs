@@ -38,10 +38,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1196, 647);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(897, 526);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 28);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 11;
             this.button2.Text = "Ok";
             this.button2.UseVisualStyleBackColor = true;
@@ -49,10 +48,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1088, 647);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(816, 526);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 10;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = true;
@@ -60,19 +58,17 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(16, 75);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView2.Location = new System.Drawing.Point(12, 61);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(1280, 529);
+            this.dataGridView2.Size = new System.Drawing.Size(960, 430);
             this.dataGridView2.TabIndex = 9;
             this.dataGridView2.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellValueChanged);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(223, 16);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(167, 13);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(132, 22);
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 7;
             this.textBox1.Text = "Item No";
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
@@ -81,28 +77,25 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(16, 15);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Location = new System.Drawing.Point(12, 12);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(160, 24);
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 6;
             this.comboBox1.Text = "Order No";
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
             // Register
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1312, 690);
+            this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.comboBox1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Register";
             this.Text = "Register";
-            this.Load += new System.EventHandler(this.Register_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

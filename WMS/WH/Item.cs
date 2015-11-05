@@ -24,7 +24,8 @@ namespace WMS.WH
 
         public string Description { get { return description; }} 
 
-        public int Shelf {get { return shelf; }}
+        public int Shelf {get { return shelf; }
+                          set { this.shelf = value; } }
 
         public int Space { get { return space; } }
 
@@ -45,6 +46,11 @@ namespace WMS.WH
                 return otherItem.inStock.CompareTo(this.inStock);
             else
                 throw new ArgumentException("Object is not an Item");
+        }
+
+        public void ReduceItem(string itemNo, int quantity)
+        {
+
         }
     }
 }
