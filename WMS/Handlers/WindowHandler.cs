@@ -127,8 +127,17 @@ namespace WMS.Handlers
 
         public void CloseWindowWithError(IGui caller, string error)
         {
-            windowsOpen.Remove(caller);
-            MessageBox.Show(error);
+            if (caller != null)
+            {
+                windowsOpen.Remove(caller);
+                MessageBox.Show(error);
+            }
+            else
+            {
+                MessageBox.Show(error);
+                Application.Exit();
+            }
+
         }
     }
 }
