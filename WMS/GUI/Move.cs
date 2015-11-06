@@ -124,7 +124,7 @@ namespace WMS.GUI
                 
                 if (!(TypeChecker(dataGridView4.Rows[i])))
                 {
-                    TryAgain();
+                        TryAgain();
 
                     //temporary
                     return;
@@ -198,7 +198,9 @@ namespace WMS.GUI
 
         private void dataGridView4_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            /*var dgv = sender as DataGridView;
+            if (e.ColumnIndex == 0)
+            {
+                var dgv = sender as DataGridView;
 
             var originalCell = dgv[e.ColumnIndex, e.RowIndex];
             var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
@@ -211,6 +213,7 @@ namespace WMS.GUI
             string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
 
             cell.DataSource = GetSortedListOfItems(test, "name");*/
+        }
         }
             
         private List<Item> GetSortedListOfItems(string a, string b)
