@@ -74,6 +74,7 @@
     <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderItem.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
