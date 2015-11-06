@@ -22,6 +22,11 @@ namespace WMS.WH
         {
             this.core = core;
             LoadNewItem();
+            LoadWarehouseInventory();
+            LoadWarehouseLayout();
+            print();
+            print2();
+            print3();
         }
 
         //Save to Layout
@@ -30,7 +35,7 @@ namespace WMS.WH
         public void LoadNewItem()
         {
             List<object> objectTemp = new List<object>();
-            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO);
+            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO,null);
             foreach (object items in objectTemp)
             {
                 string []temp = items.ToString().Split(':');

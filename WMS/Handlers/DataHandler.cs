@@ -109,12 +109,7 @@ namespace WMS.Handlers
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db, IGui caller)
         {
-            return sql.GetDataForItemNo("itemNo",itemNo, db);
-        }
-
-        public MySqlDataAdapter GetDataFromOrderNo(string orderNo, IGui caller)
-        {
-            return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
+            return sql.GetDataForItemNo(itemNo, db);
         }
 
 
