@@ -26,35 +26,40 @@ namespace WMS.GUI
             this.core = core;
 
             //List of locations. Not supposed to be in the final implementation. I can't database, thats why!
-            locationList = new List<Location>();
+            /*locationList = new List<Location>();
             for(int a = 1; a <= 15; a++)
             {
                 string b = a.ToString();
                 locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
-            }
+            }*/
+
 
             DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnName = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
+            /*DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();*/
 
 
             foreach (Item a in core.DataHandler.dataToList("information"))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
-                ComboColumnLocation.Items.Add(a);
+                //ComboColumnLocation.Items.Add(a);
             }
 
-            ComboColumnItemNo.DisplayMember = "ItemNo";
+            ComboColumnItemNo.DisplayMember = "ItemNoString";
             ComboColumnName.DisplayMember = "Description";
-            ComboColumnLocation.DisplayMember = "";
+
+            ComboColumnItemNo.HeaderText = "Item Number";
+            ComboColumnName.HeaderText = "Item Name";
 
             dataGridView4.Columns.Add(ComboColumnItemNo);
             dataGridView4.Columns.Add(ComboColumnName);
 
-            
+            // Add the events to listen for
+            dataGridView4.CellValueChanged += new DataGridViewCellEventHandler(dataGridView4_CellValueChanged);
+            dataGridView4.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
 
 
 
@@ -138,6 +143,55 @@ namespace WMS.GUI
         private void TryAgain()
         {
             
+        }
+
+        
+
+        // This event handler manually raises the CellValueChanged event 
+        // by calling the CommitEdit method. 
+        void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (this.dataGridView4.IsCurrentCellDirty)
+            {
+                // This fires the cell value changed handler below
+                dataGridView4.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dataGridView4_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var dgv = sender as DataGridView;
+
+            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
+            var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+
+            if (cell == null)
+            {
+                return;
+            }
+
+            string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+            cell.DataSource = GetSortedListOfItems(test, "name");
+        }
+
+        private List<Item> GetSortedListOfItems(string a, string b)
+        {
+            List<Item> returnList = new List<Item>();
+
+            if (a != null && b.Equals("name"))
+            {
+                foreach (Item item in core.DataHandler.dataToList("information"))
+                {
+                    if (a.Equals(item.ItemNo.ToString()))
+                    {
+                        Console.WriteLine(item.ItemNo + " " + Convert.ToInt32(a));
+                        returnList.Add(item);
+                    }
+                }
+            }
+
+            return returnList;
         }
     }
 }
