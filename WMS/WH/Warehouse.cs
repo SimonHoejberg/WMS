@@ -54,8 +54,9 @@ namespace WMS.WH
         }
 
 
-        public void LoadWarehouseInventory()
+        public List<Location> LoadWarehouseInventory()
         {
+            List<Location> returnList = new List<Location>();
             List<object> local = new List<object>();
             local = core.DataHandler.DataToList("location", null);
             foreach (object tempLocal in local)
@@ -68,8 +69,9 @@ namespace WMS.WH
                 int space = int.Parse(tempLocation[4]);
                 int quantity = int.Parse(tempLocation[5]);
                 Location temp = new Location(unit, shelf, shelfNo, itemNo, space, quantity);
-                location.Add(temp);
+                returnList.Add(temp);
             }
+            return returnList;
         }
 
 
