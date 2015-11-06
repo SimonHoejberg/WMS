@@ -86,9 +86,12 @@ namespace WMS.Handlers
 
         private void ChangeLocationOnMain(object sender, EventArgs e)
         {
-            System.Drawing.Point location = ((Form)sender).Location;
+           /* System.Drawing.Point location = ((Form)sender).Location;
             location.X -= (main.Width);
-            main.Location = location;
+            main.Location = location;*/
+
+            main.Left = ((Form)sender).Left-main.Width;
+            main.Top = ((Form)sender).Top;
         }
 
         private void FormClosing(object sender, FormClosingEventArgs e)
