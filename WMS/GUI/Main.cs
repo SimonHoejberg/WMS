@@ -21,6 +21,8 @@ namespace WMS.GUI
 
         private void Main_Load(object sender, EventArgs e)
         {
+            this.Width = 136;
+            this.Height = 556;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
         }
