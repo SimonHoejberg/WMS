@@ -37,16 +37,16 @@ namespace WMS.GUI
 
             DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnName = new DataGridViewComboBoxColumn();
-            /*DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();*/
+            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
-
-            foreach (Item a in core.DataHandler.DataToList("information",this))
+            foreach (Item a in core.DataHandler.DataToList("information"this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
                 //ComboColumnLocation.Items.Add(a);
+
             }
 
             ComboColumnItemNo.DisplayMember = "ItemNoString";
@@ -54,16 +54,20 @@ namespace WMS.GUI
 
             ComboColumnItemNo.HeaderText = "Item Number";
             ComboColumnName.HeaderText = "Item Name";
+            ComboColumnQuantity.HeaderText = "Quantity";
+            ComboColumnLocation.HeaderText = "Location";
+            ComboColumnNewLocation.HeaderText = "New Location";
 
             dataGridView4.Columns.Add(ComboColumnItemNo);
             dataGridView4.Columns.Add(ComboColumnName);
+            dataGridView4.Columns.Add(ComboColumnQuantity);
+            dataGridView4.Columns.Add(ComboColumnLocation);
+            dataGridView4.Columns.Add(ComboColumnNewLocation);
+
 
             // Add the events to listen for
             dataGridView4.CellValueChanged += new DataGridViewCellEventHandler(dataGridView4_CellValueChanged);
             dataGridView4.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
-
-
-
         }
 
         public void FilterColumn(string a)
