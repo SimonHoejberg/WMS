@@ -11,10 +11,11 @@ namespace WMS.Handlers
     public class DataHandler
     {
         private ICore core;
-        private SqlHandler sql = new SqlHandler();
+        private SqlHandler sql;
         public DataHandler(ICore core)
         {
             this.core = core;
+            sql = new SqlHandler(core);
         }
 
         public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
