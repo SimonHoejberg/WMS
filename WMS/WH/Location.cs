@@ -4,13 +4,20 @@ namespace WMS.WH
     public class Location
     {
         string unit;
-        string shelf;
-        string shelfNo;
+        int shelf;
+        int shelfNo;
         string itemNo;
-        string space;
-        string quantity;
+        int space;
+        int quantity;
 
-        public Location(string unit, string shelf, string shelfNo, string itemNo, string space, string quantity)
+        public string Unit { get { return unit; }}
+        public int Shelf { get { return shelf; } }
+        public int ShelfNo { get { return shelfNo; } }
+        public string ItemNo { get { return itemNo; } }
+        public int Space { get { return space; } }
+        public int Quantity { get { return quantity; } }
+
+        public Location(string unit, int shelf, int shelfNo, string itemNo, int space, int quantity)
         {
             this.unit = unit;
             this.shelf = shelf;
@@ -22,7 +29,7 @@ namespace WMS.WH
 
         public override string ToString()
         {
-            return "  " + itemNo;
+            return unit + ":" + shelf + ":" + shelfNo + ":" + itemNo + ":" + space + ":" + quantity;
         }
 
 

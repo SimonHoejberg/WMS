@@ -65,7 +65,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.INFO);
             while (reader.Read())
             {
-                temp.Add(new Item(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()),
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()),
                                         int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
             }
             sql.CloseConnection();
@@ -110,7 +110,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList("location");
             while (reader.Read())
             {
-                temp.Add(new Location(reader["unit"].ToString(), reader["shelf"].ToString(), reader["shelfNo"].ToString(), reader["itemNo"].ToString(), reader["space"].ToString(), reader["quantity"].ToString()));
+                temp.Add(new Location(reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
             }
             sql.CloseConnection();
             return temp;

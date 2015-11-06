@@ -41,7 +41,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
-            foreach (Item a in core.DataHandler.DataToList("information", this))
+            foreach (Item a in core.DataHandler.DataToList("information",this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -138,7 +138,7 @@ namespace WMS.GUI
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {
                         // Sees if the items are the same and if there's room
-                        if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
+                        if (int.Parse(item.ItemNo) == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
                         {
 
                             itemInStockIncrease = item.InStock + (int)row.Cells[3].Value - ((item.InStock + (int)row.Cells[3].Value) % item.Size);

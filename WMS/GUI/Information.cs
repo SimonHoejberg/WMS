@@ -26,7 +26,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.DataHandler.GetData(GetTypeOfWindow(), this).Fill(data);
+            core.DataHandler.GetData(GetTypeOfWindow(),this).Fill(data);
 
             dataGridView1.Columns[0].HeaderText = "Item No";
             dataGridView1.Columns[1].HeaderText = "Description";
