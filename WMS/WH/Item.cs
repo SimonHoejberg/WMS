@@ -36,7 +36,7 @@ namespace WMS.WH
 
         public override string ToString()
         {
-            return "Item: " + ItemNo + "  Description: " + Description;
+            return ItemNo + ":" + Description + ":" + Size + ":" + InStock + ":" + Shelf;
         }
 
         public int CompareTo(object obj)

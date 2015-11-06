@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WMS.Handlers;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
 using WMS.Reference;
@@ -20,49 +17,40 @@ namespace WMS.Handlers
             this.core = core;
         }
 
-        public void Update(object caller)
-        {
-            foreach (var item in core.WindowHandler.WindowsOpen.FindAll(x => !(x.Equals(caller))))
-            {
-                item.UpdateGuiElements();
-            }
-        }
-
-        public void UpdateProduct(string coloumn, string value, string id, string db)
+        public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
         {
             sql.update(coloumn, value, id, db);
         }
 
-
-
-        public MySqlDataAdapter getData(string db)
+        public MySqlDataAdapter GetData(string db, IGui caller)
         {
             return sql.GetData(db);
         }
 
-        public List<object> dataToList(string db)
+        public List<object> DataToList(string db, IGui caller)
         {
-            int a = 0;
             if (db.Equals(WindowTypes.INFO))
             {
-                return infoToList().ToList<object>();
-            }
-            else if (int.TryParse(db, out a))
-            {
-                return LogToList(db).ToList<object>();
-            }
-            else if (db.Equals("user"))
-            {
-                return userToList().ToList<object>();
+                return InfoToList().ToList<object>();
             }
             else if (db.Equals(WindowTypes.REGISTER))
             {
-                return orderToList().ToList<object>();
+                return OrderToList().ToList<object>();
             }
             return null;
         }
 
-        private List<Item> infoToList()
+        public List<string> GetUser(IGui caller)
+        {
+            return UserToList();
+        }
+
+        public List<string> GetLog(string itemNo, IGui caller)
+        {
+            return LogToList(itemNo);
+        }
+
+        private List<Item> InfoToList()
         {
             List<Item> temp = new List<Item>();
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.INFO);
@@ -75,7 +63,7 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<string> userToList()
+        private List<string> UserToList()
         {
             List<string> temp = new List<string>();
             MySqlDataReader reader = sql.GetDataForList("user");
@@ -87,7 +75,7 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<Order> orderToList()
+        private List<Order> OrderToList()
         {
             List<Order> temp = new List<Order>();
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.REGISTER);
@@ -119,13 +107,18 @@ namespace WMS.Handlers
             return temp;
         }
 
-        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
+        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db, IGui caller)
         {
-            return sql.GetDataForItemNo(itemNo, db);
+            return sql.GetDataForItemNo("itemNo",itemNo, db);
+        }
+
+        public MySqlDataAdapter GetDataFromOrderNo(string orderNo, IGui caller)
+        {
+            return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
         }
 
 
-        public MySqlDataAdapter GetInfoForReduce(string itemNo)
+        public MySqlDataAdapter GetInfoForReduce(string itemNo, IGui caller)
         {
             throw new NotImplementedException();
         }

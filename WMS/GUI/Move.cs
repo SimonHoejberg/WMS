@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Core;
 using WMS.Interfaces;
+using WMS.Reference;
 using WMS.WH;
 
 namespace WMS.GUI
@@ -41,7 +42,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();*/
 
 
-            foreach (Item a in core.DataHandler.dataToList("information"))
+            foreach (Item a in core.DataHandler.DataToList("information",this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -89,7 +90,7 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.dataToList("information"))
+            foreach (Item item in core.DataHandler.DataToList("information",this))
             {
                 Console.Write("4");
             }
@@ -109,26 +110,40 @@ namespace WMS.GUI
         
         public void ManualMove()
         {
-            //Searches for empty cells in a row
-            foreach (DataGridViewRow row in dataGridView4.Rows)
+            int itemInStockIncrease = 0;
+            int itemInStockDecrease = 0;
+
+            //Checks the types of the different cells
+            for (int i = 0; i < dataGridView4.Columns.Count; i++)
             {
-                foreach (DataGridViewCell cell in row.Cells)
+                if (!(TypeChecker(dataGridView4.Rows[i])))
                 {
-                    if (cell.Value == null)
-                    {
                         TryAgain();
+
+                    //temporary
+                    return;
                     }
                 }
 
+            foreach (DataGridViewRow row in dataGridView4.Rows)
+            {
                 //Searches for items with the same location as the new location
                 //could use a location search
-                foreach (Item item in core.DataHandler.dataToList("information"))
+                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO, this))
                 {
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {
                         // Sees if the items are the same and if there's room
                         if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
                         {
+
+                            itemInStockIncrease = item.InStock + (int)row.Cells[3].Value - ((item.InStock + (int)row.Cells[3].Value) % item.Size);
+                            itemInStockDecrease = (item.InStock + (int)row.Cells[3].Value) % item.Size;
+
+
+                            //use an updatefunction to either update the item or location
+                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO, this);
+                            
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock
                         }
@@ -137,6 +152,22 @@ namespace WMS.GUI
                     // something for when shelf and cells[4] are not equal
                 }
             }
+        }
+
+        private bool TypeChecker(DataGridViewRow row)
+        {
+            bool typeInt = true;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (i != 1 && row.Cells[i].Value.GetType() != typeof(int))
+                {
+                    Console.WriteLine("mistake at:" + i.ToString());
+                    typeInt = false;
+                }
+                
+            }
+            return typeInt;
         }
 
         //for when errors occur
@@ -174,7 +205,7 @@ namespace WMS.GUI
 
             cell.DataSource = GetSortedListOfItems(test, "name");
         }
-
+            
         private List<Item> GetSortedListOfItems(string a, string b)
         {
             List<Item> returnList = new List<Item>();
@@ -192,6 +223,11 @@ namespace WMS.GUI
             }
 
             return returnList;
+        }
+
+        private void Move_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
         }
     }
 }

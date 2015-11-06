@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.Reference;
@@ -8,9 +9,15 @@ namespace WMS.GUI
     public partial class Register : Form, IGui
     {
         private ICore core;
+        private BindingSource bsource;
+        private DataTable data;
         public Register(ICore core)
         {
             this.core = core;
+            bsource = new BindingSource();
+            data = new DataTable();
+            bsource.DataSource = data;
+            dataGridView2.DataSource = bsource;
             InitializeComponent();
             updateComboBox();
         }
@@ -32,7 +39,7 @@ namespace WMS.GUI
 
         private void updateComboBox()
         {
-            comboBox1.DataSource = core.DataHandler.dataToList(GetTypeOfWindow());
+            comboBox1.DataSource = core.DataHandler.DataToList(GetTypeOfWindow(), this);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -56,9 +63,14 @@ namespace WMS.GUI
 
         }
 
+        private void Register_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
+
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

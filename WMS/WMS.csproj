@@ -70,9 +70,11 @@
     <Compile Include="Core\Localization.cs" />
     <Compile Include="Handlers\DataHandler.cs" />
     <Compile Include="Handlers\WindowHandler.cs" />
+    <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderItem.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
@@ -162,6 +164,9 @@
     <EmbeddedResource Include="GUI\UserIDBox.resx">
       <DependentUpon>UserIDBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Waste.resx">
+      <DependentUpon>Waste.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -203,6 +208,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageResources\placeholder_Waste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WH\Layout.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WH\Inventory.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
