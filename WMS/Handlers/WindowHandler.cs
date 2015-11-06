@@ -87,7 +87,7 @@ namespace WMS.Handlers
         private void ChangeLocationOnMain(object sender, EventArgs e)
         {
             System.Drawing.Point location = ((Form)sender).Location;
-            location.X -= (main.Width - SystemInformation.BorderSize.Width)-15;
+            location.X -= (main.Width);
             main.Location = location;
         }
 

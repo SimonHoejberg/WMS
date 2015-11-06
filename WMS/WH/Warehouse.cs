@@ -27,7 +27,9 @@ namespace WMS.WH
             LoadWarehouseInventory();
             print2();
             print();
-        //    OptimaleLocation(item);
+            EmptySpace(2);
+            //    OptimaleLocation(item);
+            
             print2();
         }
 
@@ -178,9 +180,9 @@ namespace WMS.WH
              foreach (Location local in location)
              {
                 
-                 if (shelfID.Equals(local.ShelfNo))
+                 if (shelfID.Equals(local.Shelf))
                  {
-                    x = x + local.Quantity;
+                    x = x + local.Space;
                     Console.WriteLine(x);
                  }
              }
