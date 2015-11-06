@@ -78,7 +78,7 @@ namespace WMS.WH
                     warehouseLayout.Add(shelfID, shelfSize);
                 }
             }*/
-        }
+            }
 
         public void print()
         {
@@ -125,7 +125,7 @@ namespace WMS.WH
                     location.Add(tempLocal);
                 }
             }*/
-        }
+            }
 
         public bool AddShelfUnit(int newShelfID, int newSize)
         {
@@ -152,7 +152,7 @@ namespace WMS.WH
         {
             foreach (Location local in location)
             {
-                if (product.Description.Equals(local.itemName))
+                if (product.ItemNo.Equals(local))
                 {
                     return local.shelfNumber;
                 }
@@ -256,6 +256,6 @@ namespace WMS.WH
             }
             return ItemNotPlaced;
         }
-    }
+                }
 }
 
