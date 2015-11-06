@@ -196,19 +196,22 @@ namespace WMS.GUI
 
         private void dataGridView4_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            var dgv = sender as DataGridView;
-
-            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
-            var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
-
-            if (cell == null)
+            if (e.ColumnIndex == 0)
             {
-                return;
+                var dgv = sender as DataGridView;
+
+                var originalCell = dgv[e.ColumnIndex, e.RowIndex];
+                var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+
+                if (cell == null)
+                {
+                    return;
+                }
+
+                string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+                cell.DataSource = GetSortedListOfItems(test, "name");
             }
-
-            string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
-
-            cell.DataSource = GetSortedListOfItems(test, "name");
         }
             
         private List<Item> GetSortedListOfItems(string a, string b)
