@@ -31,7 +31,7 @@ namespace WMS.GUI
             for(int a = 1; a <= 15; a++)
             {
                 string b = a.ToString();
-                locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
+               // locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
             }
 
             DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
