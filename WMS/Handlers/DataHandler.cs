@@ -11,24 +11,28 @@ namespace WMS.Handlers
     public class DataHandler
     {
         private ICore core;
-        private SqlHandler sql = new SqlHandler();
+        private SqlHandler sql;
         public DataHandler(ICore core)
         {
             this.core = core;
+            sql = new SqlHandler(core);
         }
 
         public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
         {
+            sql.Caller = caller;
             sql.update(coloumn, value, id, db);
         }
 
         public MySqlDataAdapter GetData(string db, IGui caller)
         {
+            sql.Caller = caller;
             return sql.GetData(db);
         }
 
         public List<object> DataToList(string db, IGui caller)
         {
+            sql.Caller = caller;
             if (db.Equals(WindowTypes.INFO))
             {
                 return InfoToList().ToList<object>();
@@ -36,6 +40,10 @@ namespace WMS.Handlers
             else if (db.Equals(WindowTypes.REGISTER))
             {
                 return OrderToList().ToList<object>();
+            }
+            else if (db.Equals("location"))
+            {
+                return LocationToList().ToList<object>();
             }
             return null;
         }
@@ -47,6 +55,7 @@ namespace WMS.Handlers
 
         public List<string> GetLog(string itemNo, IGui caller)
         {
+            sql.Caller = caller;
             return LogToList(itemNo);
         }
 
@@ -56,7 +65,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.INFO);
             while (reader.Read())
             {
-                temp.Add(new Item(int.Parse(reader["itemNo"].ToString()), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()),
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()),
                                         int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
             }
             sql.CloseConnection();
@@ -95,6 +104,18 @@ namespace WMS.Handlers
             return temp;
         }
 
+        private List<Location> LocationToList()
+        {
+            List<Location> temp = new List<Location>();
+            MySqlDataReader reader = sql.GetDataForList("location");
+            while (reader.Read())
+            {
+                temp.Add(new Location(reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
         private List<string> LogToList(string itemNo)
         {
             List<string> temp = new List<string>();
@@ -109,11 +130,13 @@ namespace WMS.Handlers
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db, IGui caller)
         {
+            sql.Caller = caller;
             return sql.GetDataForItemNo("itemNo",itemNo, db);
         }
 
         public MySqlDataAdapter GetDataFromOrderNo(string orderNo, IGui caller)
         {
+            sql.Caller = caller;
             return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
         }
 

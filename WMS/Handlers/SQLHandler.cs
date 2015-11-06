@@ -10,9 +10,11 @@ namespace WMS.Handlers
         private string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
         private MySqlConnection connection;
         private IGui caller;
+        private ICore core;
         
-        public SqlHandler()
+        public SqlHandler(ICore core)
         {
+            this.core = core;
             connection = new MySqlConnection(mysqlConnectionString);
         }
 
@@ -30,30 +32,37 @@ namespace WMS.Handlers
                 command.CommandText = sql;
             }
 
-            OpenConnection();
-            command.ExecuteNonQuery();
-            connection.Close();
+            if (OpenConnection())
+            {
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
 
         public IGui Caller{ set { caller = value; } }
 
         public MySqlDataAdapter GetDataForItemNo(string sqlValue, string itemNo, string db)
         {
-            OpenConnection();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlC = "SELECT * FROM "+ db +" WHERE " + sqlValue + " = " + itemNo;
-            MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
-            connection.Close();
+            if (OpenConnection())
+            {
+                string sqlC = "SELECT * FROM " + db + " WHERE " + sqlValue + " = " + itemNo;
+                MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
+                connection.Close();
+            }
             return MyDA;
         }
 
         public MySqlDataReader GetLatestLog(string itemNo)
         {
             MySqlCommand command = connection.CreateCommand();
-            OpenConnection();
-            string sql = "SELECT * FROM log WHERE itemNo = " + itemNo;
-            command.CommandText = sql;
-            MySqlDataReader reader = command.ExecuteReader();
+            MySqlDataReader reader = null;
+            if (OpenConnection())
+            {
+                string sql = "SELECT * FROM log WHERE itemNo = " + itemNo;
+                command.CommandText = sql;
+                reader = command.ExecuteReader();
+            }
             return reader;
         }
 
@@ -61,35 +70,44 @@ namespace WMS.Handlers
         public MySqlDataReader GetDataForList(string db)
         {
             MySqlCommand command = connection.CreateCommand();
-            OpenConnection();
-            string sql = "SELECT * FROM " + db;
-            command.CommandText = sql;
-            MySqlDataReader reader = command.ExecuteReader();
+            MySqlDataReader reader = null;
+            if (OpenConnection())
+            {
+                string sql = "SELECT * FROM " + db;
+                command.CommandText = sql;
+                reader = command.ExecuteReader();
+            }
             return reader;
         }
 
-        public void OpenConnection()
+        public bool OpenConnection()
         {
+            bool succes = true;
             try
             {
                 connection.Open();
+                
             }
             catch (MySqlException ex)
             {
                 Console.WriteLine("Connetion to DB failed \nError: " + ex.Number);
+                string temp = null;
                 switch (ex.Number)
                 {
                     case 0:
-                        Console.Write("Cannot connect to server.  Contact administrator " + ex);
+                        temp = "Cannot connect to server.  Contact administrator ";
                         break;
                     case 1045:
-                        Console.Write("Invalid username/password, please try again");
+                        temp = "Invalid username/password, please try again";
                         break;
                     case 1042:
-                        Console.Write("Hostname problem");
+                        temp = "Hostname problem";
                         break;
                 }
+                succes = false;
+                core.WindowHandler.CloseWindowWithError(caller, temp);
             }
+            return succes;
         }
 
         public void CloseConnection()
@@ -98,11 +116,13 @@ namespace WMS.Handlers
         }
         public MySqlDataAdapter GetData(string db)
         {
-            OpenConnection();
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlCom = string.Format("SELECT * FROM {0}", db);
-            MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
-            connection.Close();
+            if (OpenConnection())
+            {
+                string sqlCom = string.Format("SELECT * FROM {0}", db);
+                MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
+                connection.Close();
+            }
             return MyDA;
         }
     }
