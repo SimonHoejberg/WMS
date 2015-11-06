@@ -20,6 +20,11 @@ namespace WMS.GUI
         
         private ICore core;
         public List<Location> locationList;
+        DataGridViewComboBoxColumn ComboColumnItemNo;
+        DataGridViewComboBoxColumn ComboColumnName;
+        DataGridViewComboBoxColumn ComboColumnLocation;
+        DataGridViewComboBoxColumn ComboColumnQuantity;
+        DataGridViewComboBoxColumn ComboColumnNewLocation;
 
         public Move(ICore core)
         {
@@ -35,13 +40,13 @@ namespace WMS.GUI
             }*/
 
 
-            DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnName = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
+            ComboColumnItemNo = new DataGridViewComboBoxColumn();
+            ComboColumnName = new DataGridViewComboBoxColumn();
+            ComboColumnLocation = new DataGridViewComboBoxColumn();
+            ComboColumnQuantity = new DataGridViewComboBoxColumn();
+            ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
-            foreach (Item a in core.DataHandler.DataToList("information",this))
+            foreach (Item a in core.DataHandler.DataToList(WindowTypes.INFO,this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -94,18 +99,14 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO,this))
-            {
-                Console.Write("4");
-            }
-
             foreach (DataGridViewRow row in dataGridView4.Rows)
             {
                 if (row.Cells[0].Value != null && row.Cells[4].Value == null)
                 {
                     //use algorithm here
                     //send itemNo, current location and itemQuantity
-                    row.Cells[4].Value = 3;
+                    ComboColumnNewLocation.Items.Add("3");
+                    row.Cells[4].Value = "3";
                     
                 }
             }
@@ -120,9 +121,10 @@ namespace WMS.GUI
             //Checks the types of the different cells
             for (int i = 0; i < dataGridView4.Columns.Count; i++)
             {
+                
                 if (!(TypeChecker(dataGridView4.Rows[i])))
                 {
-                        TryAgain();
+                    TryAgain();
 
                     //temporary
                     return;
@@ -146,7 +148,7 @@ namespace WMS.GUI
 
 
                             //use an updatefunction to either update the item or location
-                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO, this);
+                            //core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO, this);
                             
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock
@@ -196,7 +198,7 @@ namespace WMS.GUI
 
         private void dataGridView4_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            var dgv = sender as DataGridView;
+            /*var dgv = sender as DataGridView;
 
             var originalCell = dgv[e.ColumnIndex, e.RowIndex];
             var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
@@ -208,7 +210,7 @@ namespace WMS.GUI
 
             string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
 
-            cell.DataSource = GetSortedListOfItems(test, "name");
+            cell.DataSource = GetSortedListOfItems(test, "name");*/
         }
             
         private List<Item> GetSortedListOfItems(string a, string b)
