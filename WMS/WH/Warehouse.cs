@@ -22,11 +22,8 @@ namespace WMS.WH
         {
             this.core = core;
             LoadNewItem();
-            LoadWarehouseInventory();
-            LoadWarehouseLayout();
-            print();
-            print2();
             print3();
+            LoadWarehouseLayout();
         }
 
         //Save to Layout
@@ -35,10 +32,10 @@ namespace WMS.WH
         public void LoadNewItem()
         {
             List<object> objectTemp = new List<object>();
-            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO,null);
+            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO, null);
             foreach (object items in objectTemp)
             {
-                string []temp = items.ToString().Split(':');
+                string[] temp = items.ToString().Split(':');
                 int itemNo = int.Parse(temp[0]);
                 string description = temp[1];
                 int size = int.Parse(temp[2]);
@@ -47,23 +44,17 @@ namespace WMS.WH
                 Item newItemTemp = new Item(itemNo, description, inStock, shelf, size);
                 item.Add(newItemTemp);
             }
-
-            foreach(Item t in item)
-            {
-                Console.WriteLine(t);
-            }
-            
         }
 
-     /*   public List<Item> getlist()
-        {
-            List<Item> temp = new List<Item>();
-            foreach (Item t in item)
-            {
-                temp.Add(t);
-            }
-            return temp;
-        }*/
+        /*   public List<Item> getlist()
+           {
+               List<Item> temp = new List<Item>();
+               foreach (Item t in item)
+               {
+                   temp.Add(t);
+               }
+               return temp;
+           }*/
 
         public int getMaxSize
         {
@@ -72,18 +63,35 @@ namespace WMS.WH
 
         public void LoadWarehouseLayout()
         {
-            using (StreamReader read = new StreamReader("C:\\Users/Claus/Documents/Visual Studio 2015/Projects/WMS/WMS/WH/Layout.txt"))
+            List<object> local = new List<object>();
+            local = core.DataHandler.DataToList("location", null);
+            foreach (object t in local)
             {
-
-                while (!read.EndOfStream)
-                {
-                    string[] tempRead = read.ReadLine().Split(',');
-                    int shelfID = int.Parse(tempRead[0]);
-                    int shelfSize = int.Parse(tempRead[1]);
-                    warehouseLayout.Add(shelfID, shelfSize);
-                }
+                Console.WriteLine(t);
             }
         }
+
+
+
+
+
+
+
+
+
+
+        /*
+        using (StreamReader read = new StreamReader("C:\\Users/Claus/Documents/Visual Studio 2015/Projects/WMS/WMS/WH/Layout.txt"))
+        {
+
+            while (!read.EndOfStream)
+            {
+                string[] tempRead = read.ReadLine().Split(',');
+                int shelfID = int.Parse(tempRead[0]);
+                int shelfSize = int.Parse(tempRead[1]);
+                warehouseLayout.Add(shelfID, shelfSize);
+            }
+        }*/
 
         public void print()
         {
@@ -114,6 +122,17 @@ namespace WMS.WH
 
 
         }
+
+
+        public void SaveWarehouseInventory()
+        {
+
+        }
+
+
+
+
+
 
         public void LoadWarehouseInventory()
         {
@@ -148,10 +167,10 @@ namespace WMS.WH
             return true;
         }
         //få fra database
-     /*   public void RecivedNewOrderNo(List<Item> items)
-        {
-            this.item = items;
-        }*/
+        /*   public void RecivedNewOrderNo(List<Item> items)
+           {
+               this.item = items;
+           }*/
         //Lav om så den finder baseret på ?????
         public int FindShelfNumber(Item product)
         {
@@ -262,6 +281,7 @@ namespace WMS.WH
             return ItemNotPlaced;
         }
     }
+}
 
 
 
@@ -490,5 +510,5 @@ namespace WMS.WH
                 }*/
 
 
-}
+
 
