@@ -124,5 +124,11 @@ namespace WMS.Handlers
                 item.UpdateGuiElements();
             }
         }
+
+        public void CloseWindowWithError(IGui caller, string error)
+        {
+            windowsOpen.Remove(caller);
+            MessageBox.Show(error);
+        }
     }
 }

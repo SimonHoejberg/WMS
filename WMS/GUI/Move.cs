@@ -41,7 +41,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
 
-            foreach (Item a in core.DataHandler.DataToList("information"))
+            foreach (Item a in core.DataHandler.DataToList("information",this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -85,7 +85,7 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.DataToList("information"))
+            foreach (Item item in core.DataHandler.DataToList("information",this))
             {
                 Console.Write("4");
             }
@@ -107,20 +107,24 @@ namespace WMS.GUI
         {
             int itemInStockIncrease = 0;
             int itemInStockDecrease = 0;
-            //Searches for empty cells in a row
+
+            //Checks the types of the different cells
+            for (int i = 0; i < dataGridView4.Columns.Count; i++)
+            {
+                if (!(TypeChecker(dataGridView4.Rows[i])))
+                {
+                    TryAgain();
+
+                    //temporary
+                    return;
+                }
+            }
+
             foreach (DataGridViewRow row in dataGridView4.Rows)
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    if (cell.Value == null)
-                    {
-                        TryAgain();
-                    }
-                }
-
                 //Searches for items with the same location as the new location
                 //could use a location search
-                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO))
+                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO, this))
                 {
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {
@@ -133,7 +137,7 @@ namespace WMS.GUI
 
 
                             //use an updatefunction to either update the item or location
-                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO);
+                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO, this);
                             
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock
@@ -143,6 +147,22 @@ namespace WMS.GUI
                     // something for when shelf and cells[4] are not equal
                 }
             }
+        }
+
+        private bool TypeChecker(DataGridViewRow row)
+        {
+            bool typeInt = true;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (i != 1 && row.Cells[i].Value.GetType() != typeof(int))
+                {
+                    Console.WriteLine("mistake at:" + i.ToString());
+                    typeInt = false;
+                }
+                
+            }
+            return typeInt;
         }
 
         //for when errors occur

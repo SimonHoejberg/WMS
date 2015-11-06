@@ -26,7 +26,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
+            core.DataHandler.GetData(GetTypeOfWindow(), this).Fill(data);
 
             dataGridView1.Columns[0].HeaderText = "Item No";
             dataGridView1.Columns[1].HeaderText = "Description";
@@ -47,7 +47,7 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow());
+                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow(),this);
                 core.WindowHandler.Update(this);
             }
 

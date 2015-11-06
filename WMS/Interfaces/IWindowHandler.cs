@@ -13,5 +13,7 @@ namespace WMS.Interfaces
         void Update(object caller);
 
         void Run();
+
+        void CloseWindowWithError(IGui caller,string error);
     }
 }
