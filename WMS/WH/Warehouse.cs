@@ -21,44 +21,36 @@ namespace WMS.WH
         public Warehouse(ICore core)
         {
             this.core = core;
-            addtest();
+            LoadNewItem();
         }
 
-        
-        public void addtest()
+        //Save to Layout
+        //Save to Inventory
+
+        public void LoadNewItem()
         {
-            //item List
-
-            List<Item> t = new List<Item>();
-            List<object> temp = new List<object>();
-            temp = core.DataHandler.DataToList(WindowTypes.INFO, null);
-
-            foreach (object te in temp)
+            List<object> objectTemp = new List<object>();
+            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO);
+            foreach (object items in objectTemp)
             {
-                //Kan tilføje til hver
-                string er = te.ToString();
-                Console.WriteLine(er);
+                string []temp = items.ToString().Split(':');
+                int itemNo = int.Parse(temp[0]);
+                string description = temp[1];
+                int size = int.Parse(temp[2]);
+                int inStock = int.Parse(temp[3]);
+                int shelf = int.Parse(temp[4]);
+                Item newItemTemp = new Item(itemNo, description, inStock, shelf, size);
+                item.Add(newItemTemp);
             }
-          
 
-            /*
-
-            Item m1 = new Item(2615, "aat", 1, 3, 401);
-            Item m2 = new Item(2615, "aas", 1, 2, 201);
-            Item m3 = new Item(2615, "aad", 1, 5, 101);
-            Item m4 = new Item(2615, "aag", 1, 8, 41);
-            Item m5 = new Item(2615, "aah", 1, 9, 40);
-            Item m6 = new Item(2615, "aak", 1, 10, 40);
-            item.Add(m1);
-            item.Add(m2);
-            item.Add(m3);
-            item.Add(m4);
-            item.Add(m5);
-            item.Add(m6);
-*/
+            foreach(Item t in item)
+            {
+                Console.WriteLine(t);
+            }
+            
         }
 
-        public List<Item> getlist()
+     /*   public List<Item> getlist()
         {
             List<Item> temp = new List<Item>();
             foreach (Item t in item)
@@ -66,7 +58,7 @@ namespace WMS.WH
                 temp.Add(t);
             }
             return temp;
-        }
+        }*/
 
         public int getMaxSize
         {
@@ -120,7 +112,7 @@ namespace WMS.WH
 
         public void LoadWarehouseInventory()
         {
-            using (StreamReader read = new StreamReader("C:\\Users/Claus/Documents/Visual Studio 2015/Projects/WMS/WMS/WH/test.txt"))
+            using (StreamReader read = new StreamReader("C:\\Users/Claus/Documents/Visual Studio 2015/Projects/WMS/WMS/WH/Inventory.txt"))
             {
                 while (!read.EndOfStream)
                 {
@@ -151,10 +143,10 @@ namespace WMS.WH
             return true;
         }
         //få fra database
-        public void RecivedNewOrderNo(List<Item> items)
+     /*   public void RecivedNewOrderNo(List<Item> items)
         {
             this.item = items;
-        }
+        }*/
         //Lav om så den finder baseret på ?????
         public int FindShelfNumber(Item product)
         {
