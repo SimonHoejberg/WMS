@@ -152,7 +152,7 @@ namespace WMS.WH
         {
             foreach (Location local in location)
             {
-                if (product.Description.Equals(local.itemName))
+                if (product.ItemNo.Equals(local))
                 {
                     return local.shelfNumber;
                 }

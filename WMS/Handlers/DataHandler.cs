@@ -41,6 +41,10 @@ namespace WMS.Handlers
             {
                 return OrderToList().ToList<object>();
             }
+            else if (db.Equals("location"))
+            {
+                return LocationToList().ToList<object>();
+            }
             return null;
         }
 
@@ -95,6 +99,18 @@ namespace WMS.Handlers
                     }
                 }
 
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
+        private List<Location> LocationToList()
+        {
+            List<Location> temp = new List<Location>();
+            MySqlDataReader reader = sql.GetDataForList("location");
+            while (reader.Read())
+            {
+                temp.Add(new Location(reader["unit"].ToString(), reader["shelf"].ToString(), reader["shelfNo"].ToString(), reader["itemNo"].ToString(), reader["space"].ToString(), reader["quantity"].ToString()));
             }
             sql.CloseConnection();
             return temp;
