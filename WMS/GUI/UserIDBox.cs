@@ -34,7 +34,7 @@ namespace WMS.GUI
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
-            var stringList = core.DataHandler.DataToList("user").OfType<string>();
+            var stringList = core.DataHandler.DataToList("user", null).OfType<string>();
             
             if (stringList.Contains(this.getInputFromTextbox))
             {

@@ -87,7 +87,7 @@ namespace WMS.Handlers
         private void ChangeLocationOnMain(object sender, EventArgs e)
         {
             System.Drawing.Point location = ((Form)sender).Location;
-            location.X -= 178;
+            location.X -= main.Width;
             main.Location = location;
         }
 
@@ -123,6 +123,12 @@ namespace WMS.Handlers
             {
                 item.UpdateGuiElements();
             }
+        }
+
+        public void CloseWindowWithError(IGui caller, string error)
+        {
+            windowsOpen.Remove(caller);
+            MessageBox.Show(error);
         }
     }
 }

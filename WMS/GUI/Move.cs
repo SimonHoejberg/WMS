@@ -31,7 +31,7 @@ namespace WMS.GUI
             for(int a = 1; a <= 15; a++)
             {
                 string b = a.ToString();
-                locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
+               // locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
             }
 
             DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
@@ -41,7 +41,7 @@ namespace WMS.GUI
             DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
 
-            foreach (Item a in core.DataHandler.DataToList("information"))
+            foreach (Item a in core.DataHandler.DataToList("information",this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
@@ -85,7 +85,7 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.DataToList("information"))
+            foreach (Item item in core.DataHandler.DataToList("information",this))
             {
                 Console.Write("4");
             }
@@ -124,7 +124,7 @@ namespace WMS.GUI
             {
                 //Searches for items with the same location as the new location
                 //could use a location search
-                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO))
+                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO, this))
                 {
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {
@@ -137,7 +137,7 @@ namespace WMS.GUI
 
 
                             //use an updatefunction to either update the item or location
-                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO);
+                            core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO, this);
                             
                             //moves quantity to location
                             //add (int)row.Cells[3].value to item.InStock

@@ -26,13 +26,13 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
+            core.DataHandler.GetData(GetTypeOfWindow(), this).Fill(data);
 
             dataGridView1.Columns[0].HeaderText = "Item No";
             dataGridView1.Columns[1].HeaderText = "Description";
             dataGridView1.Columns[2].HeaderText = "In stock";
             dataGridView1.Columns[3].HeaderText = "Location";
-            dataGridView1.Columns[4].Visible = false;
+            //dataGridView1.Columns[4].Visible = false;
             dataGridView1.Columns[5].Visible = false;
             for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -47,7 +47,7 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow());
+                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow(),this);
                 core.WindowHandler.Update(this);
             }
 

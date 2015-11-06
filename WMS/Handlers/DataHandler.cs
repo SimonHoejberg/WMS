@@ -17,17 +17,17 @@ namespace WMS.Handlers
             this.core = core;
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db)
+        public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
         {
             sql.update(coloumn, value, id, db);
         }
 
-        public MySqlDataAdapter GetData(string db)
+        public MySqlDataAdapter GetData(string db, IGui caller)
         {
             return sql.GetData(db);
         }
 
-        public List<object> DataToList(string db)
+        public List<object> DataToList(string db, IGui caller)
         {
             if (db.Equals(WindowTypes.INFO))
             {
@@ -40,12 +40,12 @@ namespace WMS.Handlers
             return null;
         }
 
-        public List<string> GetUser()
+        public List<string> GetUser(IGui caller)
         {
             return UserToList();
         }
 
-        public List<string> GetLog(string itemNo)
+        public List<string> GetLog(string itemNo, IGui caller)
         {
             return LogToList(itemNo);
         }
@@ -107,13 +107,18 @@ namespace WMS.Handlers
             return temp;
         }
 
-        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
+        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db, IGui caller)
         {
-            return sql.GetDataForItemNo(itemNo, db);
+            return sql.GetDataForItemNo("itemNo",itemNo, db);
+        }
+
+        public MySqlDataAdapter GetDataFromOrderNo(string orderNo, IGui caller)
+        {
+            return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
         }
 
 
-        public MySqlDataAdapter GetInfoForReduce(string itemNo)
+        public MySqlDataAdapter GetInfoForReduce(string itemNo, IGui caller)
         {
             throw new NotImplementedException();
         }
