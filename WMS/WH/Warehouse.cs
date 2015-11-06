@@ -25,7 +25,7 @@ namespace WMS.WH
             print3();
             LoadWarehouseInventory();
             print2();
-            OptimaleLocation(item);
+            //OptimaleLocation(item);
             print2();
         }
 
