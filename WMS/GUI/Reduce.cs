@@ -52,7 +52,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
+            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO, this);
             Run = true;
 
         }
@@ -70,7 +70,7 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO).Fill(data);
+            core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO, this).Fill(data);
             if (First)
             {
                 DataGridViewMake();
@@ -97,12 +97,12 @@ namespace WMS.GUI
             string[] b = new string[3];
             if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO).Fill(data);
+                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO, this).Fill(data);
             }
             else if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up && e.KeyCode == Keys.Enter)
             {
                 b = comboBox2.Text.Split(' ');
-                core.DataHandler.GetDataFromItemNo(b[1], WindowTypes.INFO).Fill(data);
+                core.DataHandler.GetDataFromItemNo(b[1], WindowTypes.INFO, this).Fill(data);
             }
             if (First && e.KeyCode == Keys.Enter)
             {
@@ -119,7 +119,7 @@ namespace WMS.GUI
                 itemNo = output.Split(' ');
 
 
-                core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
+                core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO, this).Fill(data);
                 if (First)
                 {
                     DataGridViewMake();

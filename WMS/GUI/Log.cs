@@ -29,14 +29,14 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
-            UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,GetTypeOfWindow(),this));
             sortToggle = true;
             button9.Text = "Unsort";
         }
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.GetData(GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.GetData(GetTypeOfWindow(),this));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
@@ -76,7 +76,7 @@ namespace WMS.GUI
             {
                 sortToggle = true;
                 string temp = dataGridView5[1, dataGridView5.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.DataHandler.GetDataFromItemNo(temp,GetTypeOfWindow()));
+                UpdateLog(core.DataHandler.GetDataFromItemNo(temp,GetTypeOfWindow(),this));
                 button9.Text = "Unsort";
             }
             else if(sortToggle)
