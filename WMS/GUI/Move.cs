@@ -213,7 +213,7 @@ namespace WMS.GUI
 
             if (a != null && b.Equals("name"))
             {
-                foreach (Item item in core.DataHandler.DataToList("information",this))
+                foreach (Item item in core.DataHandler.DataToList("information", this))
                 {
                     if (a.Equals(item.ItemNo.ToString()))
                     {

@@ -71,12 +71,7 @@
             // 
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView4.Location = new System.Drawing.Point(12, 12);
-            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column5,
-            this.Column6,
-            this.Column7,
-            this.Quantity,
-            this.Column8});
+            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {});
             this.dataGridView4.Location = new System.Drawing.Point(16, 15);
             this.dataGridView4.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView4.Name = "dataGridView4";
