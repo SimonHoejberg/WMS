@@ -102,6 +102,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4); 
             this.Name = "Register";
             this.Text = "Register";
+            this.Load += new System.EventHandler(this.Register_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

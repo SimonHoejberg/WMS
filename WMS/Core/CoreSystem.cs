@@ -20,9 +20,9 @@ namespace WMS.Core
 
         public CoreSystem(IMain main)
         {
-            wh = new Warehouse(this);
             dataHandler = new DataHandler(this);
             windowHandler = new WindowHandler(this, main);
+            wh = new Warehouse(this);
         }
 
         public void Run()

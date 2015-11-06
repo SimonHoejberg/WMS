@@ -21,10 +21,28 @@ namespace WMS.WH
         public Warehouse(ICore core)
         {
             this.core = core;
+            addtest();
         }
 
+        
         public void addtest()
         {
+            //item List
+
+            List<Item> t = new List<Item>();
+            List<object> temp = new List<object>();
+            temp = core.DataHandler.DataToList(WindowTypes.INFO);
+
+            foreach (object te in temp)
+            {
+                //Kan tilføje til hver
+                string er = te.ToString();
+                Console.WriteLine(er);
+            }
+          
+
+            /*
+
             Item m1 = new Item(2615, "aat", 1, 3, 401);
             Item m2 = new Item(2615, "aas", 1, 2, 201);
             Item m3 = new Item(2615, "aad", 1, 5, 101);
@@ -37,7 +55,7 @@ namespace WMS.WH
             item.Add(m4);
             item.Add(m5);
             item.Add(m6);
-
+*/
         }
 
         public List<Item> getlist()

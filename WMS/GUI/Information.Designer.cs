@@ -217,6 +217,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Information";
             this.Text = "Information";
+            this.Load += new System.EventHandler(this.Information_Load);
             this.Enter += new System.EventHandler(this.Information_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.itemInfoPnl.ResumeLayout(false);

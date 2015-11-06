@@ -36,7 +36,7 @@ namespace WMS.GUI
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.getData(GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.GetData(GetTypeOfWindow()));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
@@ -90,6 +90,11 @@ namespace WMS.GUI
         private void closeBtn_Click(object sender, EventArgs e)
         {
             itemInfoPnl.Visible = false;
+        }
+
+        private void Log_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
         }
     }
 }

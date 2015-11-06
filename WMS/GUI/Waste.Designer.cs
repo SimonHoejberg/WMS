@@ -42,18 +42,20 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(897, 526);
+            this.button11.Location = new System.Drawing.Point(1196, 647);
+            this.button11.Margin = new System.Windows.Forms.Padding(4);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
+            this.button11.Size = new System.Drawing.Size(100, 28);
             this.button11.TabIndex = 7;
             this.button11.Text = "Confirm";
             this.button11.UseVisualStyleBackColor = true;
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(816, 526);
+            this.button10.Location = new System.Drawing.Point(1088, 647);
+            this.button10.Margin = new System.Windows.Forms.Padding(4);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.Size = new System.Drawing.Size(100, 28);
             this.button10.TabIndex = 6;
             this.button10.Text = "Cancel";
             this.button10.UseVisualStyleBackColor = true;
@@ -61,9 +63,10 @@
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(12, 23);
+            this.comboBox3.Location = new System.Drawing.Point(16, 28);
+            this.comboBox3.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.Size = new System.Drawing.Size(160, 24);
             this.comboBox3.TabIndex = 5;
             this.comboBox3.Text = "Search";
             // 
@@ -76,9 +79,10 @@
             this.Column13,
             this.Column14,
             this.Column15});
-            this.dataGridView6.Location = new System.Drawing.Point(12, 50);
+            this.dataGridView6.Location = new System.Drawing.Point(16, 62);
+            this.dataGridView6.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView6.Name = "dataGridView6";
-            this.dataGridView6.Size = new System.Drawing.Size(960, 446);
+            this.dataGridView6.Size = new System.Drawing.Size(1280, 549);
             this.dataGridView6.TabIndex = 4;
             // 
             // Column11
@@ -100,24 +104,25 @@
             // 
             this.Column14.HeaderText = "Quantity";
             this.Column14.Name = "Column14";
-
-            /////////
+            // 
+            // Column15
+            // 
             this.Column15.HeaderText = "test";
             this.Column15.Name = "Column15";
-
-
             // 
             // Waste
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.ClientSize = new System.Drawing.Size(1312, 690);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.dataGridView6);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Waste";
             this.Text = "Waste";
+            this.Load += new System.EventHandler(this.Waste_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.ResumeLayout(false);
 

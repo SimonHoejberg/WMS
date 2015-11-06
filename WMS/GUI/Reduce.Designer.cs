@@ -28,42 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.reduceCancelBtn = new System.Windows.Forms.Button();
+            this.reduceConfirmBtn = new System.Windows.Forms.Button();
+            this.reduceDataGridView = new System.Windows.Forms.DataGridView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // button4
+            // reduceCancelBtn
             // 
-            this.button4.Location = new System.Drawing.Point(1088, 709);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(100, 28);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Cancel";
-            this.button4.UseVisualStyleBackColor = true;
+            this.reduceCancelBtn.Location = new System.Drawing.Point(1088, 690);
+            this.reduceCancelBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reduceCancelBtn.Name = "reduceCancelBtn";
+            this.reduceCancelBtn.Size = new System.Drawing.Size(100, 28);
+            this.reduceCancelBtn.TabIndex = 7;
+            this.reduceCancelBtn.Text = "Cancel";
+            this.reduceCancelBtn.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // reduceConfirmBtn
             // 
-            this.button3.Location = new System.Drawing.Point(1196, 709);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(100, 28);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Confirm";
-            this.button3.UseVisualStyleBackColor = true;
+            this.reduceConfirmBtn.Location = new System.Drawing.Point(1196, 690);
+            this.reduceConfirmBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reduceConfirmBtn.Name = "reduceConfirmBtn";
+            this.reduceConfirmBtn.Size = new System.Drawing.Size(100, 28);
+            this.reduceConfirmBtn.TabIndex = 6;
+            this.reduceConfirmBtn.Text = "Confirm";
+            this.reduceConfirmBtn.UseVisualStyleBackColor = true;
+            this.reduceConfirmBtn.Click += new System.EventHandler(this.reduceConfirmBtn_Click);
             // 
-            // dataGridView3
+            // reduceDataGridView
             // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(16, 82);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.Size = new System.Drawing.Size(1280, 599);
-            this.dataGridView3.TabIndex = 5;
-            this.dataGridView3.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellValueChanged);
+            this.reduceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.reduceDataGridView.Location = new System.Drawing.Point(16, 82);
+            this.reduceDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reduceDataGridView.Name = "reduceDataGridView";
+            this.reduceDataGridView.Size = new System.Drawing.Size(1280, 599);
+            this.reduceDataGridView.TabIndex = 5;
+            this.reduceDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellValueChanged);
             // 
             // comboBox2
             // 
@@ -75,29 +77,44 @@
             this.comboBox2.TabIndex = 4;
             this.comboBox2.Text = "Search";
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.comboBox2.DropDownClosed += new System.EventHandler(this.comboBox2_DropDownClosed);
+            this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox2_KeyDown);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(252, 17);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Search";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Reduce
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1312, 752);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.dataGridView3);
+            this.ClientSize = new System.Drawing.Size(984, 596);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.reduceCancelBtn);
+            this.Controls.Add(this.reduceConfirmBtn);
+            this.Controls.Add(this.reduceDataGridView);
             this.Controls.Add(this.comboBox2);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Reduce";
             this.Text = "Reduce";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.Load += new System.EventHandler(this.Reduce_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Button reduceCancelBtn;
+        private System.Windows.Forms.Button reduceConfirmBtn;
+        private System.Windows.Forms.DataGridView reduceDataGridView;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button1;
     }
 }

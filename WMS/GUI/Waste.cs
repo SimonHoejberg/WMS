@@ -27,5 +27,10 @@ namespace WMS.GUI
         {
 
         }
+
+        private void Waste_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
     }
 }
