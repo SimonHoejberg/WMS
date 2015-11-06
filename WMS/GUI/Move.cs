@@ -90,7 +90,7 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.DataToList("information",this))
+            foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO,this))
             {
                 Console.Write("4");
             }
@@ -157,15 +157,16 @@ namespace WMS.GUI
         private bool TypeChecker(DataGridViewRow row)
         {
             bool typeInt = true;
+            int tempInt;
 
             for (int i = 0; i < 5; i++)
             {
-                if (i != 1 && row.Cells[i].Value.GetType() != typeof(int))
+                if (i != 1 && (string.IsNullOrEmpty(row.Cells[i].Value.ToString()) || !int.TryParse(row.Cells[i].Value.ToString(), out tempInt)))
                 {
-                    Console.WriteLine("mistake at:" + i.ToString());
+                    Console.WriteLine("mistake at:" + i.ToString() + " " + row.Cells[i].Value.GetType().ToString());
                     typeInt = false;
                 }
-                
+                else Console.WriteLine("worked at:" + i.ToString());
             }
             return typeInt;
         }
