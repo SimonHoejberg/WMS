@@ -8,7 +8,6 @@ using WMS.Handlers;
 using WMS.Reference;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using WMS.WH;
 
 namespace WMS.Core
 {
