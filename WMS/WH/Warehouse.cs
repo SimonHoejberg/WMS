@@ -21,11 +21,13 @@ namespace WMS.WH
         public Warehouse(ICore core)
         {
             this.core = core;
+            aaaaaaa();
             LoadNewItem();
             print3();
             LoadWarehouseInventory();
             print2();
-            OptimaleLocation(item);
+            print();
+        //    OptimaleLocation(item);
             print2();
         }
 
@@ -79,9 +81,9 @@ namespace WMS.WH
             warehouseLayout.Add(2, 100);
             warehouseLayout.Add(3, 100);
             warehouseLayout.Add(4, 100);
-            warehouseLayout.Add(1, 100);
-            warehouseLayout.Add(1, 100);
-            warehouseLayout.Add(1, 100);
+            warehouseLayout.Add(5, 100);
+            warehouseLayout.Add(6, 100);
+            warehouseLayout.Add(7, 100);
         }
 
 
@@ -179,6 +181,7 @@ namespace WMS.WH
                  if (shelfID.Equals(local.ShelfNo))
                  {
                     x = x + local.Quantity;
+                    Console.WriteLine(x);
                  }
              }
 
@@ -232,7 +235,7 @@ namespace WMS.WH
                  // Console.WriteLine("ok");
                  return FindAvaliableSpace(product, shelfID + 1);
              }
-             else if (shelfID > numberOfShelf)
+             else if (shelfID > warehouseLayout.Count)
              {
                  //  Console.WriteLine("whyyyyyy");
                  return false;
