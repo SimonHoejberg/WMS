@@ -27,35 +27,40 @@ namespace WMS.GUI
             this.core = core;
 
             //List of locations. Not supposed to be in the final implementation. I can't database, thats why!
-            locationList = new List<Location>();
+            /*locationList = new List<Location>();
             for(int a = 1; a <= 15; a++)
             {
                 string b = a.ToString();
-               // locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
-            }
+                locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
+            }*/
+
 
             DataGridViewComboBoxColumn ComboColumnItemNo = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnName = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
+            /*DataGridViewComboBoxColumn ComboColumnLocation = new DataGridViewComboBoxColumn();
             DataGridViewComboBoxColumn ComboColumnQuantity = new DataGridViewComboBoxColumn();
-            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn ComboColumnNewLocation = new DataGridViewComboBoxColumn();*/
 
 
             foreach (Item a in core.DataHandler.DataToList("information",this))
             {
                 ComboColumnItemNo.Items.Add(a);
                 ComboColumnName.Items.Add(a);
-                ComboColumnLocation.Items.Add(a);
+                //ComboColumnLocation.Items.Add(a);
             }
 
-            ComboColumnItemNo.DisplayMember = "ItemNo";
+            ComboColumnItemNo.DisplayMember = "ItemNoString";
             ComboColumnName.DisplayMember = "Description";
-            ComboColumnLocation.DisplayMember = "";
+
+            ComboColumnItemNo.HeaderText = "Item Number";
+            ComboColumnName.HeaderText = "Item Name";
 
             dataGridView4.Columns.Add(ComboColumnItemNo);
             dataGridView4.Columns.Add(ComboColumnName);
 
-            
+            // Add the events to listen for
+            dataGridView4.CellValueChanged += new DataGridViewCellEventHandler(dataGridView4_CellValueChanged);
+            dataGridView4.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
 
 
 
@@ -85,7 +90,7 @@ namespace WMS.GUI
         //Find optimal location
         private void button6_Click(object sender, EventArgs e)
         {
-            foreach (Item item in core.DataHandler.DataToList("information",this))
+            foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO,this))
             {
                 Console.Write("4");
             }
@@ -113,12 +118,12 @@ namespace WMS.GUI
             {
                 if (!(TypeChecker(dataGridView4.Rows[i])))
                 {
-                    TryAgain();
+                        TryAgain();
 
                     //temporary
                     return;
+                    }
                 }
-            }
 
             foreach (DataGridViewRow row in dataGridView4.Rows)
             {
@@ -129,7 +134,7 @@ namespace WMS.GUI
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {
                         // Sees if the items are the same and if there's room
-                        if (item.ItemNo == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
+                        if (int.Parse(item.ItemNo) == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
                         {
 
                             itemInStockIncrease = item.InStock + (int)row.Cells[3].Value - ((item.InStock + (int)row.Cells[3].Value) % item.Size);
@@ -152,15 +157,16 @@ namespace WMS.GUI
         private bool TypeChecker(DataGridViewRow row)
         {
             bool typeInt = true;
+            int tempInt;
 
             for (int i = 0; i < 5; i++)
             {
-                if (i != 1 && row.Cells[i].Value.GetType() != typeof(int))
+                if (i != 1 && (string.IsNullOrEmpty(row.Cells[i].Value.ToString()) || !int.TryParse(row.Cells[i].Value.ToString(), out tempInt)))
                 {
-                    Console.WriteLine("mistake at:" + i.ToString());
+                    Console.WriteLine("mistake at:" + i.ToString() + " " + row.Cells[i].Value.GetType().ToString());
                     typeInt = false;
                 }
-                
+                else Console.WriteLine("worked at:" + i.ToString());
             }
             return typeInt;
         }
@@ -169,6 +175,55 @@ namespace WMS.GUI
         private void TryAgain()
         {
             
+        }
+
+        
+
+        // This event handler manually raises the CellValueChanged event 
+        // by calling the CommitEdit method. 
+        void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (this.dataGridView4.IsCurrentCellDirty)
+            {
+                // This fires the cell value changed handler below
+                dataGridView4.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dataGridView4_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var dgv = sender as DataGridView;
+
+            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
+            var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+
+            if (cell == null)
+            {
+                return;
+            }
+
+            string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+            cell.DataSource = GetSortedListOfItems(test, "name");
+        }
+            
+        private List<Item> GetSortedListOfItems(string a, string b)
+        {
+            List<Item> returnList = new List<Item>();
+
+            if (a != null && b.Equals("name"))
+            {
+                foreach (Item item in core.DataHandler.DataToList("information", this))
+                {
+                    if (a.Equals(item.ItemNo.ToString()))
+                    {
+                        Console.WriteLine(item.ItemNo + " " + Convert.ToInt32(a));
+                        returnList.Add(item);
+                    }
+                }
+            }
+
+            return returnList;
         }
 
         private void Move_Load(object sender, EventArgs e)
