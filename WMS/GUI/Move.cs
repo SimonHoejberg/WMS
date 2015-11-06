@@ -107,17 +107,21 @@ namespace WMS.GUI
         {
             int itemInStockIncrease = 0;
             int itemInStockDecrease = 0;
-            //Searches for empty cells in a row
+
+            //Checks the types of the different cells
+            for (int i = 0; i < dataGridView4.Columns.Count; i++)
+            {
+                if (!(TypeChecker(dataGridView4.Rows[i])))
+                {
+                    TryAgain();
+
+                    //temporary
+                    return;
+                }
+            }
+
             foreach (DataGridViewRow row in dataGridView4.Rows)
             {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    if (cell.Value == null)
-                    {
-                        TryAgain();
-                    }
-                }
-
                 //Searches for items with the same location as the new location
                 //could use a location search
                 foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO, this))
@@ -143,6 +147,22 @@ namespace WMS.GUI
                     // something for when shelf and cells[4] are not equal
                 }
             }
+        }
+
+        private bool TypeChecker(DataGridViewRow row)
+        {
+            bool typeInt = true;
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (i != 1 && row.Cells[i].Value.GetType() != typeof(int))
+                {
+                    Console.WriteLine("mistake at:" + i.ToString());
+                    typeInt = false;
+                }
+                
+            }
+            return typeInt;
         }
 
         //for when errors occur
