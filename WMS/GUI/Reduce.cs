@@ -67,7 +67,7 @@ namespace WMS.GUI
                 if (First)
                 {
                     core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO).Fill(data);
-                    First = false;
+                    //First = false;
                 }
                 else
                 {

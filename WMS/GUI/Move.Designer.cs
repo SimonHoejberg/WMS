@@ -1,4 +1,6 @@
-﻿namespace WMS.GUI
+﻿using System.Windows.Forms;
+
+namespace WMS.GUI
 {
     partial class Move
     {
@@ -136,5 +138,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private DataGridViewRowsAddedEventHandler dataGridView4_RowsAdded;
     }
 }
