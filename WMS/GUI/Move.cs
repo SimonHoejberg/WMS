@@ -13,6 +13,15 @@ using WMS.Interfaces;
 using WMS.Reference;
 using WMS.WH;
 
+
+/*ToDo
+- Grey out cells that can not be accessed.
+- Generalize functions
+- Add functionality to new location
+- Clean up code
+- Add support for using the "Location" combobox first
+*/
+
 namespace WMS.GUI
 {
     public partial class Move : Form, IGui
@@ -20,76 +29,49 @@ namespace WMS.GUI
         
         private ICore core;
         public List<Location> locationList;
-        DataGridViewComboBoxColumn ComboColumnItemNo;
-        DataGridViewComboBoxColumn ComboColumnName;
-        DataGridViewComboBoxColumn ComboColumnLocation;
-        DataGridViewComboBoxColumn ComboColumnQuantity;
-        DataGridViewComboBoxColumn ComboColumnNewLocation;
+        DataGridViewComboBoxColumn ComboColumnItemNo, ComboColumnName, ComboColumnLocation, ComboColumnQuantity, ComboColumnNewLocation;
 
         public Move(ICore core)
         {
             InitializeComponent();
             this.core = core;
 
-            //List of locations. Not supposed to be in the final implementation. I can't database, thats why!
-            /*locationList = new List<Location>();
-            for(int a = 1; a <= 15; a++)
-            {
-                string b = a.ToString();
-                locationList.Add(new Location(1, b, 1, 1, 1, 1, 1));
-            }*/
-
-
+            //Creates the DataGridViewComboBoxColumns that makes up the datagridview
             ComboColumnItemNo = new DataGridViewComboBoxColumn();
             ComboColumnName = new DataGridViewComboBoxColumn();
             ComboColumnLocation = new DataGridViewComboBoxColumn();
             ComboColumnQuantity = new DataGridViewComboBoxColumn();
             ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
-            foreach (Item a in core.DataHandler.DataToList(WindowTypes.INFO,this))
-            {
-                ComboColumnItemNo.Items.Add(a);
-                ComboColumnName.Items.Add(a);
-                //ComboColumnLocation.Items.Add(a);
-
-            }
-
+            //Sets the Displaymembers for the DataGridViewComboBoxColumns
             ComboColumnItemNo.DisplayMember = "ItemNoString";
             ComboColumnName.DisplayMember = "Description";
+            ComboColumnLocation.DisplayMember = "LocationToString";
 
+            //Sets the HeaderTexts for the DataGridViewComboBoxColumns
             ComboColumnItemNo.HeaderText = "Item Number";
             ComboColumnName.HeaderText = "Item Name";
             ComboColumnQuantity.HeaderText = "Quantity";
             ComboColumnLocation.HeaderText = "Location";
             ComboColumnNewLocation.HeaderText = "New Location";
 
+            //Adds DataGridViewComboBoxColumns to DataGridView
             dataGridView4.Columns.Add(ComboColumnItemNo);
             dataGridView4.Columns.Add(ComboColumnName);
             dataGridView4.Columns.Add(ComboColumnQuantity);
             dataGridView4.Columns.Add(ComboColumnLocation);
             dataGridView4.Columns.Add(ComboColumnNewLocation);
 
+            //Sets the initial datasources
+            ComboColumnItemNo.DataSource = core.DataHandler.DataToList(WindowTypes.INFO, this);
+            ComboColumnName.DataSource = core.DataHandler.DataToList(WindowTypes.INFO, this);
+            ComboColumnLocation.DataSource = core.DataHandler.DataToList("location", this);
 
             // Add the events to listen for
             dataGridView4.CellValueChanged += new DataGridViewCellEventHandler(dataGridView4_CellValueChanged);
             dataGridView4.CurrentCellDirtyStateChanged += new EventHandler(dataGridView1_CurrentCellDirtyStateChanged);
         }
 
-        public void FilterColumn(string a)
-        {
-
-        }
-
-        public string GetTypeOfWindow()
-        {
-            return "move";
-        }
-
-        public void UpdateGuiElements()
-        {
-            
-        }
-        
         private void button5_Click(object sender, EventArgs e)
         {
             //Current button event is made for testing the confirmation box. (passowd/userID)
@@ -177,11 +159,7 @@ namespace WMS.GUI
             return typeInt;
         }
 
-        //for when errors occur
-        private void TryAgain()
-        {
-            
-        }
+        
 
         
 
@@ -236,7 +214,6 @@ namespace WMS.GUI
                 List<Location> datasourceItemList2 = new List<Location>(); /*Needed new list for other unimplemented feature (autoselect)*/
                 datasourceItemList2 = GetSortedListOfLocations(test2);
                 cell2.DataSource = datasourceItemList2;
-                cell2.DisplayMember = "LocationToString";
             }
         }
 
@@ -283,6 +260,27 @@ namespace WMS.GUI
         private void Move_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        public string GetTypeOfWindow()
+        {
+            return "move";
+        }
+
+        public void FilterColumn(string a)
+        {
+
+        }
+
+        public void UpdateGuiElements()
+        {
+
+        }
+
+        //for when errors occur
+        private void TryAgain()
+        {
+
         }
     }
 }
