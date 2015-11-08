@@ -198,24 +198,69 @@ namespace WMS.GUI
 
         private void dataGridView4_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            //Sets originalCell to reference the cell the event was called from
+            var dgv = sender as DataGridView;
+            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
+
+            //If the cellValueChanged was called from the first column, aka. "itemNo" Set the datasource for the second column "ItemName"
             if (e.ColumnIndex == 0)
             {
-                var dgv = sender as DataGridView;
+                //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
+                var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
 
-            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
-            var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
+                if (cell == null)
+                {
+                    return;
+                }
 
-            if (cell == null)
+                string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString(); /*Hvorfor har jeg denne her?*/
+
+                //Creates a list from GetSortedListOfItems and sets it as the new datasource for ItemName.
+                List<Item> datasourceItemList = new List<Item>(); /*Needed new list for other unimplemented feature (autoselect)*/
+                datasourceItemList = GetSortedListOfItems(test, "name");
+                cell.DataSource = datasourceItemList;
+
+                //----------------------------------Datasource Location-----------------------------------------------------------
+
+                //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
+                var cell2 = dgv[e.ColumnIndex + 3, e.RowIndex] as DataGridViewComboBoxCell;
+
+                if (cell2 == null)
+                {
+                    return;
+                }
+
+                string test2 = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString(); /*Hvorfor har jeg denne her?*/
+
+                //Creates a list from GetSortedListOfItems and sets it as the new datasource for ItemName.
+                List<Location> datasourceItemList2 = new List<Location>(); /*Needed new list for other unimplemented feature (autoselect)*/
+                datasourceItemList2 = GetSortedListOfLocations(test2);
+                cell2.DataSource = datasourceItemList2;
+                cell2.DisplayMember = "LocationToString";
+            }
+        }
+
+        //returns list of locations that contain an item with itemnumber a
+        private List<Location> GetSortedListOfLocations(string a)
+        {
+            List<Location> returnList = new List<Location>();
+
+            if (a != null)
             {
-                return;
+                foreach (Location location in core.DataHandler.DataToList("location", this))
+                {
+                    if (a.Equals(location.LocItem.ItemNo.ToString()))
+                    {
+                        Console.WriteLine(location.LocItem.ItemNo + " " + Convert.ToInt32(a));
+                        returnList.Add(location);
+                    }
+                }
             }
 
-            string test = dataGridView4[e.ColumnIndex, e.RowIndex].Value.ToString();
+            return returnList;
+        }
 
-            cell.DataSource = GetSortedListOfItems(test, "name");*/
-        }
-        }
-            
+        //returns a list of items that contain the itemnumber a
         private List<Item> GetSortedListOfItems(string a, string b)
         {
             List<Item> returnList = new List<Item>();
