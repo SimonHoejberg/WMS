@@ -4,14 +4,14 @@ namespace WMS.WH
 {
     public class Item : IComparable
     {
-        private int itemNo;
+        private string itemNo;
         private string description;
         private int inStock;
         private int shelf;
         private int space;
         private int size;
 
-        public Item(int itemNo, string description, int inStock, int shelf, int size)
+        public Item(string itemNo, string description, int inStock, int shelf, int size)
         {
             this.itemNo = itemNo;
             this.description = description;
@@ -20,11 +20,13 @@ namespace WMS.WH
             this.size = size;
         }
 
-        public int ItemNo{ get { return itemNo; }}
+        public string ItemNo{ get { return itemNo; }}
+        public string ItemNoString { get { return Convert.ToString(ItemNo); } }
 
-        public string Description { get { return description; }} 
+        public string Description { get { return description; }}
 
-        public int Shelf {get { return shelf; }}
+        public int Shelf {get { return shelf; }
+                          set { this.shelf = value; } }
 
         public int Space { get { return space; } }
 
@@ -34,7 +36,7 @@ namespace WMS.WH
 
         public override string ToString()
         {
-            return "Item: " + ItemNo + "  Description: " + Description;
+            return ItemNo + ":" + Description + ":" + Size + ":" + InStock + ":" + Shelf;
         }
 
         public int CompareTo(object obj)
@@ -45,6 +47,11 @@ namespace WMS.WH
                 return otherItem.inStock.CompareTo(this.inStock);
             else
                 throw new ArgumentException("Object is not an Item");
+        }
+
+        public void ReduceItem(string itemNo, int quantity)
+        {
+
         }
     }
 }

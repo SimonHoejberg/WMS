@@ -31,6 +31,8 @@
             this.viewItemBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.itemInfoPnl = new System.Windows.Forms.Panel();
+            this.nameLbl = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.sizeLbl = new System.Windows.Forms.Label();
             this.locationLbl = new System.Windows.Forms.Label();
             this.usageLbl = new System.Windows.Forms.Label();
@@ -41,8 +43,6 @@
             this.logBtn = new System.Windows.Forms.Button();
             this.logLstBox = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.nameLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.itemInfoPnl.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +85,23 @@
             this.itemInfoPnl.Size = new System.Drawing.Size(338, 452);
             this.itemInfoPnl.TabIndex = 4;
             this.itemInfoPnl.Visible = false;
+            // 
+            // nameLbl
+            // 
+            this.nameLbl.AutoSize = true;
+            this.nameLbl.Location = new System.Drawing.Point(92, 48);
+            this.nameLbl.Name = "nameLbl";
+            this.nameLbl.Size = new System.Drawing.Size(0, 13);
+            this.nameLbl.TabIndex = 13;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 48);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Name:";
             // 
             // sizeLbl
             // 
@@ -172,23 +189,6 @@
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 9;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 48);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Name:";
-            // 
-            // nameLbl
-            // 
-            this.nameLbl.AutoSize = true;
-            this.nameLbl.Location = new System.Drawing.Point(92, 48);
-            this.nameLbl.Name = "nameLbl";
-            this.nameLbl.Size = new System.Drawing.Size(0, 13);
-            this.nameLbl.TabIndex = 13;
-            // 
             // Information
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,6 +200,8 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Information";
             this.Text = "Information";
+            this.Load += new System.EventHandler(this.Information_Load);
+            this.Enter += new System.EventHandler(this.Information_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.itemInfoPnl.ResumeLayout(false);
             this.itemInfoPnl.PerformLayout();
