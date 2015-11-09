@@ -57,7 +57,7 @@ namespace WMS.GUI
             ComboColumnLocation.HeaderText = "Location";
             ComboColumnNewLocation.HeaderText = "New Location";
 
-            //Adds DataGridViewComboBoxColumns to DataGridView
+            //Adds DataGridViewComboBoxColumns to DataGridView (Do not ge the order of these)
             moveMain_dgv.Columns.Add(ComboColumnItemNo);
             moveMain_dgv.Columns.Add(ComboColumnName);
             moveMain_dgv.Columns.Add(ComboColumnQuantity);
