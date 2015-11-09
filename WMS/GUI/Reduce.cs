@@ -31,8 +31,8 @@ namespace WMS.GUI
             data = new DataTable();
             bsource.DataSource = data;
             reduceDataGridView.DataSource = bsource;
-
-
+            comboBox2.ValueMember = "ItemNo";
+            comboBox2.DisplayMember = "Description";
         }
 
         public string GetTypeOfWindow()
@@ -45,21 +45,11 @@ namespace WMS.GUI
 
         }
 
-        private void dataGridView3_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void MakeComboBox()
         {
             comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO, this);
             Run = true;
 
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void reduceConfirmBtn_Click(object sender, EventArgs e)
@@ -70,7 +60,17 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO, this).Fill(data);
+            int a = 0;
+            if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
+            {
+                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO, this).Fill(data);
+            }
+
+            else
+            {
+                core.DataHandler.GetDataFromItemNo(comboBox2.SelectedValue.ToString(), WindowTypes.INFO, this).Fill(data);
+            }
+            
             if (First)
             {
                 DataGridViewMake();
@@ -94,38 +94,38 @@ namespace WMS.GUI
         private void comboBox2_KeyDown(object sender, KeyEventArgs e)
         {
             int a = 0;
-            string[] b = new string[3];
+            
+
             if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO, this).Fill(data);
+                core.DataHandler.GetDataFromItemNo(a.ToString(), WindowTypes.INFO, this).Fill(data);
             }
+
             else if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up && e.KeyCode == Keys.Enter)
             {
-                b = comboBox2.Text.Split(' ');
-                core.DataHandler.GetDataFromItemNo(b[1], WindowTypes.INFO, this).Fill(data);
+                string itemNo = comboBox2.SelectedValue.ToString();
+                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO, this).Fill(data);
             }
+
             if (First && e.KeyCode == Keys.Enter)
             {
                 DataGridViewMake();
             }
         }
 
-        private void comboBox2_DropDownClosed(object sender, EventArgs e)
-        {
-            if (Run)
-            {
-                string[] itemNo = new string[5];
-                string output = comboBox2.SelectedItem.ToString();
-                itemNo = output.Split(' ');
+        //private void comboBox2_DropDownClosed(object sender, EventArgs e)
+        //{
+        //    if (Run)
+        //    {
+        //        string itemNo = comboBox2.SelectedValue.ToString();
 
-
-                core.DataHandler.GetDataFromItemNo(itemNo[1], WindowTypes.INFO, this).Fill(data);
-                if (First)
-                {
-                    DataGridViewMake();
-                }
-            }
-        }
+        //        core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO, this).Fill(data);
+        //        if (First)
+        //        {
+        //            DataGridViewMake();
+        //        }
+        //    }
+        //}
 
         private void Reduce_Load(object sender, EventArgs e)
         {

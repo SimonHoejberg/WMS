@@ -62,7 +62,6 @@
             this.reduceDataGridView.Name = "reduceDataGridView";
             this.reduceDataGridView.Size = new System.Drawing.Size(960, 487);
             this.reduceDataGridView.TabIndex = 5;
-            this.reduceDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellValueChanged);
             // 
             // comboBox2
             // 
@@ -72,8 +71,6 @@
             this.comboBox2.Size = new System.Drawing.Size(225, 21);
             this.comboBox2.TabIndex = 4;
             this.comboBox2.Text = "Search";
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            this.comboBox2.DropDownClosed += new System.EventHandler(this.comboBox2_DropDownClosed);
             this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox2_KeyDown);
             // 
             // button1
