@@ -69,7 +69,7 @@ namespace WMS
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 
-                core.DataHandler.UpdateProduct(coloumn, value, id,"information", "id", null);
+                core.DataHandler.UpdateProduct(coloumn, value, id,"information", "id");
                 updateLog();
             }
 
@@ -99,7 +99,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
             
-            core.DataHandler.GetData("information", null).Fill(data);
+            core.DataHandler.GetData("information").Fill(data);
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].HeaderText = "Item No:";
             dataGridView1.Columns[2].HeaderText = "Name";
@@ -121,7 +121,7 @@ namespace WMS
             bsource.DataSource = data;
             dataGridView5.DataSource = bsource;
 
-            core.DataHandler.GetData("log", null).Fill(data);
+            core.DataHandler.GetData("log").Fill(data);
         }
         private void button2_Click(object sender, EventArgs e)
         {

@@ -63,9 +63,9 @@ namespace WMS.GUI
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
             //Sets the initial datasources
-            ComboColumnItemNo.DataSource = core.DataHandler.DataToList(DataBaseTypes.INFO, this);
-            ComboColumnName.DataSource = core.DataHandler.DataToList(DataBaseTypes.INFO, this);
-            ComboColumnLocation.DataSource = core.DataHandler.DataToList(DataBaseTypes.LOCATION, this);
+            ComboColumnItemNo.DataSource = core.DataHandler.DataToList(DataBaseTypes.INFO);
+            ComboColumnName.DataSource = core.DataHandler.DataToList(DataBaseTypes.INFO);
+            ComboColumnLocation.DataSource = core.DataHandler.DataToList(DataBaseTypes.LOCATION);
 
             // Add the events to listen for
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
@@ -85,13 +85,13 @@ namespace WMS.GUI
 
         private List<Item> ItemList(DataGridViewCell eventCell)
         {
-            List<Item> input = core.DataHandler.DataToList(DataBaseTypes.INFO, this).Cast<Item>().ToList();
+            List<Item> input = core.DataHandler.DataToList(DataBaseTypes.INFO).Cast<Item>().ToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
         private List<Location> LocationList(DataGridViewCell eventCell)
         {
-            List<Location> input = core.DataHandler.DataToList(DataBaseTypes.LOCATION, this).Cast<Location>().ToList();
+            List<Location> input = core.DataHandler.DataToList(DataBaseTypes.LOCATION).Cast<Location>().ToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
@@ -139,7 +139,7 @@ namespace WMS.GUI
             {
                 //Searches for items with the same location as the new location
                 //could use a location search
-                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO, this))
+                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO))
                 {
                     if (item.Shelf == (int)row.Cells[4].Value)
                     {

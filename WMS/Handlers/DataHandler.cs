@@ -18,21 +18,18 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm, IGui caller)
+        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm)
         {
-            sql.Caller = caller;
             sql.update(coloumn, value, id, db, searchTerm);
         }
 
-        public MySqlDataAdapter GetData(string db, IGui caller)
+        public MySqlDataAdapter GetData(string db)
         {
-            sql.Caller = caller;
             return sql.GetData(db);
         }
 
-        public List<object> DataToList(string db, IGui caller)
+        public List<object> DataToList(string db)
         {
-            sql.Caller = caller;
             if (db.Equals(DataBaseTypes.INFO))
             {
                 return InfoToList().ToList<object>();
@@ -48,14 +45,13 @@ namespace WMS.Handlers
             return null;
         }
 
-        public List<string> GetUser(IGui caller)
+        public List<string> GetUser()
         {
             return UserToList();
         }
 
-        public List<LogItem> GetLog(string itemNo, IGui caller)
+        public List<LogItem> GetLog(string itemNo)
         {
-            sql.Caller = caller;
             return LogToList(itemNo);
         }
 
@@ -128,20 +124,18 @@ namespace WMS.Handlers
             return temp;
         }
 
-        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db, IGui caller)
+        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
         {
-            sql.Caller = caller;
             return sql.GetDataForItemNo("itemNo",itemNo, db);
         }
 
-        public MySqlDataAdapter GetDataFromOrderNo(string orderNo, IGui caller)
+        public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
         {
-            sql.Caller = caller;
             return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
         }
 
 
-        public MySqlDataAdapter GetInfoForReduce(string itemNo, IGui caller)
+        public MySqlDataAdapter GetInfoForReduce(string itemNo)
         {
             throw new NotImplementedException();
         }

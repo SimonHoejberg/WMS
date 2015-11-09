@@ -14,6 +14,6 @@ namespace WMS.Interfaces
 
         void Run();
 
-        void CloseWindowWithError(IGui caller,string error);
+        void Exit(string error);
     }
 }

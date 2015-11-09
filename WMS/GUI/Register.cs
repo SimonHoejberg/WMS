@@ -39,7 +39,7 @@ namespace WMS.GUI
 
         private void updateComboBox()
         {
-            comboBox1.DataSource = core.DataHandler.DataToList(GetTypeOfWindow(), this);
+            comboBox1.DataSource = core.DataHandler.DataToList(GetTypeOfWindow());
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -33,7 +33,7 @@ namespace WMS.WH
         public void LoadNewItem()
         {
             List<object> objectTemp = new List<object>();
-            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO, null);
+            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO);
             foreach (object items in objectTemp)
             {
                 string[] temp = items.ToString().Split(':');
@@ -58,7 +58,7 @@ namespace WMS.WH
         {
             List<Location> returnList = new List<Location>();
             List<object> local = new List<object>();
-            local = core.DataHandler.DataToList("location", null);
+            local = core.DataHandler.DataToList("location");
             foreach (object tempLocal in local)
             {
                 string[] tempLocation = tempLocal.ToString().Split(':');

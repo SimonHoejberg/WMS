@@ -18,8 +18,6 @@ namespace WMS.Handlers
             connection = new MySqlConnection(mysqlConnectionString);
         }
 
-        public IGui Caller { set { caller = value; } }
-
         public void update(string coloumn, string value, string id, string db, string searchTerm)
         {
             MySqlCommand command = connection.CreateCommand();
@@ -99,7 +97,7 @@ namespace WMS.Handlers
                         break;
                 }
                 succes = false;
-                core.WindowHandler.CloseWindowWithError(caller, temp);
+                core.WindowHandler.Exit(temp);
             }
             return succes;
         }

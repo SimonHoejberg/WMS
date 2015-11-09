@@ -128,18 +128,10 @@ namespace WMS.Handlers
             }
         }
 
-        public void CloseWindowWithError(IGui caller, string error)
+        public void Exit(string error)
         {
-            if (caller != null)
-            {
-                windowsOpen.Remove(caller);
                 MessageBox.Show(error);
-            }
-            else
-            {
                 Environment.Exit(0);
-            }
-
         }
     }
 }

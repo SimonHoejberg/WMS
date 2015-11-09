@@ -21,7 +21,7 @@ namespace WMS.Core
         {
             dataHandler = new DataHandler(this);
             windowHandler = new WindowHandler(this, main);
-            wh = new Warehouse(this);
+            //wh = new Warehouse(this);
         }
 
         public void Run()

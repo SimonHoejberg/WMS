@@ -25,7 +25,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.DataHandler.GetData(GetTypeOfWindow(), this).Fill(data);
+            core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
 
             dataGridView1.Columns[0].HeaderText = "Item No";
             dataGridView1.Columns[1].HeaderText = "Description";
@@ -46,7 +46,7 @@ namespace WMS.GUI
             string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
             string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-            core.DataHandler.UpdateProduct(coloumn, value, id, GetTypeOfWindow(), DataBaseValues.ITEM, this);
+            core.DataHandler.UpdateProduct(coloumn, value, id, GetTypeOfWindow(), DataBaseValues.ITEM);
             core.WindowHandler.Update(this);
 
         }
@@ -71,7 +71,7 @@ namespace WMS.GUI
             locationLbl.Text = dataGridView1[3, test].Value.ToString();
             usageLbl.Text = dataGridView1[5, test].Value.ToString();
             nameLbl.Text = dataGridView1[1, test].Value.ToString();
-            logLstBox.DataSource = core.DataHandler.GetLog(itemNo, this);
+            logLstBox.DataSource = core.DataHandler.GetLog(itemNo);
         }
 
         private void closeBtn_Click(object sender, System.EventArgs e)

@@ -47,7 +47,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO, this);
+            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
             Run = true;
 
         }
@@ -63,12 +63,12 @@ namespace WMS.GUI
             int a = 0;
             if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO, this).Fill(data);
+                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO).Fill(data);
             }
 
             else
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.SelectedValue.ToString(), WindowTypes.INFO, this).Fill(data);
+                core.DataHandler.GetDataFromItemNo(comboBox2.SelectedValue.ToString(), WindowTypes.INFO).Fill(data);
             }
             
             if (First)
@@ -98,13 +98,13 @@ namespace WMS.GUI
 
             if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
             {
-                core.DataHandler.GetDataFromItemNo(a.ToString(), WindowTypes.INFO, this).Fill(data);
+                core.DataHandler.GetDataFromItemNo(a.ToString(), WindowTypes.INFO).Fill(data);
             }
 
             else if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up && e.KeyCode == Keys.Enter)
             {
                 string itemNo = comboBox2.SelectedValue.ToString();
-                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO, this).Fill(data);
+                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
             }
 
             if (First && e.KeyCode == Keys.Enter)
