@@ -1,6 +1,6 @@
 ﻿namespace WMS.GUI
 {
-    partial class Move
+    partial class moveLoadOptimal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,80 +28,73 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.moveCancel_btn = new System.Windows.Forms.Button();
+            this.moveLoadOptimal_btn = new System.Windows.Forms.Button();
+            this.moveConfirm_btn = new System.Windows.Forms.Button();
+            this.moveMain_dgv = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.moveMain_dgv)).BeginInit();
             this.SuspendLayout();
             // 
-            // button7
+            // moveCancel_btn
             // 
-            this.button7.Location = new System.Drawing.Point(1088, 647);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(100, 28);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "Cancel";
-            this.button7.UseVisualStyleBackColor = true;
+            this.moveCancel_btn.Location = new System.Drawing.Point(816, 526);
+            this.moveCancel_btn.Name = "moveCancel_btn";
+            this.moveCancel_btn.Size = new System.Drawing.Size(75, 23);
+            this.moveCancel_btn.TabIndex = 7;
+            this.moveCancel_btn.Text = "Cancel";
+            this.moveCancel_btn.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // moveLoadOptimal_btn
             // 
-            this.button6.Location = new System.Drawing.Point(980, 647);
-            this.button6.Margin = new System.Windows.Forms.Padding(4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(100, 28);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Load optimal";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.moveLoadOptimal_btn.Location = new System.Drawing.Point(735, 526);
+            this.moveLoadOptimal_btn.Name = "moveLoadOptimal_btn";
+            this.moveLoadOptimal_btn.Size = new System.Drawing.Size(75, 23);
+            this.moveLoadOptimal_btn.TabIndex = 6;
+            this.moveLoadOptimal_btn.Text = "Load optimal";
+            this.moveLoadOptimal_btn.UseVisualStyleBackColor = true;
+            this.moveLoadOptimal_btn.Click += new System.EventHandler(this.moveLoadOptimal_btn_Click);
             // 
-            // button5
+            // moveConfirm_btn
             // 
-            this.button5.Location = new System.Drawing.Point(1196, 647);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(100, 28);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Confirm";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.moveConfirm_btn.Location = new System.Drawing.Point(897, 526);
+            this.moveConfirm_btn.Name = "moveConfirm_btn";
+            this.moveConfirm_btn.Size = new System.Drawing.Size(75, 23);
+            this.moveConfirm_btn.TabIndex = 5;
+            this.moveConfirm_btn.Text = "Confirm";
+            this.moveConfirm_btn.UseVisualStyleBackColor = true;
+            this.moveConfirm_btn.Click += new System.EventHandler(this.moveConfirm_btn_Click);
             // 
-            // dataGridView4
+            // moveMain_dgv
             // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(12, 12);
-            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {});
-            this.dataGridView4.Location = new System.Drawing.Point(16, 15);
-            this.dataGridView4.Margin = new System.Windows.Forms.Padding(4);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.Size = new System.Drawing.Size(1280, 594);
-            this.dataGridView4.TabIndex = 4;
-            this.dataGridView4.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView4_CellValueChanged);
+            this.moveMain_dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.moveMain_dgv.Location = new System.Drawing.Point(12, 12);
+            this.moveMain_dgv.Name = "moveMain_dgv";
+            this.moveMain_dgv.Size = new System.Drawing.Size(960, 483);
+            this.moveMain_dgv.TabIndex = 4;
+            this.moveMain_dgv.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.moveMain_dgv_CellValueChanged);
+            this.moveMain_dgv.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.moveMain_dgv_RowsAdded);
             // 
-            // Move
+            // moveLoadOptimal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.dataGridView4);
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Move";
+            this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.moveCancel_btn);
+            this.Controls.Add(this.moveLoadOptimal_btn);
+            this.Controls.Add(this.moveConfirm_btn);
+            this.Controls.Add(this.moveMain_dgv);
+            this.Name = "moveLoadOptimal";
             this.Text = "Move";
-            this.Load += new System.EventHandler(this.Move_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveMain_dgv)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.Button moveCancel_btn;
+        private System.Windows.Forms.Button moveLoadOptimal_btn;
+        private System.Windows.Forms.Button moveConfirm_btn;
+        private System.Windows.Forms.DataGridView moveMain_dgv;
     }
 }
