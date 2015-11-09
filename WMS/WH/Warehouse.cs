@@ -10,9 +10,11 @@ namespace WMS.WH
 {
     public class Warehouse
     {
-
+        private int maxShelfSize;
         private int numberOfShelf;
-        Dictionary<int, int> warehouseLayout = new Dictionary<int, int>();
+        private int shelfSize;
+        int[,] warehouseLayout;
+        Dictionary<int, int> dwarehouseLayout = new Dictionary<int, int>();
         List<Item> item = new List<Item>();
         List<Location> location = new List<Location>();
         List<Item> ItemNotPlaced = new List<Item>();
@@ -21,10 +23,10 @@ namespace WMS.WH
         public Warehouse(ICore core)
         {
             this.core = core;
-            aaaaaaa();
+            LoadWarehouseLayout(numberOfShelf, shelfSize);
             LoadNewItem();
             print3();
-            LoadWarehouseInventory();
+            location = LoadWarehouseInventory();
             print2();
             print();
             EmptySpace(2);
@@ -33,6 +35,20 @@ namespace WMS.WH
             print2();
         }
 
+        public int NumberOfShelf
+        {
+            set { numberOfShelf = value; }
+        }
+
+        public int ShelfSize
+        {
+            set { shelfSize = value; }
+        }
+
+        public void LoadWarehouseLayout(int numberOfShelf, int shelfSize)
+        {
+            warehouseLayout = new int[numberOfShelf, shelfSize];
+        }
 
         public void LoadNewItem()
         {
@@ -54,7 +70,7 @@ namespace WMS.WH
 
         public int getMaxSize
         {
-            set { numberOfShelf = warehouseLayout.Count; }
+            set { maxShelfSize = shelfSize; }
         }
 
 
@@ -79,18 +95,7 @@ namespace WMS.WH
         }
 
 
-        public void aaaaaaa()
-        {
-            warehouseLayout.Add(1, 100);
-            warehouseLayout.Add(2, 100);
-            warehouseLayout.Add(3, 100);
-            warehouseLayout.Add(4, 100);
-            warehouseLayout.Add(5, 100);
-            warehouseLayout.Add(6, 100);
-            warehouseLayout.Add(7, 100);
-        }
-
-
+        
 
 
 
@@ -100,10 +105,11 @@ namespace WMS.WH
 
         public void print()
         {
-            foreach (KeyValuePair<int, int> pair in warehouseLayout)
+            int i = 0;
+            while(i < warehouseLayout.Length)
             {
-                Console.WriteLine(pair.Key + " " + pair.Value);
-
+                Console.WriteLine(warehouseLayout[i,shelfSize]);
+                i++;
             }
 
         }
@@ -127,19 +133,10 @@ namespace WMS.WH
 
 
         }
+        
 
 
-        public void SaveWarehouseInventory()
-        {
-
-        }
-
-
-
-
-
-
-
+/*
         public bool AddShelfUnit(int newShelfID, int newSize)
         {
             foreach (Location local in location)
@@ -155,7 +152,7 @@ namespace WMS.WH
             }
             return true;
         }
-        /*   public void RecivedNewOrderNo(List<Item> items)
+        /   public void RecivedNewOrderNo(List<Item> items)
            {
                this.item = items;
            }*/
@@ -192,7 +189,7 @@ namespace WMS.WH
              return x;
 
          }
-
+        //Skal Laves om
          public bool PlaceItem(Item item, int shelfID)
          {
 
@@ -211,7 +208,7 @@ namespace WMS.WH
 
 
          }
-
+        /*
          public int FindMaxSize(int shelfID)
          {
              foreach (KeyValuePair<int, int> pair in warehouseLayout)
@@ -224,22 +221,22 @@ namespace WMS.WH
              }
              return 0;
          }
-
+         */
          public bool FindAvaliableSpace(Item product, int shelfID)
          {
              Console.WriteLine("shelfID er :     {0}", shelfID);
-             if (product.Size <= (FindMaxSize(shelfID) - EmptySpace(shelfID)))
+             if (product.Size <= (maxShelfSize - EmptySpace(shelfID)))
              {
                  PlaceItem(product, shelfID);
                  // Console.WriteLine("Yes");
                  return true;
              }
-             else if (product.Size > ((FindMaxSize(shelfID) - EmptySpace(shelfID))))
+             else if (product.Size > ((maxShelfSize - EmptySpace(shelfID))))
              {
                  // Console.WriteLine("ok");
                  return FindAvaliableSpace(product, shelfID + 1);
              }
-             else if (shelfID > warehouseLayout.Count)
+             else if (shelfID > warehouseLayout.Length)
              {
                  //  Console.WriteLine("whyyyyyy");
                  return false;
