@@ -16,7 +16,6 @@ namespace WMS.GUI
     public partial class Reduce : Form , IGui
     {
         private ICore core;
-        private bool Run = false;
         private bool First = true;
         BindingSource bsource;
         DataTable data;
@@ -31,8 +30,6 @@ namespace WMS.GUI
             data = new DataTable();
             bsource.DataSource = data;
             reduceDataGridView.DataSource = bsource;
-            comboBox2.ValueMember = "ItemNo";
-            comboBox2.DisplayMember = "Description";
         }
 
         public string GetTypeOfWindow()
@@ -47,8 +44,9 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
-            Run = true;
+            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO, this);
+            comboBox2.ValueMember = "ItemNo";
+            comboBox2.DisplayMember = "Description";
 
         }
 
@@ -56,16 +54,16 @@ namespace WMS.GUI
         {
             UserIDBox user_dialog = new UserIDBox(core);
             DialogResult a = user_dialog.ShowDialog();
+            //MessageBox.Show( a.ToString());
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void searchBtn_Click(object sender, EventArgs e)
         {
             int a = 0;
             if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
             {
                 core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO).Fill(data);
             }
-
             else
             {
                 core.DataHandler.GetDataFromItemNo(comboBox2.SelectedValue.ToString(), WindowTypes.INFO).Fill(data);
@@ -95,7 +93,6 @@ namespace WMS.GUI
         {
             int a = 0;
             
-
             if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
             {
                 core.DataHandler.GetDataFromItemNo(a.ToString(), WindowTypes.INFO).Fill(data);
@@ -112,20 +109,6 @@ namespace WMS.GUI
                 DataGridViewMake();
             }
         }
-
-        //private void comboBox2_DropDownClosed(object sender, EventArgs e)
-        //{
-        //    if (Run)
-        //    {
-        //        string itemNo = comboBox2.SelectedValue.ToString();
-
-        //        core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO, this).Fill(data);
-        //        if (First)
-        //        {
-        //            DataGridViewMake();
-        //        }
-        //    }
-        //}
 
         private void Reduce_Load(object sender, EventArgs e)
         {
