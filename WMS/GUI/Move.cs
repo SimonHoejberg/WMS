@@ -26,7 +26,6 @@ namespace WMS.GUI
 {
     public partial class moveLoadOptimal : Form, IGui
     {
-        
         private ICore core;
         public List<Location> locationList;
         DataGridViewComboBoxColumn ComboColumnItemNo, ComboColumnName, ComboColumnLocation, ComboColumnQuantity, ComboColumnNewLocation;
@@ -97,7 +96,6 @@ namespace WMS.GUI
                 {
                     if (eventCell.Value.Equals(item.ItemNo.ToString()))
                     {
-                        //Console.WriteLine(item.ItemNo + " " + Convert.ToInt32(a));
                         returnList.Add(item);
                     }
                 }
@@ -109,7 +107,6 @@ namespace WMS.GUI
                 {
                     if (eventCell.Value.Equals(location.LocItem.ItemNo.ToString()))
                     {
-                        //Console.WriteLine(location.LocItem.ItemNo + " " + Convert.ToInt32(a));
                         returnList.Add(location);
                     }
                 }
@@ -225,6 +222,14 @@ namespace WMS.GUI
         public void FilterColumn(string a)
         {
 
+        }
+
+        private void moveMain_dgv_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            //things to do when a new row is added (e.g. disable some cells, change styles for cells)
+            DataGridViewCellStyle a = new DataGridViewCellStyle();
+            a.SelectionForeColor = Color.AliceBlue;
+            (moveMain_dgv[0, e.RowIndex] as DataGridViewComboBoxCell).Style = a;
         }
 
         public void UpdateGuiElements()

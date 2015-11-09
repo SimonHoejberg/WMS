@@ -72,6 +72,7 @@
             this.moveMain_dgv.Size = new System.Drawing.Size(960, 483);
             this.moveMain_dgv.TabIndex = 4;
             this.moveMain_dgv.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.moveMain_dgv_CellValueChanged);
+            this.moveMain_dgv.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.moveMain_dgv_RowsAdded);
             // 
             // moveLoadOptimal
             // 
