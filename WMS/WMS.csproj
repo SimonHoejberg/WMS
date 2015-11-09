@@ -76,6 +76,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="Reference\DataBaseTypes.cs" />
+    <Compile Include="Reference\DataBaseValues.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WMS.Reference
 {
-    public class DataBaseTypes
+    public static class DataBaseTypes
     {
         public static string INFO = WindowTypes.INFO;
         public static string LOG = WindowTypes.LOG;

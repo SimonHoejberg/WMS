@@ -5,12 +5,11 @@ using WMS.Reference;
 
 namespace WMS.GUI
 {
-    public partial class Information : Form , IGui
+    public partial class Information : Form, IGui
     {
-        private bool run = false;
         private ICore core;
         private string itemNo;
-        
+
         public Information(ICore core)
         {
             InitializeComponent();
@@ -19,14 +18,14 @@ namespace WMS.GUI
         }
         private void updateInfo()
         {
-
+            dataGridView1.CellValueChanged -= dataGridView_cellChanged;
             BindingSource bsource = new BindingSource();
             DataTable data = new DataTable();
 
             bsource.DataSource = data;
             dataGridView1.DataSource = bsource;
 
-            core.DataHandler.GetData(GetTypeOfWindow(),this).Fill(data);
+            core.DataHandler.GetData(GetTypeOfWindow(), this).Fill(data);
 
             dataGridView1.Columns[0].HeaderText = "Item No";
             dataGridView1.Columns[1].HeaderText = "Description";
@@ -34,26 +33,26 @@ namespace WMS.GUI
             dataGridView1.Columns[3].HeaderText = "Location";
             dataGridView1.Columns[4].Visible = false;
             dataGridView1.Columns[5].Visible = false;
-            for (int i = 0; i < dataGridView1.ColumnCount; i++) { 
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+            {
                 dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-            run = true;
+            dataGridView1.CellValueChanged += dataGridView_cellChanged;
         }
-        private void dataGridView1_cellChanged(object sender, DataGridViewCellEventArgs e)
+
+        private void dataGridView_cellChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (run)
-            {
-                string coloumn = dataGridView1.Columns[e.ColumnIndex].Name.ToString();
-                string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            string coloumn = dataGridView1.Columns[e.ColumnIndex].Name.ToString();
+            string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow(), "itemNo" ,this);
-                core.WindowHandler.Update(this);
-            }
+            core.DataHandler.UpdateProduct(coloumn, value, id, GetTypeOfWindow(), DataBaseValues.ITEM, this);
+            core.WindowHandler.Update(this);
 
         }
 
-        public void UpdateGuiElements(){
+        public void UpdateGuiElements()
+        {
             updateInfo();
         }
 
@@ -64,7 +63,7 @@ namespace WMS.GUI
 
         private void viewItemBtn_Click(object sender, System.EventArgs e)
         {
-            
+
             itemInfoPnl.Visible = true;
             int test = dataGridView1.CurrentCell.RowIndex;
             itemNo = dataGridView1[0, test].Value.ToString();
@@ -72,6 +71,7 @@ namespace WMS.GUI
             locationLbl.Text = dataGridView1[3, test].Value.ToString();
             usageLbl.Text = dataGridView1[5, test].Value.ToString();
             nameLbl.Text = dataGridView1[1, test].Value.ToString();
+            logLstBox.DataSource = core.DataHandler.GetLog(itemNo, this);
         }
 
         private void closeBtn_Click(object sender, System.EventArgs e)
