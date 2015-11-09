@@ -130,7 +130,7 @@ namespace WMS.Handlers
 
         public void Exit(string error)
         {
-                MessageBox.Show(error);
+                MessageBox.Show(error, "Error");
                 Environment.Exit(0);
         }
     }

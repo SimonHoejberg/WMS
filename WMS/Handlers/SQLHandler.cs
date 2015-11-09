@@ -93,7 +93,7 @@ namespace WMS.Handlers
                         temp = "Invalid username/password, please try again";
                         break;
                     case 1042:
-                        temp = "Hostname problem";
+                        temp = "No internet connection";
                         break;
                 }
                 succes = false;
