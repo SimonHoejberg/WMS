@@ -21,12 +21,10 @@ namespace WMS.WH
         }
 
         public string ItemNo{ get { return itemNo; }}
-        public string ItemNoString { get { return Convert.ToString(ItemNo); } }
 
         public string Description { get { return description; }}
 
-        public int Shelf {get { return shelf; }
-                          set { this.shelf = value; } }
+        public int Shelf {get { return shelf; } set { shelf = value; } }
 
         public int Space { get { return space; } }
 
@@ -36,7 +34,7 @@ namespace WMS.WH
 
         public override string ToString()
         {
-            return ItemNo + ":" + Description + ":" + Size + ":" + InStock + ":" + Shelf;
+            return ItemNo + " :" + Description + ":" + Size + ":" + InStock + ":" + Shelf;
         }
 
         public int CompareTo(object obj)

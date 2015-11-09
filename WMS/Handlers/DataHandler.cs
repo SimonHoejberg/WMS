@@ -18,10 +18,10 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
+        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm, IGui caller)
         {
             sql.Caller = caller;
-            sql.update(coloumn, value, id, db);
+            sql.update(coloumn, value, id, db, searchTerm);
         }
 
         public MySqlDataAdapter GetData(string db, IGui caller)
@@ -33,15 +33,15 @@ namespace WMS.Handlers
         public List<object> DataToList(string db, IGui caller)
         {
             sql.Caller = caller;
-            if (db.Equals(WindowTypes.INFO))
+            if (db.Equals(DataBaseTypes.INFO))
             {
                 return InfoToList().ToList<object>();
             }
-            else if (db.Equals(WindowTypes.REGISTER))
+            else if (db.Equals(DataBaseTypes.REGISTER))
             {
                 return OrderToList().ToList<object>();
             }
-            else if (db.Equals("location"))
+            else if (db.Equals(DataBaseTypes.LOCATION))
             {
                 return LocationToList().ToList<object>();
             }
@@ -53,7 +53,7 @@ namespace WMS.Handlers
             return UserToList();
         }
 
-        public List<string> GetLog(string itemNo, IGui caller)
+        public List<LogItem> GetLog(string itemNo, IGui caller)
         {
             sql.Caller = caller;
             return LogToList(itemNo);
@@ -107,7 +107,7 @@ namespace WMS.Handlers
         private List<Location> LocationToList()
         {
             List<Location> temp = new List<Location>();
-            MySqlDataReader reader = sql.GetDataForList("location");
+            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
             while (reader.Read())
             {
                 temp.Add(new Location(reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
@@ -116,13 +116,13 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<string> LogToList(string itemNo)
+        private List<LogItem> LogToList(string itemNo)
         {
-            List<string> temp = new List<string>();
-            MySqlDataReader reader = sql.GetDataForList(itemNo);
+            List<LogItem> temp = new List<LogItem>();
+            MySqlDataReader reader = sql.GetLatestLog(itemNo);
             while (reader.Read())
             {
-                temp.Add(reader["userId"].ToString());
+                temp.Add(new LogItem(reader["itemNo"].ToString(), reader["name"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
             sql.CloseConnection();
             return temp;

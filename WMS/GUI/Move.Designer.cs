@@ -1,6 +1,6 @@
 ﻿namespace WMS.GUI
 {
-    partial class moveLoadOptimal
+    partial class Move
     {
         /// <summary>
         /// Required designer variable.

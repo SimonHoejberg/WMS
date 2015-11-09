@@ -75,6 +75,8 @@
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
+    <Compile Include="Reference\DataBaseTypes.cs" />
+    <Compile Include="Reference\DataBaseValues.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
@@ -209,11 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ImageResources\placeholder_Waste.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="WH\Layout.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

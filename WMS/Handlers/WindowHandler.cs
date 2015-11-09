@@ -46,7 +46,7 @@ namespace WMS.Handlers
 
         public void OpenMove()
         {
-            CreateWindow(new moveLoadOptimal(core));
+            CreateWindow(new Move(core));
         }
 
         public void OpenRegister()
