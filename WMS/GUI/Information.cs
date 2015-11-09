@@ -47,7 +47,7 @@ namespace WMS.GUI
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow(),this);
+                core.DataHandler.UpdateProduct(coloumn, value, id,GetTypeOfWindow(), "itemNo" ,this);
                 core.WindowHandler.Update(this);
             }
 

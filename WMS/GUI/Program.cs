@@ -69,7 +69,7 @@ namespace WMS
                 string value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 string id = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 
-                core.DataHandler.UpdateProduct(coloumn, value, id,"information", null);
+                core.DataHandler.UpdateProduct(coloumn, value, id,"information", "id", null);
                 updateLog();
             }
 

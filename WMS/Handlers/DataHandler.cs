@@ -18,10 +18,10 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
+        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm, IGui caller)
         {
             sql.Caller = caller;
-            sql.update(coloumn, value, id, db);
+            sql.update(coloumn, value, id, db, searchTerm);
         }
 
         public MySqlDataAdapter GetData(string db, IGui caller)

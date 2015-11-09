@@ -11,26 +11,21 @@ namespace WMS.Handlers
         private MySqlConnection connection;
         private IGui caller;
         private ICore core;
-        
+
         public SqlHandler(ICore core)
         {
             this.core = core;
             connection = new MySqlConnection(mysqlConnectionString);
         }
 
-        public void update(string coloumn, string value, string id, string db)
+        public IGui Caller { set { caller = value; } }
+
+        public void update(string coloumn, string value, string id, string db, string searchTerm)
         {
             MySqlCommand command = connection.CreateCommand();
-            if (db.Equals(WindowTypes.INFO))
-            {
-                string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE itemNo = {2}", coloumn, value, id, db);
-                command.CommandText = sql;
-            }
-            else
-            {
-                string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE id = {2}", coloumn, value, id, db);
-                command.CommandText = sql;
-            }
+
+            string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE {4} = {2}", coloumn, value, id, db, searchTerm);
+            command.CommandText = sql;
 
             if (OpenConnection())
             {
@@ -39,7 +34,6 @@ namespace WMS.Handlers
             }
         }
 
-        public IGui Caller{ set { caller = value; } }
 
         public MySqlDataAdapter GetDataForItemNo(string sqlValue, string itemNo, string db)
         {
@@ -86,8 +80,8 @@ namespace WMS.Handlers
             try
             {
                 connection.Open();
-                
             }
+
             catch (MySqlException ex)
             {
                 Console.WriteLine("Connetion to DB failed \nError: " + ex.Number);
@@ -114,6 +108,7 @@ namespace WMS.Handlers
         {
             connection.Close();
         }
+
         public MySqlDataAdapter GetData(string db)
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
@@ -126,5 +121,5 @@ namespace WMS.Handlers
             return MyDA;
         }
     }
-    
+
 }
