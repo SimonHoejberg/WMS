@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WMS.Core;
 using WMS.Interfaces;
 using WMS.Reference;
 using WMS.WH;
@@ -88,34 +83,16 @@ namespace WMS.GUI
             }
         }
 
-        //Returns list for DataSource
-        private List<object> GetListForDataSource(string listType, DataGridViewCell eventCell)
+        private List<Item> ItemList(DataGridViewCell eventCell)
         {
-            List<object> returnList = new List<object>();
+            List<Item> input = core.DataHandler.DataToList(DataBaseTypes.INFO, this).Cast<Item>().ToList();
+            return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
+        }
 
-            if (listType.Equals("item"))
-            {
-                foreach (Item item in core.DataHandler.DataToList(DataBaseTypes.LOCATION, this))
-                {
-                    if (eventCell.Value.Equals(item.ItemNo.ToString()))
-                    {
-                        returnList.Add(item);
-                    }
-                }
-            }
-
-            else if (listType.Equals("location"))
-            {
-                foreach (Location location in core.DataHandler.DataToList("location", this))
-                {
-                    if (eventCell.Value.Equals(location.LocItem.ItemNo.ToString()))
-                    {
-                        returnList.Add(location);
-                    }
-                }
-            }
-
-            return returnList;
+        private List<Location> LocationList(DataGridViewCell eventCell)
+        {
+            List<Location> input = core.DataHandler.DataToList(DataBaseTypes.LOCATION, this).Cast<Location>().ToList();
+            return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
         private void moveLoadOptimalButtonClick(object sender, EventArgs e)
@@ -145,11 +122,11 @@ namespace WMS.GUI
             {
                 //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
                 var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
-                cell.DataSource = GetListForDataSource("item", eventCell);
+                cell.DataSource = ItemList(eventCell);
 
                 //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
                 var cell2 = dgv[e.ColumnIndex + 3, e.RowIndex] as DataGridViewComboBoxCell;
-                cell2.DataSource = GetListForDataSource("location", eventCell);
+                cell2.DataSource = LocationList(eventCell);
             }
         }
 
