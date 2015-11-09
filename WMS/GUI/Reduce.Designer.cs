@@ -32,7 +32,7 @@
             this.reduceConfirmBtn = new System.Windows.Forms.Button();
             this.reduceDataGridView = new System.Windows.Forms.DataGridView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.searchBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,23 +73,23 @@
             this.comboBox2.Text = "Search";
             this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox2_KeyDown);
             // 
-            // button1
+            // searchBtn
             // 
-            this.button1.Location = new System.Drawing.Point(251, 17);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(56, 19);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Search";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.searchBtn.Location = new System.Drawing.Point(251, 17);
+            this.searchBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.searchBtn.Name = "searchBtn";
+            this.searchBtn.Size = new System.Drawing.Size(56, 19);
+            this.searchBtn.TabIndex = 9;
+            this.searchBtn.Text = "Search";
+            this.searchBtn.UseVisualStyleBackColor = true;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
             // Reduce
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.reduceCancelBtn);
             this.Controls.Add(this.reduceConfirmBtn);
             this.Controls.Add(this.reduceDataGridView);
@@ -108,6 +108,6 @@
         private System.Windows.Forms.Button reduceConfirmBtn;
         private System.Windows.Forms.DataGridView reduceDataGridView;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button searchBtn;
     }
 }
