@@ -142,6 +142,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WH\Warehouse.cs" />
+    <Compile Include="WH\Warehouse2.cs" />
     <EmbeddedResource Include="GUI\Program.resx">
       <DependentUpon>Program.cs</DependentUpon>
     </EmbeddedResource>
