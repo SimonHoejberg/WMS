@@ -137,8 +137,7 @@ namespace WMS.Handlers
             }
             else
             {
-                MessageBox.Show(error);
-                Application.Exit();
+                Environment.Exit(0);
             }
 
         }
