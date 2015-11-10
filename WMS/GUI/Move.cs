@@ -92,6 +92,12 @@ namespace WMS.GUI
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
+        private List<Item> DescriptionList(DataGridViewCell eventCell)
+        {
+            List<Item> input = core.DataHandler.InfoToList();
+            return input.Where(x => x.Description.Equals(eventCell.Value)).ToList();
+        }
+
         private List<Location> LocationList(DataGridViewCell eventCell)
         {
             List<Location> input = core.DataHandler.LocationToList();
@@ -134,8 +140,11 @@ namespace WMS.GUI
             }
             else if (e.ColumnIndex == 1)
             {
+                var cell = dgv[e.ColumnIndex - 1, e.RowIndex] as DataGridViewComboBoxCell;
+                cell.DataSource = ItemList(eventCell);
 
             }
+
         }
 
        /* public void ManualMove()
