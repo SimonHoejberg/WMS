@@ -38,7 +38,7 @@
             // 
             // reduceCancelBtn
             // 
-            this.reduceCancelBtn.Location = new System.Drawing.Point(816, 561);
+            this.reduceCancelBtn.Location = new System.Drawing.Point(816, 528);
             this.reduceCancelBtn.Name = "reduceCancelBtn";
             this.reduceCancelBtn.Size = new System.Drawing.Size(75, 23);
             this.reduceCancelBtn.TabIndex = 7;
@@ -47,7 +47,7 @@
             // 
             // reduceConfirmBtn
             // 
-            this.reduceConfirmBtn.Location = new System.Drawing.Point(897, 561);
+            this.reduceConfirmBtn.Location = new System.Drawing.Point(897, 528);
             this.reduceConfirmBtn.Name = "reduceConfirmBtn";
             this.reduceConfirmBtn.Size = new System.Drawing.Size(75, 23);
             this.reduceConfirmBtn.TabIndex = 6;
@@ -60,7 +60,7 @@
             this.reduceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.reduceDataGridView.Location = new System.Drawing.Point(12, 67);
             this.reduceDataGridView.Name = "reduceDataGridView";
-            this.reduceDataGridView.Size = new System.Drawing.Size(960, 487);
+            this.reduceDataGridView.Size = new System.Drawing.Size(960, 455);
             this.reduceDataGridView.TabIndex = 5;
             // 
             // comboBox2
