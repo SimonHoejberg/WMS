@@ -47,7 +47,7 @@
             this.information_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Information;
             this.information_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.information_pbox.Location = new System.Drawing.Point(16, 15);
-            this.information_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.information_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.information_pbox.Name = "information_pbox";
             this.information_pbox.Size = new System.Drawing.Size(128, 75);
             this.information_pbox.TabIndex = 0;
@@ -59,7 +59,7 @@
             this.log_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Log;
             this.log_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.log_pbox.Location = new System.Drawing.Point(16, 97);
-            this.log_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.log_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.log_pbox.Name = "log_pbox";
             this.log_pbox.Size = new System.Drawing.Size(128, 75);
             this.log_pbox.TabIndex = 1;
@@ -71,7 +71,7 @@
             this.move_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Move;
             this.move_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.move_pbox.Location = new System.Drawing.Point(16, 180);
-            this.move_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.move_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.move_pbox.Name = "move_pbox";
             this.move_pbox.Size = new System.Drawing.Size(128, 75);
             this.move_pbox.TabIndex = 2;
@@ -83,7 +83,7 @@
             this.register_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Register;
             this.register_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.register_pbox.Location = new System.Drawing.Point(16, 262);
-            this.register_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.register_pbox.Margin = new System.Windows.Forms.Padding(4);
             this.register_pbox.Name = "register_pbox";
             this.register_pbox.Size = new System.Drawing.Size(128, 75);
             this.register_pbox.TabIndex = 3;
@@ -95,7 +95,7 @@
             this.pictureBox1.BackgroundImage = global::WMS.Properties.Resources.placeholder_Waste;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Location = new System.Drawing.Point(16, 345);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(128, 75);
             this.pictureBox1.TabIndex = 5;
@@ -107,7 +107,7 @@
             this.pictureBox2.BackgroundImage = global::WMS.Properties.Resources.placeholder_Remove;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox2.Location = new System.Drawing.Point(16, 428);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(128, 75);
             this.pictureBox2.TabIndex = 6;
@@ -125,9 +125,10 @@
             this.Controls.Add(this.log_pbox);
             this.Controls.Add(this.information_pbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Main";
             this.Text = "Main";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).EndInit();

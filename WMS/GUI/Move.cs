@@ -129,7 +129,7 @@ namespace WMS.GUI
             }
         }
 
-        public void ManualMove()
+       /* public void ManualMove()
         {
             int itemInStockIncrease = 0;
             int itemInStockDecrease = 0;
@@ -157,7 +157,7 @@ namespace WMS.GUI
                     // something for when shelf and cells[4] are not equal
                 }
             }
-        }
+        }*/
 
         public string GetTypeOfWindow()
         {
@@ -190,7 +190,7 @@ namespace WMS.GUI
         private void MoveConfirmButtonClick(object sender, EventArgs e)
         {
             //Current button event is made for testing the confirmation box. (passowd/userID)
-            ManualMove();
+            //ManualMove();
         }
     }
 }

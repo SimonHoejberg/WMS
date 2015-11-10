@@ -13,7 +13,7 @@ namespace WMS.GUI
 {
     public partial class Main : Form , IMain
     {
-        ICore core;
+        private ICore core;
         public Main()
         {
             InitializeComponent();
@@ -55,6 +55,11 @@ namespace WMS.GUI
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             core.WindowHandler.OpenReduce();
+        }
+
+        private void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+            core.DataHandler.CloseConnectionToServer();
         }
     }
 }

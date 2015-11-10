@@ -7,26 +7,27 @@ namespace WMS.WH
         private string itemNo;
         private string description;
         private int inStock;
-        private int shelf;
-        private int space;
+        private string location;
+        private int itemUsage;
         private int size;
 
-        public Item(string itemNo, string description, int inStock, int shelf, int size)
+        public Item(string itemNo, string description, int inStock, string location, int size, int itemUsage)
         {
             this.itemNo = itemNo;
             this.description = description;
             this.inStock = inStock;
-            this.shelf = shelf;
+            this.location = location;
             this.size = size;
+            this.itemUsage = itemUsage;
         }
 
         public string ItemNo{ get { return itemNo; }}
 
         public string Description { get { return description; }}
 
-        public int Shelf {get { return shelf; } set { shelf = value; } }
+        public string Location { get { return location; } set { location = value; } }
 
-        public int Space { get { return space; } }
+        public int Usage { get { return itemUsage; } }
 
         public int InStock { get { return inStock; } }
 
@@ -34,7 +35,7 @@ namespace WMS.WH
 
         public override string ToString()
         {
-            return ItemNo + " :" + Description + ":" + Size + ":" + InStock + ":" + Shelf;
+            return ItemNo + " :" + Description + ":" + Size + ":" + InStock + ":";// Shelf;
         }
 
         public int CompareTo(object obj)
