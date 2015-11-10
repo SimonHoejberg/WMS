@@ -89,13 +89,8 @@ namespace WMS.Handlers
         {
             int id = GetLogId();
             MySqlCommand command = connection.CreateCommand();
-            string sql = "INSERT INTO log (id = " + id + 
-                         ", itemNo = " + itemNo + 
-                         ", description = " + description + 
-                         ", date = " + date + 
-                         ", user = " + user + 
-                         ", operation = "+ operation + 
-                         ", amount = "+ amount;
+            string sql = "INSERT INTO log (id, itemNo, description, date, user, operation, amount)"+ 
+                         "VALUES (" + id + ", " + itemNo + ", '" + description + "', " + date + ", '" + user + "', '" + operation + "', " + amount + ")";
             command.CommandText = sql;
             command.ExecuteNonQuery();
         }
@@ -108,6 +103,16 @@ namespace WMS.Handlers
             ResetConnection();
             int i = int.Parse(command.ExecuteScalar().ToString());
             return i;
+        }
+
+        public void ReduceItemInfo(string itemNo, int quantity)
+        {
+            MySqlCommand command = connection.CreateCommand();
+
+            string sql = string.Format("UPDATE information SET inStock = inStock - ?quantity WHERE itemNo = {0}", itemNo);
+            command.Parameters.AddWithValue("?quantity", quantity);
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
         }
 
         public void OpenConnection()
