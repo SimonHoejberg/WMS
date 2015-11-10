@@ -70,7 +70,7 @@ namespace WMS.Handlers
             while (reader.Read())
             {
                 int tempOrderNo = 0;
-                if (int.TryParse(reader["orderNr"].ToString(), out tempOrderNo))
+                if (int.TryParse(reader["orderNo"].ToString(), out tempOrderNo))
                 {
                     if (temp.Count(x => x.OrderNo.Equals(tempOrderNo)) == 0)
                     {
@@ -121,7 +121,7 @@ namespace WMS.Handlers
 
         public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
         {
-            return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ITEM, orderNo);
+            return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
         }
 
 
