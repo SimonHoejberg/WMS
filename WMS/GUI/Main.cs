@@ -19,40 +19,40 @@ namespace WMS.GUI
             InitializeComponent();
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private void MainLoad(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
+            MinimizeBox = false;
         }
 
         public ICore Core { set { this.core = value; } }
 
-        private void information_pbox_Click(object sender, EventArgs e)
+        private void Information_pbox_Click(object sender, EventArgs e)
         {
             core.WindowHandler.OpenInformation();
         }
 
-        private void log_pbox_Click(object sender, EventArgs e)
+        private void LogButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenLog();
         }
 
-        private void move_pbox_Click(object sender, EventArgs e)
+        private void MoveButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenMove();
         }
 
-        private void register_pbox_Click(object sender, EventArgs e)
+        private void RegisterButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenRegister();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void WasteButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenWaste();
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void ReduceButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenReduce();
         }
