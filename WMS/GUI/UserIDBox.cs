@@ -21,6 +21,8 @@ namespace WMS.GUI
             InitializeComponent();
         }
 
+        public string User { get { return getInputFromTextbox; } }
+
         private void UserIDBox_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
