@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.Reference;
+using WMS.WH;
 
 namespace WMS.GUI
 {
@@ -66,11 +67,11 @@ namespace WMS.GUI
 
             itemInfoPanel.Visible = true;
             int test = dataGridView.CurrentCell.RowIndex;
-            itemNo = dataGridView[1, test].Value.ToString();
-            sizeLabel.Text = dataGridView[5, test].Value.ToString();
-            locationLabel.Text = dataGridView[4, test].Value.ToString();
-            usageLabel.Text = dataGridView[5, test].Value.ToString();
-            nameLabel.Text = dataGridView[2, test].Value.ToString();
+            string itemNo = dataGridView[0, test].Value.ToString();
+            Item item = core.DataHandler.GetItemFromItemNo(itemNo);
+            sizeLabel.Text = item.Size.ToString();
+            usageLabel.Text = item.Usage.ToString();
+            nameLabel.Text = item.Description;
             logListBox.DataSource = core.DataHandler.GetLog(itemNo);
         }
 
