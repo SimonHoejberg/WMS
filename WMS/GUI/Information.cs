@@ -78,9 +78,6 @@ namespace WMS.GUI
         private void CloseButtonClick(object sender, System.EventArgs e)
         {
             itemInfoPanel.Visible = false;
-            sizeLabel.Text = "";
-            locationLabel.Text = "";
-            usageLabel.Text = "";
         }
 
         private void LogButtonClick(object sender, System.EventArgs e)
