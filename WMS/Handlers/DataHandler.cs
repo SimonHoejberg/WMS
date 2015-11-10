@@ -61,8 +61,8 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.INFO);
             while (reader.Read())
             {
-                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()),
-                                        int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString())));
+
             }
             sql.CloseConnection();
             return temp;
@@ -118,10 +118,17 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetLatestLog(itemNo);
             while (reader.Read())
             {
-                temp.Add(new LogItem(reader["itemNo"].ToString(), reader["name"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
+                temp.Add(new LogItem(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
             sql.CloseConnection();
             return temp;
+        }
+
+        public Item GetItemFromItemNo(string itemNo)
+        {
+            MySqlDataReader reader = sql.GetItemFromItemNo(itemNo);
+            reader.Read();
+            return new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()),int.Parse(reader["itemUsage"].ToString()));
         }
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)

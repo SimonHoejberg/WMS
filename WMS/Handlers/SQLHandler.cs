@@ -45,6 +45,19 @@ namespace WMS.Handlers
             return MyDA;
         }
 
+        public MySqlDataReader GetItemFromItemNo(string itemNo)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            MySqlDataReader reader = null;
+            if (OpenConnection())
+            {
+                string sql = "SELECT * FROM information WHERE itemNo = " + itemNo;
+                command.CommandText = sql;
+                reader = command.ExecuteReader();
+            }
+            return reader;
+        }
+
         public MySqlDataReader GetLatestLog(string itemNo)
         {
             MySqlCommand command = connection.CreateCommand();

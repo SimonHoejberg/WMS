@@ -28,74 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.viewItemBtn = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.itemInfoPnl = new System.Windows.Forms.Panel();
-            this.nameLbl = new System.Windows.Forms.Label();
+            this.viewItemButton = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.itemInfoPanel = new System.Windows.Forms.Panel();
+            this.nameLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.sizeLbl = new System.Windows.Forms.Label();
-            this.locationLbl = new System.Windows.Forms.Label();
-            this.usageLbl = new System.Windows.Forms.Label();
+            this.sizeLabel = new System.Windows.Forms.Label();
+            this.locationLabel = new System.Windows.Forms.Label();
+            this.usageLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.closeBtn = new System.Windows.Forms.Button();
-            this.logBtn = new System.Windows.Forms.Button();
-            this.logLstBox = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.itemInfoPnl.SuspendLayout();
+            this.closeButton = new System.Windows.Forms.Button();
+            this.logButton = new System.Windows.Forms.Button();
+            this.logListBox = new System.Windows.Forms.ListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.itemInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // viewItemBtn
+            // viewItemButton
             // 
-            this.viewItemBtn.Location = new System.Drawing.Point(1196, 647);
-            this.viewItemBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.viewItemBtn.Name = "viewItemBtn";
-            this.viewItemBtn.Size = new System.Drawing.Size(100, 28);
-            this.viewItemBtn.TabIndex = 3;
-            this.viewItemBtn.Text = "View Item";
-            this.viewItemBtn.UseVisualStyleBackColor = true;
-            this.viewItemBtn.Click += new System.EventHandler(this.viewItemBtn_Click);
+            this.viewItemButton.Location = new System.Drawing.Point(1196, 647);
+            this.viewItemButton.Margin = new System.Windows.Forms.Padding(4);
+            this.viewItemButton.Name = "viewItemButton";
+            this.viewItemButton.Size = new System.Drawing.Size(100, 28);
+            this.viewItemButton.TabIndex = 3;
+            this.viewItemButton.Text = "View Item";
+            this.viewItemButton.UseVisualStyleBackColor = true;
+            this.viewItemButton.Click += new System.EventHandler(this.ViewItemButtonClick);
             // 
-            // dataGridView1
+            // dataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(16, 39);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1280, 572);
-            this.dataGridView1.TabIndex = 2;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Location = new System.Drawing.Point(16, 39);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.Size = new System.Drawing.Size(1280, 572);
+            this.dataGridView.TabIndex = 2;
+            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellClick);
             // 
-            // itemInfoPnl
+            // itemInfoPanel
             // 
-            this.itemInfoPnl.Controls.Add(this.nameLbl);
-            this.itemInfoPnl.Controls.Add(this.label4);
-            this.itemInfoPnl.Controls.Add(this.sizeLbl);
-            this.itemInfoPnl.Controls.Add(this.locationLbl);
-            this.itemInfoPnl.Controls.Add(this.usageLbl);
-            this.itemInfoPnl.Controls.Add(this.label3);
-            this.itemInfoPnl.Controls.Add(this.label2);
-            this.itemInfoPnl.Controls.Add(this.label1);
-            this.itemInfoPnl.Controls.Add(this.closeBtn);
-            this.itemInfoPnl.Controls.Add(this.logBtn);
-            this.itemInfoPnl.Controls.Add(this.logLstBox);
-            this.itemInfoPnl.Location = new System.Drawing.Point(411, 47);
-            this.itemInfoPnl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.itemInfoPnl.Name = "itemInfoPnl";
-            this.itemInfoPnl.Size = new System.Drawing.Size(451, 556);
-            this.itemInfoPnl.TabIndex = 4;
-            this.itemInfoPnl.Visible = false;
+            this.itemInfoPanel.Controls.Add(this.nameLabel);
+            this.itemInfoPanel.Controls.Add(this.label4);
+            this.itemInfoPanel.Controls.Add(this.sizeLabel);
+            this.itemInfoPanel.Controls.Add(this.locationLabel);
+            this.itemInfoPanel.Controls.Add(this.usageLabel);
+            this.itemInfoPanel.Controls.Add(this.label3);
+            this.itemInfoPanel.Controls.Add(this.label2);
+            this.itemInfoPanel.Controls.Add(this.label1);
+            this.itemInfoPanel.Controls.Add(this.closeButton);
+            this.itemInfoPanel.Controls.Add(this.logButton);
+            this.itemInfoPanel.Controls.Add(this.logListBox);
+            this.itemInfoPanel.Location = new System.Drawing.Point(411, 47);
+            this.itemInfoPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.itemInfoPanel.Name = "itemInfoPanel";
+            this.itemInfoPanel.Size = new System.Drawing.Size(451, 556);
+            this.itemInfoPanel.TabIndex = 4;
+            this.itemInfoPanel.Visible = false;
             // 
-            // nameLbl
+            // nameLabel
             // 
-            this.nameLbl.AutoSize = true;
-            this.nameLbl.Location = new System.Drawing.Point(123, 59);
-            this.nameLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.nameLbl.Name = "nameLbl";
-            this.nameLbl.Size = new System.Drawing.Size(0, 17);
-            this.nameLbl.TabIndex = 13;
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(123, 59);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(35, 17);
+            this.nameLabel.TabIndex = 13;
+            this.nameLabel.Text = "Text";
             // 
             // label4
             // 
@@ -107,32 +107,35 @@
             this.label4.TabIndex = 12;
             this.label4.Text = "Name:";
             // 
-            // sizeLbl
+            // sizeLabel
             // 
-            this.sizeLbl.AutoSize = true;
-            this.sizeLbl.Location = new System.Drawing.Point(119, 108);
-            this.sizeLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.sizeLbl.Name = "sizeLbl";
-            this.sizeLbl.Size = new System.Drawing.Size(0, 17);
-            this.sizeLbl.TabIndex = 11;
+            this.sizeLabel.AutoSize = true;
+            this.sizeLabel.Location = new System.Drawing.Point(119, 108);
+            this.sizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.sizeLabel.Name = "sizeLabel";
+            this.sizeLabel.Size = new System.Drawing.Size(35, 17);
+            this.sizeLabel.TabIndex = 11;
+            this.sizeLabel.Text = "Text";
             // 
-            // locationLbl
+            // locationLabel
             // 
-            this.locationLbl.AutoSize = true;
-            this.locationLbl.Location = new System.Drawing.Point(119, 140);
-            this.locationLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.locationLbl.Name = "locationLbl";
-            this.locationLbl.Size = new System.Drawing.Size(0, 17);
-            this.locationLbl.TabIndex = 10;
+            this.locationLabel.AutoSize = true;
+            this.locationLabel.Location = new System.Drawing.Point(119, 140);
+            this.locationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.locationLabel.Name = "locationLabel";
+            this.locationLabel.Size = new System.Drawing.Size(35, 17);
+            this.locationLabel.TabIndex = 10;
+            this.locationLabel.Text = "Text";
             // 
-            // usageLbl
+            // usageLabel
             // 
-            this.usageLbl.AutoSize = true;
-            this.usageLbl.Location = new System.Drawing.Point(119, 172);
-            this.usageLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.usageLbl.Name = "usageLbl";
-            this.usageLbl.Size = new System.Drawing.Size(0, 17);
-            this.usageLbl.TabIndex = 9;
+            this.usageLabel.AutoSize = true;
+            this.usageLabel.Location = new System.Drawing.Point(119, 172);
+            this.usageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.usageLabel.Name = "usageLabel";
+            this.usageLabel.Size = new System.Drawing.Size(35, 17);
+            this.usageLabel.TabIndex = 9;
+            this.usageLabel.Text = "Text";
             // 
             // label3
             // 
@@ -164,84 +167,73 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Size:";
             // 
-            // closeBtn
+            // closeButton
             // 
-            this.closeBtn.Location = new System.Drawing.Point(193, 524);
-            this.closeBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(100, 28);
-            this.closeBtn.TabIndex = 5;
-            this.closeBtn.Text = "Close";
-            this.closeBtn.UseVisualStyleBackColor = true;
-            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+            this.closeButton.Location = new System.Drawing.Point(193, 524);
+            this.closeButton.Margin = new System.Windows.Forms.Padding(4);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(100, 28);
+            this.closeButton.TabIndex = 5;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
-            // logBtn
+            // logButton
             // 
-            this.logBtn.Location = new System.Drawing.Point(331, 524);
-            this.logBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.logBtn.Name = "logBtn";
-            this.logBtn.Size = new System.Drawing.Size(100, 28);
-            this.logBtn.TabIndex = 4;
-            this.logBtn.Text = "Log";
-            this.logBtn.UseVisualStyleBackColor = true;
-            this.logBtn.Click += new System.EventHandler(this.logBtn_Click);
+            this.logButton.Location = new System.Drawing.Point(331, 524);
+            this.logButton.Margin = new System.Windows.Forms.Padding(4);
+            this.logButton.Name = "logButton";
+            this.logButton.Size = new System.Drawing.Size(100, 28);
+            this.logButton.TabIndex = 4;
+            this.logButton.Text = "Log";
+            this.logButton.UseVisualStyleBackColor = true;
+            this.logButton.Click += new System.EventHandler(this.LogButtonClick);
             // 
-            // logLstBox
+            // logListBox
             // 
-            this.logLstBox.FormattingEnabled = true;
-            this.logLstBox.ItemHeight = 16;
-            this.logLstBox.Location = new System.Drawing.Point(4, 233);
-            this.logLstBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.logLstBox.Name = "logLstBox";
-            this.logLstBox.Size = new System.Drawing.Size(441, 244);
-            this.logLstBox.TabIndex = 3;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(953, 166);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(132, 22);
-            this.textBox1.TabIndex = 9;
+            this.logListBox.FormattingEnabled = true;
+            this.logListBox.ItemHeight = 16;
+            this.logListBox.Location = new System.Drawing.Point(4, 233);
+            this.logListBox.Margin = new System.Windows.Forms.Padding(4);
+            this.logListBox.Name = "logListBox";
+            this.logListBox.Size = new System.Drawing.Size(441, 244);
+            this.logListBox.TabIndex = 3;
             // 
             // Information
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.itemInfoPnl);
-            this.Controls.Add(this.viewItemBtn);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Controls.Add(this.itemInfoPanel);
+            this.Controls.Add(this.viewItemButton);
+            this.Controls.Add(this.dataGridView);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Information";
             this.Text = "Information";
-            this.Load += new System.EventHandler(this.Information_Load);
-            this.Enter += new System.EventHandler(this.Information_Enter);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.itemInfoPnl.ResumeLayout(false);
-            this.itemInfoPnl.PerformLayout();
+            this.Load += new System.EventHandler(this.InformationLoad);
+            this.Enter += new System.EventHandler(this.InformationEnter);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.itemInfoPanel.ResumeLayout(false);
+            this.itemInfoPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button viewItemBtn;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel itemInfoPnl;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button viewItemButton;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.Panel itemInfoPanel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.Button logBtn;
-        private System.Windows.Forms.ListBox logLstBox;
-        private System.Windows.Forms.Label sizeLbl;
-        private System.Windows.Forms.Label locationLbl;
-        private System.Windows.Forms.Label usageLbl;
-        private System.Windows.Forms.Label nameLbl;
+        private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button logButton;
+        private System.Windows.Forms.ListBox logListBox;
+        private System.Windows.Forms.Label sizeLabel;
+        private System.Windows.Forms.Label locationLabel;
+        private System.Windows.Forms.Label usageLabel;
+        private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label label4;
     }
 }

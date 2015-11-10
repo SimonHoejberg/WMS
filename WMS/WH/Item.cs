@@ -11,7 +11,7 @@ namespace WMS.WH
         private int space;
         private int size;
 
-        public Item(string itemNo, string description, int inStock, int shelf, int size)
+        public Item(string itemNo, string description, int inStock, string location, int size, int itemUsage)
         {
             this.itemNo = itemNo;
             this.description = description;

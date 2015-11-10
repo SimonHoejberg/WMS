@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
 using WMS.Reference;
+using WMS.WH;
 
 namespace WMS.GUI
 {
@@ -29,14 +30,14 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
-            UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,DataBaseTypes.LOG));
             sortToggle = true;
-            button9.Text = "Unsort";
+            sortButton.Text = "Unsort";
         }
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.GetData(GetTypeOfWindow()));
+            UpdateLog(core.DataHandler.GetData(DataBaseTypes.LOG));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
@@ -45,12 +46,12 @@ namespace WMS.GUI
             DataTable data = new DataTable();
 
             bsource.DataSource = data;
-            dataGridView5.DataSource = bsource;
+            dataGridView.DataSource = bsource;
 
             mysqlData.Fill(data);
-            for (int i = 0; i < dataGridView5.ColumnCount; i++)
+            for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
-                dataGridView5.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
 
@@ -65,34 +66,41 @@ namespace WMS.GUI
             return WindowTypes.LOG;
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void ViewItemButtonClick(object sender, EventArgs e)
         {
-            itemInfoPnl.Visible = true;
+            itemInfoPanel.Visible = true;
+            int test = dataGridView.CurrentCell.RowIndex;
+            string itemNo = dataGridView[1, test].Value.ToString();
+            Item item = core.DataHandler.GetItemFromItemNo(itemNo);
+            sizeLabel.Text = item.Size.ToString();
+            usageLabel.Text = dataGridView[5, test].Value.ToString();
+            nameLabel.Text = dataGridView[2, test].Value.ToString();
+            logListBox.DataSource = core.DataHandler.GetLog(itemNo);
         }
 
-        private void Sort_Click(object sender, EventArgs e)
+        private void SortButtonClick(object sender, EventArgs e)
         {
-            if(dataGridView5.CurrentCell != null && !sortToggle)
+            if(dataGridView.CurrentCell != null && !sortToggle)
             {
                 sortToggle = true;
-                string temp = dataGridView5[1, dataGridView5.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.DataHandler.GetDataFromItemNo(temp,GetTypeOfWindow()));
-                button9.Text = "Unsort";
+                string temp = dataGridView[1, dataGridView.CurrentCell.RowIndex].Value.ToString();
+                UpdateLog(core.DataHandler.GetDataFromItemNo(temp, DataBaseTypes.LOG));
+                sortButton.Text = "Unsort";
             }
             else if(sortToggle)
             {
                 sortToggle = false;
                 UpdateLog();
-                button9.Text = "Sort";
+                sortButton.Text = "Sort";
             }
         }
 
-        private void closeBtn_Click(object sender, EventArgs e)
+        private void CloseButtonClick(object sender, EventArgs e)
         {
-            itemInfoPnl.Visible = false;
+            itemInfoPanel.Visible = false;
         }
 
-        private void Log_Load(object sender, EventArgs e)
+        private void LogLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
         }

@@ -28,62 +28,64 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
-            this.nameLbl = new System.Windows.Forms.Label();
+            this.sortButton = new System.Windows.Forms.Button();
+            this.viewItemButton = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.nameLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.sizeLbl = new System.Windows.Forms.Label();
-            this.locationLbl = new System.Windows.Forms.Label();
-            this.usageLbl = new System.Windows.Forms.Label();
+            this.sizeLabel = new System.Windows.Forms.Label();
+            this.locationLabel = new System.Windows.Forms.Label();
+            this.usageLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.closeBtn = new System.Windows.Forms.Button();
-            this.itemInfoPnl = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
-            this.itemInfoPnl.SuspendLayout();
+            this.closeButton = new System.Windows.Forms.Button();
+            this.itemInfoPanel = new System.Windows.Forms.Panel();
+            this.logListBox = new System.Windows.Forms.ListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.itemInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button9
+            // sortButton
             // 
-            this.button9.Location = new System.Drawing.Point(1088, 647);
-            this.button9.Margin = new System.Windows.Forms.Padding(4);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(100, 28);
-            this.button9.TabIndex = 5;
-            this.button9.Text = "Sort";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.Sort_Click);
+            this.sortButton.Location = new System.Drawing.Point(1088, 647);
+            this.sortButton.Margin = new System.Windows.Forms.Padding(4);
+            this.sortButton.Name = "sortButton";
+            this.sortButton.Size = new System.Drawing.Size(100, 28);
+            this.sortButton.TabIndex = 5;
+            this.sortButton.Text = "Sort";
+            this.sortButton.UseVisualStyleBackColor = true;
+            this.sortButton.Click += new System.EventHandler(this.SortButtonClick);
             // 
-            // button8
+            // viewItemButton
             // 
-            this.button8.Location = new System.Drawing.Point(1196, 647);
-            this.button8.Margin = new System.Windows.Forms.Padding(4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(100, 28);
-            this.button8.TabIndex = 4;
-            this.button8.Text = "View Item";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.viewItemButton.Location = new System.Drawing.Point(1196, 647);
+            this.viewItemButton.Margin = new System.Windows.Forms.Padding(4);
+            this.viewItemButton.Name = "viewItemButton";
+            this.viewItemButton.Size = new System.Drawing.Size(100, 28);
+            this.viewItemButton.TabIndex = 4;
+            this.viewItemButton.Text = "View Item";
+            this.viewItemButton.UseVisualStyleBackColor = true;
+            this.viewItemButton.Click += new System.EventHandler(this.ViewItemButtonClick);
             // 
-            // dataGridView5
+            // dataGridView
             // 
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(16, 37);
-            this.dataGridView5.Margin = new System.Windows.Forms.Padding(4);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.Size = new System.Drawing.Size(1280, 575);
-            this.dataGridView5.TabIndex = 3;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Location = new System.Drawing.Point(16, 37);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.Size = new System.Drawing.Size(1280, 575);
+            this.dataGridView.TabIndex = 3;
             // 
-            // nameLbl
+            // nameLabel
             // 
-            this.nameLbl.AutoSize = true;
-            this.nameLbl.Location = new System.Drawing.Point(119, 59);
-            this.nameLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.nameLbl.Name = "nameLbl";
-            this.nameLbl.Size = new System.Drawing.Size(0, 17);
-            this.nameLbl.TabIndex = 13;
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(119, 59);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(35, 17);
+            this.nameLabel.TabIndex = 13;
+            this.nameLabel.Text = "Text";
             // 
             // label4
             // 
@@ -95,32 +97,35 @@
             this.label4.TabIndex = 12;
             this.label4.Text = "Name:";
             // 
-            // sizeLbl
+            // sizeLabel
             // 
-            this.sizeLbl.AutoSize = true;
-            this.sizeLbl.Location = new System.Drawing.Point(119, 108);
-            this.sizeLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.sizeLbl.Name = "sizeLbl";
-            this.sizeLbl.Size = new System.Drawing.Size(0, 17);
-            this.sizeLbl.TabIndex = 11;
+            this.sizeLabel.AutoSize = true;
+            this.sizeLabel.Location = new System.Drawing.Point(119, 108);
+            this.sizeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.sizeLabel.Name = "sizeLabel";
+            this.sizeLabel.Size = new System.Drawing.Size(35, 17);
+            this.sizeLabel.TabIndex = 11;
+            this.sizeLabel.Text = "Text";
             // 
-            // locationLbl
+            // locationLabel
             // 
-            this.locationLbl.AutoSize = true;
-            this.locationLbl.Location = new System.Drawing.Point(119, 140);
-            this.locationLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.locationLbl.Name = "locationLbl";
-            this.locationLbl.Size = new System.Drawing.Size(0, 17);
-            this.locationLbl.TabIndex = 10;
+            this.locationLabel.AutoSize = true;
+            this.locationLabel.Location = new System.Drawing.Point(119, 140);
+            this.locationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.locationLabel.Name = "locationLabel";
+            this.locationLabel.Size = new System.Drawing.Size(35, 17);
+            this.locationLabel.TabIndex = 10;
+            this.locationLabel.Text = "Text";
             // 
-            // usageLbl
+            // usageLabel
             // 
-            this.usageLbl.AutoSize = true;
-            this.usageLbl.Location = new System.Drawing.Point(119, 172);
-            this.usageLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.usageLbl.Name = "usageLbl";
-            this.usageLbl.Size = new System.Drawing.Size(0, 17);
-            this.usageLbl.TabIndex = 9;
+            this.usageLabel.AutoSize = true;
+            this.usageLabel.Location = new System.Drawing.Point(119, 172);
+            this.usageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.usageLabel.Name = "usageLabel";
+            this.usageLabel.Size = new System.Drawing.Size(35, 17);
+            this.usageLabel.TabIndex = 9;
+            this.usageLabel.Text = "Text";
             // 
             // label3
             // 
@@ -152,69 +157,81 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Size:";
             // 
-            // closeBtn
+            // closeButton
             // 
-            this.closeBtn.Location = new System.Drawing.Point(347, 524);
-            this.closeBtn.Margin = new System.Windows.Forms.Padding(4);
-            this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(100, 28);
-            this.closeBtn.TabIndex = 5;
-            this.closeBtn.Text = "Close";
-            this.closeBtn.UseVisualStyleBackColor = true;
-            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
+            this.closeButton.Location = new System.Drawing.Point(347, 524);
+            this.closeButton.Margin = new System.Windows.Forms.Padding(4);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(100, 28);
+            this.closeButton.TabIndex = 5;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
-            // itemInfoPnl
+            // itemInfoPanel
             // 
-            this.itemInfoPnl.Controls.Add(this.nameLbl);
-            this.itemInfoPnl.Controls.Add(this.label4);
-            this.itemInfoPnl.Controls.Add(this.sizeLbl);
-            this.itemInfoPnl.Controls.Add(this.locationLbl);
-            this.itemInfoPnl.Controls.Add(this.usageLbl);
-            this.itemInfoPnl.Controls.Add(this.label3);
-            this.itemInfoPnl.Controls.Add(this.label2);
-            this.itemInfoPnl.Controls.Add(this.label1);
-            this.itemInfoPnl.Controls.Add(this.closeBtn);
-            this.itemInfoPnl.Location = new System.Drawing.Point(433, 47);
-            this.itemInfoPnl.Margin = new System.Windows.Forms.Padding(4);
-            this.itemInfoPnl.Name = "itemInfoPnl";
-            this.itemInfoPnl.Size = new System.Drawing.Size(451, 556);
-            this.itemInfoPnl.TabIndex = 6;
-            this.itemInfoPnl.Visible = false;
+            this.itemInfoPanel.Controls.Add(this.logListBox);
+            this.itemInfoPanel.Controls.Add(this.nameLabel);
+            this.itemInfoPanel.Controls.Add(this.label4);
+            this.itemInfoPanel.Controls.Add(this.sizeLabel);
+            this.itemInfoPanel.Controls.Add(this.locationLabel);
+            this.itemInfoPanel.Controls.Add(this.usageLabel);
+            this.itemInfoPanel.Controls.Add(this.label3);
+            this.itemInfoPanel.Controls.Add(this.label2);
+            this.itemInfoPanel.Controls.Add(this.label1);
+            this.itemInfoPanel.Controls.Add(this.closeButton);
+            this.itemInfoPanel.Location = new System.Drawing.Point(433, 47);
+            this.itemInfoPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.itemInfoPanel.Name = "itemInfoPanel";
+            this.itemInfoPanel.Size = new System.Drawing.Size(451, 556);
+            this.itemInfoPanel.TabIndex = 6;
+            this.itemInfoPanel.Visible = false;
+            // 
+            // logListBox
+            // 
+            this.logListBox.FormattingEnabled = true;
+            this.logListBox.ItemHeight = 16;
+            this.logListBox.Location = new System.Drawing.Point(4, 236);
+            this.logListBox.Margin = new System.Windows.Forms.Padding(4);
+            this.logListBox.Name = "logListBox";
+            this.logListBox.Size = new System.Drawing.Size(441, 244);
+            this.logListBox.TabIndex = 7;
             // 
             // Log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.itemInfoPnl);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.dataGridView5);
+            this.Controls.Add(this.itemInfoPanel);
+            this.Controls.Add(this.sortButton);
+            this.Controls.Add(this.viewItemButton);
+            this.Controls.Add(this.dataGridView);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Log";
             this.Text = "Log";
-            this.Load += new System.EventHandler(this.Log_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
-            this.itemInfoPnl.ResumeLayout(false);
-            this.itemInfoPnl.PerformLayout();
+            this.Load += new System.EventHandler(this.LogLoad);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.itemInfoPanel.ResumeLayout(false);
+            this.itemInfoPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.DataGridView dataGridView5;
-        private System.Windows.Forms.Label nameLbl;
+        private System.Windows.Forms.Button sortButton;
+        private System.Windows.Forms.Button viewItemButton;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label sizeLbl;
-        private System.Windows.Forms.Label locationLbl;
-        private System.Windows.Forms.Label usageLbl;
+        private System.Windows.Forms.Label sizeLabel;
+        private System.Windows.Forms.Label locationLabel;
+        private System.Windows.Forms.Label usageLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.Panel itemInfoPnl;
+        private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Panel itemInfoPanel;
+        private System.Windows.Forms.ListBox logListBox;
     }
 }
