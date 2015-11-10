@@ -9,13 +9,13 @@ namespace WMS.Handlers
     {
         private string mysqlConnectionString = "server=46.101.39.111;database=test;user=test;password=test2;port=3306;";
         private MySqlConnection connection;
-        private IGui caller;
         private ICore core;
 
         public SqlHandler(ICore core)
         {
             this.core = core;
             connection = new MySqlConnection(mysqlConnectionString);
+            OpenConnection();
         }
 
         public void update(string coloumn, string value, string id, string db, string searchTerm)
@@ -24,70 +24,69 @@ namespace WMS.Handlers
 
             string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE {4} = {2}", coloumn, value, id, db, searchTerm);
             command.CommandText = sql;
-
-            if (OpenConnection())
-            {
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+            command.ExecuteNonQuery();
         }
 
 
-        public MySqlDataAdapter GetDataForItemNo(string sqlValue, string itemNo, string db)
+        public MySqlDataAdapter GetDataForItemNo(string db, string searchTerm, string itemNo)
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            if (OpenConnection())
-            {
-                string sqlC = "SELECT * FROM " + db + " WHERE " + sqlValue + " = " + itemNo;
-                MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
-                connection.Close();
-            }
+            string sqlC = "SELECT * FROM " + db + " WHERE " + searchTerm + " = " + itemNo;
+            MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             return MyDA;
         }
 
-        public MySqlDataReader GetItemFromItemNo(string itemNo)
+        public MySqlDataAdapter GetAllDataFromDataBase(string db)
+        {
+            MySqlDataAdapter MyDA = new MySqlDataAdapter();
+            string sqlCom = string.Format("SELECT * FROM {0}", db);
+            MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
+            return MyDA;
+        }
+
+
+        public MySqlDataReader GetItemInfo(string db, string searchTerm, string i, string fromLimit, string howMany)
         {
             MySqlCommand command = connection.CreateCommand();
-            MySqlDataReader reader = null;
-            if (OpenConnection())
-            {
-                string sql = "SELECT * FROM information WHERE itemNo = " + itemNo;
-                command.CommandText = sql;
-                reader = command.ExecuteReader();
-            }
+            string sql = "SELECT * FROM " + db + " WHERE " + searchTerm + " = " + i + " limit " + fromLimit + "," + howMany;
+            command.CommandText = sql;
+            ResetConnection();
+            MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
 
-        public MySqlDataReader GetLatestLog(string itemNo)
+        public MySqlDataReader GetItemInfo(string db, string searchTerm, string i)
         {
             MySqlCommand command = connection.CreateCommand();
-            MySqlDataReader reader = null;
-            if (OpenConnection())
-            {
-                string sql = "SELECT * FROM log WHERE itemNo = " + itemNo;
-                command.CommandText = sql;
-                reader = command.ExecuteReader();
-            }
+            string sql = "SELECT * FROM " + db + " WHERE "+ searchTerm + " = " + i;
+            command.CommandText = sql;
+            ResetConnection();
+            MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
 
+        public MySqlDataReader GetItemLatestLog(string itemNo)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT COUNT(*) FROM log  WHERE itemNo = " + itemNo;
+            command.CommandText = sql;
+            ResetConnection();
+            int i = int.Parse(command.ExecuteScalar().ToString());
+            return GetItemInfo(DataBaseTypes.LOG, DataBaseValues.ITEM, itemNo, (i-10).ToString(), "10");
+        }
 
         public MySqlDataReader GetDataForList(string db)
         {
             MySqlCommand command = connection.CreateCommand();
-            MySqlDataReader reader = null;
-            if (OpenConnection())
-            {
-                string sql = "SELECT * FROM " + db;
-                command.CommandText = sql;
-                reader = command.ExecuteReader();
-            }
+            string sql = "SELECT * FROM " + db;
+            command.CommandText = sql;
+            ResetConnection();
+            MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
 
-        public bool OpenConnection()
+        public void OpenConnection()
         {
-            bool succes = true;
             try
             {
                 connection.Open();
@@ -109,10 +108,8 @@ namespace WMS.Handlers
                         temp = "No internet connection";
                         break;
                 }
-                succes = false;
                 core.WindowHandler.Exit(temp);
             }
-            return succes;
         }
 
         public void CloseConnection()
@@ -120,16 +117,10 @@ namespace WMS.Handlers
             connection.Close();
         }
 
-        public MySqlDataAdapter GetData(string db)
+        private void ResetConnection()
         {
-            MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            if (OpenConnection())
-            {
-                string sqlCom = string.Format("SELECT * FROM {0}", db);
-                MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
-                connection.Close();
-            }
-            return MyDA;
+            CloseConnection();
+            OpenConnection();
         }
     }
 

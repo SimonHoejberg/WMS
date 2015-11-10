@@ -73,8 +73,8 @@ namespace WMS.GUI
             string itemNo = dataGridView[1, test].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
             sizeLabel.Text = item.Size.ToString();
-            usageLabel.Text = dataGridView[5, test].Value.ToString();
-            nameLabel.Text = dataGridView[2, test].Value.ToString();
+            usageLabel.Text = item.Usage.ToString();
+            nameLabel.Text = item.Description;
             logListBox.DataSource = core.DataHandler.GetLog(itemNo);
         }
 

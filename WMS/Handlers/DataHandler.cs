@@ -25,7 +25,7 @@ namespace WMS.Handlers
 
         public MySqlDataAdapter GetData(string db)
         {
-            return sql.GetData(db);
+            return sql.GetAllDataFromDataBase(db);
         }
 
         public List<object> DataToList(string db)
@@ -115,7 +115,7 @@ namespace WMS.Handlers
         private List<LogItem> LogToList(string itemNo)
         {
             List<LogItem> temp = new List<LogItem>();
-            MySqlDataReader reader = sql.GetLatestLog(itemNo);
+            MySqlDataReader reader = sql.GetItemLatestLog(itemNo);
             while (reader.Read())
             {
                 temp.Add(new LogItem(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
@@ -126,7 +126,7 @@ namespace WMS.Handlers
 
         public Item GetItemFromItemNo(string itemNo)
         {
-            MySqlDataReader reader = sql.GetItemFromItemNo(itemNo);
+            MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
             reader.Read();
             return new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()),int.Parse(reader["itemUsage"].ToString()));
         }
@@ -145,6 +145,11 @@ namespace WMS.Handlers
         public MySqlDataAdapter GetInfoForReduce(string itemNo)
         {
             throw new NotImplementedException();
+        }
+
+        public void CloseConnectionToServer()
+        {
+            sql.CloseConnection();
         }
     }
 }
