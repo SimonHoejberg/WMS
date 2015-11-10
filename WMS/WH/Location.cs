@@ -29,7 +29,7 @@ namespace WMS.WH
 
         public override string ToString()
         {
-            return unit + ":" + shelf + ":" + shelfNo + ":" + itemNo + ":" + space + ":" + quantity;
+            return unit + ":" + shelf + ":" + shelfNo;
         }
 
 

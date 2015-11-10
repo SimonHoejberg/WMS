@@ -54,7 +54,7 @@ namespace WMS.WH
             return true;
         }
 
-        public bool FindAvaliableSpace(Item product, int shelfID)
+        /*public bool FindAvaliableSpace(Item product, int shelfID)
         {
             Console.WriteLine("shelfID er :     {0}", shelfID);
             if (product.Size <= (FindMaxSize(shelfID) - EmptySpace(shelfID)))
@@ -75,11 +75,14 @@ namespace WMS.WH
             }
             //Console.WriteLine("no");
             return false;
-        }
+        }*/
 
-        public void SaveWarehouseData()
+        public void SaveWarehouseData(string input, List<object> objList)
         {
-            //Use datahandler to save itemList/locationList changes to database.
+            if (input.Equals("item"))
+            {
+
+            }
         }
 
         public bool AddShelfUnit(int newShelfID, int newSize)
@@ -88,7 +91,7 @@ namespace WMS.WH
             return true;
         }
 
-        public List<Item> OptimaleLocation(List<Item> items)
+        /*public List<Item> OptimaleLocation(List<Item> items)
         {
             int i = 0;
             bool j = true;
@@ -112,7 +115,7 @@ namespace WMS.WH
                 i++;
             }
             return ItemNotPlaced;
-        }
+        }*/
 
     }
 
