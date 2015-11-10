@@ -43,7 +43,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
+            comboBox2.DataSource = core.DataHandler.InfoToList();
             comboBox2.ValueMember = "ItemNo";
             comboBox2.DisplayMember = "Description";
 

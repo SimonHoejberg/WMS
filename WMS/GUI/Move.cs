@@ -41,12 +41,11 @@ namespace WMS.GUI
             ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
             //Sets the Displaymembers for the DataGridViewComboBoxColumns
-            ComboColumnItemNo.DisplayMember = "ItemNoString";
+            ComboColumnItemNo.DisplayMember = "ItemNo";
             ComboColumnName.DisplayMember = "Description";
-            ComboColumnLocation.DisplayMember = "LocationToString";
 
             //Sets the Valuemembers for the DataGridViewComboBoxColumns
-            ComboColumnItemNo.DisplayMember = "ItemNoString";
+            ComboColumnItemNo.DisplayMember = "ItemNo";
 
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
             ComboColumnItemNo.HeaderText = "Item Number";
@@ -63,9 +62,9 @@ namespace WMS.GUI
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
             //Sets the initial datasources
-            ComboColumnItemNo.DataSource = core.DataHandler.DataToList(DataBaseTypes.INFO);
-            ComboColumnName.DataSource = core.DataHandler.DataToList(DataBaseTypes.INFO);
-            ComboColumnLocation.DataSource = core.DataHandler.DataToList(DataBaseTypes.LOCATION);
+            ComboColumnItemNo.DataSource = core.DataHandler.InfoToList();
+            ComboColumnName.DataSource = core.DataHandler.InfoToList();
+            ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
 
             // Add the events to listen for
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
@@ -85,13 +84,13 @@ namespace WMS.GUI
 
         private List<Item> ItemList(DataGridViewCell eventCell)
         {
-            List<Item> input = core.DataHandler.DataToList(DataBaseTypes.INFO).Cast<Item>().ToList();
+            List<Item> input = core.DataHandler.InfoToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
         private List<Location> LocationList(DataGridViewCell eventCell)
         {
-            List<Location> input = core.DataHandler.DataToList(DataBaseTypes.LOCATION).Cast<Location>().ToList();
+            List<Location> input = core.DataHandler.LocationToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
@@ -124,13 +123,13 @@ namespace WMS.GUI
                 var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
                 cell.DataSource = ItemList(eventCell);
 
-                //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
+                //Cell is hardcoded to reference the column 3 right of "itemNo", which should be "ItemLocation"
                 var cell2 = dgv[e.ColumnIndex + 3, e.RowIndex] as DataGridViewComboBoxCell;
                 cell2.DataSource = LocationList(eventCell);
             }
         }
 
-        public void ManualMove()
+       /* public void ManualMove()
         {
             int itemInStockIncrease = 0;
             int itemInStockDecrease = 0;
@@ -158,7 +157,7 @@ namespace WMS.GUI
                     // something for when shelf and cells[4] are not equal
                 }
             }
-        }
+        }*/
 
         public string GetTypeOfWindow()
         {
@@ -191,7 +190,7 @@ namespace WMS.GUI
         private void MoveConfirmButtonClick(object sender, EventArgs e)
         {
             //Current button event is made for testing the confirmation box. (passowd/userID)
-            ManualMove();
+            //ManualMove();
         }
     }
 }

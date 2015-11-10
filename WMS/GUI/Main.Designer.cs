@@ -28,124 +28,125 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.information_pbox = new System.Windows.Forms.PictureBox();
-            this.log_pbox = new System.Windows.Forms.PictureBox();
-            this.move_pbox = new System.Windows.Forms.PictureBox();
-            this.register_pbox = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.informationButton = new System.Windows.Forms.PictureBox();
+            this.logButton = new System.Windows.Forms.PictureBox();
+            this.moveButton = new System.Windows.Forms.PictureBox();
+            this.registerButton = new System.Windows.Forms.PictureBox();
+            this.wasteButton = new System.Windows.Forms.PictureBox();
+            this.reduceButton = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.informationButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.registerButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).BeginInit();
             this.SuspendLayout();
             // 
-            // information_pbox
+            // informationButton
             // 
-            this.information_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Information;
-            this.information_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.information_pbox.Location = new System.Drawing.Point(16, 15);
-            this.information_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.information_pbox.Name = "information_pbox";
-            this.information_pbox.Size = new System.Drawing.Size(128, 75);
-            this.information_pbox.TabIndex = 0;
-            this.information_pbox.TabStop = false;
-            this.information_pbox.Click += new System.EventHandler(this.information_pbox_Click);
+            this.informationButton.BackgroundImage = global::WMS.Properties.Resources.placeholder_Information;
+            this.informationButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.informationButton.Location = new System.Drawing.Point(16, 15);
+            this.informationButton.Margin = new System.Windows.Forms.Padding(4);
+            this.informationButton.Name = "informationButton";
+            this.informationButton.Size = new System.Drawing.Size(128, 75);
+            this.informationButton.TabIndex = 0;
+            this.informationButton.TabStop = false;
+            this.informationButton.Click += new System.EventHandler(this.Information_pbox_Click);
             // 
-            // log_pbox
+            // logButton
             // 
-            this.log_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Log;
-            this.log_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.log_pbox.Location = new System.Drawing.Point(16, 97);
-            this.log_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.log_pbox.Name = "log_pbox";
-            this.log_pbox.Size = new System.Drawing.Size(128, 75);
-            this.log_pbox.TabIndex = 1;
-            this.log_pbox.TabStop = false;
-            this.log_pbox.Click += new System.EventHandler(this.log_pbox_Click);
+            this.logButton.BackgroundImage = global::WMS.Properties.Resources.placeholder_Log;
+            this.logButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.logButton.Location = new System.Drawing.Point(16, 97);
+            this.logButton.Margin = new System.Windows.Forms.Padding(4);
+            this.logButton.Name = "logButton";
+            this.logButton.Size = new System.Drawing.Size(128, 75);
+            this.logButton.TabIndex = 1;
+            this.logButton.TabStop = false;
+            this.logButton.Click += new System.EventHandler(this.LogButtonClick);
             // 
-            // move_pbox
+            // moveButton
             // 
-            this.move_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Move;
-            this.move_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.move_pbox.Location = new System.Drawing.Point(16, 180);
-            this.move_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.move_pbox.Name = "move_pbox";
-            this.move_pbox.Size = new System.Drawing.Size(128, 75);
-            this.move_pbox.TabIndex = 2;
-            this.move_pbox.TabStop = false;
-            this.move_pbox.Click += new System.EventHandler(this.move_pbox_Click);
+            this.moveButton.BackgroundImage = global::WMS.Properties.Resources.placeholder_Move;
+            this.moveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.moveButton.Location = new System.Drawing.Point(16, 180);
+            this.moveButton.Margin = new System.Windows.Forms.Padding(4);
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(128, 75);
+            this.moveButton.TabIndex = 2;
+            this.moveButton.TabStop = false;
+            this.moveButton.Click += new System.EventHandler(this.MoveButtonClick);
             // 
-            // register_pbox
+            // registerButton
             // 
-            this.register_pbox.BackgroundImage = global::WMS.Properties.Resources.placeholder_Register;
-            this.register_pbox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.register_pbox.Location = new System.Drawing.Point(16, 262);
-            this.register_pbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.register_pbox.Name = "register_pbox";
-            this.register_pbox.Size = new System.Drawing.Size(128, 75);
-            this.register_pbox.TabIndex = 3;
-            this.register_pbox.TabStop = false;
-            this.register_pbox.Click += new System.EventHandler(this.register_pbox_Click);
+            this.registerButton.BackgroundImage = global::WMS.Properties.Resources.placeholder_Register;
+            this.registerButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.registerButton.Location = new System.Drawing.Point(16, 262);
+            this.registerButton.Margin = new System.Windows.Forms.Padding(4);
+            this.registerButton.Name = "registerButton";
+            this.registerButton.Size = new System.Drawing.Size(128, 75);
+            this.registerButton.TabIndex = 3;
+            this.registerButton.TabStop = false;
+            this.registerButton.Click += new System.EventHandler(this.RegisterButtonClick);
             // 
-            // pictureBox1
+            // wasteButton
             // 
-            this.pictureBox1.BackgroundImage = global::WMS.Properties.Resources.placeholder_Waste;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(16, 345);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(128, 75);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.wasteButton.BackgroundImage = global::WMS.Properties.Resources.placeholder_Waste;
+            this.wasteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.wasteButton.Location = new System.Drawing.Point(16, 345);
+            this.wasteButton.Margin = new System.Windows.Forms.Padding(4);
+            this.wasteButton.Name = "wasteButton";
+            this.wasteButton.Size = new System.Drawing.Size(128, 75);
+            this.wasteButton.TabIndex = 5;
+            this.wasteButton.TabStop = false;
+            this.wasteButton.Click += new System.EventHandler(this.WasteButtonClick);
             // 
-            // pictureBox2
+            // reduceButton
             // 
-            this.pictureBox2.BackgroundImage = global::WMS.Properties.Resources.placeholder_Remove;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(16, 428);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(128, 75);
-            this.pictureBox2.TabIndex = 6;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.reduceButton.BackgroundImage = global::WMS.Properties.Resources.placeholder_Remove;
+            this.reduceButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.reduceButton.Location = new System.Drawing.Point(16, 428);
+            this.reduceButton.Margin = new System.Windows.Forms.Padding(4);
+            this.reduceButton.Name = "reduceButton";
+            this.reduceButton.Size = new System.Drawing.Size(128, 75);
+            this.reduceButton.TabIndex = 6;
+            this.reduceButton.TabStop = false;
+            this.reduceButton.Click += new System.EventHandler(this.ReduceButtonClick);
             // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(157, 509);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.register_pbox);
-            this.Controls.Add(this.move_pbox);
-            this.Controls.Add(this.log_pbox);
-            this.Controls.Add(this.information_pbox);
+            this.Controls.Add(this.reduceButton);
+            this.Controls.Add(this.wasteButton);
+            this.Controls.Add(this.registerButton);
+            this.Controls.Add(this.moveButton);
+            this.Controls.Add(this.logButton);
+            this.Controls.Add(this.informationButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Main";
             this.Text = "Main";
-            this.Load += new System.EventHandler(this.Main_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.information_pbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.log_pbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.move_pbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.register_pbox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
+            this.Load += new System.EventHandler(this.MainLoad);
+            ((System.ComponentModel.ISupportInitialize)(this.informationButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.registerButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox information_pbox;
-        private System.Windows.Forms.PictureBox log_pbox;
-        private System.Windows.Forms.PictureBox move_pbox;
-        private System.Windows.Forms.PictureBox register_pbox;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox informationButton;
+        private System.Windows.Forms.PictureBox logButton;
+        private System.Windows.Forms.PictureBox moveButton;
+        private System.Windows.Forms.PictureBox registerButton;
+        private System.Windows.Forms.PictureBox wasteButton;
+        private System.Windows.Forms.PictureBox reduceButton;
     }
 }

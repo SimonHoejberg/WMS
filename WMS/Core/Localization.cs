@@ -15,10 +15,10 @@ namespace WMS.Core
         //    return product.LocationShelfUnit.ToString() + ";" + product.LocationShelfDepth.ToString();
         //}
 
-        public string Localizer (Item product)
+        /*public string Localizer (Item product)
         {
             return ((Shelf)product.Shelf).ToString() + ";" + product.Space.ToString();
-        }
+        }*/
 
     }
 }

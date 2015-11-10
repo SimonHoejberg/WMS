@@ -10,7 +10,7 @@ namespace WMS.WH
 {
     public class Warehouse
     {
-
+/*
         private int numberOfShelf;
         Dictionary<int, int> warehouseLayout = new Dictionary<int, int>();
         List<Item> item = new List<Item>();
@@ -42,8 +42,8 @@ namespace WMS.WH
                 int size = int.Parse(temp[2]);
                 int inStock = int.Parse(temp[3]);
                 int shelf = int.Parse(temp[4]);
-                Item newItemTemp = new Item(itemNo, description, inStock, shelf, size);
-                item.Add(newItemTemp);
+                //Item newItemTemp = new Item(itemNo, description, inStock, shelf, size);
+                //item.Add(newItemTemp);
             }
         }
 
@@ -151,15 +151,14 @@ namespace WMS.WH
             }
             return true;
         }
-        /*   public void RecivedNewOrderNo(List<Item> items)
+        public void RecivedNewOrderNo(List<Item> items)
            {
                this.item = items;
-           }*/
+           }
         
         
         //Lav om så den finder baseret på ?????
 
-       /* 
          public int FindShelfNumber(Item product)
          {
              foreach (Location local in location)
@@ -171,7 +170,6 @@ namespace WMS.WH
              }
              return 0;
          }
-         */
          public int EmptySpace(int shelfID)
          {
              int x = 0;
@@ -267,7 +265,7 @@ namespace WMS.WH
                  i++;
              }
              return ItemNotPlaced;
-         }
+         }*/
      }
     }
 
