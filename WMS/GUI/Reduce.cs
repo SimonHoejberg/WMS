@@ -54,7 +54,7 @@ namespace WMS.GUI
         {
             UserIDBox user_dialog = new UserIDBox(core);
             DialogResult a = user_dialog.ShowDialog();
-            //MessageBox.Show( a.ToString());
+            
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
