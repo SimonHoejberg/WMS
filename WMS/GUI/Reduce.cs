@@ -19,7 +19,6 @@ namespace WMS.GUI
         private bool First = true;
         BindingSource bsource;
         DataTable data;
-
        
         public Reduce(ICore core)
         {
@@ -44,7 +43,7 @@ namespace WMS.GUI
 
         private void MakeComboBox()
         {
-            comboBox2.DataSource = core.DataHandler.DataToList(WindowTypes.INFO);
+            comboBox2.DataSource = core.DataHandler.InfoToList();
             comboBox2.ValueMember = "ItemNo";
             comboBox2.DisplayMember = "Description";
 
@@ -54,7 +53,17 @@ namespace WMS.GUI
         {
             UserIDBox user_dialog = new UserIDBox(core);
             DialogResult a = user_dialog.ShowDialog();
-            
+            if (a.Equals(DialogResult.OK))
+            {
+                string user = user_dialog.User;
+                for (int i = 0; i < reduceDataGridView.RowCount; i++)
+                {
+                    if (!(reduceDataGridView[0,i].Value == null))
+                    {
+                        Item.ReduceItem(reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), int.Parse(reduceDataGridView[6,i].Value.ToString()), user);
+                    }
+                }
+            }
         }
 
         private void searchBtn_Click(object sender, EventArgs e)

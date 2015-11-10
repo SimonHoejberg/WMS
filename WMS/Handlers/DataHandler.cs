@@ -28,23 +28,6 @@ namespace WMS.Handlers
             return sql.GetAllDataFromDataBase(db);
         }
 
-        public List<object> DataToList(string db)
-        {
-            if (db.Equals(DataBaseTypes.INFO))
-            {
-                return InfoToList().ToList<object>();
-            }
-            else if (db.Equals(DataBaseTypes.REGISTER))
-            {
-                return OrderToList().ToList<object>();
-            }
-            else if (db.Equals(DataBaseTypes.LOCATION))
-            {
-                return LocationToList().ToList<object>();
-            }
-            return null;
-        }
-
         public List<string> GetUser()
         {
             return UserToList();
@@ -55,10 +38,10 @@ namespace WMS.Handlers
             return LogToList(itemNo);
         }
 
-        private List<Item> InfoToList()
+        public List<Item> InfoToList()
         {
             List<Item> temp = new List<Item>();
-            MySqlDataReader reader = sql.GetDataForList(WindowTypes.INFO);
+            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.INFO);
             while (reader.Read())
             {
                 temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString())));
@@ -68,7 +51,7 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<string> UserToList()
+        public List<string> UserToList()
         {
             List<string> temp = new List<string>();
             MySqlDataReader reader = sql.GetDataForList("user");
@@ -80,7 +63,7 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<Order> OrderToList()
+        public List<Order> OrderToList()
         {
             List<Order> temp = new List<Order>();
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.REGISTER);
@@ -100,7 +83,7 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<Location> LocationToList()
+        public List<Location> LocationToList()
         {
             List<Location> temp = new List<Location>();
             MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
@@ -112,7 +95,7 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<LogItem> LogToList(string itemNo)
+        public List<LogItem> LogToList(string itemNo)
         {
             List<LogItem> temp = new List<LogItem>();
             MySqlDataReader reader = sql.GetItemLatestLog(itemNo);
