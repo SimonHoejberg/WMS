@@ -60,7 +60,7 @@ namespace WMS.GUI
                 {
                     if (!(reduceDataGridView[0,i].Value == null))
                     {
-                        Item.ReduceItem(reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), int.Parse(reduceDataGridView[6,i].Value.ToString()), user);
+                        core.DataHandler.ReduceItem(reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), int.Parse(reduceDataGridView[6,i].Value.ToString()), user);
                     }
                 }
             }

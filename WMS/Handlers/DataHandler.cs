@@ -70,9 +70,9 @@ namespace WMS.Handlers
             while (reader.Read())
             {
                 int tempOrderNo = 0;
-                if (int.TryParse(reader["orderNr"].ToString(), out tempOrderNo))
+                if (int.TryParse(reader["orderNo"].ToString(), out tempOrderNo))
                 {
-                    if (temp.Count(x => ((Order)x).OrderNo.Equals(tempOrderNo)) > 0)
+                    if (temp.Count(x => x.OrderNo.Equals(tempOrderNo)) == 0)
                     {
                         temp.Add(new Order(tempOrderNo));
                     }
@@ -116,12 +116,12 @@ namespace WMS.Handlers
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
         {
-            return sql.GetDataForItemNo("itemNo",itemNo, db);
+            return sql.GetDataForItemNo(db,DataBaseValues.ITEM,itemNo);
         }
 
         public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
         {
-            return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
+            return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
         }
 
 
@@ -133,6 +133,11 @@ namespace WMS.Handlers
         public void CloseConnectionToServer()
         {
             sql.CloseConnection();
+        }
+
+        public void ReduceItem(string itemNo, string description, int quantity, string user)
+        {
+            sql.ReduceItem(itemNo, description, 1409, user, "Reduced", quantity);
         }
     }
 }

@@ -49,10 +49,5 @@ namespace WMS.WH
             else
                 throw new ArgumentException("Object is not an Item");
         }
-
-        public static void ReduceItem(string itemNo, string description, int quantity, string user)
-        {
-            Console.WriteLine(itemNo + " " + description + " " + quantity + " " + " " + user);
-        }
     }
 }
