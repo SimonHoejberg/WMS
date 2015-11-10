@@ -40,6 +40,10 @@ namespace WMS.GUI
             ComboColumnQuantity = new DataGridViewComboBoxColumn();
             ComboColumnNewLocation = new DataGridViewComboBoxColumn();
 
+            //Names?
+            ComboColumnName.Name = "ItemNameColumn";
+            ComboColumnItemNo.Name = "ItemNoColumn";
+
             //Sets the Displaymembers for the DataGridViewComboBoxColumns
             ComboColumnItemNo.DisplayMember = "ItemNo";
             ComboColumnName.DisplayMember = "Description";
@@ -122,10 +126,15 @@ namespace WMS.GUI
                 //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
                 var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
                 cell.DataSource = ItemList(eventCell);
+                moveDataGridView.Rows[e.RowIndex].Cells["ItemNameColumn"].Value = core.DataHandler.GetItemFromItemNo(originalCell.Value.ToString()).Description;
 
                 //Cell is hardcoded to reference the column 3 right of "itemNo", which should be "ItemLocation"
                 var cell2 = dgv[e.ColumnIndex + 3, e.RowIndex] as DataGridViewComboBoxCell;
                 cell2.DataSource = LocationList(eventCell);
+            }
+            else if (e.ColumnIndex == 1)
+            {
+
             }
         }
 
