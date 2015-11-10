@@ -14,11 +14,11 @@ namespace WMS.GUI
         public Register(ICore core)
         {
             this.core = core;
+            InitializeComponent();
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
-            dataGridView2.DataSource = bsource;
-            InitializeComponent();
+            dataGridView.DataSource = bsource;
             updateComboBox();
         }
 
@@ -32,9 +32,19 @@ namespace WMS.GUI
 
         }
 
-        private void updateDataGridView()
+        private void updateDataGridView(string orderNo)
         {
 
+            core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
+
+            dataGridView.Columns[0].HeaderText = "Order No";
+            dataGridView.Columns[1].HeaderText = "Item No";
+            dataGridView.Columns[2].HeaderText = "Description";
+            dataGridView.Columns[3].HeaderText = "Expected Quantity";
+            for (int i = 0; i < dataGridView.ColumnCount; i++)
+            {
+                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
 
         private void updateComboBox()
@@ -70,7 +80,7 @@ namespace WMS.GUI
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-
+            updateDataGridView(((Order)comboBox1.SelectedItem).OrderNo.ToString());
         }
     }
 }
