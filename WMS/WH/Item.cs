@@ -21,6 +21,8 @@ namespace WMS.WH
             this.itemUsage = itemUsage;
         }
 
+        public string Identification { get { return itemNo + ": " + description; } }
+
         public string ItemNo{ get { return itemNo; }}
 
         public string Description { get { return description; }}
