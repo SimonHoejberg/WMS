@@ -134,5 +134,10 @@ namespace WMS.Handlers
         {
             sql.CloseConnection();
         }
+
+        public void ReduceItem(string itemNo, string description, int quantity, string user)
+        {
+            sql.ReduceItem(itemNo, description, 1409, user, "Reduced", quantity);
+        }
     }
 }

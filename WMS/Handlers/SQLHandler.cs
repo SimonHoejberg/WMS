@@ -85,6 +85,31 @@ namespace WMS.Handlers
             return reader;
         }
 
+        public void ReduceItem(string itemNo, string description, int date, string user, string operation, int amount)
+        {
+            int id = GetLogId();
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "INSERT INTO log (id = " + id + 
+                         ", itemNo = " + itemNo + 
+                         ", description = " + description + 
+                         ", date = " + date + 
+                         ", user = " + user + 
+                         ", operation = "+ operation + 
+                         ", amount = "+ amount;
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+        }
+
+        public int GetLogId()
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT COUNT(*) FROM log";
+            command.CommandText = sql;
+            ResetConnection();
+            int i = int.Parse(command.ExecuteScalar().ToString());
+            return i;
+        }
+
         public void OpenConnection()
         {
             try
