@@ -64,6 +64,8 @@ namespace WMS.GUI
                     }
                 }
             }
+
+            data.Clear();
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
@@ -86,7 +88,7 @@ namespace WMS.GUI
 
         private void DataGridViewMake()
         {
-            reduceDataGridView.Columns[2].Visible = false;
+            //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
             reduceDataGridView.Columns[5].Visible = false;
             data.Columns.Add("Quantity");
