@@ -58,7 +58,7 @@ namespace WMS.GUI
                 string user = user_dialog.User;
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
-                    if (!(reduceDataGridView[0,i].Value == null))
+                    if (!(reduceDataGridView[0, i].Value == null))
                     {
                         core.DataHandler.ReduceItem(reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), int.Parse(reduceDataGridView[6,i].Value.ToString()), user);
                     }
