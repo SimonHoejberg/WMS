@@ -107,12 +107,25 @@ namespace WMS.Handlers
 
         public void ReduceItemInfo(string itemNo, int quantity)
         {
-            MySqlCommand command = connection.CreateCommand();
+            int reducedQuantity = GetInStockForItem(itemNo) - quantity;
+            //MySqlCommand command = connection.CreateCommand();
+            //string sql = string.Format("UPDATE information SET inStock = {1} WHERE itemNo = {0}", itemNo, quantity);
+            //command.CommandText = sql;
+            //command.ExecuteNonQuery();
+        }
 
-            string sql = string.Format("UPDATE information SET inStock = inStock - ?quantity WHERE itemNo = {0}", itemNo);
-            command.Parameters.AddWithValue("?quantity", quantity);
+        public int GetInStockForItem(string itemNo)
+        {
+            int i = 0;
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT * FROM information WHERE itemNo = " + itemNo;
             command.CommandText = sql;
-            command.ExecuteNonQuery();
+            ResetConnection();
+            MySqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            i = int.Parse(reader["inStock"].ToString());
+            Console.WriteLine(i);
+            return i;
         }
 
         public void OpenConnection()
