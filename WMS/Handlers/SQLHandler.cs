@@ -85,10 +85,9 @@ namespace WMS.Handlers
             return reader;
         }
 
-        public void ReduceItem(string itemNo, string description, int date, string user, string operation, int amount)
+        public void LogOperation(string itemNo, string description, int date, string user, string operation, int amount)
         {
             int id = GetLogId();
-            ReduceItemInfo(itemNo, amount);
             ResetConnection();
             MySqlCommand command = connection.CreateCommand();
             string sql = "INSERT INTO log (id, itemNo, description, date, user, operation, amount)"+ 
@@ -107,12 +106,44 @@ namespace WMS.Handlers
             return i;
         }
 
-        public void ReduceItemInfo(string itemNo, int quantity)
+        public bool ExistOnInfo(string itemNo)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = string.Format("UPDATE information SET inStock = inStock - {1} WHERE itemNo = {0}", itemNo, quantity);
+            string sql = "SELECT COUNT(*) FROM information Where itemNo = "+itemNo;
             command.CommandText = sql;
             ResetConnection();
+            bool i = Convert.ToBoolean(int.Parse(command.ExecuteScalar().ToString()));
+            return i;
+        }
+
+
+        public void InformationChanges(string itemNo, string description, int quantity, string location, int size, int itemUsage,char op)
+        {
+            if (ExistOnInfo(itemNo))
+            {
+                UpdateInfo(itemNo, quantity, op);
+            }
+            else
+            {
+                InsertInfo(itemNo, description, quantity, location, size, itemUsage);
+            }
+        }
+
+        private void UpdateInfo(string itemNo, int quantity, char op)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = string.Format("UPDATE information SET inStock = inStock" + op + " {1} WHERE itemNo = {0}", itemNo, quantity);
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
+        }
+
+        private void InsertInfo(string itemNo, string description, int inStock, string location, int size, int itemUsage)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "INSERT INTO information (itemNo, description, inStock, location, size, itemUsage)" +
+                         "VALUES ( " + itemNo + ", '" + description + "', " + inStock + ", '" + location + "', '" + size + "', " + itemUsage + ")";
+            command.CommandText = sql;
             command.ExecuteNonQuery();
         }
 
