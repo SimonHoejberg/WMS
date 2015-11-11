@@ -114,7 +114,13 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            clearDataGridView();
+            CancelBox cancel = new CancelBox();
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
+            {
+                clearDataGridView();
+            }
         }
     }
 }
