@@ -22,7 +22,7 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewComboBoxColumn ComboColumnItemNo, ComboColumnName, ComboColumnLocation, ComboColumnQuantity, ComboColumnNewLocation;
+        private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnItemNo, ComboColumnName, ComboColumnLocation, ComboColumnQuantity, ComboColumnNewLocation;
 
         public Move(ICore core)
         {
@@ -34,40 +34,36 @@ namespace WMS.GUI
         private void InitializeDataGridView(ICore core)
         {
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
-            ComboColumnItemNo = new DataGridViewComboBoxColumn();
-            ComboColumnName = new DataGridViewComboBoxColumn();
             ComboColumnLocation = new DataGridViewComboBoxColumn();
             ComboColumnQuantity = new DataGridViewComboBoxColumn();
             ComboColumnNewLocation = new DataGridViewComboBoxColumn();
+            ComboColumnIdentification = new DataGridViewComboBoxColumn(); //New!
 
             //Names?
-            ComboColumnName.Name = "ItemNameColumn";
-            ComboColumnItemNo.Name = "ItemNoColumn";
+            ComboColumnIdentification.Name = "ItemIDColumn";
+            ComboColumnLocation.Name = "LocationColumn";
 
             //Sets the Displaymembers for the DataGridViewComboBoxColumns
-            ComboColumnItemNo.DisplayMember = "ItemNo";
-            ComboColumnName.DisplayMember = "Description";
-
-            //Sets the Valuemembers for the DataGridViewComboBoxColumns
-            ComboColumnItemNo.DisplayMember = "ItemNo";
+            ComboColumnIdentification.DisplayMember = "Identification";
 
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
-            ComboColumnItemNo.HeaderText = "Item Number";
-            ComboColumnName.HeaderText = "Item Name";
             ComboColumnQuantity.HeaderText = "Quantity";
             ComboColumnLocation.HeaderText = "Location";
             ComboColumnNewLocation.HeaderText = "New Location";
+            ComboColumnIdentification.HeaderText = "Item Number/Name";
 
             //Adds DataGridViewComboBoxColumns to DataGridView
-            moveDataGridView.Columns.Add(ComboColumnItemNo);
-            moveDataGridView.Columns.Add(ComboColumnName);
+            moveDataGridView.Columns.Add(ComboColumnIdentification);
             moveDataGridView.Columns.Add(ComboColumnQuantity);
             moveDataGridView.Columns.Add(ComboColumnLocation);
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
+            //Set width of columns
+            DataGridViewColumn column1 = moveDataGridView.Columns[0];
+            column1.Width = 150;
+
             //Sets the initial datasources
-            ComboColumnItemNo.DataSource = core.DataHandler.InfoToList();
-            ComboColumnName.DataSource = core.DataHandler.InfoToList();
+            ComboColumnIdentification.DataSource = core.DataHandler.InfoToList();
             ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
 
             // Add the events to listen for
@@ -126,7 +122,17 @@ namespace WMS.GUI
 
             DataGridViewCell eventCell = moveDataGridView[e.ColumnIndex, e.RowIndex];
 
-            //If the cellValueChanged was called from the first column, aka. "itemNo" Set the datasource for the second column "ItemName"
+            if (e.ColumnIndex == 0) //Name/ID
+            {
+                var cell = dgv.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
+                cell.DataSource = LocationList(eventCell);
+            }
+            else if(e.ColumnIndex == 2) //Location
+            {
+
+            }
+
+            /*If the cellValueChanged was called from the first column, aka. "itemNo" Set the datasource for the second column "ItemName"
             if (e.ColumnIndex == 0)
             {
                 //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
@@ -141,10 +147,10 @@ namespace WMS.GUI
             else if (e.ColumnIndex == 1)
             {
                 var cell = dgv[e.ColumnIndex - 1, e.RowIndex] as DataGridViewComboBoxCell;
-                cell.DataSource = ItemList(eventCell);
+                cell.DataSource = DescriptionList(eventCell);
+                moveDataGridView.Rows[e.RowIndex].Cells["ItemNoColumn"].Value = moveDataGridView.Rows[e.RowIndex].Cells["ItemNameColumn"].Value as Item;
 
-            }
-
+            }*/
         }
 
        /* public void ManualMove()
