@@ -35,10 +35,11 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
 
-            dataGridView.Columns[0].HeaderText = "Order No";
-            dataGridView.Columns[1].HeaderText = "Item No";
-            dataGridView.Columns[2].HeaderText = "Description";
-            dataGridView.Columns[3].HeaderText = "Expected Quantity";
+            dataGridView.Columns[0].Visible = false;
+            dataGridView.Columns[1].HeaderText = "Order No";
+            dataGridView.Columns[2].HeaderText = "Item No";
+            dataGridView.Columns[3].HeaderText = "Description";
+            dataGridView.Columns[4].HeaderText = "Expected Quantity";
             data.Columns.Add("Quantity");
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
@@ -66,10 +67,21 @@ namespace WMS.GUI
             dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void confirmBtn_Click(object sender, EventArgs e)
         {
             UserIDBox user_dialog = new UserIDBox(core);
             DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+            if (a.Equals(DialogResult.OK))
+            {
+                string user = user_dialog.User;
+                for (int i = 0; i < dataGridView.RowCount; i++)
+                {
+                    if (dataGridView[i, 0].Value == null)
+                    {
+                        core.DataHandler.ReduceItem(dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), -int.Parse(dataGridView[5, i].Value.ToString()), user);
+                    }
+                }
+            }
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
