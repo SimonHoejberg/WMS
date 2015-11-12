@@ -152,6 +152,15 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
+        public void UpdateLocation(string itemNo, string location)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = string.Format("UPDATE information SET location = {1} WHERE itemNo = {0}", itemNo, location);
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
+        }
+
         public void OpenConnection()
         {
             try
