@@ -152,6 +152,16 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
+        public MySqlDataReader SearchToList(string itemNo)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT * FROM information WHERE itemNo LIKE '" + itemNo + "%'";
+            ResetConnection();
+            command.CommandText = sql;
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
+        }
+
         public void UpdateLocation(string itemNo, string location)
         {
             MySqlCommand command = connection.CreateCommand();

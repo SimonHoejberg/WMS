@@ -33,6 +33,7 @@ namespace WMS.GUI
         private void updateDataGridView(string orderNo)
         {
             dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
+            data.Clear();
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
@@ -42,7 +43,10 @@ namespace WMS.GUI
             dataGridView.Columns[2].HeaderText = "Item No";
             dataGridView.Columns[3].HeaderText = "Description";
             dataGridView.Columns[4].HeaderText = "Expected Quantity";
-            data.Columns.Add("Quantity");
+            if (!data.Columns.Contains("Quantity"))
+            {
+                data.Columns.Add("Quantity");
+            }
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 if (i < dataGridView.ColumnCount - 1)
@@ -74,13 +78,16 @@ namespace WMS.GUI
                 {
                     if (dataGridView[5, i].Value != null && int.TryParse(dataGridView[5, i].Value.ToString(),out temp))
                     {
-                        core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), temp, user,LogOperations.REGISTED);
-                        tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
+                            core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), temp, user, LogOperations.REGISTED);
+                            tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
                     }
                 }
                 data.Clear();
                 core.WindowHandler.Update(this);
-                core.SortNewItems(tempList);
+                if (tempList.Count != 0)
+                {
+                    core.SortNewItems(tempList);
+                }
             }
         }
 
@@ -93,12 +100,40 @@ namespace WMS.GUI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                updateDataGridView(textBox1.Text);
+                int temp = 0;
+                if(int.TryParse(textBox1.Text,out temp))
+                {
+                    updateDataGridView(textBox1.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Must be only numbers", "Error");
+                    textBox1.Text = "";
+                }
+                
             }
+
         }
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
+            string temp = dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            int tempInt = 0;
+            if (temp != null)
+            {
+                if (!int.TryParse(temp, out tempInt))
+                {
+                    MessageBox.Show("Must be a number", "Error");
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else if(tempInt < 0)
+                {
+                    MessageBox.Show("Must be a positive number", "Error");
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+            }
+            dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
 
         }
 

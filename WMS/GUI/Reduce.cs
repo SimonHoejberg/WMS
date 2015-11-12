@@ -17,8 +17,8 @@ namespace WMS.GUI
     {
         private ICore core;
         private bool First = true;
-        BindingSource bsource;
-        DataTable data;
+        private BindingSource bsource;
+        private DataTable data;
        
         public Reduce(ICore core)
         {

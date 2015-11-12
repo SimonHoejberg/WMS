@@ -207,6 +207,7 @@
             this.Controls.Add(this.itemInfoPanel);
             this.Controls.Add(this.viewItemButton);
             this.Controls.Add(this.dataGridView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Information";
             this.Text = "Information";

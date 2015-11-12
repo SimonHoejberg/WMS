@@ -119,6 +119,19 @@ namespace WMS.Handlers
             return temp;
         }
 
+        public List<Item> SearchInfoToList(string itemNo)
+        {
+            List<Item> temp = new List<Item>();
+            MySqlDataReader reader = sql.SearchToList(itemNo);
+            while (reader.Read())
+            {
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString())));
+
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
         public Item GetItemFromItemNo(string itemNo)
         {
             MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
@@ -136,12 +149,6 @@ namespace WMS.Handlers
         public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
         {
             return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
-        }
-
-
-        public MySqlDataAdapter GetInfoForReduce(string itemNo)
-        {
-            throw new NotImplementedException();
         }
 
         public void CloseConnectionToServer()
