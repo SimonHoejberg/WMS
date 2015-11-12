@@ -142,6 +142,8 @@
             this.Controls.Add(this.button10);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.dataGridView6);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Waste";
             this.Text = "Waste";
             this.Load += new System.EventHandler(this.Waste_Load);
