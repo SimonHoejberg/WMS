@@ -17,16 +17,16 @@ namespace WMS.WH
         int[,] shelfSpace;
         List<int[,]> shelfUnit;
 
-        List<Item> itemList;
+        List<Item> itemList    
 
         public Warehouse2(ICore core)
         {
             this.core = core;
 
             this.shelfUnit = new List<int[,]>();
-            this.locationList = new List<Location>();
+            this.locationList = new List<Location>(); 
             this.itemList = new List<Item>();
-            itemList = GetItems();
+            itemList = GetItems(); 
             locationList = GetLocations();
 
 
