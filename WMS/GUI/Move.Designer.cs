@@ -38,7 +38,7 @@
             // moveCancelButton
             // 
             this.moveCancelButton.Location = new System.Drawing.Point(1088, 647);
-            this.moveCancelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.moveCancelButton.Margin = new System.Windows.Forms.Padding(4);
             this.moveCancelButton.Name = "moveCancelButton";
             this.moveCancelButton.Size = new System.Drawing.Size(100, 28);
             this.moveCancelButton.TabIndex = 7;
@@ -48,7 +48,7 @@
             // moveLoadOptimalButton
             // 
             this.moveLoadOptimalButton.Location = new System.Drawing.Point(980, 647);
-            this.moveLoadOptimalButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.moveLoadOptimalButton.Margin = new System.Windows.Forms.Padding(4);
             this.moveLoadOptimalButton.Name = "moveLoadOptimalButton";
             this.moveLoadOptimalButton.Size = new System.Drawing.Size(100, 28);
             this.moveLoadOptimalButton.TabIndex = 6;
@@ -59,7 +59,7 @@
             // moveConfirmButton
             // 
             this.moveConfirmButton.Location = new System.Drawing.Point(1196, 647);
-            this.moveConfirmButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.moveConfirmButton.Margin = new System.Windows.Forms.Padding(4);
             this.moveConfirmButton.Name = "moveConfirmButton";
             this.moveConfirmButton.Size = new System.Drawing.Size(100, 28);
             this.moveConfirmButton.TabIndex = 5;
@@ -71,7 +71,7 @@
             // 
             this.moveDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.moveDataGridView.Location = new System.Drawing.Point(16, 15);
-            this.moveDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.moveDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.moveDataGridView.Name = "moveDataGridView";
             this.moveDataGridView.Size = new System.Drawing.Size(1280, 594);
             this.moveDataGridView.TabIndex = 4;
@@ -87,7 +87,8 @@
             this.Controls.Add(this.moveLoadOptimalButton);
             this.Controls.Add(this.moveConfirmButton);
             this.Controls.Add(this.moveDataGridView);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Move";
             this.Text = "Move";
             ((System.ComponentModel.ISupportInitialize)(this.moveDataGridView)).EndInit();
