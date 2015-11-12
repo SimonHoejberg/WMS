@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using WMS.Interfaces;
 using WMS.Reference;
+using WMS.WH;
 
 namespace WMS.GUI
 {
     public partial class Register : Form, IGui
     {
         private ICore core;
+        private BindingSource bsource = new BindingSource();
+        private DataTable data = new DataTable();
         public Register(ICore core)
         {
             this.core = core;
@@ -29,8 +33,6 @@ namespace WMS.GUI
         private void updateDataGridView(string orderNo)
         {
             dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
-            BindingSource bsource = new BindingSource();
-            DataTable data = new DataTable();
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
@@ -57,30 +59,28 @@ namespace WMS.GUI
             comboBox1.DataSource = core.DataHandler.OrderToList();
         }
 
-        private void clearDataGridView()
-        {
-            dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
-            BindingSource bsource = new BindingSource();
-            DataTable data = new DataTable();
-            bsource.DataSource = data;
-            dataGridView.DataSource = bsource;
-            dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
-        }
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+            List<Item> tempList = new List<Item>();
             UserIDBox user_dialog = new UserIDBox(core);
+            user_dialog.Owner = this;
             DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
             if (a.Equals(DialogResult.OK))
             {
                 string user = user_dialog.User;
+                int temp; 
                 for (int i = 0; i < dataGridView.RowCount; i++)
                 {
-                    if (dataGridView[i, 0].Value == null)
+                    if (dataGridView[5, i].Value != null && int.TryParse(dataGridView[5, i].Value.ToString(),out temp))
                     {
-                        core.DataHandler.ReduceItem(dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), -int.Parse(dataGridView[5, i].Value.ToString()), user);
+                        core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), temp, user,LogOperations.REGISTED);
+                        tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
                     }
                 }
+                data.Clear();
+                core.WindowHandler.Update(this);
+                core.SortNewItems(tempList);
             }
         }
 
@@ -115,12 +115,13 @@ namespace WMS.GUI
         private void button1_Click(object sender, EventArgs e)
         {
             CancelBox cancel = new CancelBox();
+            cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
             if (a.Equals(DialogResult.OK))
             {
-                clearDataGridView();
-            }
+                data.Clear();
         }
     }
+}
 }

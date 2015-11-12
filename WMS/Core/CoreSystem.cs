@@ -21,7 +21,7 @@ namespace WMS.Core
         {
             dataHandler = new DataHandler(this);
             windowHandler = new WindowHandler(this, main);
-            //wh = new Warehouse(this);
+            wh = new Warehouse(this);
         }
 
         public void Run()
@@ -32,5 +32,16 @@ namespace WMS.Core
         public IWindowHandler WindowHandler { get { return windowHandler; } }
 
         public DataHandler DataHandler { get { return dataHandler; } }
+
+        public string GetTimeStamp()
+        {
+            return DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
+        }
+
+        public void SortNewItems(List<Item> items)
+        {
+            wh.CreateWH();
+            wh.FindOptimalLocation(items);
+        }
     }
 }

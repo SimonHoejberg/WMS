@@ -60,11 +60,11 @@ namespace WMS.GUI
                 {
                     if (!(reduceDataGridView[0, i].Value == null))
                     {
-                        core.DataHandler.ReduceItem(reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), int.Parse(reduceDataGridView[6,i].Value.ToString()), user);
+                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,LogOperations.REDUCED);
                     }
                 }
             }
-
+            core.WindowHandler.Update(this);
             data.Clear();
         }
 

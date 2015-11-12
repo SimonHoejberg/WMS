@@ -83,6 +83,7 @@
     <Compile Include="OrderItem.cs" />
     <Compile Include="Reference\DataBaseTypes.cs" />
     <Compile Include="Reference\DataBaseValues.cs" />
+    <Compile Include="Reference\LogOperations.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
@@ -148,7 +149,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WH\Warehouse.cs" />
-    <Compile Include="WH\Warehouse2.cs" />
     <EmbeddedResource Include="GUI\CancelBox.resx">
       <DependentUpon>CancelBox.cs</DependentUpon>
     </EmbeddedResource>

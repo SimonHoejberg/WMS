@@ -95,6 +95,18 @@ namespace WMS.Handlers
             return temp;
         }
 
+        public Dictionary<string,string> warehouseToDictionary()
+        {
+            Dictionary<string, string> temp = new Dictionary<string, string>();
+            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.INFO);
+            while (reader.Read())
+            {
+                temp.Add(reader["itemNo"].ToString(),reader["location"].ToString());
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
         public List<LogItem> LogToList(string itemNo)
         {
             List<LogItem> temp = new List<LogItem>();
@@ -111,7 +123,9 @@ namespace WMS.Handlers
         {
             MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
             reader.Read();
-            return new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()),int.Parse(reader["itemUsage"].ToString()));
+            Item item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString()));
+            sql.CloseConnection();
+            return item;        
         }
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
@@ -135,9 +149,16 @@ namespace WMS.Handlers
             sql.CloseConnection();
         }
 
-        public void ReduceItem(string itemNo, string description, int quantity, string user)
+        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user,string operation)
         {
-            sql.ReduceItem(itemNo, description, 1409, user, "Reduced", quantity);
+            sql.LogOperation(itemNo, description, date, user, operation, quantity);
+            sql.InformationChanges(itemNo, description, quantity, "0",0, 0, operaton);
         }
+
+        public void ChangeLocation(string itemNo,string location)
+        {
+            sql.UpdateLocation(itemNo, location);
+        }
+
     }
 }

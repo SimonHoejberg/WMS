@@ -60,5 +60,6 @@ namespace WMS.GUI
                 button2_Click(this, new EventArgs());
             }
         }
+
     }
 }
