@@ -106,7 +106,13 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            data.Clear();
+            CancelBox cancel = new CancelBox();
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
+            {
+                data.Clear();
         }
     }
+}
 }
