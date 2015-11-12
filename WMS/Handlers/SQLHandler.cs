@@ -208,6 +208,11 @@ namespace WMS.Handlers
             CloseConnection();
             OpenConnection();
         }
+
+        public void moveItem(string locationIdentification, string newQuantity, string newItem)
+        {
+
+        }
     }
 
 }
