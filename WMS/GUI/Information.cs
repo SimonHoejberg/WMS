@@ -32,7 +32,7 @@ namespace WMS.GUI
             dataGridView.Columns[1].HeaderText = "Description";
             dataGridView.Columns[2].HeaderText = "In stock";
             dataGridView.Columns[3].HeaderText = "Location";
-            dataGridView.Columns[4].Visible = false;
+            dataGridView.Columns[4].HeaderText = "Size";
             dataGridView.Columns[5].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
