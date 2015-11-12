@@ -64,7 +64,7 @@ namespace WMS.GUI
                     }
                 }
             }
-
+            core.WindowHandler.Update(this);
             data.Clear();
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using WMS.Interfaces;
 using WMS.Reference;
+using WMS.WH;
 
 namespace WMS.GUI
 {
@@ -60,19 +62,25 @@ namespace WMS.GUI
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+            List<Item> tempList = new List<Item>();
             UserIDBox user_dialog = new UserIDBox(core);
+            user_dialog.Owner = this;
             DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
             if (a.Equals(DialogResult.OK))
             {
                 string user = user_dialog.User;
+                int temp; 
                 for (int i = 0; i < dataGridView.RowCount; i++)
                 {
-                    if (!(dataGridView[0, i].Value == null))
+                    if (dataGridView[5, i].Value != null && int.TryParse(dataGridView[5, i].Value.ToString(),out temp))
                     {
-                        core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), int.Parse(dataGridView[5, i].Value.ToString()), user,LogOperations.REGISTED);
+                        core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), temp, user,LogOperations.REGISTED);
+                        tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
                     }
                 }
                 data.Clear();
+                core.WindowHandler.Update(this);
+                core.SortNewItems(tempList);
             }
         }
 
@@ -107,6 +115,7 @@ namespace WMS.GUI
         private void button1_Click(object sender, EventArgs e)
         {
             CancelBox cancel = new CancelBox();
+            cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
             if (a.Equals(DialogResult.OK))

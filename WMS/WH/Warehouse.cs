@@ -1,272 +1,94 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using WMS.Handlers;
 using WMS.Interfaces;
 using System.Collections.Generic;
 using WMS.Reference;
 
-
 namespace WMS.WH
 {
+    /*Place item, find available space, Algoritmen (kører de to andre)*/
     public class Warehouse
     {
-/*
-        private int numberOfShelf;
-        Dictionary<int, int> warehouseLayout = new Dictionary<int, int>();
-        List<Item> item = new List<Item>();
-        List<Location> location = new List<Location>();
-        List<Item> ItemNotPlaced = new List<Item>();
         private ICore core;
+        string[,] locations;
+        private Dictionary<string, string> placedItems = new Dictionary<string, string>(); 
+        private List<Item> notplaced = new List<Item>();
 
         public Warehouse(ICore core)
         {
             this.core = core;
-            LoadNewItem();
-            print3();
-            LoadWarehouseInventory();
-            print2();
-            //OptimaleLocation(item);
-            print2();
+            locations = new string[5,3];
         }
 
-
-        public void LoadNewItem()
+        public bool PlaceItem(Item item, string location)
         {
-            List<object> objectTemp = new List<object>();
-            objectTemp = core.DataHandler.DataToList(WindowTypes.INFO);
-            foreach (object items in objectTemp)
-            {
-                string[] temp = items.ToString().Split(':');
-                string itemNo = temp[0];
-                string description = temp[1];
-                int size = int.Parse(temp[2]);
-                int inStock = int.Parse(temp[3]);
-                int shelf = int.Parse(temp[4]);
-                //Item newItemTemp = new Item(itemNo, description, inStock, shelf, size);
-                //item.Add(newItemTemp);
-            }
-        }
-
-
-        public int getMaxSize
-        {
-            set { numberOfShelf = warehouseLayout.Count; }
-        }
-
-
-        public List<Location> LoadWarehouseInventory()
-        {
-            List<Location> returnList = new List<Location>();
-            List<object> local = new List<object>();
-            local = core.DataHandler.DataToList("location");
-            foreach (object tempLocal in local)
-            {
-                string[] tempLocation = tempLocal.ToString().Split(':');
-                string unit = tempLocation[0];
-                int shelf = int.Parse(tempLocation[1]);
-                int shelfNo = int.Parse(tempLocation[2]);
-                string itemNo = tempLocation[3];
-                int space = int.Parse(tempLocation[4]);
-                int quantity = int.Parse(tempLocation[5]);
-                Location temp = new Location(unit, shelf, shelfNo, itemNo, space, quantity);
-                returnList.Add(temp);
-            }
-            return returnList;
-        }
-
-
-        public void aaaaaaa()
-        {
-            warehouseLayout.Add(1, 100);
-            warehouseLayout.Add(2, 100);
-            warehouseLayout.Add(3, 100);
-            warehouseLayout.Add(4, 100);
-            warehouseLayout.Add(1, 100);
-            warehouseLayout.Add(1, 100);
-            warehouseLayout.Add(1, 100);
-        }
-
-
-
-
-
-
-
-
-
-        public void print()
-        {
-            foreach (KeyValuePair<int, int> pair in warehouseLayout)
-            {
-                Console.WriteLine(pair.Key + " " + pair.Value);
-
-            }
-
-        }
-
-        public void print2()
-        {
-            foreach (Location t in location)
-            {
-                Console.WriteLine(t);
-            }
-
-
-        }
-
-        public void print3()
-        {
-            foreach (Item t in item)
-            {
-                Console.WriteLine(t);
-            }
-
-
-        }
-
-
-        public void SaveWarehouseInventory()
-        {
-
-        }
-
-
-
-
-
-
-
-        public bool AddShelfUnit(int newShelfID, int newSize)
-        {
-            foreach (Location local in location)
-            {
-                if (warehouseLayout.Keys.Equals(newShelfID))
-                {
-                    return false;
-                }
-                else
-                {
-                    warehouseLayout.Add(newShelfID, newSize);
-                }
-            }
+            core.DataHandler.ChangeLocation(item.ItemNo, location);
             return true;
         }
-        public void RecivedNewOrderNo(List<Item> items)
-           {
-               this.item = items;
-           }
-        
-        
-        //Lav om så den finder baseret på ?????
 
-         public int FindShelfNumber(Item product)
-         {
-             foreach (Location local in location)
-             {
-                 if (product.ItemNo.Equals(local.))
-                 {
-                     return local.;
-                 }
-             }
-             return 0;
-         }
-         public int EmptySpace(int shelfID)
-         {
-             int x = 0;
-             foreach (Location local in location)
-             {
-                
-                 if (shelfID.Equals(local.ShelfNo))
-                 {
-                    x = x + local.Quantity;
-                 }
-             }
+        private int MaxLength()
+        {
+            return 2;
+        }
 
-             return x;
+        public void CreateWH()
+        {
+            Dictionary<string, string> temp = core.DataHandler.warehouseToDictionary();
+            foreach (KeyValuePair<string,string> kvp in temp)
+            {
+                string[] tempS = kvp.Value.Split('.');
+                locations[int.Parse(tempS[0]),int.Parse(tempS[1])] = kvp.Key;
+            }
+        }
 
-         }
+        private bool FindAvaliableSpace(Item item)
+        {
+            int maxLength = MaxLength();
+            for (int i = 0; i < 5; i++)
+            {
+                if(GetUsage(locations[i,0]) > item.Usage && item.Usage < GetUsage(locations[i,maxLength--]))
+                {
+                    for (int j = 0; j < locations[i,j].Length; j++)
+                    {
+                        if(locations[i,j]== null)
+                        {
+                            PlaceItem(item, i.ToString() + "." + j.ToString());
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
 
-         public bool PlaceItem(Item item, int shelfID)
-         {
+        private int GetUsage(string itemNo)
+        {
+            if(itemNo != null)
+            {
+                return core.DataHandler.GetItemFromItemNo(itemNo).Usage;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-             if (item != null)
-             {
-                 var NewPlace = new Location("k",shelfID, item.Shelf,item.ItemNo, item.Space, item.InStock);
-                 location.Add(NewPlace);
-                 Console.WriteLine("Placered Item");
-                 return true;
-             }
-             else
-             {
-                 Console.WriteLine("Dident Placered Item");
-                 return false;
-             }
+        public List<Item> FindOptimalLocation(List<Item> items)
+        {
+            items.Sort();
+            foreach (Item item in items)
+            {
+                if (!FindAvaliableSpace(item))
+                {
+                    notplaced.Add(item);
+                }
+            }
+            return notplaced;
+        }
 
-
-         }
-
-         public int FindMaxSize(int shelfID)
-         {
-             foreach (KeyValuePair<int, int> pair in warehouseLayout)
-             {
-                 if (shelfID.Equals(pair.Key))
-                 {
-                     Console.WriteLine(pair.Value);
-                     return pair.Value;
-                 }
-             }
-             return 0;
-         }
-
-         public bool FindAvaliableSpace(Item product, int shelfID)
-         {
-             Console.WriteLine("shelfID er :     {0}", shelfID);
-             if (product.Size <= (FindMaxSize(shelfID) - EmptySpace(shelfID)))
-             {
-                 PlaceItem(product, shelfID);
-                 // Console.WriteLine("Yes");
-                 return true;
-             }
-             else if (product.Size > ((FindMaxSize(shelfID) - EmptySpace(shelfID))))
-             {
-                 // Console.WriteLine("ok");
-                 return FindAvaliableSpace(product, shelfID + 1);
-             }
-             else if (shelfID > numberOfShelf)
-             {
-                 //  Console.WriteLine("whyyyyyy");
-                 return false;
-             }
-             //Console.WriteLine("no");
-             return false;
-         }
-         
-         public List<Item> OptimaleLocation(List<Item> items)
-         {
-             int i = 0;
-             bool j = true;
-             int r = 0;
-             bool f;
-             items.Sort();
-             while (j && i < items.Count)
-             {
-                 if (items[i].Description == null)
-                 {
-                     j = false;
-                 }
-                 r = items[i].Shelf;
-                 f = FindAvaliableSpace(items[i], items[i].Shelf);
-                 if (f == false)
-                 {
-                     Console.WriteLine("False:    Add to List");
-                     ItemNotPlaced.Add(items[i]);
-                 }
-                 Console.WriteLine("True:    Yeahhhhhhhh");
-                 i++;
-             }
-             return ItemNotPlaced;
-         }*/
-     }
     }
 
 
+}

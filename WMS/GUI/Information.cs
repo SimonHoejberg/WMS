@@ -67,7 +67,7 @@ namespace WMS.GUI
 
             itemInfoPanel.Visible = true;
             int test = dataGridView.CurrentCell.RowIndex;
-            string itemNo = dataGridView[0, test].Value.ToString();
+            itemNo = dataGridView[0, test].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
             sizeLabel.Text = item.Size.ToString();
             usageLabel.Text = item.Usage.ToString();

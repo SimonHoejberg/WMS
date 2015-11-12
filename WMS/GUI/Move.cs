@@ -22,7 +22,8 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnItemNo, ComboColumnName, ComboColumnLocation, ComboColumnQuantity, ComboColumnNewLocation;
+        private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnLocation, ComboColumnNewLocation;
+        private DataGridViewColumn ColumnQuantity;
 
         public Move(ICore core)
         {
@@ -35,26 +36,32 @@ namespace WMS.GUI
         {
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
             ComboColumnLocation = new DataGridViewComboBoxColumn();
-            ComboColumnQuantity = new DataGridViewComboBoxColumn();
             ComboColumnNewLocation = new DataGridViewComboBoxColumn();
             ComboColumnIdentification = new DataGridViewComboBoxColumn(); //New!
+
+            ColumnQuantity = new DataGridViewColumn();
 
             //Names?
             ComboColumnIdentification.Name = "ItemIDColumn";
             ComboColumnLocation.Name = "LocationColumn";
+            ComboColumnNewLocation.Name = "NewLocationColumn";
 
             //Sets the Displaymembers for the DataGridViewComboBoxColumns
             ComboColumnIdentification.DisplayMember = "Identification";
 
+            //ValueMembers
+            ComboColumnIdentification.ValueMember = "ItemNo";
+            ComboColumnLocation.ValueMember = "LocString";
+
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
-            ComboColumnQuantity.HeaderText = "Quantity";
+            ColumnQuantity.HeaderText = "Quantity";
             ComboColumnLocation.HeaderText = "Location";
             ComboColumnNewLocation.HeaderText = "New Location";
             ComboColumnIdentification.HeaderText = "Item Number/Name";
 
             //Adds DataGridViewComboBoxColumns to DataGridView
             moveDataGridView.Columns.Add(ComboColumnIdentification);
-            moveDataGridView.Columns.Add(ComboColumnQuantity);
+            moveDataGridView.Columns.Add("QuantityColumn", "Quantity");
             moveDataGridView.Columns.Add(ComboColumnLocation);
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
@@ -64,23 +71,23 @@ namespace WMS.GUI
 
             //Sets the initial datasources
             ComboColumnIdentification.DataSource = core.DataHandler.InfoToList();
-            ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
+            //ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
 
             // Add the events to listen for
-            moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
-            moveDataGridView.CurrentCellDirtyStateChanged += new EventHandler(moveDataGridViewCurrentCellDirtyStateChanged);
+            /*moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
+            moveDataGridView.CurrentCellDirtyStateChanged += new EventHandler(moveDataGridViewCurrentCellDirtyStateChanged);*/
         }
 
         // This event handler manually raises the CellValueChanged event 
         // by calling the CommitEdit method. 
-        void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
+        /*void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (this.moveDataGridView.IsCurrentCellDirty)
             {
                 // This fires the cell value changed handler below
                 moveDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
-        }
+        }*/
 
         private List<Item> ItemList(DataGridViewCell eventCell)
         {
@@ -100,6 +107,12 @@ namespace WMS.GUI
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
+        private List<Location> NewLocationList(DataGridViewCell eventCell, string oldLoc)
+        {
+            List<Location> input = core.DataHandler.LocationToList();
+            return input.Where((x => x.ItemNo.Equals("0") || (x.ItemNo.Equals(eventCell.Value) && x.LocString != oldLoc))).ToList();
+        }
+
         private void moveLoadOptimalButtonClick(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in moveDataGridView.Rows)
@@ -116,21 +129,22 @@ namespace WMS.GUI
 
         private void moveDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            //Sets originalCell to reference the cell the event was called from
+            /*/Sets originalCell to reference the cell the event was called from
             var dgv = sender as DataGridView;
             var originalCell = dgv[e.ColumnIndex, e.RowIndex];
 
             DataGridViewCell eventCell = moveDataGridView[e.ColumnIndex, e.RowIndex];
 
             if (e.ColumnIndex == 0) //Name/ID
-            {
+            { 
                 var cell = dgv.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
+                cell.Value = null;
                 cell.DataSource = LocationList(eventCell);
             }
             else if(e.ColumnIndex == 2) //Location
             {
 
-            }
+            }*/
 
             /*If the cellValueChanged was called from the first column, aka. "itemNo" Set the datasource for the second column "ItemName"
             if (e.ColumnIndex == 0)
@@ -143,8 +157,8 @@ namespace WMS.GUI
                 //Cell is hardcoded to reference the column 3 right of "itemNo", which should be "ItemLocation"
                 var cell2 = dgv[e.ColumnIndex + 3, e.RowIndex] as DataGridViewComboBoxCell;
                 cell2.DataSource = LocationList(eventCell);
-            }
-            else if (e.ColumnIndex == 1)
+            }*/
+            /*else if (e.ColumnIndex == 1)
             {
                 var cell = dgv[e.ColumnIndex - 1, e.RowIndex] as DataGridViewComboBoxCell;
                 cell.DataSource = DescriptionList(eventCell);
@@ -153,7 +167,24 @@ namespace WMS.GUI
             }*/
         }
 
-       /* public void ManualMove()
+        /* v.Jonas
+        public void manualMove()
+        {
+            List<Location> LocList = new List<Location>();
+
+            foreach (DataGridViewRow row in moveDataGridView.Rows)
+            {
+                string unit = (row.Cells[].Value as Location).Unit;
+                int shelf = (row.Cells[].Value as Location).Shelf.ToString();
+
+
+                LocList.Add(new Location())
+
+
+            }
+        }*/
+
+        /*public void ManualMove()
         {
             int itemInStockIncrease = 0;
             int itemInStockDecrease = 0;
@@ -186,6 +217,70 @@ namespace WMS.GUI
         public string GetTypeOfWindow()
         {
             return "move";
+        }
+
+        private void moveDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            //Sets originalCell to reference the cell the event was called from
+            var dgv = sender as DataGridView;
+            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
+
+            DataGridViewCell eventCell = moveDataGridView[e.ColumnIndex, e.RowIndex];
+
+            if (e.ColumnIndex == 0) //Name/ID
+            {
+                //Set Location cell datasource
+                var LocationCell = dgv.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
+                LocationCell.Items.Clear();
+                List<Location> locList = LocationList(eventCell);
+                foreach (Location lc in locList)
+                {
+                    LocationCell.Items.Add(lc);
+                }
+                //LocationCell.Value = LocationCell.Items[0];
+
+              
+            }
+            else if(e.ColumnIndex == 2)
+            {
+                //Set new location cell datasource
+                var NewLocationCell = dgv.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
+                NewLocationCell.Items.Clear();
+                List<Location> newLocList = NewLocationList(eventCell, dgv.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString());
+                foreach (Location lc in newLocList)
+                {
+                    NewLocationCell.Items.Add(lc);
+                }
+                //NewLocationCell.Value = NewLocationCell.Items[0];
+            }
+            else if (e.ColumnIndex == 1)
+            {
+                int a = 0;
+                
+                bool checkIfInt = Int32.TryParse(dgv.Rows[e.RowIndex].Cells["QuantityColumn"].Value.ToString(), out a);
+                if (checkIfInt)
+                {
+                    int maxQuantity = 0;
+
+                    foreach(Location loc in core.DataHandler.LocationToList())
+                    {
+                        if (dgv.Rows[e.RowIndex].Cells["LocationColumn"].Value != null && loc.LocString.Equals(dgv.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()))
+                        {
+                            maxQuantity = loc.Quantity;
+                        }
+                    }
+
+                    if(0 > a)
+                    {
+                        dgv.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
+                    }
+                    else if (a > maxQuantity)
+                    {
+                        dgv.Rows[e.RowIndex].Cells["QuantityColumn"].Value = maxQuantity;
+                    }
+
+                }
+            }
         }
 
         public void FilterColumn(string a)
