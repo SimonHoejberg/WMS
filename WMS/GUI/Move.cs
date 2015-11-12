@@ -61,8 +61,8 @@ namespace WMS.GUI
 
             //Adds DataGridViewComboBoxColumns to DataGridView
             moveDataGridView.Columns.Add(ComboColumnIdentification);
-            moveDataGridView.Columns.Add("QuantityColumn", "Quantity");
             moveDataGridView.Columns.Add(ComboColumnLocation);
+            moveDataGridView.Columns.Add("QuantityColumn", "Quantity");
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
             //Set width of columns
@@ -253,7 +253,7 @@ namespace WMS.GUI
                 }
                 //NewLocationCell.Value = NewLocationCell.Items[0];
             }
-            else if (e.ColumnIndex == 1)
+            else if (e.ColumnIndex == 2)
             {
                 int a = 0;
                 
@@ -262,7 +262,7 @@ namespace WMS.GUI
                 {
                     int maxQuantity = 0;
 
-                    foreach(Location loc in core.DataHandler.LocationToList())
+                    foreach (Location loc in core.DataHandler.LocationToList())
                     {
                         if (dgv.Rows[e.RowIndex].Cells["LocationColumn"].Value != null && loc.LocString.Equals(dgv.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()))
                         {
@@ -280,12 +280,11 @@ namespace WMS.GUI
                     }
 
                 }
+                else
+                {
+                    dgv.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
+                }
             }
-        }
-
-        public void FilterColumn(string a)
-        {
-
         }
 
         private void MoveDataGridViewRowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
