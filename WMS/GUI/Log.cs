@@ -49,9 +49,16 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
 
             mysqlData.Fill(data);
+
+            if (dataGridView[0, 0].Value != null)
+            {
+                dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Descending);
+            }
+            dataGridView.Columns[0].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
 

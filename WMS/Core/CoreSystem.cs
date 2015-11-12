@@ -32,5 +32,10 @@ namespace WMS.Core
         public IWindowHandler WindowHandler { get { return windowHandler; } }
 
         public DataHandler DataHandler { get { return dataHandler; } }
+
+        public string GetTimeStamp()
+        {
+            return DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace WMS.GUI
     public partial class Register : Form, IGui
     {
         private ICore core;
+        private BindingSource bsource = new BindingSource();
+        private DataTable data = new DataTable();
         public Register(ICore core)
         {
             this.core = core;
@@ -29,8 +31,6 @@ namespace WMS.GUI
         private void updateDataGridView(string orderNo)
         {
             dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
-            BindingSource bsource = new BindingSource();
-            DataTable data = new DataTable();
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
@@ -57,15 +57,6 @@ namespace WMS.GUI
             comboBox1.DataSource = core.DataHandler.OrderToList();
         }
 
-        private void clearDataGridView()
-        {
-            dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
-            BindingSource bsource = new BindingSource();
-            DataTable data = new DataTable();
-            bsource.DataSource = data;
-            dataGridView.DataSource = bsource;
-            dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
-        }
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
@@ -76,11 +67,12 @@ namespace WMS.GUI
                 string user = user_dialog.User;
                 for (int i = 0; i < dataGridView.RowCount; i++)
                 {
-                    if (dataGridView[i, 0].Value == null)
+                    if (!(dataGridView[0, i].Value == null))
                     {
-                        core.DataHandler.ReduceItem(dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), -int.Parse(dataGridView[5, i].Value.ToString()), user);
+                        core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), int.Parse(dataGridView[5, i].Value.ToString()), user,LogOperations.REGISTED);
                     }
                 }
+                data.Clear();
             }
         }
 
@@ -114,7 +106,7 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            clearDataGridView();
+            data.Clear();
         }
     }
 }

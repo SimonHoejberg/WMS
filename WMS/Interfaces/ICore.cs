@@ -10,5 +10,7 @@ namespace WMS.Interfaces
 
         DataHandler DataHandler { get; }
 
+        string GetTimeStamp();
+
     }
 }

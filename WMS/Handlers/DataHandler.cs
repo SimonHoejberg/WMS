@@ -135,9 +135,9 @@ namespace WMS.Handlers
             sql.CloseConnection();
         }
 
-        public void ReduceItem(char operaton, string itemNo, string description, int quantity, string user,string operation)
+        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user,string operation)
         {
-            sql.LogOperation(itemNo, description, 1409, user, operation, quantity);
+            sql.LogOperation(itemNo, description, date, user, operation, quantity);
             sql.InformationChanges(itemNo, description, quantity, "0",0, 0, operaton);
         }
 

@@ -72,7 +72,12 @@ namespace WMS.Handlers
             command.CommandText = sql;
             ResetConnection();
             int i = int.Parse(command.ExecuteScalar().ToString());
-            return GetItemInfo(DataBaseTypes.LOG, DataBaseValues.ITEM, itemNo, (i-10).ToString(), "10");
+            int temp = i - 10;
+            if(temp < 0)
+            {
+                temp = 0;
+            }
+            return GetItemInfo(DataBaseTypes.LOG, DataBaseValues.ITEM, itemNo, (temp).ToString(), "10");
         }
 
         public MySqlDataReader GetDataForList(string db)
@@ -85,13 +90,13 @@ namespace WMS.Handlers
             return reader;
         }
 
-        public void LogOperation(string itemNo, string description, int date, string user, string operation, int amount)
+        public void LogOperation(string itemNo, string description, string date, string user, string operation, int amount)
         {
             int id = GetLogId();
             ResetConnection();
             MySqlCommand command = connection.CreateCommand();
             string sql = "INSERT INTO log (id, itemNo, description, date, user, operation, amount)"+ 
-                         "VALUES (" + id + ", " + itemNo + ", '" + description + "', " + date + ", '" + user + "', '" + operation + "', " + amount + ")";
+                         "VALUES (" + id + ", " + itemNo + ", '" + description + "', '" + date + "', '" + user + "', '" + operation + "', " + amount + ")";
             command.CommandText = sql;
             command.ExecuteNonQuery();
         }
