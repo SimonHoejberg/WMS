@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.moveCancelButton = new System.Windows.Forms.Button();
-            this.moveLoadOptimalButton = new System.Windows.Forms.Button();
             this.moveConfirmButton = new System.Windows.Forms.Button();
             this.moveDataGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.moveDataGridView)).BeginInit();
@@ -37,31 +36,19 @@
             // 
             // moveCancelButton
             // 
-            this.moveCancelButton.Location = new System.Drawing.Point(1088, 647);
-            this.moveCancelButton.Margin = new System.Windows.Forms.Padding(4);
+            this.moveCancelButton.Location = new System.Drawing.Point(816, 526);
             this.moveCancelButton.Name = "moveCancelButton";
-            this.moveCancelButton.Size = new System.Drawing.Size(100, 28);
+            this.moveCancelButton.Size = new System.Drawing.Size(75, 23);
             this.moveCancelButton.TabIndex = 7;
             this.moveCancelButton.Text = "Cancel";
             this.moveCancelButton.UseVisualStyleBackColor = true;
-            // 
-            // moveLoadOptimalButton
-            // 
-            this.moveLoadOptimalButton.Location = new System.Drawing.Point(980, 647);
-            this.moveLoadOptimalButton.Margin = new System.Windows.Forms.Padding(4);
-            this.moveLoadOptimalButton.Name = "moveLoadOptimalButton";
-            this.moveLoadOptimalButton.Size = new System.Drawing.Size(100, 28);
-            this.moveLoadOptimalButton.TabIndex = 6;
-            this.moveLoadOptimalButton.Text = "Load optimal";
-            this.moveLoadOptimalButton.UseVisualStyleBackColor = true;
-            this.moveLoadOptimalButton.Click += new System.EventHandler(this.moveLoadOptimalButtonClick);
+            this.moveCancelButton.Click += new System.EventHandler(this.moveCancelButton_Click);
             // 
             // moveConfirmButton
             // 
-            this.moveConfirmButton.Location = new System.Drawing.Point(1196, 647);
-            this.moveConfirmButton.Margin = new System.Windows.Forms.Padding(4);
+            this.moveConfirmButton.Location = new System.Drawing.Point(897, 526);
             this.moveConfirmButton.Name = "moveConfirmButton";
-            this.moveConfirmButton.Size = new System.Drawing.Size(100, 28);
+            this.moveConfirmButton.Size = new System.Drawing.Size(75, 23);
             this.moveConfirmButton.TabIndex = 5;
             this.moveConfirmButton.Text = "Confirm";
             this.moveConfirmButton.UseVisualStyleBackColor = true;
@@ -70,25 +57,21 @@
             // moveDataGridView
             // 
             this.moveDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.moveDataGridView.Location = new System.Drawing.Point(16, 15);
-            this.moveDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.moveDataGridView.Location = new System.Drawing.Point(12, 12);
             this.moveDataGridView.Name = "moveDataGridView";
-            this.moveDataGridView.Size = new System.Drawing.Size(1280, 594);
+            this.moveDataGridView.Size = new System.Drawing.Size(960, 483);
             this.moveDataGridView.TabIndex = 4;
             this.moveDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.moveDataGridViewCellValueChanged);
-            this.moveDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.MoveDataGridViewRowsAdded);
             // 
             // Move
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1312, 690);
+            this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.moveCancelButton);
-            this.Controls.Add(this.moveLoadOptimalButton);
             this.Controls.Add(this.moveConfirmButton);
             this.Controls.Add(this.moveDataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Move";
             this.Text = "Move";
             ((System.ComponentModel.ISupportInitialize)(this.moveDataGridView)).EndInit();
@@ -99,7 +82,6 @@
         #endregion
 
         private System.Windows.Forms.Button moveCancelButton;
-        private System.Windows.Forms.Button moveLoadOptimalButton;
         private System.Windows.Forms.Button moveConfirmButton;
         private System.Windows.Forms.DataGridView moveDataGridView;
     }
