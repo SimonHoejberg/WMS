@@ -151,6 +151,11 @@ namespace WMS.Handlers
             return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
         }
 
+        public void ItemMove(string storageUnit, string shelf, string shelfNo, string newQuantity, string newItem)
+        {
+            sql.moveItem(storageUnit, shelf, shelfNo, newQuantity, newItem);
+        }
+
         public void CloseConnectionToServer()
         {
             sql.CloseConnection();

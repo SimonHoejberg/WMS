@@ -10,7 +10,7 @@ using WMS.WH;
 
 
 /*ToDo
-- 
+- New location list should contain all locations with the same item
 */
 
 namespace WMS.GUI
@@ -226,7 +226,20 @@ namespace WMS.GUI
 
                 if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null)
                 {
-                    //Add updated locations to changelist. Then commit them to the database.
+                    UserIDBox user_dialog = new UserIDBox(core);
+                    user_dialog.Owner = this;
+                    DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+                    if (a.Equals(DialogResult.OK))
+                    {
+
+                    }
+                    
+                    //Reduce Item on on location
+                    string[] array = new string[3];
+
+                    ///core.DataHandler.ItemMove();
+
+                    //Increase items on new location
                 }
                 else 
                 {
@@ -250,6 +263,7 @@ namespace WMS.GUI
                         noProblemsEncountered = false;
                         problemList += ("\nValue in New Location on row " + (dgvRow.Index + 1) + " is empty!");
                     }
+                    //Fix attempt to move multiple items to the same location
                 }
             }
 

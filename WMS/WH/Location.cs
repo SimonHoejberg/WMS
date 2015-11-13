@@ -27,6 +27,7 @@ namespace WMS.WH
         public int Space { get { return space; } }
         public int Quantity { get { return quantity; } }
         public string LocString { get { return unit + ":" + shelf + ":" + shelfNo; } }
+        public Location getObj { get { return this; } }
 
         public override string ToString()
         {
