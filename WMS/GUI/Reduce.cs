@@ -16,9 +16,9 @@ namespace WMS.GUI
     public partial class Reduce : Form , IGui
     {
         private ICore core;
-        private bool First = true;
         private BindingSource bsource;
         private DataTable data;
+        private string itemNo;
        
         public Reduce(ICore core)
         {
@@ -73,31 +73,36 @@ namespace WMS.GUI
             int a = 0;
             if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO).Fill(data);
+                itemNo = comboBox2.Text;
+                DataGridViewMake();
             }
-            else
+            else if (comboBox2.SelectedValue != null && int.TryParse(comboBox2.SelectedValue.ToString(), out a))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.SelectedValue.ToString(), WindowTypes.INFO).Fill(data);
-            }
-            
-            if (First)
-            {
+                itemNo = comboBox2.SelectedValue.ToString();
                 DataGridViewMake();
             }
         }
 
         private void DataGridViewMake()
         {
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+            core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
+            reduceDataGridView.Columns[0].HeaderText = "Item No";
+            reduceDataGridView.Columns[1].HeaderText = "Description";
+            reduceDataGridView.Columns[2].HeaderText = "In stock";
+            reduceDataGridView.Columns[3].HeaderText = "Location";
             //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
             reduceDataGridView.Columns[5].Visible = false;
-            data.Columns.Add("Quantity");
-            First = false;
-
+            if (!data.Columns.Contains("Quantity"))
+            {
+                data.Columns.Add("Quantity");
+            }
             for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
             {
                 reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
         }
 
         private void comboBox2_KeyDown(object sender, KeyEventArgs e)
@@ -106,24 +111,41 @@ namespace WMS.GUI
             
             if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
             {
-                core.DataHandler.GetDataFromItemNo(a.ToString(), WindowTypes.INFO).Fill(data);
-            }
-
-            else if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up && e.KeyCode == Keys.Enter)
-            {
-                string itemNo = comboBox2.SelectedValue.ToString();
-                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
-            }
-
-            if (First && e.KeyCode == Keys.Enter)
-            {
+                itemNo = comboBox2.Text;
                 DataGridViewMake();
             }
+            else if (e.KeyCode == Keys.Enter && comboBox2.SelectedValue != null && int.TryParse(comboBox2.SelectedValue.ToString(),out a))
+            {
+                itemNo = comboBox2.SelectedValue.ToString();
+                DataGridViewMake();
+            }
+
         }
 
         private void Reduce_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        private void reduceDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+            string temp = reduceDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            int tempInt = 0;
+            if (temp != null)
+            {
+                if (!int.TryParse(temp, out tempInt))
+                {
+                    MessageBox.Show("Must be a number", "Error");
+                    reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else if (tempInt < 0)
+                {
+                    MessageBox.Show("Must be a positive number", "Error");
+                    reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+            }
+            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
     }
 }

@@ -39,7 +39,7 @@
             // reduceCancelBtn
             // 
             this.reduceCancelBtn.Location = new System.Drawing.Point(1088, 650);
-            this.reduceCancelBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reduceCancelBtn.Margin = new System.Windows.Forms.Padding(4);
             this.reduceCancelBtn.Name = "reduceCancelBtn";
             this.reduceCancelBtn.Size = new System.Drawing.Size(100, 28);
             this.reduceCancelBtn.TabIndex = 7;
@@ -49,7 +49,7 @@
             // reduceConfirmBtn
             // 
             this.reduceConfirmBtn.Location = new System.Drawing.Point(1196, 650);
-            this.reduceConfirmBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reduceConfirmBtn.Margin = new System.Windows.Forms.Padding(4);
             this.reduceConfirmBtn.Name = "reduceConfirmBtn";
             this.reduceConfirmBtn.Size = new System.Drawing.Size(100, 28);
             this.reduceConfirmBtn.TabIndex = 6;
@@ -59,18 +59,20 @@
             // 
             // reduceDataGridView
             // 
+            this.reduceDataGridView.AllowUserToAddRows = false;
             this.reduceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.reduceDataGridView.Location = new System.Drawing.Point(16, 82);
-            this.reduceDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reduceDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.reduceDataGridView.Name = "reduceDataGridView";
             this.reduceDataGridView.Size = new System.Drawing.Size(1280, 560);
             this.reduceDataGridView.TabIndex = 5;
+            this.reduceDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.reduceDataGridView_CellValueChanged);
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(28, 21);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(299, 24);
             this.comboBox2.TabIndex = 4;
@@ -99,7 +101,7 @@
             this.Controls.Add(this.reduceDataGridView);
             this.Controls.Add(this.comboBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Reduce";
             this.Text = "Reduce";
             this.Load += new System.EventHandler(this.Reduce_Load);
