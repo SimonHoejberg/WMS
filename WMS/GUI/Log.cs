@@ -49,16 +49,23 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
 
             mysqlData.Fill(data);
-
+            dataGridView.Columns[0].Visible = false;
+            dataGridView.Columns[1].HeaderText = "Item No";
+            dataGridView.Columns[2].HeaderText = "Description";
+            dataGridView.Columns[3].HeaderText = "Date / Time";
+            dataGridView.Columns[4].HeaderText = "User";
+            dataGridView.Columns[5].HeaderText = "Operation";
+            dataGridView.Columns[6].HeaderText = "Amount";
             if (dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Descending);
             }
-            dataGridView.Columns[0].Visible = false;
+
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dataGridView.Columns[i].ReadOnly = true;
             }
         }
 

@@ -16,12 +16,12 @@ namespace WMS.GUI
     {
         private List<string> reasons;
 
-        bool run = false;
-        bool first = true;
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
         private string reason;
+        private int lastRow;
+        string itemNo;
 
         public Waste(ICore core)
         {
@@ -56,20 +56,33 @@ namespace WMS.GUI
 
         public void MakeDataGridView()
         {
+            dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
+            if (itemNo != null)
+            {
+                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
+            }
             dataGridView6.Columns[0].HeaderText = "Item No";
             dataGridView6.Columns[1].HeaderText = "Description";
             dataGridView6.Columns[2].HeaderText = "In Stock";
             dataGridView6.Columns[3].HeaderText = "Location";
             dataGridView6.Columns[4].Visible = false;
             dataGridView6.Columns[5].Visible = false;
-
-            data.Columns.Add("Quantity");
-            data.Columns.Add("Reason");
-            run = true;
+            if (!data.Columns.Contains("Quantity"))
+            {
+                data.Columns.Add("Quantity");
+            }
+            if (!data.Columns.Contains("Reason"))
+            {
+                data.Columns.Add("Reason");
+            }
             for (int i = 0; i < dataGridView6.ColumnCount; i++)
             {
                 dataGridView6.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView6.Columns[i].ReadOnly = true;
             }
+            dataGridView6.Columns[6].ReadOnly = false;
+            dataGridView6.Columns[7].ReadOnly = false;
+            dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
         }
         private void updateComboBox()
         {
@@ -85,21 +98,29 @@ namespace WMS.GUI
 
         private void comboBox3_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            string itemNo = comboBox3.SelectedValue.ToString();
-            core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
-            if (first)
-            {
-                MakeDataGridView();
-                first = false;
-            }
+            itemNo = comboBox3.SelectedValue.ToString();
+            updateComboBox();
+            MakeDataGridView();
         }
 
         private void dataGridView6_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (run)
+            if (dataGridView6.Columns[e.ColumnIndex].Equals(dataGridView6.Columns[6]))
             {
-                if (dataGridView6.Columns[e.ColumnIndex].Equals(dataGridView6.Columns[6]))
+                int temp = 0;
+                if (!int.TryParse(dataGridView6[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
                 {
+
+                }
+                else if (temp < 0)
+                {
+
+                }
+                else
+                {
+                    dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
+                    lastRow = e.RowIndex;
+
                     panel1.Visible = true;
                     listBox1.Focus();
                 }
@@ -109,18 +130,16 @@ namespace WMS.GUI
         private void button1_Click(object sender, EventArgs e)
         {
             panel1.Visible = false;
-            int row = dataGridView6.CurrentCell.RowIndex;
-            dataGridView6[7, row].Value = listBox1.SelectedItem.ToString();
+            dataGridView6.Focus();
+            dataGridView6[7, lastRow].Value = listBox1.SelectedItem.ToString();
+            dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                panel1.Visible = false;
-
-                int row = dataGridView6.CurrentCell.RowIndex;
-                dataGridView6[7, row].Value = listBox1.SelectedItem.ToString();
+                button1_Click(sender, e);
             }
         }
 
@@ -146,7 +165,10 @@ namespace WMS.GUI
                 {
                     if (!(dataGridView6[0, i].Value == null))
                     {
-                        core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), dataGridView6[1, i].Value.ToString(), core.GetTimeStamp(), int.Parse(dataGridView6[6, i].Value.ToString()), user, dataGridView6[7,i].Value.ToString());
+                        core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), 
+                                                      dataGridView6[1, i].Value.ToString(), core.GetTimeStamp(), 
+                                                      int.Parse(dataGridView6[6, i].Value.ToString()), user, 
+                                                      dataGridView6[7, i].Value.ToString());
                     }
                 }
                 data.Clear();
@@ -157,7 +179,6 @@ namespace WMS.GUI
         {
             string itemNo = textBox1.Text;
             comboBox3.DataSource = core.DataHandler.SearchInfoToList(itemNo);
-            
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
