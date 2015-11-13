@@ -10,6 +10,11 @@ using WMS.WH;
 
 
 /*ToDo
+- New location list should contain all locations with the same item
+- Should no be able to move multiple items to the same location
+- Make it so that you can move multiple times from the same location
+- Move multiple to same new location if item is the same
+- When moving multiple times from the same location, make sure the total quantity does not exceed the quantity on the location
 - 
 */
 
@@ -213,9 +218,10 @@ namespace WMS.GUI
 
         private void MoveConfirmButtonClick(object sender, EventArgs e)
         {
-            List<Location> changeList = new List<Location>();
             string problemList = "";
             bool noProblemsEncountered = true;
+            bool locUsedTwice = false;
+            bool newLocUsedTwice = false;
 
             foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
             {
@@ -223,10 +229,33 @@ namespace WMS.GUI
                 {
                     break;
                 }
-
-                if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null)
+                foreach (DataGridViewRow dgvRow2 in moveDataGridView.Rows)
                 {
-                    //Add updated locations to changelist. Then commit them to the database.
+                    if (dgvRow2.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                    {
+                        break;
+                    }
+                    if (dgvRow.Cells["LocationColumn"].Value.ToString().Equals(dgvRow2.Cells["LocationColumn"].Value.ToString()))
+                    {
+                        locUsedTwice = true;
+                    }
+                    if (dgvRow.Cells["NewLocationColumn"].Value.ToString().Equals(dgvRow2.Cells["NewLocationColumn"].Value.ToString()))
+                    {
+                        newLocUsedTwice = true;
+                    }
+                }
+            }
+            Console.WriteLine(locUsedTwice + " " + newLocUsedTwice);
+                //Check if multiple items are moved to the same location
+            foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
+            {
+                if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                {
+                    break;
+                }
+                if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null && locUsedTwice != true && newLocUsedTwice != true)
+                {
+                    //Commit changes to database
                 }
                 else 
                 {
@@ -250,11 +279,35 @@ namespace WMS.GUI
                         noProblemsEncountered = false;
                         problemList += ("\nValue in New Location on row " + (dgvRow.Index + 1) + " is empty!");
                     }
+                    if(locUsedTwice == true)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nAttempt to move from the same location twice");
+                    }
+                    if(newLocUsedTwice == true)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nAttempt to move multiple items to the same location");
+                    }
+    
+                    //Fix attempt to move multiple items to the same location
                 }
             }
+            if(noProblemsEncountered == true)
+            {
+                UserIDBox user_dialog = new UserIDBox(core);
+                user_dialog.Owner = this;
+                DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+                if (a.Equals(DialogResult.OK))
+                {
+                    //Reduce Item on on location
+                    
+                    //Increase items on new location
 
+                }
+            }
             //give error message if commit could not be done
-            if (noProblemsEncountered == false)
+            else if (noProblemsEncountered == false)
             {
                 MessageBox.Show(problemList, "Changes could not be comitted!");
             }

@@ -89,7 +89,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
             while (reader.Read())
             {
-                temp.Add(new Location(reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
+                temp.Add(new Location(reader["ID"].ToString(), reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
             }
             sql.CloseConnection();
             return temp;
@@ -137,6 +137,11 @@ namespace WMS.Handlers
         public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
         {
             return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
+        }
+
+        public void ItemMove(string storageUnit, string shelf, string shelfNo, string newQuantity, string newItem)
+        {
+            sql.moveItem(storageUnit, shelf, shelfNo, newQuantity, newItem);
         }
 
         public void CloseConnectionToServer()

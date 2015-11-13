@@ -23,18 +23,13 @@ namespace WMS.WH
 
 
         public string Identification { get { return itemNo + ": " + description; } }
-
         public string ItemNo{ get { return itemNo; }}
-
         public string Description { get { return description; }}
-
         public string Location { get { return location; } set { location = value; } }
-
         public int Usage { get { return itemUsage; } }
-
         public int InStock { get { return inStock; } }
-
         public int Size { get { return size; }}
+        public Item getObj { get { return this; } }
 
         public override string ToString()
         {
