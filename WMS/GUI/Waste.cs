@@ -99,6 +99,7 @@ namespace WMS.GUI
         private void comboBox3_SelectionChangeCommitted(object sender, EventArgs e)
         {
             itemNo = comboBox3.SelectedValue.ToString();
+            updateComboBox();
             MakeDataGridView();
         }
 
@@ -164,7 +165,10 @@ namespace WMS.GUI
                 {
                     if (!(dataGridView6[0, i].Value == null))
                     {
-                        core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), dataGridView6[1, i].Value.ToString(), core.GetTimeStamp(), int.Parse(dataGridView6[6, i].Value.ToString()), user, dataGridView6[7, i].Value.ToString());
+                        core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), 
+                                                      dataGridView6[1, i].Value.ToString(), core.GetTimeStamp(), 
+                                                      int.Parse(dataGridView6[6, i].Value.ToString()), user, 
+                                                      dataGridView6[7, i].Value.ToString());
                     }
                 }
                 data.Clear();
@@ -175,7 +179,6 @@ namespace WMS.GUI
         {
             string itemNo = textBox1.Text;
             comboBox3.DataSource = core.DataHandler.SearchInfoToList(itemNo);
-
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
