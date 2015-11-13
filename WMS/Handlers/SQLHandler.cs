@@ -198,6 +198,8 @@ namespace WMS.Handlers
             }
         }
 
+        public 
+
         public void CloseConnection()
         {
             connection.Close();

@@ -11,6 +11,7 @@ using WMS.WH;
 
 /*ToDo
 - New location list should contain all locations with the same item
+- Should no be able to move multiple items to the same location
 */
 
 namespace WMS.GUI
@@ -213,7 +214,6 @@ namespace WMS.GUI
 
         private void MoveConfirmButtonClick(object sender, EventArgs e)
         {
-            List<Location> changeList = new List<Location>();
             string problemList = "";
             bool noProblemsEncountered = true;
 
@@ -226,20 +226,7 @@ namespace WMS.GUI
 
                 if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null)
                 {
-                    UserIDBox user_dialog = new UserIDBox(core);
-                    user_dialog.Owner = this;
-                    DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
-                    if (a.Equals(DialogResult.OK))
-                    {
 
-                    }
-                    
-                    //Reduce Item on on location
-                    string[] array = new string[3];
-
-                    ///core.DataHandler.ItemMove();
-
-                    //Increase items on new location
                 }
                 else 
                 {
@@ -266,9 +253,21 @@ namespace WMS.GUI
                     //Fix attempt to move multiple items to the same location
                 }
             }
+            if(noProblemsEncountered == true)
+            {
+                UserIDBox user_dialog = new UserIDBox(core);
+                user_dialog.Owner = this;
+                DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+                if (a.Equals(DialogResult.OK))
+                {
+                    //Reduce Item on on location
+                    
+                    //Increase items on new location
 
+                }
+            }
             //give error message if commit could not be done
-            if (noProblemsEncountered == false)
+            else if (noProblemsEncountered == false)
             {
                 MessageBox.Show(problemList, "Changes could not be comitted!");
             }
