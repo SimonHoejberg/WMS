@@ -217,13 +217,13 @@ namespace WMS.GUI
             string problemList = "";
             bool noProblemsEncountered = true;
 
+            //Check if multiple items are moved to the same location
             foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
             {
                 if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
                 {
                     break;
                 }
-
                 if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null)
                 {
                     //Commit changes to database
@@ -250,6 +250,7 @@ namespace WMS.GUI
                         noProblemsEncountered = false;
                         problemList += ("\nValue in New Location on row " + (dgvRow.Index + 1) + " is empty!");
                     }
+    
                     //Fix attempt to move multiple items to the same location
                 }
             }
