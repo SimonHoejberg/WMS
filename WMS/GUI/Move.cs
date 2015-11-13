@@ -226,7 +226,7 @@ namespace WMS.GUI
 
                 if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null)
                 {
-
+                    //Commit changes to database
                 }
                 else 
                 {
