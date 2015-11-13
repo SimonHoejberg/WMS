@@ -208,6 +208,15 @@ namespace WMS.Handlers
             CloseConnection();
             OpenConnection();
         }
+
+        public void moveItem(string storageUnit, string shelf, string shelfNo, string newQuantity, string newItem)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = string.Format("UPDATE location SET itemNo = '{0}' AND quantity = '{1}' WHERE unit = '{2}' AND shelf = '{3}' AND shelfNo = '{4}'", newItem, newQuantity, storageUnit, shelf, shelfNo);
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
+        }
     }
 
 }
