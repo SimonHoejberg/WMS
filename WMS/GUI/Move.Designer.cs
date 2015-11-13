@@ -57,6 +57,7 @@
             // moveDataGridView
             // 
             this.moveDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.moveDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.moveDataGridView.Location = new System.Drawing.Point(12, 12);
             this.moveDataGridView.Name = "moveDataGridView";
             this.moveDataGridView.Size = new System.Drawing.Size(960, 483);

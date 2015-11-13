@@ -12,6 +12,10 @@ using WMS.WH;
 /*ToDo
 - New location list should contain all locations with the same item
 - Should no be able to move multiple items to the same location
+- Make it so that you can move multiple times from the same location
+- Move multiple to same new location if item is the same
+- When moving multiple times from the same location, make sure the total quantity does not exceed the quantity on the location
+- 
 */
 
 namespace WMS.GUI
@@ -216,15 +220,40 @@ namespace WMS.GUI
         {
             string problemList = "";
             bool noProblemsEncountered = true;
+            bool locUsedTwice = false;
+            bool newLocUsedTwice = false;
 
-            //Check if multiple items are moved to the same location
             foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
             {
                 if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
                 {
                     break;
                 }
-                if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null)
+                foreach (DataGridViewRow dgvRow2 in moveDataGridView.Rows)
+                {
+                    if (dgvRow2.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                    {
+                        break;
+                    }
+                    if (dgvRow.Cells["LocationColumn"].Value.ToString().Equals(dgvRow2.Cells["LocationColumn"].Value.ToString()))
+                    {
+                        locUsedTwice = true;
+                    }
+                    if (dgvRow.Cells["NewLocationColumn"].Value.ToString().Equals(dgvRow2.Cells["NewLocationColumn"].Value.ToString()))
+                    {
+                        newLocUsedTwice = true;
+                    }
+                }
+            }
+            Console.WriteLine(locUsedTwice + " " + newLocUsedTwice);
+                //Check if multiple items are moved to the same location
+            foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
+            {
+                if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                {
+                    break;
+                }
+                if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null && locUsedTwice != true && newLocUsedTwice != true)
                 {
                     //Commit changes to database
                 }
@@ -249,6 +278,16 @@ namespace WMS.GUI
                     {
                         noProblemsEncountered = false;
                         problemList += ("\nValue in New Location on row " + (dgvRow.Index + 1) + " is empty!");
+                    }
+                    if(locUsedTwice == true)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nAttempt to move from the same location twice");
+                    }
+                    if(newLocUsedTwice == true)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nAttempt to move multiple items to the same location");
                     }
     
                     //Fix attempt to move multiple items to the same location
