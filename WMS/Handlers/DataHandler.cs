@@ -95,18 +95,6 @@ namespace WMS.Handlers
             return temp;
         }
 
-        public Dictionary<string,string> warehouseToDictionary()
-        {
-            Dictionary<string, string> temp = new Dictionary<string, string>();
-            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.INFO);
-            while (reader.Read())
-            {
-                temp.Add(reader["itemNo"].ToString(),reader["location"].ToString());
-            }
-            sql.CloseConnection();
-            return temp;
-        }
-
         public List<LogItem> LogToList(string itemNo)
         {
             List<LogItem> temp = new List<LogItem>();
