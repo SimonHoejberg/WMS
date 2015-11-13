@@ -9,7 +9,7 @@ namespace WMS.Reference
     public static class LogOperations
     {
         public static string REDUCED = "Reduced";
-        public static string REGISTED = "Registed";
+        public static string REGISTED = "Registered";
         public static string MOVED = "Moved";
     }
 }

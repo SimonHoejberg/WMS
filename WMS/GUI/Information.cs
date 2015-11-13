@@ -19,7 +19,6 @@ namespace WMS.GUI
         }
         private void UpdateInfo()
         {
-            dataGridView.CellValueChanged -= dataGridView_cellChanged;
             BindingSource bsource = new BindingSource();
             DataTable data = new DataTable();
 
@@ -37,19 +36,8 @@ namespace WMS.GUI
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView.Columns[i].ReadOnly = true;
             }
-            dataGridView.CellValueChanged += dataGridView_cellChanged;
-        }
-
-        private void dataGridView_cellChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            string coloumn = dataGridView.Columns[e.ColumnIndex].Name.ToString();
-            string value = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            string id = dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
-
-            core.DataHandler.UpdateProduct(coloumn, value, id, GetTypeOfWindow(), DataBaseValues.ITEM);
-            core.WindowHandler.Update(this);
-
         }
 
         public void UpdateGuiElements()
