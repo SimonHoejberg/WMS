@@ -45,6 +45,7 @@
             this.reduceCancelBtn.TabIndex = 7;
             this.reduceCancelBtn.Text = "Cancel";
             this.reduceCancelBtn.UseVisualStyleBackColor = true;
+            this.reduceCancelBtn.Click += new System.EventHandler(this.reduceCancelBtn_Click);
             // 
             // reduceConfirmBtn
             // 

@@ -18,6 +18,10 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             updateComboBox();
+            this.Text = Lang.REGISTER;
+            this.textBox1.Text = Lang.ORDER_NO;
+            this.confirmBtn.Text = Lang.CONFIRM;
+            this.button1.Text = Lang.CANCEL;
         }
 
         public string GetTypeOfWindow()
@@ -39,13 +43,13 @@ namespace WMS.GUI
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
 
             dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = "Order No";
-            dataGridView.Columns[2].HeaderText = "Item No";
-            dataGridView.Columns[3].HeaderText = "Description";
-            dataGridView.Columns[4].HeaderText = "Expected Quantity";
-            if (!data.Columns.Contains("Quantity"))
+            dataGridView.Columns[1].HeaderText = Lang.ORDER_NO;
+            dataGridView.Columns[2].HeaderText = Lang.ITEM_NO;
+            dataGridView.Columns[3].HeaderText = Lang.DESCRIPTION;
+            dataGridView.Columns[4].HeaderText = Lang.EXPECTED_AMOUNT;
+            if (!data.Columns.Contains(Lang.AMOUNT))
             {
-                data.Columns.Add("Quantity");
+                data.Columns.Add(Lang.AMOUNT);
             }
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
@@ -107,7 +111,7 @@ namespace WMS.GUI
                 }
                 else
                 {
-                    MessageBox.Show("Must be only numbers", "Error");
+                    MessageBox.Show(Lang.ONLY_NUMBERS, Lang.ERROR);
                     textBox1.Text = "";
                 }
                 
@@ -124,12 +128,12 @@ namespace WMS.GUI
             {
                 if (!int.TryParse(temp, out tempInt))
                 {
-                    MessageBox.Show("Must be a number", "Error");
+                    MessageBox.Show(Lang.MUST_BE_A_NUMBER, Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if(tempInt < 0)
                 {
-                    MessageBox.Show("Must be a positive number", "Error");
+                    MessageBox.Show(Lang.MUST_BE_POSITIVE, Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
             }
@@ -156,7 +160,7 @@ namespace WMS.GUI
             if (a.Equals(DialogResult.OK))
             {
                 data.Clear();
+            }
         }
     }
-}
 }

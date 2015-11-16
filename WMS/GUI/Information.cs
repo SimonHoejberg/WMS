@@ -16,6 +16,15 @@ namespace WMS.GUI
             InitializeComponent();
             this.core = core;
             UpdateInfo();
+            this.Text = Lang.INFORMATION;
+            this.closeButton.Text = Lang.CLOSE;
+            this.viewItemButton.Text = Lang.VIEW_ITEM;
+            this.logButton.Text = Lang.LOG;
+            this.label4.Text = Lang.DESCRIPTION;
+            this.label1.Text = Lang.SIZE;
+            this.label2.Text = Lang.LOCATION;
+            this.label3.Text = Lang.USAGE;
+
         }
         private void UpdateInfo()
         {
@@ -27,11 +36,11 @@ namespace WMS.GUI
 
             core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
 
-            dataGridView.Columns[0].HeaderText = "Item No";
-            dataGridView.Columns[1].HeaderText = "Description";
-            dataGridView.Columns[2].HeaderText = "In stock";
-            dataGridView.Columns[3].HeaderText = "Location";
-            dataGridView.Columns[4].HeaderText = "Size";
+            dataGridView.Columns[0].HeaderText = Lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = Lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = Lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = Lang.LOCATION;
+            dataGridView.Columns[4].HeaderText = Lang.SIZE;
             dataGridView.Columns[5].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {

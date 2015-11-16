@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Core;
 using WMS.Interfaces;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -19,6 +20,9 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
+            this.Text = Lang.CONFIRM;
+            this.userConfirm_btn.Text = Lang.ACCEPT;
+            this.userCancel_btn.Text = Lang.CANCEL;
         }
 
         public string User { get { return getInputFromTextbox; } }

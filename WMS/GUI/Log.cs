@@ -24,6 +24,15 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             UpdateLog();
+            this.Text = Lang.LOG;
+            this.closeButton.Text = Lang.CLOSE;
+            this.viewItemButton.Text = Lang.VIEW_ITEM;
+            this.label4.Text = Lang.DESCRIPTION;
+            this.label1.Text = Lang.SIZE;
+            this.label2.Text = Lang.LOCATION;
+            this.label3.Text = Lang.USAGE;
+            this.sortButton.Text = Lang.SORT;
+
         }
 
         public Log(ICore core, string itemNo)
@@ -32,7 +41,7 @@ namespace WMS.GUI
             InitializeComponent();
             UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,DataBaseTypes.LOG));
             sortToggle = true;
-            sortButton.Text = "Unsort";
+            sortButton.Text = Lang.UNSORT;
         }
 
         private void UpdateLog()
@@ -50,12 +59,12 @@ namespace WMS.GUI
 
             mysqlData.Fill(data);
             dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = "Item No";
-            dataGridView.Columns[2].HeaderText = "Description";
-            dataGridView.Columns[3].HeaderText = "Date / Time";
-            dataGridView.Columns[4].HeaderText = "User";
-            dataGridView.Columns[5].HeaderText = "Operation";
-            dataGridView.Columns[6].HeaderText = "Amount";
+            dataGridView.Columns[1].HeaderText = Lang.ITEM_NO;
+            dataGridView.Columns[2].HeaderText = Lang.DESCRIPTION;
+            dataGridView.Columns[3].HeaderText = Lang.TIMESTAMP;
+            dataGridView.Columns[4].HeaderText = Lang.USER;
+            dataGridView.Columns[5].HeaderText = Lang.OPERATION;
+            dataGridView.Columns[6].HeaderText = Lang.AMOUNT;
             if (dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Descending);
@@ -99,13 +108,13 @@ namespace WMS.GUI
                 sortToggle = true;
                 string temp = dataGridView[1, dataGridView.CurrentCell.RowIndex].Value.ToString();
                 UpdateLog(core.DataHandler.GetDataFromItemNo(temp, DataBaseTypes.LOG));
-                sortButton.Text = "Unsort";
+                sortButton.Text = Lang.UNSORT;
             }
             else if(sortToggle)
             {
                 sortToggle = false;
                 UpdateLog();
-                sortButton.Text = "Sort";
+                sortButton.Text = Lang.SORT;
             }
         }
 

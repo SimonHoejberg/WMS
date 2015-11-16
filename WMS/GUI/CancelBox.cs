@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -15,6 +16,10 @@ namespace WMS.GUI
         public CancelBox()
         {
             InitializeComponent();
+            this.label1.Text = Lang.CANCELBOXTEXT;
+            this.userConfirm_btn.Text = Lang.YES;
+            this.userCancel_btn.Text = Lang.NO;
+            this.Text = Lang.CANCEL;
         }
         
         private void CancelBox_Load(object sender, EventArgs e)

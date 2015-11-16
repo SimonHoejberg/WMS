@@ -83,6 +83,7 @@
     <Compile Include="OrderItem.cs" />
     <Compile Include="Reference\DataBaseTypes.cs" />
     <Compile Include="Reference\DataBaseValues.cs" />
+    <Compile Include="Reference\Lang.cs" />
     <Compile Include="Reference\LogOperations.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
@@ -204,22 +205,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ImageResources\placeholder_Information.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ImageResources\placeholder_Log.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ImageResources\placeholder_Move.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ImageResources\placeholder_Register.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ImageResources\placeholder_Remove.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ImageResources\placeholder_Waste.png" />
+    <Content Include="ImageResources\info.png" />
+    <Content Include="ImageResources\log.png" />
+    <Content Include="ImageResources\move.png" />
+    <Content Include="ImageResources\moveda.png" />
+    <Content Include="ImageResources\reduce.png" />
+    <Content Include="ImageResources\reduceda.png" />
+    <Content Include="ImageResources\register.png" />
+    <Content Include="ImageResources\registerda.png" />
+    <Content Include="ImageResources\waste.png" />
+    <Content Include="ImageResources\wasteda.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

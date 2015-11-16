@@ -28,6 +28,11 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             updateComboBox();
+            this.button1.Text = Lang.CHOOSE;
+            this.button2.Text = Lang.SEACH;
+            this.textBox1.Text = Lang.ITEM_NO;
+            this.button10.Text = Lang.CANCEL;
+            this.button11.Text = Lang.CONFIRM;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -38,15 +43,15 @@ namespace WMS.GUI
 
         private void MakeList()
         {
-            reasons.Add("Broken");
-            reasons.Add("Wrong item delivered");
-            reasons.Add("Missing");
+            reasons.Add(Lang.BROKEN);
+            reasons.Add(Lang.WRONG_ITEM_DELIVRED);
+            reasons.Add(Lang.MISSING);
 
             listBox1.DataSource = reasons;
         }
         public string GetTypeOfWindow()
         {
-            return "waste";
+            return WindowTypes.WASTE;
         }
 
         public void UpdateGuiElements()
@@ -61,19 +66,19 @@ namespace WMS.GUI
             {
                 core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
             }
-            dataGridView6.Columns[0].HeaderText = "Item No";
-            dataGridView6.Columns[1].HeaderText = "Description";
-            dataGridView6.Columns[2].HeaderText = "In Stock";
-            dataGridView6.Columns[3].HeaderText = "Location";
+            dataGridView6.Columns[0].HeaderText = Lang.ITEM_NO;
+            dataGridView6.Columns[1].HeaderText = Lang.DESCRIPTION;
+            dataGridView6.Columns[2].HeaderText = Lang.IN_STOCK;
+            dataGridView6.Columns[3].HeaderText = Lang.LOCATION;
             dataGridView6.Columns[4].Visible = false;
             dataGridView6.Columns[5].Visible = false;
-            if (!data.Columns.Contains("Quantity"))
+            if (!data.Columns.Contains(Lang.AMOUNT))
             {
-                data.Columns.Add("Quantity");
+                data.Columns.Add(Lang.AMOUNT);
             }
-            if (!data.Columns.Contains("Reason"))
+            if (!data.Columns.Contains(Lang.REASON))
             {
-                data.Columns.Add("Reason");
+                data.Columns.Add(Lang.REASON);
             }
             for (int i = 0; i < dataGridView6.ColumnCount; i++)
             {
@@ -105,30 +110,34 @@ namespace WMS.GUI
 
         private void dataGridView6_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
             if (dataGridView6.Columns[e.ColumnIndex].Equals(dataGridView6.Columns[6]))
             {
                 int temp = 0;
                 if (!int.TryParse(dataGridView6[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
                 {
-
+                    MessageBox.Show(Lang.MUST_BE_A_NUMBER, Lang.ERROR);
+                    dataGridView6[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if (temp < 0)
                 {
-
+                    MessageBox.Show(Lang.MUST_BE_POSITIVE, Lang.ERROR);
+                    dataGridView6[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else
-                {
-                    dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
+                {   
                     lastRow = e.RowIndex;
-
+        
                     panel1.Visible = true;
                     listBox1.Focus();
                 }
+                dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
             panel1.Visible = false;
             dataGridView6.Focus();
             dataGridView6[7, lastRow].Value = listBox1.SelectedItem.ToString();

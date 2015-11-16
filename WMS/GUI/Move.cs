@@ -30,6 +30,8 @@ namespace WMS.GUI
         {
             InitializeComponent();
             this.core = core;
+            this.moveConfirmButton.Text = Lang.CONFIRM;
+            this.moveCancelButton.Text = Lang.CANCEL;
             InitializeDataGridView(core);
         }
 
@@ -56,15 +58,15 @@ namespace WMS.GUI
             ComboColumnNewLocation.ValueMember = "LocString";
 
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
-            ColumnQuantity.HeaderText = "Quantity";
-            ComboColumnLocation.HeaderText = "Location";
-            ComboColumnNewLocation.HeaderText = "New Location";
-            ComboColumnIdentification.HeaderText = "Item Number/Name";
+            ColumnQuantity.HeaderText = Lang.AMOUNT;
+            ComboColumnLocation.HeaderText = Lang.LOCATION;
+            ComboColumnNewLocation.HeaderText = Lang.NEW_LOCATION;
+            ComboColumnIdentification.HeaderText = Lang.ITEM_NO + " / " + Lang.DESCRIPTION;
 
             //Adds DataGridViewComboBoxColumns to DataGridView
             moveDataGridView.Columns.Add(ComboColumnIdentification);
             moveDataGridView.Columns.Add(ComboColumnLocation);
-            moveDataGridView.Columns.Add("QuantityColumn", "Quantity"); //Also sets name of column
+            moveDataGridView.Columns.Add("QuantityColumn", Lang.AMOUNT); //Also sets name of column
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
             //Set width of columns, Width of datagridview is ca. 917 (as of writing this)
@@ -190,7 +192,7 @@ namespace WMS.GUI
         
         public string GetTypeOfWindow()
         {
-            return "move";
+            return WindowTypes.MOVE;
         }
 
         public void UpdateGuiElements()
@@ -200,8 +202,11 @@ namespace WMS.GUI
 
         private void moveCancelButton_Click(object sender, EventArgs e)
         {
-            DialogResult result1 = MessageBox.Show("Are you sure you want to remove all edits from the list?", "Confirm Cancel", MessageBoxButtons.YesNo);
-            if(result1 == DialogResult.Yes)
+            CancelBox cancel = new CancelBox();
+            cancel.Owner = this;
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
             {
                 int rowCount = moveDataGridView.Rows.Count - 1;
                 for (int i = 0; i < rowCount; i++)

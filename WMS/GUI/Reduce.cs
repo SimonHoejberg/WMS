@@ -25,6 +25,10 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             MakeComboBox();
+            this.searchBtn.Text = Lang.SEACH;
+            this.Text = Lang.REDUCE;
+            this.reduceConfirmBtn.Text = Lang.CONFIRM;
+            this.reduceCancelBtn.Text = Lang.CANCEL;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -62,10 +66,11 @@ namespace WMS.GUI
                     {
                         core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,LogOperations.REDUCED);
                     }
+                    core.WindowHandler.Update(this);
+                    data.Clear();
                 }
+
             }
-            core.WindowHandler.Update(this);
-            data.Clear();
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
@@ -87,16 +92,16 @@ namespace WMS.GUI
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
-            reduceDataGridView.Columns[0].HeaderText = "Item No";
-            reduceDataGridView.Columns[1].HeaderText = "Description";
-            reduceDataGridView.Columns[2].HeaderText = "In stock";
-            reduceDataGridView.Columns[3].HeaderText = "Location";
+            reduceDataGridView.Columns[0].HeaderText = Lang.ITEM_NO;
+            reduceDataGridView.Columns[1].HeaderText = Lang.DESCRIPTION;
+            reduceDataGridView.Columns[2].HeaderText = Lang.IN_STOCK;
+            reduceDataGridView.Columns[3].HeaderText = Lang.LOCATION;
             //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
             reduceDataGridView.Columns[5].Visible = false;
-            if (!data.Columns.Contains("Quantity"))
+            if (!data.Columns.Contains(Lang.AMOUNT))
             {
-                data.Columns.Add("Quantity");
+                data.Columns.Add(Lang.AMOUNT);
             }
             for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
             {
@@ -136,16 +141,28 @@ namespace WMS.GUI
             {
                 if (!int.TryParse(temp, out tempInt))
                 {
-                    MessageBox.Show("Must be a number", "Error");
+                    MessageBox.Show(Lang.MUST_BE_A_NUMBER, Lang.ERROR);
                     reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if (tempInt < 0)
                 {
-                    MessageBox.Show("Must be a positive number", "Error");
+                    MessageBox.Show(Lang.MUST_BE_POSITIVE, Lang.ERROR);
                     reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
             }
             reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
+        }
+
+        private void reduceCancelBtn_Click(object sender, EventArgs e)
+        {
+            CancelBox cancel = new CancelBox();
+            cancel.Owner = this;
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
+            {
+                data.Clear();
+            }
         }
     }
 }
