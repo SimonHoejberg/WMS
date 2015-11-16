@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -17,6 +18,7 @@ namespace WMS.GUI
         public Main()
         {
             InitializeComponent();
+            this.Text = Lang.MAIN;
         }
 
         private void MainLoad(object sender, EventArgs e)
