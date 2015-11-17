@@ -7,14 +7,14 @@ using WMS.Interfaces;
 
 namespace WMS.Lang
 {
-    public class LangEng : ILang
+    public class LangEn : ILang
     {
         private string information = "Information";
         private string log = "Log";
         private string move = "Move";
         private string reduce = "Reduce";
         private string register = "Register";
-        private string waste = "Nedskriv";
+        private string waste = "Waste";
         private string main = "Menu";
 
         private string moved = "Moved";
@@ -43,7 +43,7 @@ namespace WMS.Lang
         private string sort = "Sort";
         private string unsort = "Unsort";
 
-        private string cancelBoxText = "Er du sikker på du vil annullere";
+        private string cancelBoxText = "Are you sure you want to cancel?";
         private string yes = "Yes";
         private string no = "No";
         private string userId = "Username";
@@ -55,17 +55,17 @@ namespace WMS.Lang
         private string mustBeANumber = "Must be a number";
         private string seach = "Search";
 
-        private string orderNo = "Order Nr.";
+        private string orderNo = "Order No.";
 
         private string choose = "Choose";
-        private string broken = "Destroyed / Broken";
+        private string broken = "Broken";
         private string wrongItemDelivred = "Wrong item delivered";
         private string missing = "Missing";
         private string reason = "Reason";
 
         private string tooManyWindows = "Cannot open any more windows of the type";
 
-        public LangEng()
+        public LangEn()
         {
 
         }

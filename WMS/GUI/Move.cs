@@ -32,8 +32,9 @@ namespace WMS.GUI
             InitializeComponent();
             this.core = core;
             this.lang = lang;
-            this.moveConfirmButton.Text = lang.CONFIRM;
-            this.moveCancelButton.Text = lang.CANCEL;
+            moveConfirmButton.Text = lang.CONFIRM;
+            moveCancelButton.Text = lang.CANCEL;
+            Text = lang.MOVE;
             InitializeDataGridView(core);
         }
 
@@ -325,6 +326,7 @@ namespace WMS.GUI
             this.lang = lang;
             moveConfirmButton.Text = lang.CONFIRM;
             moveCancelButton.Text = lang.CANCEL;
+            Text = lang.MOVE;
             ColumnQuantity.HeaderText = lang.AMOUNT;
             ComboColumnLocation.HeaderText = lang.LOCATION;
             ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;

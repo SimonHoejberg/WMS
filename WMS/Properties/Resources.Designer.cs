@@ -63,6 +63,16 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dannebro {
+            get {
+                object obj = ResourceManager.GetObject("dannebro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap info {
             get {
                 object obj = ResourceManager.GetObject("info", resourceCulture);
@@ -136,6 +146,16 @@ namespace WMS.Properties {
         internal static System.Drawing.Bitmap registerda {
             get {
                 object obj = ResourceManager.GetObject("registerda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap union_jack_30x18 {
+            get {
+                object obj = ResourceManager.GetObject("union_jack_30x18", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

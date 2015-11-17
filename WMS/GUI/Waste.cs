@@ -32,11 +32,12 @@ namespace WMS.GUI
             this.lang = lang;
             InitializeComponent();
             updateComboBox();
-            this.button1.Text = lang.CHOOSE;
-            this.button2.Text = lang.SEACH;
-            this.textBox1.Text = lang.ITEM_NO;
-            this.button10.Text = lang.CANCEL;
-            this.button11.Text = lang.CONFIRM;
+            Text = lang.WASTE;
+            button1.Text = lang.CHOOSE;
+            button2.Text = lang.SEACH;
+            textBox1.Text = lang.ITEM_NO;
+            button10.Text = lang.CANCEL;
+            button11.Text = lang.CONFIRM;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
@@ -213,6 +214,7 @@ namespace WMS.GUI
         public void UpdateLang(ILang lang)
         {
             this.lang = lang;
+            Text = lang.WASTE;
             button1.Text = lang.CHOOSE;
             button2.Text = lang.SEACH;
             textBox1.Text = lang.ITEM_NO;
@@ -221,12 +223,15 @@ namespace WMS.GUI
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
-            dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
-            dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;
-            dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;
-            dataGridView6.Columns[3].HeaderText = lang.LOCATION;
-            dataGridView6.Columns[6].HeaderText = lang.AMOUNT;
-            dataGridView6.Columns[7].HeaderText = lang.REASON;
+            if (dataGridView6.ColumnCount < 0)
+            {
+                dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
+                dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;
+                dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;
+                dataGridView6.Columns[3].HeaderText = lang.LOCATION;
+                dataGridView6.Columns[6].HeaderText = lang.AMOUNT;
+                dataGridView6.Columns[7].HeaderText = lang.REASON;
+            }
             MakeList();
         }
     }

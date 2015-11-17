@@ -79,7 +79,7 @@
     <Compile Include="Interfaces\ILang.cs" />
     <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
-    <Compile Include="Lang\LangEng.cs" />
+    <Compile Include="Lang\LangEn.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
@@ -206,6 +206,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ImageResources\dannebro.png" />
     <Content Include="ImageResources\info.png" />
     <Content Include="ImageResources\log.png" />
     <Content Include="ImageResources\move.png" />
@@ -214,6 +215,7 @@
     <Content Include="ImageResources\reduceda.png" />
     <Content Include="ImageResources\register.png" />
     <Content Include="ImageResources\registerda.png" />
+    <Content Include="ImageResources\union-jack 30x18.jpg" />
     <Content Include="ImageResources\waste.png" />
     <Content Include="ImageResources\wasteda.png" />
   </ItemGroup>
