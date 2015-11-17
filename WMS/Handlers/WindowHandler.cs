@@ -83,8 +83,8 @@ namespace WMS.Handlers
             }
             else
             {
-                String tempStrng = String.Format("Cannot open any more windows of the type {0}", gui.GetTypeOfWindow());
-                MessageBox.Show(tempStrng, "Help");
+                String tempStrng = String.Format(lang.TOO_MANY_WINDOWS+" {0}", gui.GetTypeOfWindow());
+                MessageBox.Show(tempStrng, lang.ERROR);
             }
         }
 
@@ -130,7 +130,7 @@ namespace WMS.Handlers
 
         public void Exit(string error)
         {
-                MessageBox.Show(error, "Error");
+                MessageBox.Show(error, lang.ERROR);
                 Environment.Exit(0);
         }
 

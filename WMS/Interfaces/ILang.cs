@@ -61,5 +61,7 @@ namespace WMS.Interfaces
         string WRONG_ITEM_DELIVRED { get; }
         string MISSING { get; }
         string REASON { get; }
+
+        string TOO_MANY_WINDOWS { get; }
     }
 }

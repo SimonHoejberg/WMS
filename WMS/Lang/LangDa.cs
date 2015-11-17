@@ -63,6 +63,8 @@ namespace WMS.Lang
         private string missing = "Mangler";
         private string reason = "Årsag";
 
+        private string tooManyWindows = "For mange vinduere åbnet af typen";
+
         public LangDa()
         {
 
@@ -122,6 +124,6 @@ namespace WMS.Lang
         public string MISSING { get { return missing; } }
         public string REASON { get { return reason; } }
 
-
+        public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
     }
 }
