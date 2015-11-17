@@ -152,6 +152,25 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
+        public MySqlDataReader SearchToList(string itemNo)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT * FROM information WHERE itemNo LIKE '" + itemNo + "%'";
+            ResetConnection();
+            command.CommandText = sql;
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
+        }
+
+        public void UpdateLocation(string itemNo, string location)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = string.Format("UPDATE information SET location = {1} WHERE itemNo = {0}", itemNo, location);
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
+        }
+
         public void OpenConnection()
         {
             try
@@ -188,6 +207,15 @@ namespace WMS.Handlers
         {
             CloseConnection();
             OpenConnection();
+        }
+
+        public void moveItem(string storageUnit, string shelf, string shelfNo, string newQuantity, string newItem)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = string.Format("UPDATE location SET itemNo = '{0}' AND quantity = '{1}' WHERE unit = '{2}' AND shelf = '{3}' AND shelfNo = '{4}'", newItem, newQuantity, storageUnit, shelf, shelfNo);
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
         }
     }
 

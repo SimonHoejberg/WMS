@@ -18,21 +18,27 @@ namespace WMS.GUI
     {
         private ICore core;
         private bool sortToggle = false;
+        private ILang lang;
 
-        public Log(ICore core)
+        public Log(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             UpdateLog();
+            UpdateLang(lang);
+
         }
 
-        public Log(ICore core, string itemNo)
+        public Log(ICore core, string itemNo, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,DataBaseTypes.LOG));
             sortToggle = true;
-            sortButton.Text = "Unsort";
+            UpdateLang(lang);
+            sortButton.Text = lang.UNSORT;
         }
 
         private void UpdateLog()
@@ -49,16 +55,23 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
 
             mysqlData.Fill(data);
-
+            dataGridView.Columns[0].Visible = false;
+            dataGridView.Columns[1].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[2].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[3].HeaderText = lang.TIMESTAMP;
+            dataGridView.Columns[4].HeaderText = lang.USER;
+            dataGridView.Columns[5].HeaderText = lang.OPERATION;
+            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
             if (dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Descending);
             }
-            dataGridView.Columns[0].Visible = false;
+
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dataGridView.Columns[i].ReadOnly = true;
             }
         }
 
@@ -92,13 +105,13 @@ namespace WMS.GUI
                 sortToggle = true;
                 string temp = dataGridView[1, dataGridView.CurrentCell.RowIndex].Value.ToString();
                 UpdateLog(core.DataHandler.GetDataFromItemNo(temp, DataBaseTypes.LOG));
-                sortButton.Text = "Unsort";
+                sortButton.Text = lang.UNSORT;
             }
             else if(sortToggle)
             {
                 sortToggle = false;
                 UpdateLog();
-                sortButton.Text = "Sort";
+                sortButton.Text = lang.SORT;
             }
         }
 
@@ -110,6 +123,25 @@ namespace WMS.GUI
         private void LogLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            Text = lang.LOG;
+            closeButton.Text = lang.CLOSE;
+            viewItemButton.Text = lang.VIEW_ITEM;
+            label4.Text = lang.DESCRIPTION;
+            label1.Text = lang.SIZE;
+            label2.Text = lang.LOCATION;
+            label3.Text = lang.USAGE;
+            sortButton.Text = lang.SORT;
+            dataGridView.Columns[1].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[2].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[3].HeaderText = lang.TIMESTAMP;
+            dataGridView.Columns[4].HeaderText = lang.USER;
+            dataGridView.Columns[5].HeaderText = lang.OPERATION;
+            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
         }
     }
 }

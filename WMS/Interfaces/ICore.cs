@@ -1,4 +1,6 @@
 ﻿using WMS.Handlers;
+using WMS.WH;
+using System.Collections.Generic;
 
 namespace WMS.Interfaces
 {
@@ -10,7 +12,11 @@ namespace WMS.Interfaces
 
         DataHandler DataHandler { get; }
 
+        void SortNewItems(List<Item> items);
+
         string GetTimeStamp();
+
+        void changeLang();
 
     }
 }

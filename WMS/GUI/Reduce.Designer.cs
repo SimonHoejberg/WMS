@@ -44,6 +44,7 @@
             this.reduceCancelBtn.TabIndex = 7;
             this.reduceCancelBtn.Text = "Cancel";
             this.reduceCancelBtn.UseVisualStyleBackColor = true;
+            this.reduceCancelBtn.Click += new System.EventHandler(this.reduceCancelBtn_Click);
             // 
             // reduceConfirmBtn
             // 
@@ -57,25 +58,27 @@
             // 
             // reduceDataGridView
             // 
+            this.reduceDataGridView.AllowUserToAddRows = false;
             this.reduceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.reduceDataGridView.Location = new System.Drawing.Point(12, 67);
             this.reduceDataGridView.Name = "reduceDataGridView";
             this.reduceDataGridView.Size = new System.Drawing.Size(960, 455);
             this.reduceDataGridView.TabIndex = 5;
+            this.reduceDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.reduceDataGridView_CellValueChanged);
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(21, 17);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(225, 21);
             this.comboBox2.TabIndex = 4;
-            this.comboBox2.Text = "Search";
-            this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox2_KeyDown);
+            this.comboBox2.SelectionChangeCommitted += new System.EventHandler(this.comboBox2_SelectionChangeCommitted);
             // 
             // searchBtn
             // 
-            this.searchBtn.Location = new System.Drawing.Point(251, 17);
+            this.searchBtn.Location = new System.Drawing.Point(311, 17);
             this.searchBtn.Margin = new System.Windows.Forms.Padding(2);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(56, 19);
@@ -94,6 +97,7 @@
             this.Controls.Add(this.reduceConfirmBtn);
             this.Controls.Add(this.reduceDataGridView);
             this.Controls.Add(this.comboBox2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Reduce";
             this.Text = "Reduce";
             this.Load += new System.EventHandler(this.Reduce_Load);

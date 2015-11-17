@@ -10,11 +10,12 @@ using WMS.WH;
 
 
 /*ToDo
-- Grey out cells that can not be accessed.
-- Generalize functions
-- Add functionality to new location
-- Clean up code
-- Add support for using the "Location" combobox first
+- New location list should contain all locations with the same item
+- Should no be able to move multiple items to the same location
+- Make it so that you can move multiple times from the same location
+- Move multiple to same new location if item is the same
+- When moving multiple times from the same location, make sure the total quantity does not exceed the quantity on the location
+- 
 */
 
 namespace WMS.GUI
@@ -22,12 +23,17 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnItemNo, ComboColumnName, ComboColumnLocation, ComboColumnQuantity, ComboColumnNewLocation;
+        private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnLocation, ComboColumnNewLocation;
+        private DataGridViewColumn ColumnQuantity;
+        private ILang lang;
 
-        public Move(ICore core)
+        public Move(ICore core, ILang lang)
         {
             InitializeComponent();
             this.core = core;
+            this.lang = lang;
+            this.moveConfirmButton.Text = lang.CONFIRM;
+            this.moveCancelButton.Text = lang.CANCEL;
             InitializeDataGridView(core);
         }
 
@@ -35,36 +41,49 @@ namespace WMS.GUI
         {
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
             ComboColumnLocation = new DataGridViewComboBoxColumn();
-            ComboColumnQuantity = new DataGridViewComboBoxColumn();
             ComboColumnNewLocation = new DataGridViewComboBoxColumn();
             ComboColumnIdentification = new DataGridViewComboBoxColumn(); //New!
+
+            ColumnQuantity = new DataGridViewColumn();
 
             //Names?
             ComboColumnIdentification.Name = "ItemIDColumn";
             ComboColumnLocation.Name = "LocationColumn";
+            ComboColumnNewLocation.Name = "NewLocationColumn";
 
             //Sets the Displaymembers for the DataGridViewComboBoxColumns
             ComboColumnIdentification.DisplayMember = "Identification";
 
+            //ValueMembers
+            ComboColumnIdentification.ValueMember = "ItemNo";
+            ComboColumnLocation.ValueMember = "LocString";
+            ComboColumnNewLocation.ValueMember = "LocString";
+
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
-            ComboColumnQuantity.HeaderText = "Quantity";
-            ComboColumnLocation.HeaderText = "Location";
-            ComboColumnNewLocation.HeaderText = "New Location";
-            ComboColumnIdentification.HeaderText = "Item Number/Name";
+            ColumnQuantity.HeaderText = lang.AMOUNT;
+            ComboColumnLocation.HeaderText = lang.LOCATION;
+            ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
+            ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
 
             //Adds DataGridViewComboBoxColumns to DataGridView
             moveDataGridView.Columns.Add(ComboColumnIdentification);
-            moveDataGridView.Columns.Add(ComboColumnQuantity);
             moveDataGridView.Columns.Add(ComboColumnLocation);
+            moveDataGridView.Columns.Add("QuantityColumn", lang.AMOUNT); //Also sets name of column
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
-            //Set width of columns
+            //Set width of columns, Width of datagridview is ca. 917 (as of writing this)
             DataGridViewColumn column1 = moveDataGridView.Columns[0];
-            column1.Width = 150;
+            DataGridViewColumn column2 = moveDataGridView.Columns[1];
+            DataGridViewColumn column3 = moveDataGridView.Columns[2];
+            DataGridViewColumn column4 = moveDataGridView.Columns[3];
+            column1.Width = 230;
+            column2.Width = 229;
+            column3.Width = 229;
+            column4.Width = 229;
 
             //Sets the initial datasources
             ComboColumnIdentification.DataSource = core.DataHandler.InfoToList();
-            ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
+            //ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
 
             // Add the events to listen for
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
@@ -75,11 +94,74 @@ namespace WMS.GUI
         // by calling the CommitEdit method. 
         void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            if (this.moveDataGridView.IsCurrentCellDirty)
+            if (moveDataGridView.IsCurrentCellDirty)
             {
                 // This fires the cell value changed handler below
                 moveDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
+        }
+
+        //Fires when changes have been comitted to a cell in moveDataGridView
+        private void moveDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //if the change happened in ItemIDColumn
+            if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("ItemIDColumn"))
+            {
+                var LocationCell = moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
+                LocationCell.Items.Clear();
+                List<Location> locList = LocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
+                foreach (Location lc in locList)
+                {
+                    LocationCell.Items.Add(lc);
+                }
+                LocationCell.Value = LocationCell.Items[0];
+                moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
+            }
+            //if the change happened in LocationColumn
+            else if (e.RowIndex != -1 &&moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
+            {
+                //Set new locations
+                var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
+                NewLocationCell.Items.Clear();
+                List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
+                foreach (Location lc in newLocList)
+                {
+                    Console.WriteLine(lc.LocString);
+                    NewLocationCell.Items.Add(lc);
+                }
+            }
+            //if the change happened in QuantityColumn
+            else if (e.RowIndex != -1 &&moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("QuantityColumn"))
+            {
+                int a = 0;
+
+                bool checkIfInt = Int32.TryParse(moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value.ToString(), out a);
+                if (checkIfInt)
+                {
+                    int maxQuantity = 0;
+
+                    foreach (Location loc in core.DataHandler.LocationToList())
+                    {
+                        if (moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value != null && loc.LocString.Equals(moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()))
+                        {
+                            maxQuantity = loc.Quantity;
+                        }
+                    }
+
+                    if (0 > a)
+                    {
+                        moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
+                    }
+                    else if (a > maxQuantity)
+                    {
+                        moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = maxQuantity;
+                    }
+                }
+                else
+                {
+                    moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
+                }
+            } 
         }
 
         private List<Item> ItemList(DataGridViewCell eventCell)
@@ -100,110 +182,40 @@ namespace WMS.GUI
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
-        private void moveLoadOptimalButtonClick(object sender, EventArgs e)
+        private List<Location> NewLocationList(DataGridViewCell eventCell)
         {
-            foreach (DataGridViewRow row in moveDataGridView.Rows)
+            List<Location> input = core.DataHandler.LocationToList();
+            foreach(Location loc in input)
             {
-                if (row.Cells[0].Value != null && row.Cells[4].Value == null)
-                {
-                    //use algorithm here
-                    //send itemNo, current location and itemQuantity
-                    ComboColumnNewLocation.Items.Add("3");
-                    row.Cells[4].Value = "3";
-                }
+                Console.WriteLine(loc.ItemNo);
             }
+            return input.Where((x => x.ItemNo.Equals("0"))).ToList();
         }
-
-        private void moveDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //Sets originalCell to reference the cell the event was called from
-            var dgv = sender as DataGridView;
-            var originalCell = dgv[e.ColumnIndex, e.RowIndex];
-
-            DataGridViewCell eventCell = moveDataGridView[e.ColumnIndex, e.RowIndex];
-
-            if (e.ColumnIndex == 0) //Name/ID
-            {
-                var cell = dgv.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
-                cell.DataSource = LocationList(eventCell);
-            }
-            else if(e.ColumnIndex == 2) //Location
-            {
-
-            }
-
-            /*If the cellValueChanged was called from the first column, aka. "itemNo" Set the datasource for the second column "ItemName"
-            if (e.ColumnIndex == 0)
-            {
-                //Cell is hardcoded to reference the column next to "itemNo", which should be "ItemName"
-                var cell = dgv[e.ColumnIndex + 1, e.RowIndex] as DataGridViewComboBoxCell;
-                cell.DataSource = ItemList(eventCell);
-                moveDataGridView.Rows[e.RowIndex].Cells["ItemNameColumn"].Value = core.DataHandler.GetItemFromItemNo(originalCell.Value.ToString()).Description;
-
-                //Cell is hardcoded to reference the column 3 right of "itemNo", which should be "ItemLocation"
-                var cell2 = dgv[e.ColumnIndex + 3, e.RowIndex] as DataGridViewComboBoxCell;
-                cell2.DataSource = LocationList(eventCell);
-            }
-            else if (e.ColumnIndex == 1)
-            {
-                var cell = dgv[e.ColumnIndex - 1, e.RowIndex] as DataGridViewComboBoxCell;
-                cell.DataSource = DescriptionList(eventCell);
-                moveDataGridView.Rows[e.RowIndex].Cells["ItemNoColumn"].Value = moveDataGridView.Rows[e.RowIndex].Cells["ItemNameColumn"].Value as Item;
-
-            }*/
-        }
-
-       /* public void ManualMove()
-        {
-            int itemInStockIncrease = 0;
-            int itemInStockDecrease = 0;
-
-            foreach (DataGridViewRow row in moveDataGridView.Rows)
-            {
-                //Searches for items with the same location as the new location
-                //could use a location search
-                foreach (Item item in core.DataHandler.DataToList(WindowTypes.INFO))
-                {
-                    if (item.Shelf == (int)row.Cells[4].Value)
-                    {
-                        // Sees if the items are the same and if there's room
-                        if (int.Parse(item.ItemNo) == (int)row.Cells[0].Value && item.Size - item.InStock >= (int)row.Cells[3].Value)
-                        {
-
-                            itemInStockIncrease = item.InStock + (int)row.Cells[3].Value - ((item.InStock + (int)row.Cells[3].Value) % item.Size);
-                            itemInStockDecrease = (item.InStock + (int)row.Cells[3].Value) % item.Size;
-
-
-                            //use an updatefunction to either update the item or location
-                            //core.DataHandler.UpdateProduct("4", itemInStockIncrease.ToString(), item.ItemNo.ToString(), WindowTypes.INFO, this);
-                        }
-                    }
-                    // something for when shelf and cells[4] are not equal
-                }
-            }
-        }*/
-
+        
         public string GetTypeOfWindow()
         {
-            return "move";
-        }
-
-        public void FilterColumn(string a)
-        {
-
-        }
-
-        private void MoveDataGridViewRowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            //things to do when a new row is added (e.g. disable some cells, change styles for cells)
-            DataGridViewCellStyle a = new DataGridViewCellStyle();
-            a.SelectionForeColor = Color.AliceBlue;
-            (moveDataGridView[0, e.RowIndex] as DataGridViewComboBoxCell).Style = a;
+            return WindowTypes.MOVE;
         }
 
         public void UpdateGuiElements()
         {
 
+        }
+
+        private void moveCancelButton_Click(object sender, EventArgs e)
+        {
+            CancelBox cancel = new CancelBox(lang);
+            cancel.Owner = this;
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
+            {
+                int rowCount = moveDataGridView.Rows.Count - 1;
+                for (int i = 0; i < rowCount; i++)
+                {
+                    moveDataGridView.Rows.RemoveAt(0);
+                }
+            }
         }
 
         private void MoveLoad(object sender, EventArgs e)
@@ -213,8 +225,110 @@ namespace WMS.GUI
 
         private void MoveConfirmButtonClick(object sender, EventArgs e)
         {
-            //Current button event is made for testing the confirmation box. (passowd/userID)
-            //ManualMove();
+            string problemList = "";
+            bool noProblemsEncountered = true;
+            bool locUsedTwice = false;
+            bool newLocUsedTwice = false;
+
+            foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
+            {
+                if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                {
+                    break;
+                }
+                foreach (DataGridViewRow dgvRow2 in moveDataGridView.Rows)
+                {
+                    if (dgvRow2.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                    {
+                        break;
+                    }
+                    if (dgvRow.Cells["LocationColumn"].Value.ToString().Equals(dgvRow2.Cells["LocationColumn"].Value.ToString()))
+                    {
+                        locUsedTwice = true;
+                    }
+                    if (dgvRow.Cells["NewLocationColumn"].Value.ToString().Equals(dgvRow2.Cells["NewLocationColumn"].Value.ToString()))
+                    {
+                        newLocUsedTwice = true;
+                    }
+                }
+            }
+            Console.WriteLine(locUsedTwice + " " + newLocUsedTwice);
+                //Check if multiple items are moved to the same location
+            foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
+            {
+                if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                {
+                    break;
+                }
+                if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null && locUsedTwice != true && newLocUsedTwice != true)
+                {
+                    //Commit changes to database
+                }
+                else 
+                {
+                    if (dgvRow.Cells["ItemIDColumn"].Value == null)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nValue in ItemID on row " + (dgvRow.Index + 1) + " is empty!");
+                    }
+                    if(dgvRow.Cells["LocationColumn"].Value == null)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nValue in Location on row " + (dgvRow.Index + 1) + " is empty!");
+                    }
+                    if (dgvRow.Cells["QuantityColumn"].Value == null)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nValue in Quantity on row " + (dgvRow.Index + 1) + " is empty!");
+                    }
+                    if (dgvRow.Cells["NewLocationColumn"].Value == null)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nValue in New Location on row " + (dgvRow.Index + 1) + " is empty!");
+                    }
+                    if(locUsedTwice == true)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nAttempt to move from the same location twice");
+                    }
+                    if(newLocUsedTwice == true)
+                    {
+                        noProblemsEncountered = false;
+                        problemList += ("\nAttempt to move multiple items to the same location");
+                    }
+    
+                    //Fix attempt to move multiple items to the same location
+                }
+            }
+            if(noProblemsEncountered == true)
+            {
+                UserIDBox user_dialog = new UserIDBox(core,lang);
+                user_dialog.Owner = this;
+                DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+                if (a.Equals(DialogResult.OK))
+                {
+                    //Reduce Item on on location
+                    
+                    //Increase items on new location
+
+                }
+            }
+            //give error message if commit could not be done
+            else if (noProblemsEncountered == false)
+            {
+                MessageBox.Show(problemList, "Changes could not be comitted!");
+            }
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            moveConfirmButton.Text = lang.CONFIRM;
+            moveCancelButton.Text = lang.CANCEL;
+            ColumnQuantity.HeaderText = lang.AMOUNT;
+            ComboColumnLocation.HeaderText = lang.LOCATION;
+            ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
+            ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
         }
     }
 }

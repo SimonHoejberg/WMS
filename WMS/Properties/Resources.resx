@@ -118,22 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="placeholder_Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImageResources\placeholder_Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="placeholder_Log" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImageResources\placeholder_Log.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="log" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\log.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="placeholder_Move" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImageResources\placeholder_Move.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="move" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\move.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="placeholder_Register" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImageResources\placeholder_Register.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="moveda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\moveda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="placeholder_Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImageResources\placeholder_Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="reduce" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\reduce.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="placeholder_Waste" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImageResources\placeholder_Waste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="reduceda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\reduceda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="register" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\register.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="registerda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\registerda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="waste" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\waste.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wasteda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImageResources\wasteda.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

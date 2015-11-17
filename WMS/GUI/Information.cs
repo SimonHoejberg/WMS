@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.Reference;
@@ -10,16 +11,19 @@ namespace WMS.GUI
     {
         private ICore core;
         private string itemNo;
+        private ILang lang;
 
-        public Information(ICore core)
+        public Information(ICore core, ILang lang)
         {
             InitializeComponent();
+            this.lang = lang;
             this.core = core;
             UpdateInfo();
+            UpdateLang(lang);
+
         }
         private void UpdateInfo()
         {
-            dataGridView.CellValueChanged -= dataGridView_cellChanged;
             BindingSource bsource = new BindingSource();
             DataTable data = new DataTable();
 
@@ -28,28 +32,17 @@ namespace WMS.GUI
 
             core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
 
-            dataGridView.Columns[0].HeaderText = "Item No";
-            dataGridView.Columns[1].HeaderText = "Description";
-            dataGridView.Columns[2].HeaderText = "In stock";
-            dataGridView.Columns[3].HeaderText = "Location";
-            dataGridView.Columns[4].Visible = false;
+            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = lang.LOCATION;
+            dataGridView.Columns[4].HeaderText = lang.SIZE;
             dataGridView.Columns[5].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView.Columns[i].ReadOnly = true;
             }
-            dataGridView.CellValueChanged += dataGridView_cellChanged;
-        }
-
-        private void dataGridView_cellChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            string coloumn = dataGridView.Columns[e.ColumnIndex].Name.ToString();
-            string value = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-            string id = dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
-
-            core.DataHandler.UpdateProduct(coloumn, value, id, GetTypeOfWindow(), DataBaseValues.ITEM);
-            core.WindowHandler.Update(this);
-
         }
 
         public void UpdateGuiElements()
@@ -67,7 +60,7 @@ namespace WMS.GUI
 
             itemInfoPanel.Visible = true;
             int test = dataGridView.CurrentCell.RowIndex;
-            string itemNo = dataGridView[0, test].Value.ToString();
+            itemNo = dataGridView[0, test].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
             sizeLabel.Text = item.Size.ToString();
             usageLabel.Text = item.Usage.ToString();
@@ -98,6 +91,24 @@ namespace WMS.GUI
         private void InformationLoad(object sender, System.EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            Text = lang.INFORMATION;
+            closeButton.Text = lang.CLOSE;
+            viewItemButton.Text = lang.VIEW_ITEM;
+            logButton.Text = lang.LOG;
+            label4.Text = lang.DESCRIPTION;
+            label1.Text = lang.SIZE;
+            label2.Text = lang.LOCATION;
+            label3.Text = lang.USAGE;
+            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = lang.LOCATION;
+            dataGridView.Columns[4].HeaderText = lang.SIZE;
         }
     }
 }

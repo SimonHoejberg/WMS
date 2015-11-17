@@ -9,16 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Core;
 using WMS.Interfaces;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
     public partial class UserIDBox : Form
     {
         private ICore core;
-        public UserIDBox(ICore core)
+        private ILang lang;
+
+        public UserIDBox(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
+            this.Text = lang.CONFIRM;
+            this.userConfirm_btn.Text = lang.ACCEPT;
+            this.userCancel_btn.Text = lang.CANCEL;
         }
 
         public string User { get { return getInputFromTextbox; } }
@@ -45,7 +52,7 @@ namespace WMS.GUI
             }
             else
             {
-                userIDError_lbl.Text = "Invalid user ID";
+                userIDError_lbl.Text = lang.INVILD_USER_ID;
             }
         }
 

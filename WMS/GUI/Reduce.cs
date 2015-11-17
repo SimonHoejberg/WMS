@@ -16,15 +16,27 @@ namespace WMS.GUI
     public partial class Reduce : Form , IGui
     {
         private ICore core;
-        private bool First = true;
-        BindingSource bsource;
-        DataTable data;
+        private BindingSource bsource;
+        private DataTable data;
+        private string itemNo;
+        private ILang lang;
+        private string error;
+        private string mustBePostive;
+        private string mustBeAnumber;
        
-        public Reduce(ICore core)
+        public Reduce(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             MakeComboBox();
+            searchBtn.Text = lang.SEACH;
+            Text = lang.REDUCE;
+            reduceConfirmBtn.Text = lang.CONFIRM;
+            reduceCancelBtn.Text = lang.CANCEL;
+            error = lang.ERROR;
+            mustBePostive = lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = lang.MUST_BE_A_NUMER;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -45,13 +57,13 @@ namespace WMS.GUI
         {
             comboBox2.DataSource = core.DataHandler.InfoToList();
             comboBox2.ValueMember = "ItemNo";
-            comboBox2.DisplayMember = "Description";
+            comboBox2.DisplayMember = "Identification";
 
         }
 
         private void reduceConfirmBtn_Click(object sender, EventArgs e)
         {
-            UserIDBox user_dialog = new UserIDBox(core);
+            UserIDBox user_dialog = new UserIDBox(core,lang);
             DialogResult a = user_dialog.ShowDialog();
             if (a.Equals(DialogResult.OK))
             {
@@ -60,12 +72,13 @@ namespace WMS.GUI
                 {
                     if (!(reduceDataGridView[0, i].Value == null))
                     {
-                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,LogOperations.REDUCED);
+                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,lang.REDUCED);
                     }
+                    core.WindowHandler.Update(this);
+                    data.Clear();
                 }
-            }
 
-            data.Clear();
+            }
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
@@ -73,57 +86,100 @@ namespace WMS.GUI
             int a = 0;
             if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.Text, WindowTypes.INFO).Fill(data);
+                itemNo = comboBox2.Text;
+                MakeDataGridView();
             }
-            else
+            else if (comboBox2.SelectedValue != null && int.TryParse(comboBox2.SelectedValue.ToString(), out a))
             {
-                core.DataHandler.GetDataFromItemNo(comboBox2.SelectedValue.ToString(), WindowTypes.INFO).Fill(data);
-            }
-            
-            if (First)
-            {
-                DataGridViewMake();
+                itemNo = comboBox2.SelectedValue.ToString();
+                MakeDataGridView();
             }
         }
 
-        private void DataGridViewMake()
+        private void MakeDataGridView()
         {
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+            core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
+            reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
             //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
             reduceDataGridView.Columns[5].Visible = false;
-            data.Columns.Add("Quantity");
-            First = false;
-
+            if (!data.Columns.Contains(lang.AMOUNT))
+            {
+                data.Columns.Add(lang.AMOUNT);
+            }
             for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
             {
                 reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-        }
-
-        private void comboBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            int a = 0;
-            
-            if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
-            {
-                core.DataHandler.GetDataFromItemNo(a.ToString(), WindowTypes.INFO).Fill(data);
-            }
-
-            else if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up && e.KeyCode == Keys.Enter)
-            {
-                string itemNo = comboBox2.SelectedValue.ToString();
-                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
-            }
-
-            if (First && e.KeyCode == Keys.Enter)
-            {
-                DataGridViewMake();
-            }
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
         }
 
         private void Reduce_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        private void reduceDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+            string temp = reduceDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            int tempInt = 0;
+            if (temp != null)
+            {
+                if (!int.TryParse(temp, out tempInt))
+                {
+                    MessageBox.Show(mustBeAnumber, error);
+                    reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else if (tempInt < 0)
+                {
+                    MessageBox.Show(mustBePostive, error);
+                    reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+            }
+            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
+        }
+
+        private void reduceCancelBtn_Click(object sender, EventArgs e)
+        {
+            CancelBox cancel = new CancelBox(lang);
+            cancel.Owner = this;
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
+            {
+                data.Clear();
+            }
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            searchBtn.Text = lang.SEACH;
+            Text = lang.REDUCE;
+            reduceConfirmBtn.Text = lang.CONFIRM;
+            reduceCancelBtn.Text = lang.CANCEL;
+            error = lang.ERROR;
+            mustBePostive = lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
+            reduceDataGridView.Columns[4].Visible = false;
+            reduceDataGridView.Columns[5].Visible = false;
+            reduceDataGridView.Columns[6].HeaderText = lang.AMOUNT;
+        }
+
+        private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            itemNo = comboBox2.SelectedValue.ToString();
+            MakeComboBox();
+            MakeDataGridView();
         }
     }
 }

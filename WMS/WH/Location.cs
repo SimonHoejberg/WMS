@@ -3,6 +3,7 @@ namespace WMS.WH
 {
     public class Location
     {
+        private string id;
         private string unit;
         private int shelf;
         private int shelfNo;
@@ -10,8 +11,9 @@ namespace WMS.WH
         private int space;
         private int quantity;
 
-        public Location(string unit, int shelf, int shelfNo, string itemNo, int space, int quantity)
+        public Location(string id, string unit, int shelf, int shelfNo, string itemNo, int space, int quantity)
         {
+            this.id = id;
             this.unit = unit;
             this.shelf = shelf;
             this.shelfNo = shelfNo;
@@ -20,12 +22,15 @@ namespace WMS.WH
             this.quantity = quantity;
         }
 
+        public string Id { get { return id; } }
         public string Unit { get { return unit; } }
         public int Shelf { get { return shelf; } }
         public int ShelfNo { get { return shelfNo; } }
         public string ItemNo { get { return itemNo; } }
         public int Space { get { return space; } }
         public int Quantity { get { return quantity; } }
+        public string LocString { get { return unit + ":" + shelf + ":" + shelfNo; } }
+        public Location getObj { get { return this; } }
 
         public override string ToString()
         {

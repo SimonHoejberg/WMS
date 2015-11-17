@@ -137,5 +137,10 @@ namespace WMS
         {
             panel1.BringToFront();
         }
+
+        public void UpdatePics(bool da)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

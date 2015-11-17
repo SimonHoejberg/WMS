@@ -9,5 +9,7 @@ namespace WMS.Interfaces
     public interface IMain
     {
         ICore Core { set; }
+
+        void UpdatePics(bool da);
     }
 }

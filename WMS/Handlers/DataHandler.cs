@@ -89,7 +89,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
             while (reader.Read())
             {
-                temp.Add(new Location(reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
+                temp.Add(new Location(reader["ID"].ToString(), reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
             }
             sql.CloseConnection();
             return temp;
@@ -107,11 +107,26 @@ namespace WMS.Handlers
             return temp;
         }
 
+        public List<Item> SearchInfoToList(string itemNo)
+        {
+            List<Item> temp = new List<Item>();
+            MySqlDataReader reader = sql.SearchToList(itemNo);
+            while (reader.Read())
+            {
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString())));
+
+            }
+            sql.CloseConnection();
+            return temp;
+        }
+
         public Item GetItemFromItemNo(string itemNo)
         {
             MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
             reader.Read();
-            return new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()),int.Parse(reader["itemUsage"].ToString()));
+            Item item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString()));
+            sql.CloseConnection();
+            return item;        
         }
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
@@ -124,10 +139,9 @@ namespace WMS.Handlers
             return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
         }
 
-
-        public MySqlDataAdapter GetInfoForReduce(string itemNo)
+        public void ItemMove(string storageUnit, string shelf, string shelfNo, string newQuantity, string newItem)
         {
-            throw new NotImplementedException();
+            sql.moveItem(storageUnit, shelf, shelfNo, newQuantity, newItem);
         }
 
         public void CloseConnectionToServer()
@@ -139,6 +153,11 @@ namespace WMS.Handlers
         {
             sql.LogOperation(itemNo, description, date, user, operation, quantity);
             sql.InformationChanges(itemNo, description, quantity, "0",0, 0, operaton);
+        }
+
+        public void ChangeLocation(string itemNo,string location)
+        {
+            sql.UpdateLocation(itemNo, location);
         }
 
     }
