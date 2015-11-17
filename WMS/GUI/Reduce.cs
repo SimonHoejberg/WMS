@@ -83,17 +83,8 @@ namespace WMS.GUI
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            int a = 0;
-            if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
-            {
-                itemNo = comboBox2.Text;
-                MakeDataGridView();
-            }
-            else if (comboBox2.SelectedValue != null && int.TryParse(comboBox2.SelectedValue.ToString(), out a))
-            {
-                itemNo = comboBox2.SelectedValue.ToString();
-                MakeDataGridView();
-            }
+            string itemNo = textBox1.Text;
+            comboBox2.DataSource = core.DataHandler.SearchInfoToList(itemNo);
         }
 
         private void MakeDataGridView()
@@ -180,6 +171,19 @@ namespace WMS.GUI
             itemNo = comboBox2.SelectedValue.ToString();
             MakeComboBox();
             MakeDataGridView();
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                searchBtn_Click(sender, e);
+            }
         }
     }
 }

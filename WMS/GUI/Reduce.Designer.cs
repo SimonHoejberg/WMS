@@ -33,6 +33,7 @@
             this.reduceDataGridView = new System.Windows.Forms.DataGridView();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.searchBtn = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +79,7 @@
             // 
             // searchBtn
             // 
-            this.searchBtn.Location = new System.Drawing.Point(311, 17);
+            this.searchBtn.Location = new System.Drawing.Point(370, 17);
             this.searchBtn.Margin = new System.Windows.Forms.Padding(2);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(56, 19);
@@ -87,11 +88,21 @@
             this.searchBtn.UseVisualStyleBackColor = true;
             this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(265, 17);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 10;
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            // 
             // Reduce
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.reduceCancelBtn);
             this.Controls.Add(this.reduceConfirmBtn);
@@ -103,6 +114,7 @@
             this.Load += new System.EventHandler(this.Reduce_Load);
             ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -113,5 +125,6 @@
         private System.Windows.Forms.DataGridView reduceDataGridView;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button searchBtn;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
