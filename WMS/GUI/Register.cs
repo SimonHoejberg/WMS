@@ -185,11 +185,14 @@ namespace WMS.GUI
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
             onlyNumbers = lang.ONLY_NUMBERS;
-            dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
-            dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
-            dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
-            dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
-            dataGridView.Columns[5].HeaderText = lang.AMOUNT;
+            if (dataGridView.ColumnCount < 0)
+            {
+                dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
+                dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
+                dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
+                dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
+                dataGridView.Columns[5].HeaderText = lang.AMOUNT;
+            }
         }
     }
 }

@@ -157,13 +157,16 @@ namespace WMS.GUI
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
-            reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-            reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
-            reduceDataGridView.Columns[4].Visible = false;
-            reduceDataGridView.Columns[5].Visible = false;
-            reduceDataGridView.Columns[6].HeaderText = lang.AMOUNT;
+            if (reduceDataGridView.ColumnCount < 0)
+            {
+                reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+                reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+                reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+                reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
+                reduceDataGridView.Columns[4].Visible = false;
+                reduceDataGridView.Columns[5].Visible = false;
+                reduceDataGridView.Columns[6].HeaderText = lang.AMOUNT;
+            }
         }
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)

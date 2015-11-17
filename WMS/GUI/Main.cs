@@ -71,6 +71,7 @@ namespace WMS.GUI
                 reduceButton.Image = Properties.Resources.reduce;
                 registerButton.Image = Properties.Resources.register;
                 wasteButton.Image = Properties.Resources.waste;
+                langButton.Image = Properties.Resources.dannebro;
             }
             else
             {
@@ -78,6 +79,7 @@ namespace WMS.GUI
                 reduceButton.Image = Properties.Resources.reduceda;
                 registerButton.Image = Properties.Resources.registerda;
                 wasteButton.Image = Properties.Resources.wasteda;
+                langButton.Image = Properties.Resources.union_jack_30x18;
             }
         }
 

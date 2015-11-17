@@ -50,7 +50,7 @@ namespace WMS.Core
         {
             if (da)
             {
-                windowHandler.ChangeLang(new LangEng());
+                windowHandler.ChangeLang(new LangEn());
                 da = false;
             }
             else
