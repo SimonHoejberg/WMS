@@ -46,8 +46,8 @@ namespace WMS.Lang
         private string cancelBoxText = "Er du sikker på du vil annullere";
         private string yes = "Ja";
         private string no = "Nej";
-        private string userId = "Bruger Navn";
-        private string invildUserId = "Forkert Bruger Navn";
+        private string userId = "Brugernavn";
+        private string invildUserId = "Forkert brugernavn";
 
         private string error = "Fejl";
         private string mustBePositive = "Skal være et positivt nummer";
@@ -55,7 +55,7 @@ namespace WMS.Lang
         private string mustBeANumber = "Skal være et nummer";
         private string seach = "Søg";
 
-        private string orderNo = "Order Nr.";
+        private string orderNo = "Ordre Nr.";
 
         private string choose = "Vælg";
         private string broken = "Ødelagt / I stykker";

@@ -11,57 +11,57 @@ namespace WMS.Lang
     {
         private string information = "Information";
         private string log = "Log";
-        private string move = "Flyt Vare";
-        private string reduce = "Reducer";
-        private string register = "Registrer";
+        private string move = "Move";
+        private string reduce = "Reduce";
+        private string register = "Register";
         private string waste = "Nedskriv";
         private string main = "Menu";
 
-        private string moved = "Flyttet";
-        private string reduced = "Taget";
-        private string registed = "Registret";
+        private string moved = "Moved";
+        private string reduced = "Taken";
+        private string registed = "Registered";
 
-        private string close = "Luk";
-        private string accept = "Accepter";
-        private string confirm = "Bekræft";
-        private string cancel = "Annuller";
+        private string close = "Close";
+        private string accept = "Accept";
+        private string confirm = "Confirm";
+        private string cancel = "Cancel";
 
-        private string description = "Beskrivelse";
+        private string description = "Description";
         private string itemNo = "Item No.";
-        private string inStock = "På lager";
-        private string location = "Lokation";
-        private string newLocation = "Ny Lokation";
-        private string size = "Størelse";
-        private string timeStamp = "Dato / Tid";
-        private string user = "Bruger";
-        private string amount = "Mængde";
-        private string expectedAmount = "Mængde";
+        private string inStock = "In stock";
+        private string location = "Location";
+        private string newLocation = "New location";
+        private string size = "Size";
+        private string timeStamp = "Date / Time";
+        private string user = "User";
+        private string amount = "Amount";
+        private string expectedAmount = "Amount";
         private string operaton = "Operation";
 
-        private string viewItem = "Vis Vare";
-        private string usage = "Forbrug";
-        private string sort = "Sorter";
-        private string unsort = "Usorter";
+        private string viewItem = "Show item";
+        private string usage = "Usage";
+        private string sort = "Sort";
+        private string unsort = "Unsort";
 
         private string cancelBoxText = "Er du sikker på du vil annullere";
-        private string yes = "Ja";
-        private string no = "Nej";
-        private string userId = "Bruger Navn";
-        private string invildUserId = "Forkert Bruger Navn";
+        private string yes = "Yes";
+        private string no = "No";
+        private string userId = "Username";
+        private string invildUserId = "Wrong username";
 
-        private string error = "Fejl";
-        private string mustBePositive = "Skal være et positivt nummer";
-        private string onlyNumbers = "Skriv kun tal";
-        private string mustBeANumber = "Skal være et nummer";
-        private string seach = "Søg";
+        private string error = "Error";
+        private string mustBePositive = "Must be a positive number";
+        private string onlyNumbers = "Write only numbers";
+        private string mustBeANumber = "Must be a number";
+        private string seach = "Search";
 
         private string orderNo = "Order Nr.";
 
-        private string choose = "Vælg";
-        private string broken = "Ødelagt / I stykker";
-        private string wrongItemDelivred = "Modtaget forkert vare";
-        private string missing = "Mangler";
-        private string reason = "Årsag";
+        private string choose = "Choose";
+        private string broken = "Destroyed / Broken";
+        private string wrongItemDelivred = "Wrong item delivered";
+        private string missing = "Missing";
+        private string reason = "Reason";
 
         private string tooManyWindows = "Cannot open any more windows of the type";
 
