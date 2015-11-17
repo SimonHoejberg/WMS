@@ -44,7 +44,7 @@ namespace WMS.Lang
         private string unsort = "Unsort";
 
         private string cancelBoxText = "Er du sikker på du vil annullere";
-        private string yes = "Yes";
+        private string yes = "Yes"; 
         private string no = "No";
         private string userId = "Username";
         private string invildUserId = "Wrong username";
