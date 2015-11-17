@@ -223,7 +223,7 @@ namespace WMS.GUI
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
-            if (dataGridView6.ColumnCount < 0)
+            if (dataGridView6.ColumnCount > 0)
             {
                 dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
                 dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;

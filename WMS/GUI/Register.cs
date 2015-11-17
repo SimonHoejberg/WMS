@@ -185,7 +185,7 @@ namespace WMS.GUI
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
             onlyNumbers = lang.ONLY_NUMBERS;
-            if (dataGridView.ColumnCount < 0)
+            if (dataGridView.ColumnCount > 0)
             {
                 dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
                 dataGridView.Columns[2].HeaderText = lang.ITEM_NO;

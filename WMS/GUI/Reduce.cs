@@ -157,7 +157,7 @@ namespace WMS.GUI
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
-            if (reduceDataGridView.ColumnCount < 0)
+            if (reduceDataGridView.ColumnCount > 0)
             {
                 reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
                 reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;

@@ -18,10 +18,9 @@ namespace WMS.GUI
             InitializeComponent();
             this.lang = lang;
             this.core = core;
-            UpdateInfo();
             UpdateLang(lang);
-
         }
+
         private void UpdateInfo()
         {
             BindingSource bsource = new BindingSource();
@@ -65,6 +64,7 @@ namespace WMS.GUI
             sizeLabel.Text = item.Size.ToString();
             usageLabel.Text = item.Usage.ToString();
             nameLabel.Text = item.Description;
+            locationLabel.Text = item.Location;
             logListBox.DataSource = core.DataHandler.GetLog(itemNo);
         }
 
@@ -91,6 +91,7 @@ namespace WMS.GUI
         private void InformationLoad(object sender, System.EventArgs e)
         {
             MaximizeBox = false;
+            UpdateInfo();
         }
 
         public void UpdateLang(ILang lang)
@@ -104,11 +105,14 @@ namespace WMS.GUI
             label1.Text = lang.SIZE;
             label2.Text = lang.LOCATION;
             label3.Text = lang.USAGE;
-            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-            dataGridView.Columns[3].HeaderText = lang.LOCATION;
-            dataGridView.Columns[4].HeaderText = lang.SIZE;
+            if (dataGridView.ColumnCount > 0)
+            {
+                dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+                dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+                dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+                dataGridView.Columns[3].HeaderText = lang.LOCATION;
+                dataGridView.Columns[4].HeaderText = lang.SIZE;
+            }
         }
     }
 }
