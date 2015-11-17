@@ -16,5 +16,7 @@ namespace WMS.Interfaces
 
         string GetTimeStamp();
 
+        void changeLang();
+
     }
 }

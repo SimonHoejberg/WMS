@@ -13,15 +13,26 @@ namespace WMS.GUI
         private ICore core;
         private BindingSource bsource = new BindingSource();
         private DataTable data = new DataTable();
-        public Register(ICore core)
+        private ILang lang;
+        private string error;
+        private string mustBePostive;
+        private string mustBeAnumber;
+        private string onlyNumbers;
+
+        public Register(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             updateComboBox();
-            this.Text = Lang.REGISTER;
-            this.textBox1.Text = Lang.ORDER_NO;
-            this.confirmBtn.Text = Lang.CONFIRM;
-            this.button1.Text = Lang.CANCEL;
+            this.Text = lang.REGISTER;
+            this.textBox1.Text = lang.ORDER_NO;
+            this.confirmBtn.Text = lang.CONFIRM;
+            this.button1.Text = lang.CANCEL;
+            error = lang.ERROR;
+            mustBePostive = lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            onlyNumbers = lang.ONLY_NUMBERS;
         }
 
         public string GetTypeOfWindow()
@@ -43,13 +54,13 @@ namespace WMS.GUI
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data);
 
             dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = Lang.ORDER_NO;
-            dataGridView.Columns[2].HeaderText = Lang.ITEM_NO;
-            dataGridView.Columns[3].HeaderText = Lang.DESCRIPTION;
-            dataGridView.Columns[4].HeaderText = Lang.EXPECTED_AMOUNT;
-            if (!data.Columns.Contains(Lang.AMOUNT))
+            dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
+            dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
+            if (!data.Columns.Contains(lang.AMOUNT))
             {
-                data.Columns.Add(Lang.AMOUNT);
+                data.Columns.Add(lang.AMOUNT);
             }
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
@@ -71,7 +82,7 @@ namespace WMS.GUI
         private void confirmBtn_Click(object sender, EventArgs e)
         {
             List<Item> tempList = new List<Item>();
-            UserIDBox user_dialog = new UserIDBox(core);
+            UserIDBox user_dialog = new UserIDBox(core,lang);
             user_dialog.Owner = this;
             DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
             if (a.Equals(DialogResult.OK))
@@ -82,7 +93,7 @@ namespace WMS.GUI
                 {
                     if (dataGridView[5, i].Value != null && int.TryParse(dataGridView[5, i].Value.ToString(),out temp))
                     {
-                            core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), temp, user, LogOperations.REGISTED);
+                            core.DataHandler.ActionOnItem('+', dataGridView[2, i].Value.ToString(), dataGridView[3, i].Value.ToString(), core.GetTimeStamp(), temp, user, lang.REGISTED);
                             tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
                     }
                 }
@@ -111,7 +122,7 @@ namespace WMS.GUI
                 }
                 else
                 {
-                    MessageBox.Show(Lang.ONLY_NUMBERS, Lang.ERROR);
+                    MessageBox.Show(onlyNumbers, error);
                     textBox1.Text = "";
                 }
                 
@@ -128,12 +139,12 @@ namespace WMS.GUI
             {
                 if (!int.TryParse(temp, out tempInt))
                 {
-                    MessageBox.Show(Lang.MUST_BE_A_NUMBER, Lang.ERROR);
+                    MessageBox.Show(mustBeAnumber, error);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if(tempInt < 0)
                 {
-                    MessageBox.Show(Lang.MUST_BE_POSITIVE, Lang.ERROR);
+                    MessageBox.Show(mustBePostive, error);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
             }
@@ -153,7 +164,7 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox();
+            CancelBox cancel = new CancelBox(lang);
             cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
@@ -161,6 +172,24 @@ namespace WMS.GUI
             {
                 data.Clear();
             }
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            Text = lang.REGISTER;
+            textBox1.Text = lang.ORDER_NO;
+            confirmBtn.Text = lang.CONFIRM;
+            button1.Text = lang.CANCEL;
+            error = lang.ERROR;
+            mustBePostive = lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            onlyNumbers = lang.ONLY_NUMBERS;
+            dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
+            dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
+            dataGridView.Columns[5].HeaderText = lang.AMOUNT;
         }
     }
 }

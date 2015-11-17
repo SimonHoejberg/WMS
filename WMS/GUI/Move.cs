@@ -25,13 +25,15 @@ namespace WMS.GUI
         private ICore core;
         private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnLocation, ComboColumnNewLocation;
         private DataGridViewColumn ColumnQuantity;
+        private ILang lang;
 
-        public Move(ICore core)
+        public Move(ICore core, ILang lang)
         {
             InitializeComponent();
             this.core = core;
-            this.moveConfirmButton.Text = Lang.CONFIRM;
-            this.moveCancelButton.Text = Lang.CANCEL;
+            this.lang = lang;
+            this.moveConfirmButton.Text = lang.CONFIRM;
+            this.moveCancelButton.Text = lang.CANCEL;
             InitializeDataGridView(core);
         }
 
@@ -58,15 +60,15 @@ namespace WMS.GUI
             ComboColumnNewLocation.ValueMember = "LocString";
 
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
-            ColumnQuantity.HeaderText = Lang.AMOUNT;
-            ComboColumnLocation.HeaderText = Lang.LOCATION;
-            ComboColumnNewLocation.HeaderText = Lang.NEW_LOCATION;
-            ComboColumnIdentification.HeaderText = Lang.ITEM_NO + " / " + Lang.DESCRIPTION;
+            ColumnQuantity.HeaderText = lang.AMOUNT;
+            ComboColumnLocation.HeaderText = lang.LOCATION;
+            ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
+            ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
 
             //Adds DataGridViewComboBoxColumns to DataGridView
             moveDataGridView.Columns.Add(ComboColumnIdentification);
             moveDataGridView.Columns.Add(ComboColumnLocation);
-            moveDataGridView.Columns.Add("QuantityColumn", Lang.AMOUNT); //Also sets name of column
+            moveDataGridView.Columns.Add("QuantityColumn", lang.AMOUNT); //Also sets name of column
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
 
             //Set width of columns, Width of datagridview is ca. 917 (as of writing this)
@@ -103,7 +105,7 @@ namespace WMS.GUI
         private void moveDataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //if the change happened in ItemIDColumn
-            if (moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("ItemIDColumn"))
+            if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("ItemIDColumn"))
             {
                 var LocationCell = moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
                 LocationCell.Items.Clear();
@@ -116,7 +118,7 @@ namespace WMS.GUI
                 moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
             }
             //if the change happened in LocationColumn
-            else if (moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
+            else if (e.RowIndex != -1 &&moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
             {
                 //Set new locations
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
@@ -129,7 +131,7 @@ namespace WMS.GUI
                 }
             }
             //if the change happened in QuantityColumn
-            else if (moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("QuantityColumn"))
+            else if (e.RowIndex != -1 &&moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("QuantityColumn"))
             {
                 int a = 0;
 
@@ -202,7 +204,7 @@ namespace WMS.GUI
 
         private void moveCancelButton_Click(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox();
+            CancelBox cancel = new CancelBox(lang);
             cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
@@ -300,7 +302,7 @@ namespace WMS.GUI
             }
             if(noProblemsEncountered == true)
             {
-                UserIDBox user_dialog = new UserIDBox(core);
+                UserIDBox user_dialog = new UserIDBox(core,lang);
                 user_dialog.Owner = this;
                 DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
                 if (a.Equals(DialogResult.OK))
@@ -316,6 +318,17 @@ namespace WMS.GUI
             {
                 MessageBox.Show(problemList, "Changes could not be comitted!");
             }
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            moveConfirmButton.Text = lang.CONFIRM;
+            moveCancelButton.Text = lang.CANCEL;
+            ColumnQuantity.HeaderText = lang.AMOUNT;
+            ComboColumnLocation.HeaderText = lang.LOCATION;
+            ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
+            ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
         }
     }
 }

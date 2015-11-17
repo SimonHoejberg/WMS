@@ -15,5 +15,7 @@ namespace WMS.Interfaces
         void Run();
 
         void Exit(string error);
+
+        void ChangeLang(ILang lang);
     }
 }

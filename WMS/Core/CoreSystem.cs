@@ -5,6 +5,7 @@ using WMS.Interfaces;
 using WMS.GUI;
 using WMS.WH;
 using WMS.Handlers;
+using WMS.Lang;
 using WMS.Reference;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -16,6 +17,7 @@ namespace WMS.Core
         private IWindowHandler windowHandler;
         private DataHandler dataHandler;
         private Warehouse wh;
+        private bool da = true;
 
         public CoreSystem(IMain main)
         {
@@ -42,6 +44,20 @@ namespace WMS.Core
         {
             wh.CreateWH();
             wh.FindOptimalLocation(items);
+        }
+
+        public void changeLang()
+        {
+            if (da)
+            {
+                windowHandler.ChangeLang(new LangEng());
+                da = false;
+            }
+            else
+            {
+                windowHandler.ChangeLang(new LangDa());
+                da = true;
+            }
         }
     }
 }

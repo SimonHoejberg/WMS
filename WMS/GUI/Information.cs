@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.Reference;
@@ -10,20 +11,15 @@ namespace WMS.GUI
     {
         private ICore core;
         private string itemNo;
+        private ILang lang;
 
-        public Information(ICore core)
+        public Information(ICore core, ILang lang)
         {
             InitializeComponent();
+            this.lang = lang;
             this.core = core;
             UpdateInfo();
-            this.Text = Lang.INFORMATION;
-            this.closeButton.Text = Lang.CLOSE;
-            this.viewItemButton.Text = Lang.VIEW_ITEM;
-            this.logButton.Text = Lang.LOG;
-            this.label4.Text = Lang.DESCRIPTION;
-            this.label1.Text = Lang.SIZE;
-            this.label2.Text = Lang.LOCATION;
-            this.label3.Text = Lang.USAGE;
+            UpdateLang(lang);
 
         }
         private void UpdateInfo()
@@ -36,11 +32,11 @@ namespace WMS.GUI
 
             core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
 
-            dataGridView.Columns[0].HeaderText = Lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = Lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = Lang.IN_STOCK;
-            dataGridView.Columns[3].HeaderText = Lang.LOCATION;
-            dataGridView.Columns[4].HeaderText = Lang.SIZE;
+            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = lang.LOCATION;
+            dataGridView.Columns[4].HeaderText = lang.SIZE;
             dataGridView.Columns[5].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
@@ -95,6 +91,24 @@ namespace WMS.GUI
         private void InformationLoad(object sender, System.EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            Text = lang.INFORMATION;
+            closeButton.Text = lang.CLOSE;
+            viewItemButton.Text = lang.VIEW_ITEM;
+            logButton.Text = lang.LOG;
+            label4.Text = lang.DESCRIPTION;
+            label1.Text = lang.SIZE;
+            label2.Text = lang.LOCATION;
+            label3.Text = lang.USAGE;
+            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = lang.LOCATION;
+            dataGridView.Columns[4].HeaderText = lang.SIZE;
         }
     }
 }

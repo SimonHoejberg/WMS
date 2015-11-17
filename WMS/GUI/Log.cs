@@ -18,30 +18,27 @@ namespace WMS.GUI
     {
         private ICore core;
         private bool sortToggle = false;
+        private ILang lang;
 
-        public Log(ICore core)
+        public Log(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             UpdateLog();
-            this.Text = Lang.LOG;
-            this.closeButton.Text = Lang.CLOSE;
-            this.viewItemButton.Text = Lang.VIEW_ITEM;
-            this.label4.Text = Lang.DESCRIPTION;
-            this.label1.Text = Lang.SIZE;
-            this.label2.Text = Lang.LOCATION;
-            this.label3.Text = Lang.USAGE;
-            this.sortButton.Text = Lang.SORT;
+            UpdateLang(lang);
 
         }
 
-        public Log(ICore core, string itemNo)
+        public Log(ICore core, string itemNo, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,DataBaseTypes.LOG));
             sortToggle = true;
-            sortButton.Text = Lang.UNSORT;
+            UpdateLang(lang);
+            sortButton.Text = lang.UNSORT;
         }
 
         private void UpdateLog()
@@ -59,12 +56,12 @@ namespace WMS.GUI
 
             mysqlData.Fill(data);
             dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = Lang.ITEM_NO;
-            dataGridView.Columns[2].HeaderText = Lang.DESCRIPTION;
-            dataGridView.Columns[3].HeaderText = Lang.TIMESTAMP;
-            dataGridView.Columns[4].HeaderText = Lang.USER;
-            dataGridView.Columns[5].HeaderText = Lang.OPERATION;
-            dataGridView.Columns[6].HeaderText = Lang.AMOUNT;
+            dataGridView.Columns[1].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[2].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[3].HeaderText = lang.TIMESTAMP;
+            dataGridView.Columns[4].HeaderText = lang.USER;
+            dataGridView.Columns[5].HeaderText = lang.OPERATION;
+            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
             if (dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Descending);
@@ -108,13 +105,13 @@ namespace WMS.GUI
                 sortToggle = true;
                 string temp = dataGridView[1, dataGridView.CurrentCell.RowIndex].Value.ToString();
                 UpdateLog(core.DataHandler.GetDataFromItemNo(temp, DataBaseTypes.LOG));
-                sortButton.Text = Lang.UNSORT;
+                sortButton.Text = lang.UNSORT;
             }
             else if(sortToggle)
             {
                 sortToggle = false;
                 UpdateLog();
-                sortButton.Text = Lang.SORT;
+                sortButton.Text = lang.SORT;
             }
         }
 
@@ -126,6 +123,25 @@ namespace WMS.GUI
         private void LogLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            Text = lang.LOG;
+            closeButton.Text = lang.CLOSE;
+            viewItemButton.Text = lang.VIEW_ITEM;
+            label4.Text = lang.DESCRIPTION;
+            label1.Text = lang.SIZE;
+            label2.Text = lang.LOCATION;
+            label3.Text = lang.USAGE;
+            sortButton.Text = lang.SORT;
+            dataGridView.Columns[1].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[2].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[3].HeaderText = lang.TIMESTAMP;
+            dataGridView.Columns[4].HeaderText = lang.USER;
+            dataGridView.Columns[5].HeaderText = lang.OPERATION;
+            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
         }
     }
 }

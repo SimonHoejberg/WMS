@@ -34,6 +34,7 @@
             this.moveButton = new System.Windows.Forms.PictureBox();
             this.logButton = new System.Windows.Forms.PictureBox();
             this.informationButton = new System.Windows.Forms.PictureBox();
+            this.lang = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.registerButton)).BeginInit();
@@ -114,10 +115,21 @@
             this.informationButton.TabStop = false;
             this.informationButton.Click += new System.EventHandler(this.Information_pbox_Click);
             // 
+            // lang
+            // 
+            this.lang.Location = new System.Drawing.Point(-2, -3);
+            this.lang.Name = "lang";
+            this.lang.Size = new System.Drawing.Size(75, 23);
+            this.lang.TabIndex = 7;
+            this.lang.Text = "button1";
+            this.lang.UseVisualStyleBackColor = true;
+            this.lang.Click += new System.EventHandler(this.lang_Click);
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(157, 509);
+            this.Controls.Add(this.lang);
             this.Controls.Add(this.reduceButton);
             this.Controls.Add(this.wasteButton);
             this.Controls.Add(this.registerButton);
@@ -148,5 +160,6 @@
         private System.Windows.Forms.PictureBox registerButton;
         private System.Windows.Forms.PictureBox wasteButton;
         private System.Windows.Forms.PictureBox reduceButton;
+        private System.Windows.Forms.Button lang;
     }
 }

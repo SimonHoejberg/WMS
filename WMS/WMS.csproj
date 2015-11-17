@@ -76,15 +76,16 @@
     </Compile>
     <Compile Include="Handlers\DataHandler.cs" />
     <Compile Include="Handlers\WindowHandler.cs" />
+    <Compile Include="Interfaces\ILang.cs" />
     <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
+    <Compile Include="Lang\LangEng.cs" />
     <Compile Include="LogItem.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="Reference\DataBaseTypes.cs" />
     <Compile Include="Reference\DataBaseValues.cs" />
-    <Compile Include="Reference\Lang.cs" />
-    <Compile Include="Reference\LogOperations.cs" />
+    <Compile Include="Lang\LangDa.cs" />
     <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />

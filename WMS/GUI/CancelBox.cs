@@ -8,18 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Reference;
+using WMS.Interfaces;
 
 namespace WMS.GUI
 {
     public partial class CancelBox : Form
     {
-        public CancelBox()
+        public CancelBox(ILang lang)
         {
             InitializeComponent();
-            this.label1.Text = Lang.CANCELBOXTEXT;
-            this.userConfirm_btn.Text = Lang.YES;
-            this.userCancel_btn.Text = Lang.NO;
-            this.Text = Lang.CANCEL;
+            this.label1.Text = lang.CANCELBOXTEXT;
+            this.userConfirm_btn.Text = lang.YES;
+            this.userCancel_btn.Text = lang.NO;
+            this.Text = lang.CANCEL;
         }
         
         private void CancelBox_Load(object sender, EventArgs e)

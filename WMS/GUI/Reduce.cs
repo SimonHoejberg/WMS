@@ -19,16 +19,24 @@ namespace WMS.GUI
         private BindingSource bsource;
         private DataTable data;
         private string itemNo;
-       
-        public Reduce(ICore core)
+        private ILang lang;
+        private string error;
+        private string mustBePostive;
+        private string mustBeAnumber;
+
+        public Reduce(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
             MakeComboBox();
-            this.searchBtn.Text = Lang.SEACH;
-            this.Text = Lang.REDUCE;
-            this.reduceConfirmBtn.Text = Lang.CONFIRM;
-            this.reduceCancelBtn.Text = Lang.CANCEL;
+            searchBtn.Text = lang.SEACH;
+            Text = lang.REDUCE;
+            reduceConfirmBtn.Text = lang.CONFIRM;
+            reduceCancelBtn.Text = lang.CANCEL;
+            error = lang.ERROR;
+            mustBePostive = lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = lang.MUST_BE_A_NUMER;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -55,7 +63,7 @@ namespace WMS.GUI
 
         private void reduceConfirmBtn_Click(object sender, EventArgs e)
         {
-            UserIDBox user_dialog = new UserIDBox(core);
+            UserIDBox user_dialog = new UserIDBox(core,lang);
             DialogResult a = user_dialog.ShowDialog();
             if (a.Equals(DialogResult.OK))
             {
@@ -64,7 +72,7 @@ namespace WMS.GUI
                 {
                     if (!(reduceDataGridView[0, i].Value == null))
                     {
-                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,LogOperations.REDUCED);
+                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,lang.REDUCED);
                     }
                     core.WindowHandler.Update(this);
                     data.Clear();
@@ -92,16 +100,16 @@ namespace WMS.GUI
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
-            reduceDataGridView.Columns[0].HeaderText = Lang.ITEM_NO;
-            reduceDataGridView.Columns[1].HeaderText = Lang.DESCRIPTION;
-            reduceDataGridView.Columns[2].HeaderText = Lang.IN_STOCK;
-            reduceDataGridView.Columns[3].HeaderText = Lang.LOCATION;
+            reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
             //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
             reduceDataGridView.Columns[5].Visible = false;
-            if (!data.Columns.Contains(Lang.AMOUNT))
+            if (!data.Columns.Contains(lang.AMOUNT))
             {
-                data.Columns.Add(Lang.AMOUNT);
+                data.Columns.Add(lang.AMOUNT);
             }
             for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
             {
@@ -141,12 +149,12 @@ namespace WMS.GUI
             {
                 if (!int.TryParse(temp, out tempInt))
                 {
-                    MessageBox.Show(Lang.MUST_BE_A_NUMBER, Lang.ERROR);
+                    MessageBox.Show(mustBeAnumber, error);
                     reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if (tempInt < 0)
                 {
-                    MessageBox.Show(Lang.MUST_BE_POSITIVE, Lang.ERROR);
+                    MessageBox.Show(mustBePostive, error);
                     reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
             }
@@ -155,7 +163,7 @@ namespace WMS.GUI
 
         private void reduceCancelBtn_Click(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox();
+            CancelBox cancel = new CancelBox(lang);
             cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
@@ -163,6 +171,25 @@ namespace WMS.GUI
             {
                 data.Clear();
             }
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            searchBtn.Text = lang.SEACH;
+            Text = lang.REDUCE;
+            reduceConfirmBtn.Text = lang.CONFIRM;
+            reduceCancelBtn.Text = lang.CANCEL;
+            error = lang.ERROR;
+            mustBePostive = lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
+            reduceDataGridView.Columns[4].Visible = false;
+            reduceDataGridView.Columns[5].Visible = false;
+            reduceDataGridView.Columns[6].HeaderText = lang.AMOUNT;
         }
     }
 }

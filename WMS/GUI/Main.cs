@@ -18,7 +18,6 @@ namespace WMS.GUI
         public Main()
         {
             InitializeComponent();
-            this.Text = Lang.MAIN;
         }
 
         private void MainLoad(object sender, EventArgs e)
@@ -62,6 +61,29 @@ namespace WMS.GUI
         private void MainFormClosing(object sender, FormClosingEventArgs e)
         {
             core.DataHandler.CloseConnectionToServer();
+        }
+
+        public void UpdatePics(bool da)
+        {
+            if (da)
+            {
+                moveButton.Image = Properties.Resources.move;
+                reduceButton.Image = Properties.Resources.reduce;
+                registerButton.Image = Properties.Resources.register;
+                wasteButton.Image = Properties.Resources.waste;
+            }
+            else
+            {
+                moveButton.Image = Properties.Resources.moveda;
+                reduceButton.Image = Properties.Resources.reduceda;
+                registerButton.Image = Properties.Resources.registerda;
+                wasteButton.Image = Properties.Resources.wasteda;
+            }
+        }
+
+        private void lang_Click(object sender, EventArgs e)
+        {
+            core.changeLang();
         }
     }
 }

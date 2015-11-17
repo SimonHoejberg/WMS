@@ -34,7 +34,7 @@ namespace WMS.WH
 
         private int MaxLength()
         {
-            return 2;
+            return 3;
         }
 
         private int GetMaxUsage(List<Item> input, out int output)
@@ -93,6 +93,7 @@ namespace WMS.WH
 
             }
         }
+
 
         private bool FindAvaliableSpace(Item item)
         {
