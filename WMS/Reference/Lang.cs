@@ -14,6 +14,11 @@ namespace WMS.Reference
         public static string REDUCE = "Reducer";
         public static string REGISTER = "Registrer";
         public static string WASTE = "Nedskriv";
+        public static string MAIN = "Menu";
+
+        public static string MOVED = "Flyttet";
+        public static string REDUCED = "Taget";
+        public static string REGISTED = "Registret";
 
         public static string CLOSE = "Luk";
         public static string ACCEPT = "Accepter";

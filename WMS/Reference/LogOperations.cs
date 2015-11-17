@@ -8,8 +8,8 @@ namespace WMS.Reference
 {
     public static class LogOperations
     {
-        public static string REDUCED = "Reduced";
-        public static string REGISTED = "Registered";
-        public static string MOVED = "Moved";
+        public static string REDUCED = Lang.REDUCED;
+        public static string REGISTED = Lang.REGISTED;
+        public static string MOVED = Lang.MOVED;
     }
 }
