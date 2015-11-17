@@ -176,6 +176,7 @@ namespace WMS.GUI
 
         public void UpdateLang(ILang lang)
         {
+            dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
             this.lang = lang;
             Text = lang.REGISTER;
             textBox1.Text = lang.ORDER_NO;
@@ -193,6 +194,7 @@ namespace WMS.GUI
                 dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
                 dataGridView.Columns[5].HeaderText = lang.AMOUNT;
             }
+            dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
         }
     }
 }
