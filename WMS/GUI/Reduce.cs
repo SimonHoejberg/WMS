@@ -49,7 +49,7 @@ namespace WMS.GUI
         {
             comboBox2.DataSource = core.DataHandler.InfoToList();
             comboBox2.ValueMember = "ItemNo";
-            comboBox2.DisplayMember = "Description";
+            comboBox2.DisplayMember = "Identification";
 
         }
 
@@ -79,16 +79,16 @@ namespace WMS.GUI
             if (comboBox2.Text != null && (int.TryParse(comboBox2.Text, out a)))
             {
                 itemNo = comboBox2.Text;
-                DataGridViewMake();
+                MakeDataGridView();
             }
             else if (comboBox2.SelectedValue != null && int.TryParse(comboBox2.SelectedValue.ToString(), out a))
             {
                 itemNo = comboBox2.SelectedValue.ToString();
-                DataGridViewMake();
+                MakeDataGridView();
             }
         }
 
-        private void DataGridViewMake()
+        private void MakeDataGridView()
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
@@ -96,7 +96,6 @@ namespace WMS.GUI
             reduceDataGridView.Columns[1].HeaderText = Lang.DESCRIPTION;
             reduceDataGridView.Columns[2].HeaderText = Lang.IN_STOCK;
             reduceDataGridView.Columns[3].HeaderText = Lang.LOCATION;
-            //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
             reduceDataGridView.Columns[5].Visible = false;
             if (!data.Columns.Contains(Lang.AMOUNT))
@@ -108,23 +107,6 @@ namespace WMS.GUI
                 reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-        }
-
-        private void comboBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            int a = 0;
-            
-            if (e.KeyCode == Keys.Enter && int.TryParse(comboBox2.Text, out a))
-            {
-                itemNo = comboBox2.Text;
-                DataGridViewMake();
-            }
-            else if (e.KeyCode == Keys.Enter && comboBox2.SelectedValue != null && int.TryParse(comboBox2.SelectedValue.ToString(),out a))
-            {
-                itemNo = comboBox2.SelectedValue.ToString();
-                DataGridViewMake();
-            }
-
         }
 
         private void Reduce_Load(object sender, EventArgs e)
@@ -163,6 +145,13 @@ namespace WMS.GUI
             {
                 data.Clear();
             }
+        }
+
+        private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            itemNo = comboBox2.SelectedValue.ToString();
+            MakeComboBox();
+            MakeDataGridView();
         }
     }
 }
