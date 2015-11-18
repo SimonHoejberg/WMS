@@ -102,6 +102,7 @@ namespace WMS.GUI
                 if (tempList.Count != 0)
                 {
                     core.SortNewItems(tempList);
+                    MessageBox.Show(lang.SUCCESS_REGISTER, lang.SUCCESS);
                 }
             }
         }

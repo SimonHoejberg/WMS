@@ -23,31 +23,32 @@ namespace WMS.GUI
             this.core = core;
             this.lang = lang;
             InitializeComponent();
-            this.Text = lang.CONFIRM;
-            this.userConfirm_btn.Text = lang.ACCEPT;
-            this.userCancel_btn.Text = lang.CANCEL;
+            Text = lang.CONFIRM;
+            label1.Text = lang.USER_ID;
+            userConfirm_btn.Text = lang.ACCEPT;
+            userCancel_btn.Text = lang.CANCEL;
         }
 
         public string User { get { return getInputFromTextbox; } }
 
         private void UserIDBox_Load(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
+            MinimizeBox = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void userConfirm_btn_Click(object sender, EventArgs e)
         {
             var stringList = core.DataHandler.GetUser().OfType<string>();
             
-            if (stringList.Contains(this.getInputFromTextbox))
+            if (stringList.Contains(getInputFromTextbox))
             {
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
                 userIDError_lbl.Text = "";
             }
             else

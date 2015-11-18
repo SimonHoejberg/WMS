@@ -87,15 +87,18 @@ namespace WMS.GUI
 
         private void ViewItemButtonClick(object sender, EventArgs e)
         {
-            itemInfoPanel.Visible = true;
-            int test = dataGridView.CurrentCell.RowIndex;
-            string itemNo = dataGridView[1, test].Value.ToString();
-            Item item = core.DataHandler.GetItemFromItemNo(itemNo);
-            sizeLabel.Text = item.Size.ToString();
-            usageLabel.Text = item.Usage.ToString();
-            nameLabel.Text = item.Description;
-            locationLabel.Text = item.Location;
-            logListBox.DataSource = core.DataHandler.GetLog(itemNo);
+            if (dataGridView.CurrentCell != null)
+            {
+                itemInfoPanel.Visible = true;
+                int test = dataGridView.CurrentCell.RowIndex;
+                string itemNo = dataGridView[1, test].Value.ToString();
+                Item item = core.DataHandler.GetItemFromItemNo(itemNo);
+                sizeLabel.Text = item.Size.ToString();
+                usageLabel.Text = item.Usage.ToString();
+                nameLabel.Text = item.Description;
+                locationLabel.Text = item.Location;
+                logListBox.DataSource = core.DataHandler.GetLog(itemNo);
+            }
         }
 
         private void SortButtonClick(object sender, EventArgs e)
@@ -145,12 +148,12 @@ namespace WMS.GUI
             label3.Text = lang.USAGE;
             if (sortToggle)
             {
-                sortButton.Text = lang.SORT;
+                sortButton.Text = lang.UNSORT;
                 sortToggle = false;
             }
             else
             {
-                sortButton.Text = lang.UNSORT;
+                sortButton.Text = lang.SORT;
                 sortToggle = true;
             }
             if (dataGridView.ColumnCount > 0)

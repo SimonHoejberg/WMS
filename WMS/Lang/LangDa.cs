@@ -65,6 +65,20 @@ namespace WMS.Lang
 
         private string tooManyWindows = "For mange vinduere åbnet af typen";
 
+        private string success = "Succes";
+        private string successReduce = "Varer reduceret";
+        private string successMove = "Varer flyttet";
+        private string successWaste = "Varer nedskrevet";
+        private string successRegister = "Ordre registreret";
+
+        private string isEmpty = "er tom!";
+        private string valueItemIDError = "Værdi i Vare Nr. i række";
+        private string valueLocationError = "Værdi i lokation i række";
+        private string valueAmountError = "Værdi i mængde i række";
+        private string valueNewLocationError = "Værdi i ny lokation i række";
+        private string attemptToMoveFromSameTwice = "Forsgøt at flytte fra samme lokation to gange";
+        private string attemptToMoveMutipleItemsToSameLocation = "Forsøgt at flytte flere varer til samme lokation";
+
         public LangDa()
         {
 
@@ -125,5 +139,19 @@ namespace WMS.Lang
         public string REASON { get { return reason; } }
 
         public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
+
+        public string SUCCESS { get { return success; } }
+        public string SUCCESS_REDUCE { get { return successReduce; } }
+        public string SUCCESS_WASTE { get { return successWaste; } }
+        public string SUCCESS_MOVE { get { return successMove; } }
+        public string SUCCESS_REGISTER { get { return successRegister; } }
+
+        public string IS_EMPTY { get { return isEmpty; } }
+        public string VALUE_IN_ITEM_ID { get { return valueItemIDError; } }
+        public string VALUE_IN_LOCATION { get { return valueLocationError; } }
+        public string VALUE_IN_AMOUNT { get { return valueAmountError; } }
+        public string VALUE_IN_NEW_LOCATION { get { return valueNewLocationError; } }
+        public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get { return attemptToMoveFromSameTwice; } }
+        public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get { return attemptToMoveMutipleItemsToSameLocation; } }
     }
 }

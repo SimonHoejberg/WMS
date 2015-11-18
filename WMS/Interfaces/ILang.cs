@@ -63,5 +63,19 @@ namespace WMS.Interfaces
         string REASON { get; }
 
         string TOO_MANY_WINDOWS { get; }
+
+        string SUCCESS { get; }
+        string SUCCESS_REDUCE { get; }
+        string SUCCESS_WASTE { get; }
+        string SUCCESS_MOVE { get; }
+        string SUCCESS_REGISTER { get; }
+
+        string IS_EMPTY { get; }
+        string VALUE_IN_ITEM_ID { get; }
+        string VALUE_IN_LOCATION { get; }
+        string VALUE_IN_AMOUNT { get; }
+        string VALUE_IN_NEW_LOCATION { get; }
+        string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; }
+        string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; }
     }
 }

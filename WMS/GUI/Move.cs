@@ -270,32 +270,32 @@ namespace WMS.GUI
                     if (dgvRow.Cells["ItemIDColumn"].Value == null)
                     {
                         noProblemsEncountered = false;
-                        problemList += ("\nValue in ItemID on row " + (dgvRow.Index + 1) + " is empty!");
+                        problemList += ("\n" + lang.VALUE_IN_ITEM_ID + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
                     }
                     if(dgvRow.Cells["LocationColumn"].Value == null)
                     {
                         noProblemsEncountered = false;
-                        problemList += ("\nValue in Location on row " + (dgvRow.Index + 1) + " is empty!");
+                        problemList += ("\n" + lang.VALUE_IN_LOCATION + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
                     }
                     if (dgvRow.Cells["QuantityColumn"].Value == null)
                     {
                         noProblemsEncountered = false;
-                        problemList += ("\nValue in Quantity on row " + (dgvRow.Index + 1) + " is empty!");
+                        problemList += ("\n" + lang.VALUE_IN_AMOUNT + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
                     }
                     if (dgvRow.Cells["NewLocationColumn"].Value == null)
                     {
                         noProblemsEncountered = false;
-                        problemList += ("\nValue in New Location on row " + (dgvRow.Index + 1) + " is empty!");
+                        problemList += ("\n" + lang.VALUE_IN_NEW_LOCATION + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
                     }
                     if(locUsedTwice == true)
                     {
                         noProblemsEncountered = false;
-                        problemList += ("\nAttempt to move from the same location twice");
+                        problemList += ("\n" + lang.ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE);
                     }
                     if(newLocUsedTwice == true)
                     {
                         noProblemsEncountered = false;
-                        problemList += ("\nAttempt to move multiple items to the same location");
+                        problemList += ("\n" + lang.ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION);
                     }
     
                     //Fix attempt to move multiple items to the same location
@@ -317,7 +317,7 @@ namespace WMS.GUI
             //give error message if commit could not be done
             else if (noProblemsEncountered == false)
             {
-                MessageBox.Show(problemList, "Changes could not be comitted!");
+                MessageBox.Show(problemList, lang.ERROR);
             }
         }
 

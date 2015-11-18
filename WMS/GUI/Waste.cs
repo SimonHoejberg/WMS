@@ -189,6 +189,7 @@ namespace WMS.GUI
                     }
                 }
                 data.Clear();
+                MessageBox.Show(lang.SUCCESS_WASTE, lang.SUCCESS);
             }
         }
 

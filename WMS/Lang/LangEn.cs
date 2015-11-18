@@ -65,6 +65,20 @@ namespace WMS.Lang
 
         private string tooManyWindows = "Cannot open any more windows of the type";
 
+        private string success = "Success";
+        private string successReduce = "Successfully reduced items";
+        private string successMove = "Successfully moved items";
+        private string successWaste = "Successfully wasted items ";
+        private string successRegister = "Successfully registered items";
+
+        private string isEmpty = "is empty!";
+        private string valueItemIDError = "Value in ItemID on row";
+        private string valueLocationError = "Value in Location on row";
+        private string valueAmountError = "Value in Quantity on row";
+        private string valueNewLocationError = "Value in New Location on row";
+        private string attemptToMoveFromSameTwice = "Attempt to move from the same location twice";
+        private string attemptToMoveMutipleItemsToSameLocation = "Attempt to move multiple items to the same location";
+         
         public LangEn()
         {
 
@@ -125,5 +139,20 @@ namespace WMS.Lang
         public string REASON { get { return reason; } }
 
         public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
+
+        public string SUCCESS { get { return success; } }
+        public string SUCCESS_REDUCE { get { return successReduce; } }
+        public string SUCCESS_WASTE { get { return successWaste; } }
+        public string SUCCESS_MOVE { get { return successMove; } }
+        public string SUCCESS_REGISTER { get { return successRegister; } }
+
+        public string IS_EMPTY { get { return isEmpty; } }
+        public string VALUE_IN_ITEM_ID { get { return valueItemIDError; } }
+        public string VALUE_IN_LOCATION { get { return valueLocationError; } }
+        public string VALUE_IN_AMOUNT { get { return valueAmountError; } }
+        public string VALUE_IN_NEW_LOCATION { get { return valueNewLocationError; } }
+        public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get { return attemptToMoveFromSameTwice; } }
+        public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get { return attemptToMoveMutipleItemsToSameLocation; } }
+
     }
 }

@@ -70,14 +70,14 @@ namespace WMS.GUI
                 string user = user_dialog.User;
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
-                    if (!(reduceDataGridView[0, i].Value == null))
+                    if (reduceDataGridView[0, i].Value != null)
                     {
                         core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,lang.REDUCED);
                     }
-                    core.WindowHandler.Update(this);
-                    data.Clear();
                 }
-
+                MessageBox.Show(lang.SUCCESS_REDUCE, lang.SUCCESS);
+                core.WindowHandler.Update(this);
+                data.Clear();
             }
         }
 
