@@ -104,6 +104,10 @@ namespace WMS.GUI
             }
             for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
             {
+                if (!reduceDataGridView.Columns[i].HeaderText.Equals(lang.AMOUNT))
+                {
+                    reduceDataGridView.Columns[i].ReadOnly = true;
+                }
                 reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
