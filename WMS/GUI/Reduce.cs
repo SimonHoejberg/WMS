@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
@@ -83,8 +84,11 @@ namespace WMS.GUI
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            string itemNo = textBox1.Text;
-            comboBox2.DataSource = core.DataHandler.SearchInfoToList(itemNo);
+            int temp = 0;
+            if (!int.TryParse(textBox1.Text, out temp)) { 
+                string itemNo = textBox1.Text;
+                comboBox2.DataSource = core.DataHandler.SearchInfoToList(itemNo);
+            }
         }
 
         private void MakeDataGridView()
@@ -110,7 +114,7 @@ namespace WMS.GUI
                 }
                 reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
 
         private void Reduce_Load(object sender, EventArgs e)
@@ -122,10 +126,11 @@ namespace WMS.GUI
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             string temp = reduceDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            Regex regex = new Regex("^[0-9]+$");
             int tempInt = 0;
             if (temp != null)
             {
-                if (!int.TryParse(temp, out tempInt))
+                if (!int.TryParse(temp,out tempInt))
                 {
                     MessageBox.Show(mustBeAnumber, error);
                     reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;

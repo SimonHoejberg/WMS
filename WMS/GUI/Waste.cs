@@ -195,8 +195,12 @@ namespace WMS.GUI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string itemNo = textBox1.Text;
-            comboBox3.DataSource = core.DataHandler.SearchInfoToList(itemNo);
+            int temp = 0;
+            if (!int.TryParse(textBox1.Text, out temp))
+            {
+                string itemNo = textBox1.Text;
+                comboBox3.DataSource = core.DataHandler.SearchInfoToList(itemNo);
+            }
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
