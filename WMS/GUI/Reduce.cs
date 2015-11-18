@@ -175,9 +175,12 @@ namespace WMS.GUI
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            itemNo = comboBox2.SelectedValue.ToString();
-            MakeComboBox();
-            MakeDataGridView();
+            if (comboBox2.SelectedValue != null)
+            {
+                itemNo = comboBox2.SelectedValue.ToString();
+                MakeComboBox();
+                MakeDataGridView();
+            }
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
