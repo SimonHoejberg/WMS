@@ -64,6 +64,7 @@ namespace WMS.Lang
         private string reason = "Årsag";
 
         private string tooManyWindows = "For mange vinduere åbnet af typen";
+        private string removeRow = "Fjern række";
 
         private string success = "Succes";
         private string successReduce = "Varer reduceret";
@@ -71,7 +72,6 @@ namespace WMS.Lang
         private string successWaste = "Varer nedskrevet";
         private string successRegister = "Ordre registreret";
 
-        //Danish localization for "Move"
         private string itemsMoved = "Varer flyttet";
         private string isEmpty = "er tom!";
         private string valueItemIDError = "Værdi i Vare Nr. i række";
@@ -141,6 +141,7 @@ namespace WMS.Lang
         public string REASON { get { return reason; } }
 
         public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
+        public string REMOVE_ROW { get { return removeRow; } }
 
         public string SUCCESS { get { return success; } }
         public string SUCCESS_REDUCE { get { return successReduce; } }

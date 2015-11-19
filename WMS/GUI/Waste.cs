@@ -38,6 +38,7 @@ namespace WMS.GUI
             textBox1.Text = lang.ITEM_NO;
             button10.Text = lang.CANCEL;
             button11.Text = lang.CONFIRM;
+            button3.Text = lang.REMOVE_ROW;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
@@ -225,6 +226,7 @@ namespace WMS.GUI
             textBox1.Text = lang.ITEM_NO;
             button10.Text = lang.CANCEL;
             button11.Text = lang.CONFIRM;
+            button3.Text = lang.REMOVE_ROW;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
@@ -238,6 +240,11 @@ namespace WMS.GUI
                 dataGridView6.Columns[7].HeaderText = lang.REASON;
             }
             MakeList();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dataGridView6.Rows.RemoveAt(dataGridView6.CurrentCell.RowIndex);
         }
     }
 }

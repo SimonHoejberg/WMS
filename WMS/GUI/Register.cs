@@ -101,8 +101,8 @@ namespace WMS.GUI
                 core.WindowHandler.Update(this);
                 if (tempList.Count != 0)
                 {
-                    core.SortNewItems(tempList);
                     MessageBox.Show(lang.SUCCESS_REGISTER, lang.SUCCESS);
+                    core.SortNewItems(tempList);
                 }
             }
         }

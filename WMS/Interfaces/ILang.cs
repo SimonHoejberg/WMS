@@ -63,6 +63,7 @@ namespace WMS.Interfaces
         string REASON { get; }
 
         string TOO_MANY_WINDOWS { get; }
+        string REMOVE_ROW { get; }
 
         string SUCCESS { get; }
         string SUCCESS_REDUCE { get; }

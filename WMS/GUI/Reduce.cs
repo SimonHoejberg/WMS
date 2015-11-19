@@ -36,6 +36,7 @@ namespace WMS.GUI
             reduceConfirmBtn.Text = lang.CONFIRM;
             reduceCancelBtn.Text = lang.CANCEL;
             error = lang.ERROR;
+            button1.Text = lang.REMOVE_ROW;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
             bsource = new BindingSource();
@@ -71,7 +72,7 @@ namespace WMS.GUI
                 string user = user_dialog.User;
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
-                    if (reduceDataGridView[0, i].Value != null)
+                    if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[6, i].Value.Equals("0")))
                     {
                         core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,lang.REDUCED);
                     }
@@ -166,6 +167,7 @@ namespace WMS.GUI
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
+            button1.Text = lang.REMOVE_ROW;
             if (reduceDataGridView.ColumnCount > 0)
             {
                 reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
@@ -199,6 +201,11 @@ namespace WMS.GUI
             {
                 searchBtn_Click(sender, e);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
         }
     }
 }

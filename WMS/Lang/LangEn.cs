@@ -64,6 +64,7 @@ namespace WMS.Lang
         private string reason = "Reason";
 
         private string tooManyWindows = "Cannot open any more windows of the type";
+        private string removeRow = "Remove row";
 
         private string success = "Success";
         private string successReduce = "Successfully reduced items";
@@ -140,6 +141,7 @@ namespace WMS.Lang
         public string REASON { get { return reason; } }
 
         public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
+        public string REMOVE_ROW { get { return removeRow; } }
 
         public string SUCCESS { get { return success; } }
         public string SUCCESS_REDUCE { get { return successReduce; } }
