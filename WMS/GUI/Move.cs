@@ -192,16 +192,6 @@ namespace WMS.GUI
             }
             return input.Where((x => x.ItemNo.Equals("0"))).ToList();
         }
-        
-        public string GetTypeOfWindow()
-        {
-            return WindowTypes.MOVE;
-        }
-
-        public void UpdateGuiElements()
-        {
-
-        }
 
         private void moveCancelButton_Click(object sender, EventArgs e)
         {
@@ -217,11 +207,6 @@ namespace WMS.GUI
                     moveDataGridView.Rows.RemoveAt(0);
                 }
             }
-        }
-
-        private void MoveLoad(object sender, EventArgs e)
-        {
-            MaximizeBox = false;
         }
 
         private void MoveConfirmButtonClick(object sender, EventArgs e)
@@ -243,14 +228,14 @@ namespace WMS.GUI
                     {
                         break;
                     }
-                    if (dgvRow.Cells["LocationColumn"].Value.ToString().Equals(dgvRow2.Cells["LocationColumn"].Value.ToString()))
+                    /*if (dgvRow.Cells["LocationColumn"].Value.ToString().Equals(dgvRow2.Cells["LocationColumn"].Value.ToString()))
                     {
                         locUsedTwice = true;
                     }
                     if (dgvRow.Cells["NewLocationColumn"].Value.ToString().Equals(dgvRow2.Cells["NewLocationColumn"].Value.ToString()))
                     {
                         newLocUsedTwice = true;
-                    }
+                    */
                 }
             }
             Console.WriteLine(locUsedTwice + " " + newLocUsedTwice);
@@ -331,6 +316,21 @@ namespace WMS.GUI
             ComboColumnLocation.HeaderText = lang.LOCATION;
             ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
             ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
+        }
+
+        private void MoveLoad(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
+
+        public string GetTypeOfWindow()
+        {
+            return WindowTypes.MOVE;
+        }
+
+        public void UpdateGuiElements()
+        {
+
         }
     }
 }
