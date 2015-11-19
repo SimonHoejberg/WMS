@@ -136,6 +136,10 @@ namespace WMS.GUI
             {
                 int a = 0;
 
+                if(moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value == null)
+                {
+                    moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
+                }
                 bool checkIfInt = Int32.TryParse(moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value.ToString(), out a);
                 if (checkIfInt)
                 {
