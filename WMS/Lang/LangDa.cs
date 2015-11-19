@@ -71,6 +71,8 @@ namespace WMS.Lang
         private string successWaste = "Varer nedskrevet";
         private string successRegister = "Ordre registreret";
 
+        //Danish localization for "Move"
+        private string itemsMoved = "Varer flyttet";
         private string isEmpty = "er tom!";
         private string valueItemIDError = "Værdi i Vare Nr. i række";
         private string valueLocationError = "Værdi i lokation i række";
@@ -146,6 +148,7 @@ namespace WMS.Lang
         public string SUCCESS_MOVE { get { return successMove; } }
         public string SUCCESS_REGISTER { get { return successRegister; } }
 
+        public string ITEMS_MOVED { get { return itemsMoved; } }
         public string IS_EMPTY { get { return isEmpty; } }
         public string VALUE_IN_ITEM_ID { get { return valueItemIDError; } }
         public string VALUE_IN_LOCATION { get { return valueLocationError; } }

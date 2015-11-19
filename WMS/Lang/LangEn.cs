@@ -71,6 +71,7 @@ namespace WMS.Lang
         private string successWaste = "Successfully wasted items ";
         private string successRegister = "Successfully registered items";
 
+        private string itemsMoved = "Items moved";
         private string isEmpty = "is empty!";
         private string valueItemIDError = "Value in ItemID on row";
         private string valueLocationError = "Value in Location on row";
@@ -146,6 +147,7 @@ namespace WMS.Lang
         public string SUCCESS_MOVE { get { return successMove; } }
         public string SUCCESS_REGISTER { get { return successRegister; } }
 
+        public string ITEMS_MOVED { get { return itemsMoved; } }
         public string IS_EMPTY { get { return isEmpty; } }
         public string VALUE_IN_ITEM_ID { get { return valueItemIDError; } }
         public string VALUE_IN_LOCATION { get { return valueLocationError; } }

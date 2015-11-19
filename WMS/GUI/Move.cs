@@ -300,7 +300,7 @@ namespace WMS.GUI
                         moveDataGridView.Rows.RemoveAt(0);
                     }
 
-                    MessageBox.Show("Varer flyttet");
+                    MessageBox.Show(lang.ITEMS_MOVED);
                 }
             }
             //give error message if commit could not be done
