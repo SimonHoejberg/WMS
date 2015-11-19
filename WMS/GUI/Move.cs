@@ -297,10 +297,13 @@ namespace WMS.GUI
                 DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
                 if (a.Equals(DialogResult.OK))
                 {
-                    //Reduce Item on on location
-                    
-                    //Increase items on new location
+                    int rowCount = moveDataGridView.Rows.Count - 1;
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        moveDataGridView.Rows.RemoveAt(0);
+                    }
 
+                    MessageBox.Show("Varer flyttet");
                 }
             }
             //give error message if commit could not be done
