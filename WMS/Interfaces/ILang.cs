@@ -70,6 +70,7 @@ namespace WMS.Interfaces
         string SUCCESS_MOVE { get; }
         string SUCCESS_REGISTER { get; }
 
+        string ITEMS_MOVED { get; }
         string IS_EMPTY { get; }
         string VALUE_IN_ITEM_ID { get; }
         string VALUE_IN_LOCATION { get; }
