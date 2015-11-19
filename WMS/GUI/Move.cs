@@ -316,7 +316,7 @@ namespace WMS.GUI
             moveConfirmButton.Text = lang.CONFIRM;
             moveCancelButton.Text = lang.CANCEL;
             Text = lang.MOVE;
-            moveDataGridView.Columns[2].HeaderText = lang.AMOUNT;
+            moveDataGridView.Columns["QuantityColumn"].HeaderText = lang.AMOUNT;
             ComboColumnLocation.HeaderText = lang.LOCATION;
             ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
             ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
