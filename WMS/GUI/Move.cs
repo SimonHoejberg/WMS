@@ -15,6 +15,7 @@ using WMS.WH;
 - Make it so that you can move multiple times from the same location
 - Move multiple to same new location if item is the same
 - When moving multiple times from the same location, make sure the total quantity does not exceed the quantity on the location
+- Make the user able to choose Location first
 - 
 */
 
@@ -119,7 +120,7 @@ namespace WMS.GUI
                 moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
             }
             //if the change happened in LocationColumn
-            else if (e.RowIndex != -1 &&moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
+            else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
             {
                 //Set new locations
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
@@ -132,11 +133,11 @@ namespace WMS.GUI
                 }
             }
             //if the change happened in QuantityColumn
-            else if (e.RowIndex != -1 &&moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("QuantityColumn"))
+            else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("QuantityColumn"))
             {
                 int a = 0;
 
-                if(moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value == null)
+                if (moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value == null)
                 {
                     moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
                 }
@@ -166,7 +167,7 @@ namespace WMS.GUI
                 {
                     moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
                 }
-            } 
+            }
         }
 
         private List<Item> ItemList(DataGridViewCell eventCell)
@@ -190,7 +191,7 @@ namespace WMS.GUI
         private List<Location> NewLocationList(DataGridViewCell eventCell)
         {
             List<Location> input = core.DataHandler.LocationToList();
-            foreach(Location loc in input)
+            foreach (Location loc in input)
             {
                 Console.WriteLine(loc.ItemNo);
             }
@@ -243,60 +244,56 @@ namespace WMS.GUI
                 }
             }
             Console.WriteLine(locUsedTwice + " " + newLocUsedTwice);
-                //Check if multiple items are moved to the same location
+            //Check if multiple items are moved to the same location
             foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
             {
                 if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
                 {
                     break;
                 }
-                if (dgvRow.Cells["ItemIDColumn"].Value != null && dgvRow.Cells["LocationColumn"].Value != null && dgvRow.Cells["QuantityColumn"].Value != null && dgvRow.Cells["NewLocationColumn"].Value != null && locUsedTwice != true && newLocUsedTwice != true)
+                if (dgvRow.Cells["ItemIDColumn"].Value == null)
                 {
-                    //Commit changes to database
+                    noProblemsEncountered = false;
+                    problemList += ("\n" + lang.VALUE_IN_ITEM_ID + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
                 }
-                else 
+                if (dgvRow.Cells["LocationColumn"].Value == null)
                 {
-                    if (dgvRow.Cells["ItemIDColumn"].Value == null)
-                    {
-                        noProblemsEncountered = false;
-                        problemList += ("\n" + lang.VALUE_IN_ITEM_ID + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
-                    }
-                    if(dgvRow.Cells["LocationColumn"].Value == null)
-                    {
-                        noProblemsEncountered = false;
-                        problemList += ("\n" + lang.VALUE_IN_LOCATION + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
-                    }
-                    if (dgvRow.Cells["QuantityColumn"].Value == null)
-                    {
-                        noProblemsEncountered = false;
-                        problemList += ("\n" + lang.VALUE_IN_AMOUNT + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
-                    }
-                    if (dgvRow.Cells["NewLocationColumn"].Value == null)
-                    {
-                        noProblemsEncountered = false;
-                        problemList += ("\n" + lang.VALUE_IN_NEW_LOCATION + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
-                    }
-                    if(locUsedTwice == true)
-                    {
-                        noProblemsEncountered = false;
-                        problemList += ("\n" + lang.ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE);
-                    }
-                    if(newLocUsedTwice == true)
-                    {
-                        noProblemsEncountered = false;
-                        problemList += ("\n" + lang.ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION);
-                    }
-    
-                    //Fix attempt to move multiple items to the same location
+                    noProblemsEncountered = false;
+                    problemList += ("\n" + lang.VALUE_IN_LOCATION + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
                 }
+                if (dgvRow.Cells["QuantityColumn"].Value == null)
+                {
+                    noProblemsEncountered = false;
+                    problemList += ("\n" + lang.VALUE_IN_AMOUNT + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
+                }
+                if (dgvRow.Cells["NewLocationColumn"].Value == null)
+                {
+                    noProblemsEncountered = false;
+                    problemList += ("\n" + lang.VALUE_IN_NEW_LOCATION + " " + (dgvRow.Index + 1) + " " + lang.IS_EMPTY);
+                }
+                if (locUsedTwice == true)
+                {
+                    noProblemsEncountered = false;
+                    problemList += ("\n" + lang.ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE);
+                }
+                if (newLocUsedTwice == true)
+                {
+                    noProblemsEncountered = false;
+                    problemList += ("\n" + lang.ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION);
+                }
+
+                //Fix attempt to move multiple items to the same location
+
             }
-            if(noProblemsEncountered == true)
+            if (noProblemsEncountered == true) //Commit changes if no problems.
             {
-                UserIDBox user_dialog = new UserIDBox(core,lang);
+                UserIDBox user_dialog = new UserIDBox(core, lang);
                 user_dialog.Owner = this;
                 DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
                 if (a.Equals(DialogResult.OK))
                 {
+                    /*Insert code to commit to database*/
+
                     int rowCount = moveDataGridView.Rows.Count - 1;
                     for (int i = 0; i < rowCount; i++)
                     {
