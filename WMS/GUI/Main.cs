@@ -8,53 +8,84 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
+using WMS.Reference;
 
 namespace WMS.GUI
 {
     public partial class Main : Form , IMain
     {
-        ICore core;
+        private ICore core;
         public Main()
         {
             InitializeComponent();
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private void MainLoad(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
+            MinimizeBox = false;
         }
 
         public ICore Core { set { this.core = value; } }
 
-        private void information_pbox_Click(object sender, EventArgs e)
+        private void Information_pbox_Click(object sender, EventArgs e)
         {
             core.WindowHandler.OpenInformation();
         }
 
-        private void log_pbox_Click(object sender, EventArgs e)
+        private void LogButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenLog();
         }
 
-        private void move_pbox_Click(object sender, EventArgs e)
+        private void MoveButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenMove();
         }
 
-        private void register_pbox_Click(object sender, EventArgs e)
+        private void RegisterButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenRegister();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void WasteButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenWaste();
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void ReduceButtonClick(object sender, EventArgs e)
         {
             core.WindowHandler.OpenReduce();
+        }
+
+        private void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+            core.DataHandler.CloseConnectionToServer();
+        }
+
+        public void UpdatePics(bool da)
+        {
+            if (da)
+            {
+                moveButton.Image = Properties.Resources.move;
+                reduceButton.Image = Properties.Resources.reduce;
+                registerButton.Image = Properties.Resources.register;
+                wasteButton.Image = Properties.Resources.waste;
+                langButton.Image = Properties.Resources.dannebro;
+            }
+            else
+            {
+                moveButton.Image = Properties.Resources.moveda;
+                reduceButton.Image = Properties.Resources.reduceda;
+                registerButton.Image = Properties.Resources.registerda;
+                wasteButton.Image = Properties.Resources.wasteda;
+                langButton.Image = Properties.Resources.union_jack_30x18;
+            }
+        }
+
+        private void lang_Click(object sender, EventArgs e)
+        {
+            core.changeLang();
         }
     }
 }

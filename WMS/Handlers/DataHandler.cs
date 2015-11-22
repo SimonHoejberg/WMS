@@ -18,61 +18,40 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, IGui caller)
+        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm)
         {
-            sql.Caller = caller;
-            sql.update(coloumn, value, id, db);
+            sql.update(coloumn, value, id, db, searchTerm);
         }
 
-        public MySqlDataAdapter GetData(string db, IGui caller)
+        public MySqlDataAdapter GetData(string db)
         {
-            sql.Caller = caller;
-            return sql.GetData(db);
+            return sql.GetAllDataFromDataBase(db);
         }
 
-        public List<object> DataToList(string db, IGui caller)
-        {
-            sql.Caller = caller;
-            if (db.Equals(WindowTypes.INFO))
-            {
-                return InfoToList().ToList<object>();
-            }
-            else if (db.Equals(WindowTypes.REGISTER))
-            {
-                return OrderToList().ToList<object>();
-            }
-            else if (db.Equals("location"))
-            {
-                return LocationToList().ToList<object>();
-            }
-            return null;
-        }
-
-        public List<string> GetUser(IGui caller)
+        public List<string> GetUser()
         {
             return UserToList();
         }
 
-        public List<string> GetLog(string itemNo, IGui caller)
+        public List<LogItem> GetLog(string itemNo)
         {
-            sql.Caller = caller;
             return LogToList(itemNo);
         }
 
-        private List<Item> InfoToList()
+        public List<Item> InfoToList()
         {
             List<Item> temp = new List<Item>();
-            MySqlDataReader reader = sql.GetDataForList(WindowTypes.INFO);
+            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.INFO);
             while (reader.Read())
             {
-                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()),
-                                        int.Parse(reader["location"].ToString()), int.Parse(reader["size"].ToString())));
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString())));
+
             }
             sql.CloseConnection();
             return temp;
         }
 
-        private List<string> UserToList()
+        public List<string> UserToList()
         {
             List<string> temp = new List<string>();
             MySqlDataReader reader = sql.GetDataForList("user");
@@ -84,16 +63,16 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<Order> OrderToList()
+        public List<Order> OrderToList()
         {
             List<Order> temp = new List<Order>();
             MySqlDataReader reader = sql.GetDataForList(WindowTypes.REGISTER);
             while (reader.Read())
             {
                 int tempOrderNo = 0;
-                if (int.TryParse(reader["orderNr"].ToString(), out tempOrderNo))
+                if (int.TryParse(reader["orderNo"].ToString(), out tempOrderNo))
                 {
-                    if (temp.Count(x => ((Order)x).OrderNo.Equals(tempOrderNo)) > 0)
+                    if (temp.Count(x => x.OrderNo.Equals(tempOrderNo)) == 0)
                     {
                         temp.Add(new Order(tempOrderNo));
                     }
@@ -104,46 +83,82 @@ namespace WMS.Handlers
             return temp;
         }
 
-        private List<Location> LocationToList()
+        public List<Location> LocationToList()
         {
             List<Location> temp = new List<Location>();
-            MySqlDataReader reader = sql.GetDataForList("location");
+            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
             while (reader.Read())
             {
-                temp.Add(new Location(reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
+                temp.Add(new Location(reader["ID"].ToString(), reader["unit"].ToString(), int.Parse(reader["shelf"].ToString()), int.Parse(reader["shelfNo"].ToString()), reader["itemNo"].ToString(), int.Parse(reader["space"].ToString()), int.Parse(reader["quantity"].ToString())));
             }
             sql.CloseConnection();
             return temp;
         }
 
-        private List<string> LogToList(string itemNo)
+        public List<LogItem> LogToList(string itemNo)
         {
-            List<string> temp = new List<string>();
-            MySqlDataReader reader = sql.GetDataForList(itemNo);
+            List<LogItem> temp = new List<LogItem>();
+            MySqlDataReader reader = sql.GetItemLatestLog(itemNo);
             while (reader.Read())
             {
-                temp.Add(reader["userId"].ToString());
+                temp.Add(new LogItem(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
             sql.CloseConnection();
             return temp;
         }
 
-        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db, IGui caller)
+        public List<Item> SearchInfoToList(string itemNo)
         {
-            sql.Caller = caller;
-            return sql.GetDataForItemNo("itemNo",itemNo, db);
+            List<Item> temp = new List<Item>();
+            MySqlDataReader reader = sql.SearchToList(itemNo);
+            while (reader.Read())
+            {
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString())));
+
+            }
+            sql.CloseConnection();
+            return temp;
         }
 
-        public MySqlDataAdapter GetDataFromOrderNo(string orderNo, IGui caller)
+        public Item GetItemFromItemNo(string itemNo)
         {
-            sql.Caller = caller;
-            return sql.GetDataForItemNo("itemNo", orderNo, "tesst");
+            MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
+            reader.Read();
+            Item item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString()));
+            sql.CloseConnection();
+            return item;        
         }
 
-
-        public MySqlDataAdapter GetInfoForReduce(string itemNo, IGui caller)
+        public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
         {
-            throw new NotImplementedException();
+            return sql.GetDataForItemNo(db,DataBaseValues.ITEM,itemNo);
         }
+
+        public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
+        {
+            return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
+        }
+
+        public void ItemMove(string storageUnit, string shelf, string shelfNo, string newQuantity, string newItem)
+        {
+            sql.moveItem(storageUnit, shelf, shelfNo, newQuantity, newItem);
+        }
+
+        public void CloseConnectionToServer()
+        {
+            sql.CloseConnection();
+        }
+
+        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user,string operation)
+        {
+            sql.LogOperation(itemNo, description, date, user, operation, quantity);
+            sql.InformationChanges(itemNo, description, quantity, "0",0, 0, operaton);
+        }
+
+        public void ChangeLocation(string itemNo,string location)
+        {
+            sql.UpdateLocation(itemNo, location);
+        }
+
     }
 }

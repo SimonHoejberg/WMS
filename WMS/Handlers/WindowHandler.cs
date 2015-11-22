@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WMS.Interfaces;
 using WMS.GUI;
+using WMS.Lang;
 using System.Windows.Forms;
 
 namespace WMS.Handlers
@@ -14,6 +15,9 @@ namespace WMS.Handlers
         private ICore core;
         private Form main;
         private List<IGui> windowsOpen = new List<IGui>();
+        private ILang lang = new LangDa();
+        private bool da = true;
+
         public WindowHandler(ICore core, IMain main)
         {
             this.core = core;
@@ -31,37 +35,37 @@ namespace WMS.Handlers
 
         public void OpenInformation()
         {
-            CreateWindow(new Information(core));
+            CreateWindow(new Information(core,lang));
         }
 
         public void OpenLog()
         {
-            CreateWindow(new Log(core));
+            CreateWindow(new Log(core,lang));
         }
 
         public void OpenLog(string itemNo)
         {
-            CreateWindow(new Log(core, itemNo));
+            CreateWindow(new Log(core, itemNo,lang));
         }
 
         public void OpenMove()
         {
-            CreateWindow(new Move(core));
+            CreateWindow(new Move(core,lang));
         }
 
         public void OpenRegister()
         {
-            CreateWindow(new Register(core));
+            CreateWindow(new Register(core,lang));
         }
 
         public void OpenReduce()
         {
-            CreateWindow(new Reduce(core));
+            CreateWindow(new Reduce(core,lang));
         }
 
         public void OpenWaste()
         {
-            CreateWindow(new Waste(core));
+            CreateWindow(new Waste(core,lang));
         }
 
         private void CreateWindow(IGui gui)
@@ -79,17 +83,13 @@ namespace WMS.Handlers
             }
             else
             {
-                String tempStrng = String.Format("Cannot open any more windows of the type {0}", gui.GetTypeOfWindow());
-                MessageBox.Show(tempStrng, "Help");
+                String tempStrng = String.Format(lang.TOO_MANY_WINDOWS+" {0}", gui.GetTypeOfWindow());
+                MessageBox.Show(tempStrng, lang.ERROR);
             }
         }
 
         private void ChangeLocationOnMain(object sender, EventArgs e)
         {
-           /* System.Drawing.Point location = ((Form)sender).Location;
-            location.X -= (main.Width);
-            main.Location = location;*/
-
             main.Left = ((Form)sender).Left-main.Width;
             main.Top = ((Form)sender).Top;
         }
@@ -128,19 +128,29 @@ namespace WMS.Handlers
             }
         }
 
-        public void CloseWindowWithError(IGui caller, string error)
+        public void Exit(string error)
         {
-            if (caller != null)
+                MessageBox.Show(error, lang.ERROR);
+                Environment.Exit(0);
+        }
+
+        public void ChangeLang(ILang lang)
+        {
+            this.lang = lang;
+            foreach (var item in WindowsOpen)
             {
-                windowsOpen.Remove(caller);
-                MessageBox.Show(error);
+                item.UpdateLang(lang);
+            }
+            ((IMain)main).UpdatePics(da);
+            if (da)
+            {
+                da = false;
             }
             else
             {
-                MessageBox.Show(error);
-                Application.Exit();
+                da = true;
             }
-
+           
         }
     }
 }

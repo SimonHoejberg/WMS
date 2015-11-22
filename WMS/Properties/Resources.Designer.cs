@@ -63,9 +63,9 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder_Information {
+        internal static System.Drawing.Bitmap dannebro {
             get {
-                object obj = ResourceManager.GetObject("placeholder_Information", resourceCulture);
+                object obj = ResourceManager.GetObject("dannebro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder_Log {
+        internal static System.Drawing.Bitmap info {
             get {
-                object obj = ResourceManager.GetObject("placeholder_Log", resourceCulture);
+                object obj = ResourceManager.GetObject("info", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder_Move {
+        internal static System.Drawing.Bitmap log {
             get {
-                object obj = ResourceManager.GetObject("placeholder_Move", resourceCulture);
+                object obj = ResourceManager.GetObject("log", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder_Register {
+        internal static System.Drawing.Bitmap move {
             get {
-                object obj = ResourceManager.GetObject("placeholder_Register", resourceCulture);
+                object obj = ResourceManager.GetObject("move", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder_Remove {
+        internal static System.Drawing.Bitmap moveda {
             get {
-                object obj = ResourceManager.GetObject("placeholder_Remove", resourceCulture);
+                object obj = ResourceManager.GetObject("moveda", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,69 @@ namespace WMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder_Waste {
+        internal static System.Drawing.Bitmap reduce {
             get {
-                object obj = ResourceManager.GetObject("placeholder_Waste", resourceCulture);
+                object obj = ResourceManager.GetObject("reduce", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap reduceda {
+            get {
+                object obj = ResourceManager.GetObject("reduceda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap register {
+            get {
+                object obj = ResourceManager.GetObject("register", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap registerda {
+            get {
+                object obj = ResourceManager.GetObject("registerda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap union_jack_30x18 {
+            get {
+                object obj = ResourceManager.GetObject("union_jack_30x18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap waste {
+            get {
+                object obj = ResourceManager.GetObject("waste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wasteda {
+            get {
+                object obj = ResourceManager.GetObject("wasteda", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

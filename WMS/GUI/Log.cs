@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
 using WMS.Reference;
+using WMS.WH;
 
 namespace WMS.GUI
 {
@@ -17,26 +18,31 @@ namespace WMS.GUI
     {
         private ICore core;
         private bool sortToggle = false;
-
-        public Log(ICore core)
+        private ILang lang;
+        private MySqlDataAdapter inputFromInfo = null;
+        public Log(ICore core, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
-            UpdateLog();
+            UpdateLang(lang);
+
         }
 
-        public Log(ICore core, string itemNo)
+        public Log(ICore core, string itemNo, ILang lang)
         {
             this.core = core;
+            this.lang = lang;
             InitializeComponent();
-            UpdateLog(core.DataHandler.GetDataFromItemNo(itemNo,GetTypeOfWindow(),this));
+            inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, DataBaseTypes.LOG);
             sortToggle = true;
-            button9.Text = "Unsort";
+            UpdateLang(lang);
+            sortButton.Text = lang.UNSORT;
         }
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.GetData(GetTypeOfWindow(),this));
+            UpdateLog(core.DataHandler.GetData(DataBaseTypes.LOG));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
@@ -45,12 +51,26 @@ namespace WMS.GUI
             DataTable data = new DataTable();
 
             bsource.DataSource = data;
-            dataGridView5.DataSource = bsource;
+            dataGridView.DataSource = bsource;
 
             mysqlData.Fill(data);
-            for (int i = 0; i < dataGridView5.ColumnCount; i++)
+            dataGridView.Columns[0].Visible = false;
+            dataGridView.Columns[1].HeaderText = lang.ITEM_NO;
+            dataGridView.Columns[2].HeaderText = lang.DESCRIPTION;
+            dataGridView.Columns[3].HeaderText = lang.TIMESTAMP;
+            dataGridView.Columns[4].HeaderText = lang.USER;
+            dataGridView.Columns[5].HeaderText = lang.OPERATION;
+            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
+            if (dataGridView[0, 0].Value != null)
             {
-                dataGridView5.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView.Sort(dataGridView.Columns[0], ListSortDirection.Descending);
+            }
+
+            for (int i = 0; i < dataGridView.ColumnCount; i++)
+            {
+                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dataGridView.Columns[i].ReadOnly = true;
             }
         }
 
@@ -65,36 +85,86 @@ namespace WMS.GUI
             return WindowTypes.LOG;
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void ViewItemButtonClick(object sender, EventArgs e)
         {
-            itemInfoPnl.Visible = true;
+            if (dataGridView.CurrentCell != null)
+            {
+                itemInfoPanel.Visible = true;
+                int test = dataGridView.CurrentCell.RowIndex;
+                string itemNo = dataGridView[1, test].Value.ToString();
+                Item item = core.DataHandler.GetItemFromItemNo(itemNo);
+                sizeLabel.Text = item.Size.ToString();
+                usageLabel.Text = item.Usage.ToString();
+                nameLabel.Text = item.Description;
+                locationLabel.Text = item.Location;
+                logListBox.DataSource = core.DataHandler.GetLog(itemNo);
+            }
         }
 
-        private void Sort_Click(object sender, EventArgs e)
+        private void SortButtonClick(object sender, EventArgs e)
         {
-            if(dataGridView5.CurrentCell != null && !sortToggle)
+            if(dataGridView.CurrentCell != null && !sortToggle)
             {
                 sortToggle = true;
-                string temp = dataGridView5[1, dataGridView5.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.DataHandler.GetDataFromItemNo(temp,GetTypeOfWindow(),this));
-                button9.Text = "Unsort";
+                string temp = dataGridView[1, dataGridView.CurrentCell.RowIndex].Value.ToString();
+                UpdateLog(core.DataHandler.GetDataFromItemNo(temp, DataBaseTypes.LOG));
+                sortButton.Text = lang.UNSORT;
             }
             else if(sortToggle)
             {
                 sortToggle = false;
                 UpdateLog();
-                button9.Text = "Sort";
+                sortButton.Text = lang.SORT;
             }
         }
 
-        private void closeBtn_Click(object sender, EventArgs e)
+        private void CloseButtonClick(object sender, EventArgs e)
         {
-            itemInfoPnl.Visible = false;
+            itemInfoPanel.Visible = false;
         }
 
-        private void Log_Load(object sender, EventArgs e)
+        private void LogLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
+            if(inputFromInfo != null)
+            {
+                UpdateLog(inputFromInfo);
+            }
+            else
+            {
+                UpdateLog();
+            }
+        }
+
+        public void UpdateLang(ILang lang)
+        {
+            this.lang = lang;
+            Text = lang.LOG;
+            closeButton.Text = lang.CLOSE;
+            viewItemButton.Text = lang.VIEW_ITEM;
+            label4.Text = lang.DESCRIPTION;
+            label1.Text = lang.SIZE;
+            label2.Text = lang.LOCATION;
+            label3.Text = lang.USAGE;
+            if (sortToggle)
+            {
+                sortButton.Text = lang.UNSORT;
+                sortToggle = false;
+            }
+            else
+            {
+                sortButton.Text = lang.SORT;
+                sortToggle = true;
+            }
+            if (dataGridView.ColumnCount > 0)
+            {
+                dataGridView.Columns[1].HeaderText = lang.ITEM_NO;
+                dataGridView.Columns[2].HeaderText = lang.DESCRIPTION;
+                dataGridView.Columns[3].HeaderText = lang.TIMESTAMP;
+                dataGridView.Columns[4].HeaderText = lang.USER;
+                dataGridView.Columns[5].HeaderText = lang.OPERATION;
+                dataGridView.Columns[6].HeaderText = lang.AMOUNT;
+            }
         }
     }
 }

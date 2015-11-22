@@ -5,6 +5,8 @@ namespace WMS.Interfaces
     {
         void UpdateGuiElements();
 
+        void UpdateLang(ILang lang);
+
         string GetTypeOfWindow();
     }
 }

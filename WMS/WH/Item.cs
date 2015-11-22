@@ -7,36 +7,33 @@ namespace WMS.WH
         private string itemNo;
         private string description;
         private int inStock;
-        private int shelf;
-        private int space;
+        private string location;
+        private int itemUsage;
         private int size;
 
-        public Item(string itemNo, string description, int inStock, int shelf, int size)
+        public Item(string itemNo, string description, int inStock, string location, int size, int itemUsage)
         {
             this.itemNo = itemNo;
             this.description = description;
             this.inStock = inStock;
-            this.shelf = shelf;
+            this.location = location;
             this.size = size;
+            this.itemUsage = itemUsage;
         }
 
+
+        public string Identification { get { return itemNo + ": " + description; } }
         public string ItemNo{ get { return itemNo; }}
-        public string ItemNoString { get { return Convert.ToString(ItemNo); } }
-
         public string Description { get { return description; }}
-
-        public int Shelf {get { return shelf; }
-                          set { this.shelf = value; } }
-
-        public int Space { get { return space; } }
-
+        public string Location { get { return location; } set { location = value; } }
+        public int Usage { get { return itemUsage; } }
         public int InStock { get { return inStock; } }
-
         public int Size { get { return size; }}
+        public Item getObj { get { return this; } }
 
         public override string ToString()
         {
-            return ItemNo + ":" + Description + ":" + Size + ":" + InStock + ":" + Shelf;
+            return ItemNo + " :" + Description + ":" + Size + ":" + InStock + ":";// Shelf;
         }
 
         public int CompareTo(object obj)
@@ -44,14 +41,9 @@ namespace WMS.WH
             if (obj == null) return 1;
             Item otherItem = obj as Item;
             if (obj != null)
-                return otherItem.inStock.CompareTo(this.inStock);
+                return otherItem.Usage.CompareTo(this.Usage);
             else
                 throw new ArgumentException("Object is not an Item");
-        }
-
-        public void ReduceItem(string itemNo, int quantity)
-        {
-
         }
     }
 }

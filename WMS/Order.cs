@@ -15,5 +15,10 @@ namespace WMS
         }
 
         public int OrderNo { get { return orderNo; } }
+
+        public override string ToString()
+        {
+            return orderNo.ToString();
+        }
     }
 }
