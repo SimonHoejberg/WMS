@@ -35,6 +35,8 @@ namespace WMS.GUI
             onlyNumbers = lang.ONLY_NUMBERS;
         }
 
+        public Form Main { get; set; }
+
         public string GetTypeOfWindow()
         {
             return WindowTypes.REGISTER;

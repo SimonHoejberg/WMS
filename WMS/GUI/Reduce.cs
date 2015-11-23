@@ -44,6 +44,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             reduceDataGridView.DataSource = bsource;
         }
+        public Form Main { get; set; }
 
         public string GetTypeOfWindow()
         {

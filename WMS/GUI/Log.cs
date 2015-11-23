@@ -39,6 +39,7 @@ namespace WMS.GUI
             UpdateLang(lang);
             sortButton.Text = lang.UNSORT;
         }
+        public Form Main { get; set; }
 
         private void UpdateLog()
         {
