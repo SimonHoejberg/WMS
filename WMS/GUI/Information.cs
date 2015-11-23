@@ -12,6 +12,8 @@ namespace WMS.GUI
         private ICore core;
         private string itemNo;
         private ILang lang;
+        BindingSource bsource;
+        DataTable data;
 
         public Information(ICore core, ILang lang)
         {
@@ -19,15 +21,15 @@ namespace WMS.GUI
             this.lang = lang;
             this.core = core;
             UpdateLang(lang);
+            bsource = new BindingSource();
+            data = new DataTable();
+            bsource.DataSource = data;
+            dataGridView.DataSource = bsource;
         }
 
         private void UpdateInfo()
         {
-            BindingSource bsource = new BindingSource();
-            DataTable data = new DataTable();
-
-            bsource.DataSource = data;
-            dataGridView.DataSource = bsource;
+            
 
             core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
 
@@ -97,6 +99,8 @@ namespace WMS.GUI
         public void UpdateLang(ILang lang)
         {
             this.lang = lang;
+            textBox1.Text = lang.ITEM_NO;
+            button1.Text = lang.SEACH;
             Text = lang.INFORMATION;
             closeButton.Text = lang.CLOSE;
             viewItemButton.Text = lang.VIEW_ITEM;
@@ -113,6 +117,24 @@ namespace WMS.GUI
                 dataGridView.Columns[3].HeaderText = lang.LOCATION;
                 dataGridView.Columns[4].HeaderText = lang.SIZE;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            data.Clear();
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                UpdateInfo();
+            }
+            else 
+            {
+                core.DataHandler.GetDataFromItemNo(textBox1.Text, GetTypeOfWindow()).Fill(data);
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
