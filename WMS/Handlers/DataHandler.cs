@@ -18,17 +18,17 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm) => sql.update(coloumn, value, id, db, searchTerm);
+        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm)
+        {
+            sql.update(coloumn, value, id, db, searchTerm);
+        }
 
         public MySqlDataAdapter GetData(string db)
         {
             return sql.GetAllDataFromDataBase(db);
         }
 
-        public List<string> GetUser()
-        {
-            return UserToList();
-        }
+        public List<string> GetUser() => UserToList();
 
         public List<LogItem> GetLog(string itemNo)
         {

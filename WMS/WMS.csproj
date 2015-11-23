@@ -80,9 +80,8 @@
     <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="Lang\LangEn.cs" />
-    <Compile Include="LogItem.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="OrderItem.cs" />
+    <Compile Include="WH\LogItem.cs" />
+    <Compile Include="WH\Order.cs" />
     <Compile Include="Reference\DataBaseTypes.cs" />
     <Compile Include="Reference\DataBaseValues.cs" />
     <Compile Include="Lang\LangDa.cs" />
