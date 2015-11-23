@@ -116,6 +116,7 @@ namespace WMS.Handlers
             sql.CloseConnection();
             return temp;
         }
+        public MySqlDataAdapter Search(string itemNo, string db, string searchTerm) => sql.Search(itemNo, db, searchTerm);
 
         public Item GetItemFromItemNo(string itemNo)
         {

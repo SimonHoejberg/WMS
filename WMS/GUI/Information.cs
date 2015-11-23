@@ -15,6 +15,8 @@ namespace WMS.GUI
         BindingSource bsource;
         DataTable data;
 
+        public Form Main { get; set; }
+
         public Information(ICore core, ILang lang)
         {
             InitializeComponent();
@@ -29,8 +31,6 @@ namespace WMS.GUI
 
         private void UpdateInfo()
         {
-            
-
             core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
 
             dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
@@ -98,9 +98,9 @@ namespace WMS.GUI
 
         public void UpdateLang(ILang lang)
         {
+            textBox1.TextChanged -= textBox1_TextChanged;
             this.lang = lang;
-            textBox1.Text = lang.ITEM_NO;
-            button1.Text = lang.SEACH;
+            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
             Text = lang.INFORMATION;
             closeButton.Text = lang.CLOSE;
             viewItemButton.Text = lang.VIEW_ITEM;
@@ -117,24 +117,27 @@ namespace WMS.GUI
                 dataGridView.Columns[3].HeaderText = lang.LOCATION;
                 dataGridView.Columns[4].HeaderText = lang.SIZE;
             }
+            textBox1.TextChanged += textBox1_TextChanged;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            data.Clear();
-            if (string.IsNullOrEmpty(textBox1.Text))
-            {
-                UpdateInfo();
-            }
-            else 
-            {
-                core.DataHandler.GetDataFromItemNo(textBox1.Text, GetTypeOfWindow()).Fill(data);
-            }
-        }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            int a = 0;
+            data?.Clear();
+            if (int.TryParse(textBox1.Text, out a))
+            {
+                core.DataHandler.Search(textBox1.Text, GetTypeOfWindow(), DataBaseValues.ITEM).Fill(data);
+            }
+            else
+            {
+                core.DataHandler.Search(textBox1.Text, GetTypeOfWindow(), "description").Fill(data);
+            }
+        }
 
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
         }
     }
 }

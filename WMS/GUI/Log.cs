@@ -20,11 +20,18 @@ namespace WMS.GUI
         private bool sortToggle = false;
         private ILang lang;
         private MySqlDataAdapter inputFromInfo = null;
+        BindingSource bsource;
+        DataTable data;
+
         public Log(ICore core, ILang lang)
         {
+            InitializeComponent();
+            bsource = new BindingSource();
+            data = new DataTable();
+            bsource.DataSource = data;
+            dataGridView.DataSource = bsource;
             this.core = core;
             this.lang = lang;
-            InitializeComponent();
             UpdateLang(lang);
 
         }
@@ -47,11 +54,6 @@ namespace WMS.GUI
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
         {
-            BindingSource bsource = new BindingSource();
-            DataTable data = new DataTable();
-
-            bsource.DataSource = data;
-            dataGridView.DataSource = bsource;
 
             mysqlData.Fill(data);
             dataGridView.Columns[0].Visible = false;
@@ -138,9 +140,11 @@ namespace WMS.GUI
 
         public void UpdateLang(ILang lang)
         {
+            textBox1.TextChanged -= textBox1_TextChanged;
             this.lang = lang;
             Text = lang.LOG;
             closeButton.Text = lang.CLOSE;
+            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
             viewItemButton.Text = lang.VIEW_ITEM;
             label4.Text = lang.DESCRIPTION;
             label1.Text = lang.SIZE;
@@ -165,6 +169,35 @@ namespace WMS.GUI
                 dataGridView.Columns[5].HeaderText = lang.OPERATION;
                 dataGridView.Columns[6].HeaderText = lang.AMOUNT;
             }
+            textBox1.TextChanged += textBox1_TextChanged;
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            int a = 0;
+            data.Clear();
+            if (int.TryParse(textBox1.Text, out a))
+            {
+                core.DataHandler.Search(textBox1.Text, GetTypeOfWindow(), DataBaseValues.ITEM).Fill(data);
+            }
+            else
+            {
+                core.DataHandler.Search(textBox1.Text, GetTypeOfWindow(), "description").Fill(data);
+            }
+            
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.TextChanged -= textBox1_TextChanged;
+            textBox1.Text = "";
+            textBox1.TextChanged += textBox1_TextChanged;
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            textBox1.TextChanged -= textBox1_TextChanged;
+            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
+            textBox1.TextChanged += textBox1_TextChanged;
         }
     }
 }
