@@ -205,7 +205,10 @@ namespace WMS.GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
+            if (reduceDataGridView.CurrentCell != null)
+            {
+                reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
+            }
         }
     }
 }
