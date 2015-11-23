@@ -18,8 +18,6 @@ namespace WMS.WH
 
         private List<Item> itemsNotPlaced = new List<Item>();
 
-
-
         public Warehouse(ICore core)
         {
             this.core = core;
