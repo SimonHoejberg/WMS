@@ -49,6 +49,8 @@ namespace WMS.GUI
             MakeList();
         }
 
+        public Form Main { get; set; }
+
         private void MakeList()
         {
             reasons = new List<string>();

@@ -1,4 +1,5 @@
-﻿
+﻿using System.Windows.Forms;
+
 namespace WMS.Interfaces
 {
     public interface IGui
@@ -8,5 +9,7 @@ namespace WMS.Interfaces
         void UpdateLang(ILang lang);
 
         string GetTypeOfWindow();
+
+        Form Main { get; set; }
     }
 }

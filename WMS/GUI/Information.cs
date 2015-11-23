@@ -21,6 +21,8 @@ namespace WMS.GUI
             UpdateLang(lang);
         }
 
+        public Form Main { get; set; }
+
         private void UpdateInfo()
         {
             BindingSource bsource = new BindingSource();
