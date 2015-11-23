@@ -23,7 +23,7 @@ namespace WMS.GUI
             this.Text = lang.CANCEL;
         }
         
-        private void CancelBox_Load(object sender, EventArgs e)
+        public void CancelBox_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
             this.MinimizeBox = false;
