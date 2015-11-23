@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using WMS.Interfaces;
 using WMS.Reference;
 using WMS.WH;
+using System.Diagnostics;
 
 namespace WMS.GUI
 {
@@ -97,13 +98,13 @@ namespace WMS.GUI
                             tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
                     }
                 }
+                if (tempList.Count != 0)
+                { 
+                    core.SortNewItems(tempList);
+                    MessageBox.Show(lang.SUCCESS_REGISTER, lang.SUCCESS);
+                }
                 data.Clear();
                 core.WindowHandler.Update(this);
-                if (tempList.Count != 0)
-                {
-                    MessageBox.Show(lang.SUCCESS_REGISTER, lang.SUCCESS);
-                    core.SortNewItems(tempList);
-                }
             }
         }
 
