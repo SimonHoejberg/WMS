@@ -75,23 +75,24 @@ namespace WMS.Handlers
                 Form temp = (Form)gui;
                 temp.FormClosing += FormClosing;
                 windowsOpen.Add(gui);
-                temp.Activated += ChangeLocationOnMain;
-                temp.LocationChanged += ChangeLocationOnMain;
-                temp.Validating += ChangeLocationOnMain;
+                temp.Move += Temp_Move;
                 temp.Show();
                 temp.Focus();
             }
             else
             {
-                String tempStrng = String.Format(lang.TOO_MANY_WINDOWS+" {0}", gui.GetTypeOfWindow());
-                MessageBox.Show(tempStrng, lang.ERROR);
+                Form form = ((Form)windowsOpen.Find(x => x.GetTypeOfWindow().Equals(gui.GetTypeOfWindow())));
+                form?.BringToFront();
+                form?.Focus();
             }
         }
 
-        private void ChangeLocationOnMain(object sender, EventArgs e)
+        private void Temp_Move(object sender, EventArgs e)
         {
-            main.Left = ((Form)sender).Left-main.Width;
-            main.Top = ((Form)sender).Top;
+            IGui gui = ((IGui)sender);
+            Form form = ((Form)sender);
+            main.Left = form.Left - main.Width;
+            main.Top = form.Top;
         }
 
         private void FormClosing(object sender, FormClosingEventArgs e)
@@ -109,7 +110,7 @@ namespace WMS.Handlers
 
         private bool CanCreateForm(string type)
         {
-            if ((windowsOpen.Count(x => ((IGui)x).GetTypeOfWindow().Equals(type)) < 4))
+            if ((windowsOpen.Count(x => ((IGui)x).GetTypeOfWindow().Equals(type)) < 1))
             {
                 return true;
             }

@@ -244,7 +244,10 @@ namespace WMS.GUI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            dataGridView6.Rows.RemoveAt(dataGridView6.CurrentCell.RowIndex);
+            if (dataGridView6.CurrentCell != null)
+            {
+                dataGridView6.Rows.RemoveAt(dataGridView6.CurrentCell.RowIndex);
+            }
         }
     }
 }

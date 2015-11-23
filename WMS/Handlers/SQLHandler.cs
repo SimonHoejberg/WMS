@@ -162,6 +162,14 @@ namespace WMS.Handlers
             return reader;
         }
 
+        public MySqlDataAdapter Search(string itemNo, string db, string searchTerm)
+        {
+            MySqlDataAdapter MyDA = new MySqlDataAdapter();
+            string sql = $"SELECT * FROM {db} WHERE {searchTerm} LIKE '{itemNo}%'";
+            MyDA.SelectCommand = new MySqlCommand(sql, connection);
+            return MyDA;
+        }
+
         public void UpdateLocation(string itemNo, string location)
         {
             MySqlCommand command = connection.CreateCommand();

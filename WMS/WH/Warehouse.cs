@@ -83,6 +83,10 @@ namespace WMS.WH
                 {
                     int min;
                     int max = GetMaxUsage(usage, out min);
+                    if (maxMin.ContainsKey(j))
+                    {
+                        maxMin.Remove(j);
+                    }
                     maxMin.Add(j, max.ToString() + "." + min.ToString());
                     i = 0;
                     j++;
@@ -162,6 +166,14 @@ namespace WMS.WH
             items.Sort();
             foreach (Item item in items)
             {
+                foreach (string temp in maxMin.Values)
+                {
+                    string[] tempS = temp.Split('.');
+                    int max;
+                    int min;
+                    int.TryParse(tempS[0], out max);
+                    int.TryParse(tempS[1], out min);
+                }
                 if (!FindAvaliableSpace(item))
                 {
                     notplaced.Add(item);

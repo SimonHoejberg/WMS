@@ -18,17 +18,17 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm) => sql.update(coloumn, value, id, db, searchTerm);
+        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm)
+        {
+            sql.update(coloumn, value, id, db, searchTerm);
+        }
 
         public MySqlDataAdapter GetData(string db)
         {
             return sql.GetAllDataFromDataBase(db);
         }
 
-        public List<string> GetUser()
-        {
-            return UserToList();
-        }
+        public List<string> GetUser() => UserToList();
 
         public List<LogItem> GetLog(string itemNo)
         {
@@ -116,6 +116,7 @@ namespace WMS.Handlers
             sql.CloseConnection();
             return temp;
         }
+        public MySqlDataAdapter Search(string itemNo, string db, string searchTerm) => sql.Search(itemNo, db, searchTerm);
 
         public Item GetItemFromItemNo(string itemNo)
         {
