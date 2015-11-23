@@ -27,8 +27,6 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
         }
 
-        public Form Main { get; set; }
-
         private void UpdateInfo()
         {
             
