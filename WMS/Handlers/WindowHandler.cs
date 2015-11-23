@@ -89,20 +89,10 @@ namespace WMS.Handlers
 
         private void Temp_Move(object sender, EventArgs e)
         {
-            ParentChildRelationships(sender);
             IGui gui = ((IGui)sender);
             Form form = ((Form)sender);
-            gui.Main.Left = form.Left - main.Width;
-            gui.Main.Top = form.Top;
-        }
-
-        private void ParentChildRelationships(object sender)
-        {
-            foreach (var item in WindowsOpen.FindAll(x => x.Main != null))
-            {
-                item.Main = null;
-            }
-            ((IGui)sender).Main = main;
+            main.Left = form.Left - main.Width;
+            main.Top = form.Top;
         }
 
         private void FormClosing(object sender, FormClosingEventArgs e)

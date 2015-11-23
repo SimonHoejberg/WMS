@@ -39,8 +39,6 @@ namespace WMS.GUI
             InitializeDataGridView(core);
         }
 
-        public Form Main { get; set; }
-
         private void InitializeDataGridView(ICore core)
         {
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview

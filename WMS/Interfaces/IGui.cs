@@ -9,7 +9,5 @@ namespace WMS.Interfaces
         void UpdateLang(ILang lang);
 
         string GetTypeOfWindow();
-
-        Form Main { get; set; }
     }
 }
