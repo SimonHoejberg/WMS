@@ -58,8 +58,8 @@ namespace WMS.GUI
 
             //ValueMembers
             ComboColumnIdentification.ValueMember = "ItemNo";
-            ComboColumnLocation.ValueMember = "LocString";
-            ComboColumnNewLocation.ValueMember = "LocString";
+            ComboColumnLocation.ValueMember = "LocationString";
+            ComboColumnNewLocation.ValueMember = "LocationString";
 
             //Sets the HeaderTexts for the DataGridViewComboBoxColumns
             ColumnQuantity.HeaderText = lang.AMOUNT;
@@ -128,7 +128,7 @@ namespace WMS.GUI
                 List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
                 foreach (Location lc in newLocList)
                 {
-                    Console.WriteLine(lc.LocString);
+                    Console.WriteLine(lc.ToString());
                     NewLocationCell.Items.Add(lc);
                 }
             }
@@ -148,7 +148,7 @@ namespace WMS.GUI
 
                     foreach (Location loc in core.DataHandler.LocationToList())
                     {
-                        if (moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value != null && loc.LocString.Equals(moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()))
+                        if (moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value != null && loc.ToString().Equals(moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()))
                         {
                             maxQuantity = loc.Quantity;
                         }
