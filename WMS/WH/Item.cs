@@ -4,44 +4,33 @@ namespace WMS.WH
 {
     public class Item : IComparable
     {
-        private string itemNo;
-        private string description;
-        private int inStock;
-        private string location;
-        private int itemUsage;
-        private int size;
+        public string ItemNo { get; }
+        public string Description { get; }
+        public string Location { get; set; }
+        public int Usage { get; }
+        public int InStock { get; }
+        public int Size { get; }
 
         public Item(string itemNo, string description, int inStock, string location, int size, int itemUsage)
         {
-            this.itemNo = itemNo;
-            this.description = description;
-            this.inStock = inStock;
-            this.location = location;
-            this.size = size;
-            this.itemUsage = itemUsage;
+            ItemNo = itemNo;
+            Description = description;
+            InStock = inStock;
+            Location = location;
+            Size = size;
+            Usage = itemUsage;
         }
 
+        public string Identification => $"{ItemNo}: {Description}";
 
-        public string Identification { get { return itemNo + ": " + description; } }
-        public string ItemNo{ get { return itemNo; }}
-        public string Description { get { return description; }}
-        public string Location { get { return location; } set { location = value; } }
-        public int Usage { get { return itemUsage; } }
-        public int InStock { get { return inStock; } }
-        public int Size { get { return size; }}
-        public Item getObj { get { return this; } }
-
-        public override string ToString()
-        {
-            return ItemNo + " :" + Description + ":" + Size + ":" + InStock + ":";// Shelf;
-        }
+        public override string ToString() => $"{ItemNo}: {Description}: {Size}: {InStock}:";
 
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
             Item otherItem = obj as Item;
             if (obj != null)
-                return otherItem.Usage.CompareTo(this.Usage);
+                return otherItem.Usage.CompareTo(Usage);
             else
                 throw new ArgumentException("Object is not an Item");
         }

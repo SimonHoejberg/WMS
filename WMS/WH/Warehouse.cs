@@ -11,7 +11,7 @@ namespace WMS.WH
     public class Warehouse
     {
         private ICore core;
-        Item[,] locations;
+        private Item[,] locations;
         private Dictionary<string, string> placedItems = new Dictionary<string, string>();
         private List<Item> notplaced = new List<Item>();
         private Dictionary<int, string> maxMin = new Dictionary<int, string>();
