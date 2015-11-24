@@ -322,8 +322,7 @@ namespace WMS.GUI
                         }
                         //Console.WriteLine($"{tempOldLoc.ItemNo} {tempOldLoc.LocationString}");
                         core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value)).ToString(), tempOldLoc.ItemNo.ToString());
-
-                        //core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value).ToString(), tempOldLoc.ItemNo.ToString());
+                        core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value).ToString(), tempOldLoc.ItemNo.ToString());
                     }
 
                     ClearDataGridView();
