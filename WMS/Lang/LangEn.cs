@@ -34,8 +34,8 @@ namespace WMS.Lang
         private string size = "Size";
         private string timeStamp = "Date / Time";
         private string user = "User";
-        private string amount = "Amount";
-        private string expectedAmount = "Amount";
+        private string amount = "Arrived amount";
+        private string expectedAmount = "Expected amount";
         private string operaton = "Operation";
 
         private string viewItem = "Show item";

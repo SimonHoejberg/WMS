@@ -177,8 +177,11 @@ namespace WMS.Handlers
 
         public void moveItem(string id, string newQuantity, string newItem)
         {
+            Console.WriteLine($"{id} {newQuantity} {newItem}");
+
             MySqlCommand command = connection.CreateCommand();
-            string sql = $"UPDATE location SET itemNo = '{newItem}' AND quantity = '{newQuantity}' WHERE id = '{id}'";
+            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = '{newQuantity}' WHERE ID = '{id}'";
+            Console.WriteLine(sql);
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();

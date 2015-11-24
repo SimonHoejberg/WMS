@@ -34,8 +34,8 @@ namespace WMS.Lang
         private string size = "Størelse";
         private string timeStamp = "Dato / Tid";
         private string user = "Bruger";
-        private string amount = "Mængde";
-        private string expectedAmount = "Mængde";
+        private string amount = "Ankommet antal";
+        private string expectedAmount = "Forventet antal";
         private string operaton = "Operation";
 
         private string viewItem = "Vis Vare";
