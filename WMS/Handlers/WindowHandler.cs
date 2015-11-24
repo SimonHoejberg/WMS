@@ -70,7 +70,7 @@ namespace WMS.Handlers
 
         private void CreateWindow(IGui gui)
         {
-            if (CanCreateForm(gui.GetTypeOfWindow()))
+            if (CanCreateForm(gui))
             {
                 Form temp = (Form)gui;
                 temp.FormClosing += FormClosing;
@@ -81,7 +81,7 @@ namespace WMS.Handlers
             }
             else
             {
-                Form form = ((Form)windowsOpen.Find(x => x.GetTypeOfWindow().Equals(gui.GetTypeOfWindow())));
+                Form form = ((Form)windowsOpen.Find(x => x.Equals(gui)));
                 form?.BringToFront();
                 form?.Focus();
             }
@@ -108,9 +108,9 @@ namespace WMS.Handlers
             main.BringToFront();
         }
 
-        private bool CanCreateForm(string type)
+        private bool CanCreateForm(object type)
         {
-            if ((windowsOpen.Count(x => ((IGui)x).GetTypeOfWindow().Equals(type)) < 1))
+            if ((windowsOpen.Count(x => ((IGui)x).Equals(type)) < 1))
             {
                 return true;
             }

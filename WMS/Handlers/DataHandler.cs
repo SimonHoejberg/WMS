@@ -150,7 +150,7 @@ namespace WMS.Handlers
         public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user,string operation)
         {
             sql.LogOperation(itemNo, description, date, user, operation, quantity);
-            sql.InformationChanges(itemNo, description, quantity, "0",0, 0, operaton);
+            sql.UpdateInfo(itemNo, quantity, operaton);
         }
 
         public void ChangeLocation(string itemNo,string location)

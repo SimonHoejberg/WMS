@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
 using WMS.WH;
 
 
@@ -360,11 +359,6 @@ namespace WMS.GUI
         private void MoveLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
-        }
-
-        public string GetTypeOfWindow()
-        {
-            return WindowTypes.MOVE;
         }
 
         public void UpdateGuiElements()

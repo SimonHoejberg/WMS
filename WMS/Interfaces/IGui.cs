@@ -8,6 +8,5 @@ namespace WMS.Interfaces
 
         void UpdateLang(ILang lang);
 
-        string GetTypeOfWindow();
     }
 }

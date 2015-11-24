@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.Reference;
 using WMS.WH;
+using static WMS.Reference.DataBaseValues;
+using static WMS.Reference.DataBaseTypes;
 
 namespace WMS.GUI
 {
@@ -31,7 +33,7 @@ namespace WMS.GUI
 
         private void UpdateInfo()
         {
-            core.DataHandler.GetData(GetTypeOfWindow()).Fill(data);
+            core.DataHandler.GetData(INFO).Fill(data);
 
             dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
             dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
@@ -49,11 +51,6 @@ namespace WMS.GUI
         public void UpdateGuiElements()
         {
             UpdateInfo();
-        }
-
-        public string GetTypeOfWindow()
-        {
-            return WindowTypes.INFO;
         }
 
         private void ViewItemButtonClick(object sender, System.EventArgs e)
@@ -127,11 +124,11 @@ namespace WMS.GUI
             data?.Clear();
             if (int.TryParse(textBox1.Text, out a))
             {
-                core.DataHandler.Search(textBox1.Text, GetTypeOfWindow(), DataBaseValues.ITEM).Fill(data);
+                core.DataHandler.Search(textBox1.Text, INFO, ITEM).Fill(data);
             }
             else
             {
-                core.DataHandler.Search(textBox1.Text, GetTypeOfWindow(), "description").Fill(data);
+                core.DataHandler.Search(textBox1.Text, INFO, DESCRIPTION).Fill(data);
             }
         }
 

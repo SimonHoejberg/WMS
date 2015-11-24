@@ -1,11 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using WMS.Handlers;
-using WMS.Interfaces;
+﻿using WMS.Interfaces;
 using System.Collections.Generic;
-using WMS.Reference;
-using System.Diagnostics;
 
 namespace WMS.WH
 {
@@ -43,8 +37,6 @@ namespace WMS.WH
 
         public void CreateWH()
         {
-            Stopwatch st = new Stopwatch();
-            st.Start();
             List<Item> temp = core.DataHandler.InfoToList();
             foreach (Item item in temp)
             {
@@ -54,8 +46,6 @@ namespace WMS.WH
                     locations[int.Parse(tempS[0]), int.Parse(tempS[1])] = item;
                 }
             }
-            st.Stop();
-            Console.WriteLine("CW " + st.ElapsedMilliseconds/1000 +" s "+ st.ElapsedMilliseconds + " ms");
         }
 
 
@@ -122,8 +112,6 @@ namespace WMS.WH
 
         public List<Item> FindOptimalLocation(List<Item> items)
         {
-            Stopwatch st = new Stopwatch();
-            st.Start();
             items.Sort();
             foreach (Item item in items)
             {
@@ -132,8 +120,6 @@ namespace WMS.WH
                     notplaced.Add(item);
                 }
             }
-            st.Stop();
-            Console.WriteLine("Algo " + st.ElapsedMilliseconds/1000 + " s " + st.ElapsedMilliseconds + " ms");
             return notplaced;
         }
 
