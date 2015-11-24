@@ -41,25 +41,6 @@ namespace WMS.WH
             return 6;
         }
 
-        private int GetMaxUsage(List<Item> input, out int output)
-        {
-            int max = 0;
-            int min = 0;
-            foreach (Item item in input)
-            {
-                if (item.Usage > max)
-                {
-                    max = item.Usage;
-                }
-                else if (item.Usage < min)
-                {
-                    min = item.Usage;
-                }
-            }
-            output = min;
-            return max;
-        }
-
         public void CreateWH()
         {
             Stopwatch st = new Stopwatch();
@@ -72,35 +53,6 @@ namespace WMS.WH
                 {
                     locations[int.Parse(tempS[0]), int.Parse(tempS[1])] = item;
                 }
-            }
-            int i = 0;
-            int j = 0;
-            List<Item> usage = new List<Item>();
-            foreach (var item in locations)
-            {
-                if (i < 3)
-                {
-                    if (item != null)
-                    {
-                        usage.Add(item);
-
-                    }
-                    i++;
-                }
-                else if (i == 3)
-                {
-                    int min;
-                    int max = GetMaxUsage(usage, out min);
-                    if (maxMin.ContainsKey(j))
-                    {
-                        maxMin.Remove(j);
-                    }
-                    maxMin.Add(j, max.ToString() + "." + min.ToString());
-                    i = 0;
-                    j++;
-                    usage = new List<Item>();
-                }
-
             }
             st.Stop();
             Console.WriteLine("CW " + st.ElapsedMilliseconds/1000 +" s "+ st.ElapsedMilliseconds + " ms");

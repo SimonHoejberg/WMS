@@ -82,12 +82,14 @@ namespace WMS.GUI
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+            Stopwatch st = new Stopwatch();
             List<Item> tempList = new List<Item>();
             UserIDBox user_dialog = new UserIDBox(core,lang);
             user_dialog.Owner = this;
             DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
             if (a.Equals(DialogResult.OK))
             {
+                st.Start();
                 string user = user_dialog.User;
                 int temp; 
                 for (int i = 0; i < dataGridView.RowCount; i++)
@@ -98,6 +100,8 @@ namespace WMS.GUI
                             tempList.Add(core.DataHandler.GetItemFromItemNo(dataGridView[2, i].Value.ToString()));
                     }
                 }
+                st.Stop();
+                Console.WriteLine("Reg " + st.ElapsedMilliseconds / 1000 + " s, " + st.ElapsedMilliseconds + " ms");
                 if (tempList.Count != 0)
                 { 
                     core.SortNewItems(tempList);
