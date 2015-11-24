@@ -66,6 +66,10 @@ namespace WMS.GUI
                 }
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
+            for (int i = 0; i < dataGridView.RowCount; i++)
+            {
+                dataGridView[5, i].Value = dataGridView[4, i].Value;
+            }
             dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
         }
 
