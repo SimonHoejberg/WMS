@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
+using static WMS.Reference.DataBaseValues;
+using static WMS.Reference.DataBaseTypes;
 
 namespace WMS.GUI
 {
@@ -58,10 +59,6 @@ namespace WMS.GUI
 
             listBox1.DataSource = reasons;
         }
-        public string GetTypeOfWindow()
-        {
-            return WindowTypes.WASTE;
-        }
 
         public void UpdateGuiElements()
         {
@@ -73,7 +70,7 @@ namespace WMS.GUI
             dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
             if (itemNo != null)
             {
-                core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
+                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
             }
             dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
             dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;

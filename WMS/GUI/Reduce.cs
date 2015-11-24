@@ -9,8 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
-using WMS.WH;
+using static WMS.Reference.DataBaseValues;
+using static WMS.Reference.DataBaseTypes;
 
 namespace WMS.GUI
 {
@@ -43,11 +43,6 @@ namespace WMS.GUI
             data = new DataTable();
             bsource.DataSource = data;
             reduceDataGridView.DataSource = bsource;
-        }
-
-        public string GetTypeOfWindow()
-        {
-            return WindowTypes.REDUCE;
         }
 
         public void UpdateGuiElements()
@@ -95,7 +90,7 @@ namespace WMS.GUI
         private void MakeDataGridView()
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            core.DataHandler.GetDataFromItemNo(itemNo, WindowTypes.INFO).Fill(data);
+            core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
             reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
             reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
             reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
