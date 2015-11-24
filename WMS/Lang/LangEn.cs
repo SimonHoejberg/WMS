@@ -34,7 +34,7 @@ namespace WMS.Lang
         private string size = "Size";
         private string timeStamp = "Date / Time";
         private string user = "User";
-        private string amount = "Arrived amount";
+        private string amount = "Amount";
         private string expectedAmount = "Expected amount";
         private string operaton = "Operation";
 
@@ -44,6 +44,7 @@ namespace WMS.Lang
         private string unsort = "Unsort";
 
         private string cancelBoxText = "Are you sure you want to cancel?";
+        private string confirmText = "Are you sure you want to continue";
         private string yes = "Yes";
         private string no = "No";
         private string userId = "Username";
@@ -121,6 +122,7 @@ namespace WMS.Lang
         public string UNSORT { get { return unsort; } }
 
         public string CANCELBOXTEXT { get { return cancelBoxText; } }
+        public string CONFIRM_TEXT { get { return confirmText; } }
         public string YES { get { return yes; } }
         public string NO { get { return no; } }
         public string USER_ID { get { return userId; } }

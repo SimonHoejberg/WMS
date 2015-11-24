@@ -60,11 +60,10 @@ namespace WMS.GUI
 
         private void reduceConfirmBtn_Click(object sender, EventArgs e)
         {
-            UserIDBox user_dialog = new UserIDBox(core,lang);
-            DialogResult a = user_dialog.ShowDialog();
+            DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel);
             if (a.Equals(DialogResult.OK))
             {
-                string user = user_dialog.User;
+                string user = core.User;
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
                     if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[6, i].Value.Equals("0")))

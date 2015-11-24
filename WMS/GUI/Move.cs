@@ -287,9 +287,7 @@ namespace WMS.GUI
             }
             if (noProblemsEncountered == true) //Commit changes if no problems.
             {
-                UserIDBox user_dialog = new UserIDBox(core, lang);
-                user_dialog.Owner = this;
-                DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+                DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel);
                 if (a.Equals(DialogResult.OK))
                 {
                     int rowCount = moveDataGridView.Rows.Count - 1;

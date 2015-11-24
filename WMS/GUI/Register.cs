@@ -78,12 +78,10 @@ namespace WMS.GUI
         private void confirmBtn_Click(object sender, EventArgs e)
         {
             List<Item> tempList = new List<Item>();
-            UserIDBox user_dialog = new UserIDBox(core,lang);
-            user_dialog.Owner = this;
-            DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
+            DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel); 
             if (a.Equals(DialogResult.OK))
             {
-                string user = user_dialog.User;
+                string user = core.User;
                 int count = dataGridView.RowCount;
                 for (int i = 0; i < count; i++)
                 {

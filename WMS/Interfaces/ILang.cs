@@ -43,6 +43,7 @@ namespace WMS.Interfaces
         string UNSORT { get; }
 
         string CANCELBOXTEXT { get; }
+        string CONFIRM_TEXT { get; }
         string YES { get; }
         string NO { get; }
         string USER_ID { get; }

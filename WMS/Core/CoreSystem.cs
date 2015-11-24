@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using WMS.Interfaces;
-using WMS.GUI;
 using WMS.WH;
 using WMS.Handlers;
 using WMS.Lang;
-using WMS.Reference;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace WMS.Core
 {
@@ -18,6 +13,7 @@ namespace WMS.Core
         private DataHandler dataHandler;
         private Warehouse wh;
         private bool da = true;
+        public string User { get; set; }
 
         public CoreSystem(IMain main)
         {
