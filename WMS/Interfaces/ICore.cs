@@ -18,5 +18,7 @@ namespace WMS.Interfaces
 
         void changeLang();
 
+        string User { get; set; }
+
     }
 }

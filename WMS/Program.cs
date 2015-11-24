@@ -17,8 +17,12 @@ namespace WMS
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             IMain main = new Main();
-            CoreSystem Core = new CoreSystem(main);
-            Core.Run();
+            CoreSystem core = new CoreSystem(main);
+            DialogResult result = new Login(core).ShowDialog();
+            if (result.Equals(DialogResult.OK))
+            {
+                core.Run();
+            }
         }
     }
 }

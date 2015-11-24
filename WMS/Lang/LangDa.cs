@@ -34,7 +34,7 @@ namespace WMS.Lang
         private string size = "Størelse";
         private string timeStamp = "Dato / Tid";
         private string user = "Bruger";
-        private string amount = "Ankommet antal";
+        private string amount = "Antal";
         private string expectedAmount = "Forventet antal";
         private string operaton = "Operation";
 
@@ -44,6 +44,7 @@ namespace WMS.Lang
         private string unsort = "Usorter";
 
         private string cancelBoxText = "Er du sikker på du vil annullere";
+        private string confirmText = "Er du sikker på du vil forsætte";
         private string yes = "Ja";
         private string no = "Nej";
         private string userId = "Brugernavn";
@@ -121,6 +122,7 @@ namespace WMS.Lang
         public string UNSORT { get { return unsort; } }
 
         public string CANCELBOXTEXT { get { return cancelBoxText; } }
+        public string CONFIRM_TEXT { get { return confirmText; } }
         public string YES { get { return yes; } }
         public string NO { get { return no; } }
         public string USER_ID { get { return userId; } }
