@@ -24,8 +24,8 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewComboBoxColumn ComboColumnIdentification, ComboColumnLocation, ComboColumnNewLocation;
         private DataGridViewColumn ColumnQuantity;
+        private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
         private ILang lang;
 
         public Move(ICore core, ILang lang)
@@ -41,51 +41,52 @@ namespace WMS.GUI
 
         private void InitializeDataGridView(ICore core)
         {
+            //Dictionary for easy reference
+            /*Dictionary<string, Location> comboData = new Dictionary<string, Location>();
+
+            foreach (Location loc in core.DataHandler.LocationToList())
+            {
+                comboData.Add(loc.LocationString, loc);
+            }*/
+
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
-            ComboColumnLocation = new DataGridViewComboBoxColumn();
-            ComboColumnNewLocation = new DataGridViewComboBoxColumn();
-            ComboColumnIdentification = new DataGridViewComboBoxColumn(); //New!
+            ComboColumnLocation = new DataGridViewComboBoxColumn()
+            {
+                Name = "LocationColumn",
+                ValueMember = "LocationString",
+                HeaderText = lang.LOCATION,
+                Width = 229
 
-            ColumnQuantity = new DataGridViewColumn();
+            };
+            ComboColumnNewLocation = new DataGridViewComboBoxColumn()
+            {
+                Name = "NewLocationColumn",
+                ValueMember = "LocationString",
+                HeaderText = lang.NEW_LOCATION,
+                Width = 229
 
-            //Names?
-            ComboColumnIdentification.Name = "ItemIDColumn";
-            ComboColumnLocation.Name = "LocationColumn";
-            ComboColumnNewLocation.Name = "NewLocationColumn";
+            };
+            ComboColumnIdentification = new DataGridViewComboBoxColumn()
+            {
+                Name = "ItemIDColumn",
+                DataSource = core.DataHandler.InfoToList(),
+                DisplayMember = "Identification",
+                ValueMember = "ItemNo",
+                HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION,
+                Width = 300
+            };
 
-            //Sets the Displaymembers for the DataGridViewComboBoxColumns
-            ComboColumnIdentification.DisplayMember = "Identification";
-
-            //ValueMembers
-            ComboColumnIdentification.ValueMember = "ItemNo";
-            ComboColumnLocation.ValueMember = "LocationString";
-            ComboColumnNewLocation.ValueMember = "LocationString";
-
-            //Sets the HeaderTexts for the DataGridViewComboBoxColumns
-            ColumnQuantity.HeaderText = lang.AMOUNT;
-            ComboColumnLocation.HeaderText = lang.LOCATION;
-            ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
-            ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
+            ColumnQuantity = new DataGridViewColumn()
+            {
+                HeaderText = lang.AMOUNT,
+                Width = 300
+            };
 
             //Adds DataGridViewComboBoxColumns to DataGridView
             moveDataGridView.Columns.Add(ComboColumnIdentification);
             moveDataGridView.Columns.Add(ComboColumnLocation);
             moveDataGridView.Columns.Add("QuantityColumn", lang.AMOUNT); //Also sets name of column
             moveDataGridView.Columns.Add(ComboColumnNewLocation);
-
-            //Set width of columns, Width of datagridview is ca. 917 (as of writing this)
-            DataGridViewColumn column1 = moveDataGridView.Columns[0];
-            DataGridViewColumn column2 = moveDataGridView.Columns[1];
-            DataGridViewColumn column3 = moveDataGridView.Columns[2];
-            DataGridViewColumn column4 = moveDataGridView.Columns[3];
-            column1.Width = 230;
-            column2.Width = 229;
-            column3.Width = 229;
-            column4.Width = 229;
-
-            //Sets the initial datasources
-            ComboColumnIdentification.DataSource = core.DataHandler.InfoToList();
-            //ComboColumnLocation.DataSource = core.DataHandler.LocationToList();
 
             // Add the events to listen for
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
@@ -195,10 +196,6 @@ namespace WMS.GUI
         private List<Location> NewLocationList(DataGridViewCell eventCell)
         {
             List<Location> input = core.DataHandler.LocationToList();
-            foreach (Location loc in input)
-            {
-                Console.WriteLine(loc.ItemNo);
-            }
             return input.Where((x => x.ItemNo.Equals("0"))).ToList();
         }
 
