@@ -24,7 +24,7 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewColumn ColumnQuantity;
+        private DataGridViewTextBoxColumn ColumnQuantity;
         private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
         private ILang lang;
 
@@ -42,14 +42,22 @@ namespace WMS.GUI
         private void InitializeDataGridView(ICore core)
         {
             //Dictionary for easy reference
-            /*Dictionary<string, Location> comboData = new Dictionary<string, Location>();
-
-            foreach (Location loc in core.DataHandler.LocationToList())
-            {
-                comboData.Add(loc.LocationString, loc);
-            }*/
+            Dictionary<string, Location> comboData = new Dictionary<string, Location>();
+            PopulateLocationDictionary(comboData);
 
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
+            moveDataGridView.Columns.Add(
+                ComboColumnIdentification = new DataGridViewComboBoxColumn()
+                {
+                    Name = "ItemIDColumn",
+                    DataSource = core.DataHandler.InfoToList(),
+                    DisplayMember = "Identification",
+                    ValueMember = "ItemNo",
+                    HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION,
+                    Width = 300
+                });
+
+            moveDataGridView.Columns.Add(
             ComboColumnLocation = new DataGridViewComboBoxColumn()
             {
                 Name = "LocationColumn",
@@ -57,7 +65,17 @@ namespace WMS.GUI
                 HeaderText = lang.LOCATION,
                 Width = 229
 
-            };
+            });
+            moveDataGridView.Columns.Add(
+                ColumnQuantity = new DataGridViewTextBoxColumn()
+                {
+                    Name = "QuantityColumn",
+                    HeaderText = lang.AMOUNT,
+                    Width = 130
+                });
+            
+
+            moveDataGridView.Columns.Add(
             ComboColumnNewLocation = new DataGridViewComboBoxColumn()
             {
                 Name = "NewLocationColumn",
@@ -65,28 +83,7 @@ namespace WMS.GUI
                 HeaderText = lang.NEW_LOCATION,
                 Width = 229
 
-            };
-            ComboColumnIdentification = new DataGridViewComboBoxColumn()
-            {
-                Name = "ItemIDColumn",
-                DataSource = core.DataHandler.InfoToList(),
-                DisplayMember = "Identification",
-                ValueMember = "ItemNo",
-                HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION,
-                Width = 300
-            };
-
-            ColumnQuantity = new DataGridViewColumn()
-            {
-                HeaderText = lang.AMOUNT,
-                Width = 300
-            };
-
-            //Adds DataGridViewComboBoxColumns to DataGridView
-            moveDataGridView.Columns.Add(ComboColumnIdentification);
-            moveDataGridView.Columns.Add(ComboColumnLocation);
-            moveDataGridView.Columns.Add("QuantityColumn", lang.AMOUNT); //Also sets name of column
-            moveDataGridView.Columns.Add(ComboColumnNewLocation);
+            });
 
             // Add the events to listen for
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
@@ -117,11 +114,11 @@ namespace WMS.GUI
                 {
                     LocationCell.Items.Add(lc);
                 }
-                if(LocationCell.Items.Count != 0)
+                if (LocationCell.Items.Count != 0)
                 {
                     LocationCell.Value = LocationCell.Items[0];
                 }
-                
+
                 moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
             }
             //if the change happened in LocationColumn
@@ -303,7 +300,7 @@ namespace WMS.GUI
 
                         foreach (Location loc in core.DataHandler.LocationToList())
                         {
-                            if(loc.Shelf.ToString().Equals(oldLoc[0]) && loc.ShelfNo.ToString().Equals(oldLoc[1]))
+                            if (loc.Shelf.ToString().Equals(oldLoc[0]) && loc.ShelfNo.ToString().Equals(oldLoc[1]))
                             {
                                 tempOldLoc = loc;
                                 break;
@@ -351,6 +348,14 @@ namespace WMS.GUI
             ComboColumnLocation.HeaderText = lang.LOCATION;
             ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
             ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
+        }
+
+        private void PopulateLocationDictionary(Dictionary<string, Location> dic)
+        {
+            foreach (Location loc in core.DataHandler.LocationToList())
+            {
+                dic.Add(loc.Id, loc);
+            }
         }
 
         private void MoveLoad(object sender, EventArgs e)
