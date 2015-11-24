@@ -25,10 +25,11 @@ namespace WMS.GUI
             this.lang = lang;
             InitializeComponent();
             updateComboBox();
-            this.Text = lang.REGISTER;
-            this.textBox1.Text = lang.ORDER_NO;
-            this.confirmBtn.Text = lang.CONFIRM;
-            this.button1.Text = lang.CANCEL;
+            comboBox1.SelectedIndex = -1;
+            Text = lang.REGISTER;
+            textBox1.Text = lang.ORDER_NO;
+            confirmBtn.Text = lang.CONFIRM;
+            button1.Text = lang.CANCEL;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
@@ -44,7 +45,7 @@ namespace WMS.GUI
         {
 
         }
-
+        
         private void updateDataGridView(string orderNo)
         {
             dataGridView.CellValueChanged -= dataGridView2_CellValueChanged;
