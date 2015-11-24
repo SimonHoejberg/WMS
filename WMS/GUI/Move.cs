@@ -25,6 +25,7 @@ namespace WMS.GUI
         private ICore core;
         private DataGridViewTextBoxColumn ColumnQuantity;
         private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
+        Dictionary<string, Location> locationData;
         private ILang lang;
 
         public Move(ICore core, ILang lang)
@@ -41,8 +42,8 @@ namespace WMS.GUI
         private void InitializeDataGridView(ICore core)
         {
             //Dictionary for easy reference
-            Dictionary<string, Location> comboData = new Dictionary<string, Location>();
-            PopulateLocationDictionary(comboData);
+            locationData = new Dictionary<string, Location>();
+            PopulateLocationDictionary(locationData);
 
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
             moveDataGridView.Columns.Add(
@@ -108,7 +109,7 @@ namespace WMS.GUI
             {
                 var LocationCell = moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
                 LocationCell.Items.Clear();
-                List<Location> locList = LocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
+                List<Location> locList = LocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
                 foreach (Location lc in locList)
                 {
                     LocationCell.Items.Add(lc);
@@ -126,7 +127,7 @@ namespace WMS.GUI
                 //Set new locations
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
                 NewLocationCell.Items.Clear();
-                List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
+                List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
                 foreach (Location lc in newLocList)
                 {
                     Console.WriteLine(lc.ToString());
@@ -183,16 +184,33 @@ namespace WMS.GUI
             return input.Where(x => x.Description.Equals(eventCell.Value)).ToList();
         }
 
-        private List<Location> LocationList(DataGridViewCell eventCell)
+        private List<Location> LocationList(DataGridViewCell eventCell, Dictionary<string, Location> locDic)
         {
-            List<Location> input = core.DataHandler.LocationToList();
-            return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
+            List<Location> returnList = new List<Location>();
+            foreach (Location loc in locDic.Values)
+            {
+                if (loc.ItemNo.Equals(eventCell.Value))
+                {
+                    returnList.Add(loc);
+                }
+            }
+            return returnList;
         }
 
-        private List<Location> NewLocationList(DataGridViewCell eventCell)
+        private List<Location> NewLocationList(DataGridViewCell eventCell, Dictionary<string, Location> locDic)
         {
-            List<Location> input = core.DataHandler.LocationToList();
-            return input.Where((x => x.ItemNo.Equals("0"))).ToList();
+            List<Location> returnList = new List<Location>();
+            string a = moveDataGridView.Rows[eventCell.RowIndex].Cells["LocationColumn"].Value.ToString();
+
+            foreach (Location loc in locDic.Values)
+            {
+                if (loc.Quantity == 0 || (locDic.ContainsKey(a) && loc.ItemNo.Equals(locDic[a].ItemNo)))
+                {
+                    Console.WriteLine(loc.LocationString + " " + a);
+                    returnList.Add(loc);
+                }
+            }
+            return returnList;
         }
 
         private void moveCancelButton_Click(object sender, EventArgs e)
