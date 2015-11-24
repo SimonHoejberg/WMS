@@ -5,6 +5,7 @@ using WMS.Handlers;
 using WMS.Interfaces;
 using System.Collections.Generic;
 using WMS.Reference;
+using System.Diagnostics;
 
 namespace WMS.WH
 {
@@ -21,7 +22,7 @@ namespace WMS.WH
         public Warehouse(ICore core)
         {
             this.core = core;
-            locations = new Item[5, 3];
+            locations = new Item[6, 3];
         }
 
         public bool PlaceItem(Item item, string location)
@@ -30,32 +31,20 @@ namespace WMS.WH
             return true;
         }
 
-        private int MaxLength()
+        private int MaxSpace()
         {
             return 3;
         }
 
-        private int GetMaxUsage(List<Item> input, out int output)
+        private int MaxShelf()
         {
-            int max = 0;
-            int min = 0;
-            foreach (Item item in input)
-            {
-                if (item.Usage > max)
-                {
-                    max = item.Usage;
-                }
-                else if (item.Usage < min)
-                {
-                    min = item.Usage;
-                }
-            }
-            output = min;
-            return max;
+            return 6;
         }
 
         public void CreateWH()
         {
+            Stopwatch st = new Stopwatch();
+            st.Start();
             List<Item> temp = core.DataHandler.InfoToList();
             foreach (Item item in temp)
             {
@@ -65,84 +54,58 @@ namespace WMS.WH
                     locations[int.Parse(tempS[0]), int.Parse(tempS[1])] = item;
                 }
             }
-            int i = 0;
-            int j = 0;
-            List<Item> usage = new List<Item>();
-            foreach (var item in locations)
-            {
-                if (i < 3)
-                {
-                    if (item != null)
-                    {
-                        usage.Add(item);
-
-                    }
-                    i++;
-                }
-                else if (i == 3)
-                {
-                    int min;
-                    int max = GetMaxUsage(usage, out min);
-                    maxMin.Add(j, max.ToString() + "." + min.ToString());
-                    i = 0;
-                    j++;
-                    usage = new List<Item>();
-                }
-
-            }
+            st.Stop();
+            Console.WriteLine("CW " + st.ElapsedMilliseconds/1000 +" s "+ st.ElapsedMilliseconds + " ms");
         }
 
 
-        private bool FindAvaliableSpace(Item item)
+        private bool FindAvaliableSpace(Item item, int shelf, int space)
         {
-            int maxLength = MaxLength();
-            for (int i = 0; i < 5; i++)
+
+            if ((GetUsage(locations[shelf, 0]) == 0 && GetUsage(locations[shelf,(MaxSpace()-1)]) == 0) || (GetUsage(locations[shelf, 0]) > item.Usage && item.Usage > GetUsage(locations[shelf, (MaxSpace() - 1)])))
             {
-                string arr;
-                if (maxMin.TryGetValue(i, out arr))
+
+                if (locations[shelf, space] == null || locations[shelf, space].ItemNo.Equals(item.ItemNo))
                 {
-                    string[] tempS = arr.Split('.');
-                    int max;
-                    int min;
-                    int.TryParse(tempS[0], out max);
-                    int.TryParse(tempS[1], out min);
-                    if (max != 0 && max > item.Usage && item.Usage > min)
+                    locations[shelf, space] = item;
+                    PlaceItem(item, shelf.ToString() + "." + space.ToString());
+                    return true;
+                }
+                else
+                {
+                    if (space < (MaxSpace() - 1))
                     {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (locations[i, j] == null || locations[i, j].ItemNo.Equals(item.ItemNo))
-                            {
-                                locations[i, j] = item;
-                                PlaceItem(item, i.ToString() + "." + j.ToString());
-                                return true;
-                            }
-                            else if(j == 2)
-                            {
-                                i++;
-                                j = -1;
-                            }
-                        }
+                        space++;
+                    }
+                    else if (shelf < (MaxShelf() - 1))
+                    {
+                        space = 0;
+                        shelf++;
                     }
                     else
                     {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (locations[i, j] == null || locations[i, j].ItemNo.Equals(item.ItemNo))
-                            {
-                                locations[i, j] = item;
-                                PlaceItem(item, i.ToString() + "." + j.ToString());
-                                return true;
-                            }
-                            else if (j == 2)
-                            {
-                                i++;
-                                j = -1;
-                            }
-                        }
+                        return false;
                     }
+                    return FindAvaliableSpace(item, shelf, space);
                 }
             }
-            return false;
+            else
+            {
+                if (space < (MaxSpace() - 1))
+                {
+                    space++;
+                }
+                else if (shelf < (MaxShelf() - 1))
+                {
+                    space = 0;
+                    shelf++;
+                }
+                else
+                {
+                    return false;
+                }
+                return FindAvaliableSpace(item, shelf, space);
+            }
         }
 
         private int GetUsage(Item itemNo)
@@ -159,14 +122,18 @@ namespace WMS.WH
 
         public List<Item> FindOptimalLocation(List<Item> items)
         {
+            Stopwatch st = new Stopwatch();
+            st.Start();
             items.Sort();
             foreach (Item item in items)
             {
-                if (!FindAvaliableSpace(item))
+                if (!FindAvaliableSpace(item, 0,0))
                 {
                     notplaced.Add(item);
                 }
             }
+            st.Stop();
+            Console.WriteLine("Algo " + st.ElapsedMilliseconds/1000 + " s " + st.ElapsedMilliseconds + " ms");
             return notplaced;
         }
 

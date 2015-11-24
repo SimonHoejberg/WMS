@@ -24,7 +24,7 @@ namespace WMS.WH
 
         public string LocationString => ToString();
 
-        public override string ToString() => $"{Unit}:{Shelf}:{ShelfNo}";
+        public override string ToString() => $"{Shelf}:{ShelfNo}";
 
 
     }

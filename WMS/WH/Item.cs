@@ -7,7 +7,7 @@ namespace WMS.WH
         public string ItemNo { get; }
         public string Description { get; }
         public string Location { get; set; }
-        public int Usage { get; }
+        public int Usage { get; } = 0;
         public int InStock { get; }
         public int Size { get; }
 

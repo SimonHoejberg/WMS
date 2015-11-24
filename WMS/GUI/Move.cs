@@ -116,7 +116,11 @@ namespace WMS.GUI
                 {
                     LocationCell.Items.Add(lc);
                 }
-                LocationCell.Value = LocationCell.Items[0];
+                if(LocationCell.Items.Count != 0)
+                {
+                    LocationCell.Value = LocationCell.Items[0];
+                }
+                
                 moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
             }
             //if the change happened in LocationColumn
@@ -292,21 +296,52 @@ namespace WMS.GUI
                 DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
                 if (a.Equals(DialogResult.OK))
                 {
-                    /*Insert code to commit to database*/
-
                     int rowCount = moveDataGridView.Rows.Count - 1;
                     for (int i = 0; i < rowCount; i++)
                     {
-                        moveDataGridView.Rows.RemoveAt(0);
+                        string[] oldLoc = moveDataGridView.Rows[i].Cells["LocationColumn"].Value.ToString().Split(':');
+                        string[] newLoc = (moveDataGridView.Rows[i].Cells["NewLocationColumn"].Value as string).Split(':');
+                        Location tempOldLoc = null;
+                        Location tempNewLoc = null;
+
+                        foreach (Location loc in core.DataHandler.LocationToList())
+                        {
+                            if(loc.Shelf.ToString().Equals(oldLoc[0]) && loc.ShelfNo.ToString().Equals(oldLoc[1]))
+                            {
+                                tempOldLoc = loc;
+                                break;
+                            }
+                        }
+                        foreach (Location loc in core.DataHandler.LocationToList())
+                        {
+                            if (loc.Shelf.ToString().Equals(newLoc[0]) && loc.ShelfNo.ToString().Equals(newLoc[1]))
+                            {
+                                tempNewLoc = loc;
+                                break;
+                            }
+                        }
+                        //Console.WriteLine($"{tempOldLoc.ItemNo} {tempOldLoc.LocationString}");
+                        core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value)).ToString(), tempOldLoc.ItemNo.ToString());
+
+                        //core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value).ToString(), tempOldLoc.ItemNo.ToString());
                     }
 
-                    MessageBox.Show(lang.ITEMS_MOVED);
+                    ClearDataGridView();
                 }
             }
             //give error message if commit could not be done
             else if (noProblemsEncountered == false)
             {
                 MessageBox.Show(problemList, lang.ERROR);
+            }
+        }
+
+        private void ClearDataGridView()
+        {
+            int rowCount = moveDataGridView.Rows.Count - 1;
+            for (int i = 0; i < rowCount; i++)
+            {
+                moveDataGridView.Rows.RemoveAt(0);
             }
         }
 
