@@ -97,7 +97,6 @@ namespace WMS.GUI
                         tempList.Add(item);
                     }
                 }
-                Console.WriteLine("Reg " + st.ElapsedMilliseconds / 1000 + " s " + st.ElapsedMilliseconds + " ms");
                 if (tempList.Count != 0)
                 { 
                     core.SortNewItems(tempList);
