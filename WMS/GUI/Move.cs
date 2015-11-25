@@ -7,17 +7,6 @@ using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.WH;
 
-
-/*ToDo
-- New location list should contain all locations with the same item
-- Should no be able to move multiple items to the same location
-- Make it so that you can move multiple times from the same location
-- Move multiple to same new location if item is the same
-- When moving multiple times from the same location, make sure the total quantity does not exceed the quantity on the location
-- Make the user able to choose Location first
-- 
-*/
-
 namespace WMS.GUI
 {
     public partial class Move : Form, IGui
@@ -27,6 +16,8 @@ namespace WMS.GUI
         private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
         Dictionary<string, Location> locationData;
         private ILang lang;
+        AutoCompleteStringCollection ItemListA;
+        Dictionary<string, Item> itemData;
 
         public Move(ICore core, ILang lang)
         {
@@ -41,6 +32,16 @@ namespace WMS.GUI
 
         private void InitializeDataGridView(ICore core)
         {
+            itemData = new Dictionary<string, Item>();
+            ItemListA = new AutoCompleteStringCollection();
+
+            foreach (Item item in core.DataHandler.InfoToList())
+            {
+                ItemListA.Add(item.Identification);
+                itemData.Add(item.Identification, item);
+            }
+            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA;
+
             //Dictionary for easy reference
             locationData = new Dictionary<string, Location>();
             PopulateLocationDictionary(locationData);
@@ -398,6 +399,30 @@ namespace WMS.GUI
             ComboColumnLocation.HeaderText = lang.LOCATION;
             ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
             ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
+        }
+
+        private void moveAddItemButton_Click(object sender, EventArgs e)
+        {
+            if (itemData.ContainsKey(moveAddItemTextBox.Text))
+            {
+                moveSearchLabel.Visible = false;
+                moveDataGridView.Rows.Add(new DataGridViewRow());
+                moveDataGridView.Rows[moveDataGridView.RowCount - 2].Cells["ItemIDColumn"].Value = itemData[moveAddItemTextBox.Text].ItemNo;
+                moveAddItemTextBox.Text = "";
+                
+            }
+            else
+            {
+                moveSearchLabel.Visible = true;
+            }
+        }
+
+        private void moveAddItemTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                moveAddItemButton_Click(this, e);
+            }
         }
 
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
