@@ -130,6 +130,7 @@ namespace WMS.GUI
             else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
             {
                 //Set new locations
+                (moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Selected
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
                 NewLocationCell.Items.Clear();
                 List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
@@ -176,8 +177,10 @@ namespace WMS.GUI
             }
             else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("NewLocationColumn"))
             {
-                if (locationData[moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()].Equals(locationData[moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"].Value.ToString()]))
+                Console.WriteLine((moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell).Items[0] + " " + moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"].Value);
+                if ((moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell).Items.Contains((moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Value.ToString()))
                 {
+                    Console.WriteLine("YAY!");
                     moveDataGridView.Rows[e.RowIndex].Cells["ActionColumn"].Value = "Combine";
                 }
                 else
@@ -328,7 +331,7 @@ namespace WMS.GUI
 
                         foreach (Location loc in core.DataHandler.LocationToList())
                         {
-                            if (loc.Shelf.ToString().Equals(oldLoc[0]) && loc.ShelfNo.ToString().Equals(oldLoc[1]))
+                            if (loc.Shelf.ToString().Equals(oldLoc[0]) && loc.Space.ToString().Equals(oldLoc[1]))
                             {
                                 tempOldLoc = loc;
                                 break;
@@ -336,7 +339,7 @@ namespace WMS.GUI
                         }
                         foreach (Location loc in core.DataHandler.LocationToList())
                         {
-                            if (loc.Shelf.ToString().Equals(newLoc[0]) && loc.ShelfNo.ToString().Equals(newLoc[1]))
+                            if (loc.Shelf.ToString().Equals(newLoc[0]) && loc.Space.ToString().Equals(newLoc[1]))
                             {
                                 tempNewLoc = loc;
                                 break;

@@ -4,25 +4,23 @@ namespace WMS.WH
     public class Location
     {
         public string Id { get; }
-        public int Shelf { get; }
-        public int ShelfNo { get; }
+        public string Shelf { get; }
+        public string Space { get; }
         public string ItemNo { get; }
-        public int Space { get; }
         public int Quantity { get; }
 
-        public Location(string id, int shelf, int shelfNo, string itemNo, int space, int quantity)
+        public Location(string id, string shelf, string space, string itemNo, int quantity)
         {
             Id = id;
             Shelf = shelf;
-            ShelfNo = shelfNo;
-            ItemNo = itemNo;
             Space = space;
+            ItemNo = itemNo;
             Quantity = quantity;
         }
 
         public string LocationString => ToString();
 
-        public override string ToString() => $"{Shelf}:{ShelfNo}";
+        public override string ToString() => $"{Shelf}:{Space}";
 
 
     }
