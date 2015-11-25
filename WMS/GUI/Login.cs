@@ -38,8 +38,8 @@ namespace WMS.GUI
 
             if (stringList.Contains(userIDTextbox.Text))
             {
-                DialogResult = DialogResult.OK;
                 core.User = userIDTextbox.Text;
+                DialogResult = DialogResult.OK;
                 userIDError_lbl.Text = "";
             }
             else
