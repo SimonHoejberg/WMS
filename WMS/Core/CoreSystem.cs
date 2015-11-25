@@ -39,7 +39,7 @@ namespace WMS.Core
         public void SortNewItems(List<Item> items)
         {
             wh.CreateWH();
-            wh.FindOptimalLocation(items);
+            //wh.FindOptimalLocation(items);
         }
 
         public void changeLang()

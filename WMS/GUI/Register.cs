@@ -94,7 +94,7 @@ namespace WMS.GUI
                         string description = dataGridView[3, i].Value.ToString();
                         int quantity = int.Parse(dataGridView[5, 1].Value.ToString());
                         core.DataHandler.ActionOnItem('+', itemNo, description, core.GetTimeStamp(), quantity, lang.REGISTED);
-                        Item item = core.DataHandler.GetItemFromItemNo(itemNo);
+                        Item item = new Item(itemNo, description, quantity, null, 0,core.DataHandler.GetUsage(itemNo));
                         tempList.Add(item);
                     }
                 }
