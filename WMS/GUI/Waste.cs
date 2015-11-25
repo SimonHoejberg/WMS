@@ -10,13 +10,14 @@ using System.Windows.Forms;
 using WMS.Interfaces;
 using static WMS.Reference.DataBaseValues;
 using static WMS.Reference.DataBaseTypes;
+using WMS.WH;
 
 namespace WMS.GUI
 {
     public partial class Waste : Form, IGui
     {
         private List<string> reasons;
-
+        
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
@@ -32,10 +33,10 @@ namespace WMS.GUI
             this.core = core;
             this.lang = lang;
             InitializeComponent();
-            updateComboBox();
+            SearchBox();
             Text = lang.WASTE;
             button1.Text = lang.CHOOSE;
-            button2.Text = lang.SEACH;
+            button2.Text = lang.ADD;
             textBox1.Text = lang.ITEM_NO;
             button10.Text = lang.CANCEL;
             button11.Text = lang.CONFIRM;
@@ -63,6 +64,16 @@ namespace WMS.GUI
         public void UpdateGuiElements()
         {
 
+        }
+
+        public void SearchBox()
+        {
+            var source = new AutoCompleteStringCollection();
+            foreach (Item item in core.DataHandler.InfoToList())
+            {
+                source.Add(item.ItemNo);
+            }
+            textBox1.AutoCompleteCustomSource = source;
         }
 
         public void MakeDataGridView()
@@ -94,23 +105,10 @@ namespace WMS.GUI
             dataGridView6.Columns[6].ReadOnly = false;
             dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
         }
-        private void updateComboBox()
-        {
-            comboBox3.DataSource = core.DataHandler.InfoToList();
-            comboBox3.DisplayMember = "Identification";
-            comboBox3.ValueMember = "itemNo";
-        }
 
         private void Waste_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
-        }
-
-        private void comboBox3_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            itemNo = comboBox3.SelectedValue.ToString();
-            updateComboBox();
-            MakeDataGridView();
         }
 
         private void dataGridView6_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -193,11 +191,12 @@ namespace WMS.GUI
         private void button2_Click(object sender, EventArgs e)
         {
             int temp = 0;
-            if (!int.TryParse(textBox1.Text, out temp))
+            if (int.TryParse(textBox1.Text, out temp))
             {
                 string itemNo = textBox1.Text;
-                comboBox3.DataSource = core.DataHandler.SearchInfoToList(itemNo);
+                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
             }
+            MakeDataGridView();
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
@@ -243,6 +242,14 @@ namespace WMS.GUI
             if (dataGridView6.CurrentCell != null)
             {
                 dataGridView6.Rows.RemoveAt(dataGridView6.CurrentCell.RowIndex);
+            }
+        }
+
+        private void listBox1_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                button1_Click(sender, e);
             }
         }
     }
