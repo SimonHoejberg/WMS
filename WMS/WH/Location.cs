@@ -6,11 +6,12 @@ namespace WMS.WH
         public string Id { get; }
         public string Shelf { get; }
         public string Space { get; }
-        public string ItemNo { get; }
-        public int Quantity { get; }
+        public string ItemNo { get; set; }
+        public int Quantity { get; set; }
         public int BestLocation { get; }
+        public int Usage { get; }
 
-        public Location(string id, string shelf, string space, string itemNo, int quantity, int bestLocation)
+        public Location(string id, string shelf, string space, string itemNo, int quantity, int bestLocation, int usage)
         {
             Id = id;
             Shelf = shelf;
@@ -18,6 +19,7 @@ namespace WMS.WH
             ItemNo = itemNo;
             Quantity = quantity;
             BestLocation = bestLocation;
+            Usage = usage;
         }
 
         public string LocationString => ToString();

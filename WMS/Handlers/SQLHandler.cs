@@ -191,13 +191,20 @@ namespace WMS.Handlers
             ResetConnection();
             command2.ExecuteNonQuery();
         }
+
         public void moveItem(string id, string newQuantity, string newItem)
         {
-            Console.WriteLine($"{id} {newQuantity} {newItem}");
-
             MySqlCommand command = connection.CreateCommand();
             string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = quantity + {newQuantity} WHERE ID = '{id}'";
-            Console.WriteLine(sql);
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
+        }
+
+        public void moveItem(string id, string newQuantity, string newItem, string usage)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {newQuantity} WHERE ID = {id}";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
@@ -206,7 +213,7 @@ namespace WMS.Handlers
         public MySqlDataReader GetMaxShelf()
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = "SELECT shelf FROM location";
+            string sql = "SELECT bestLocation FROM location";
             ResetConnection();
             command.CommandText = sql;
             MySqlDataReader reader = command.ExecuteReader();

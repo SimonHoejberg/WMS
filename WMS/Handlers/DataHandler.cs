@@ -94,7 +94,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
             while (reader.Read())
             {
-                temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString()),int.Parse(reader["bestLocation"].ToString())));
+                temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString()),int.Parse(reader["bestLocation"].ToString()), int.Parse(reader["itemUsage"].ToString())));
             }
             sql.CloseConnection();
             return temp;
@@ -176,19 +176,23 @@ namespace WMS.Handlers
 
         public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string operation)
         {
-            ActionOnItem(operaton, itemNo, description, date, quantity, core.User, operation);
+            ActionOnItem(operaton, itemNo, description, date, quantity, 
+                GetUserName(core.User), operation);
         }
 
-        public void ChangeLocation(string itemNo,string location)
+        public void ChangeLocation(string id, string newQuantity, string newItem, string usage)
         {
-            sql.UpdateLocation(itemNo, location);
+            sql.moveItem(id, newQuantity, newItem,usage);
         }
 
         public int GetUsage(string itemNo)
         {
             MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO, DataBaseValues.ITEM, itemNo);
-            reader.Read();
-            int usage = int.Parse(reader["itemUsage"].ToString());
+            int usage = 0;
+            while (reader.Read())
+            {
+                usage = int.Parse(reader["itemUsage"].ToString());
+            }
             sql.CloseConnection();
             return usage;
         }
@@ -196,13 +200,18 @@ namespace WMS.Handlers
         public int GetMaxShelf()
         {
             MySqlDataReader reader = sql.GetMaxShelf();
-            int temp = 0;
+            int res = 0;
             while (reader.Read())
             {
-                temp++;
+                int temp = int.Parse(reader["bestLocation"].ToString());
+                if (temp > res)
+                {
+                    res = temp;
+                }
             }
             sql.CloseConnection();
-            return (temp / 3);
+            res++;
+            return res;
         }
 
         public int GetMaxSpace()
