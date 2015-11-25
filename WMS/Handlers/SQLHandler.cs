@@ -28,7 +28,15 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
-
+        public MySqlDataReader GetUserName(string userId)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = $"SELECT name FROM user WHERE userId = '{userId}'";
+            command.CommandText = sql;
+            ResetConnection();
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
+        }
         public MySqlDataAdapter GetDataForItemNo(string db, string searchTerm, string itemNo)
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();

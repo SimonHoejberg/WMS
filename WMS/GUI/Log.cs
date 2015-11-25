@@ -42,6 +42,10 @@ namespace WMS.GUI
             this.core = core;
             this.lang = lang;
             InitializeComponent();
+            bsource = new BindingSource();
+            data = new DataTable();
+            bsource.DataSource = data;
+            dataGridView.DataSource = bsource;
             inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, LOG);
             sortToggle = true;
             UpdateLang(lang);

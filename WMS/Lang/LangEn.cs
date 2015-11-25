@@ -81,6 +81,8 @@ namespace WMS.Lang
         private string valueNewLocationError = "Value in New Location on row";
         private string attemptToMoveFromSameTwice = "Attempt to move from the same location twice";
         private string attemptToMoveMutipleItemsToSameLocation = "Attempt to move multiple items to the same location";
+
+        private string loggedInAs = "Logged in as:";
          
         public LangEn()
         {
@@ -159,6 +161,9 @@ namespace WMS.Lang
         public string VALUE_IN_NEW_LOCATION { get { return valueNewLocationError; } }
         public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get { return attemptToMoveFromSameTwice; } }
         public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get { return attemptToMoveMutipleItemsToSameLocation; } }
+
+        public string LOGGED_IN_AS { get { return loggedInAs; } }
+
 
     }
 }

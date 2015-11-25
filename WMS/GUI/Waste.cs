@@ -92,7 +92,6 @@ namespace WMS.GUI
                 dataGridView6.Columns[i].ReadOnly = true;
             }
             dataGridView6.Columns[6].ReadOnly = false;
-            dataGridView6.Columns[7].ReadOnly = false;
             dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
         }
         private void updateComboBox()

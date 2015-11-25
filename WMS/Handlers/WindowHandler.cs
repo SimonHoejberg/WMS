@@ -23,6 +23,8 @@ namespace WMS.Handlers
             this.core = core;
             main.Core = core;
             this.main = (Form)main;
+            main.lang = lang;
+            main.UpdateLang();
             this.main.LocationChanged += MainLocationChanged;
         }
 
@@ -138,6 +140,8 @@ namespace WMS.Handlers
         public void ChangeLang(ILang lang)
         {
             this.lang = lang;
+            ((IMain)main).lang = lang;
+            ((IMain)main).UpdateLang();
             foreach (var item in WindowsOpen)
             {
                 item.UpdateLang(lang);

@@ -82,6 +82,8 @@ namespace WMS.Lang
         private string attemptToMoveFromSameTwice = "Forsgøt at flytte fra samme lokation to gange";
         private string attemptToMoveMutipleItemsToSameLocation = "Forsøgt at flytte flere varer til samme lokation";
 
+        private string loggedInAs = "Logget ind som:";
+
         public LangDa()
         {
 
@@ -159,5 +161,7 @@ namespace WMS.Lang
         public string VALUE_IN_NEW_LOCATION { get { return valueNewLocationError; } }
         public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get { return attemptToMoveFromSameTwice; } }
         public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get { return attemptToMoveMutipleItemsToSameLocation; } }
+
+        public string LOGGED_IN_AS { get { return loggedInAs; } }
     }
 }
