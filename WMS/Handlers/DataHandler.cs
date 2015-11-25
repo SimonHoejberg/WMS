@@ -166,6 +166,11 @@ namespace WMS.Handlers
             sql.UpdateInfo(itemNo, quantity, operaton);
         }
 
+        public void MoveActionOnItem(string itemNo, string description, string date, int quantity, string user, string operation)
+        {
+            sql.LogOperation(itemNo, description, date, user, operation, quantity);
+        }
+
         public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string operation)
         {
             ActionOnItem(operaton, itemNo, description, date, quantity, core.User, operation);
