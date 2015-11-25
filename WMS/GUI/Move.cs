@@ -23,8 +23,9 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewTextBoxColumn ColumnQuantity;
+        private DataGridViewTextBoxColumn ColumnQuantity, columnAction;
         private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
+        Dictionary<string, Location> locationData;
         private ILang lang;
 
         public Move(ICore core, ILang lang)
@@ -41,8 +42,8 @@ namespace WMS.GUI
         private void InitializeDataGridView(ICore core)
         {
             //Dictionary for easy reference
-            Dictionary<string, Location> comboData = new Dictionary<string, Location>();
-            PopulateLocationDictionary(comboData);
+            locationData = new Dictionary<string, Location>();
+            PopulateLocationDictionary(locationData);
 
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
             moveDataGridView.Columns.Add(
@@ -62,7 +63,7 @@ namespace WMS.GUI
                 Name = "LocationColumn",
                 ValueMember = "LocationString",
                 HeaderText = lang.LOCATION,
-                Width = 229
+                Width = 200
 
             });
             moveDataGridView.Columns.Add(
@@ -72,17 +73,22 @@ namespace WMS.GUI
                     HeaderText = lang.AMOUNT,
                     Width = 130
                 });
-            
-
             moveDataGridView.Columns.Add(
             ComboColumnNewLocation = new DataGridViewComboBoxColumn()
             {
                 Name = "NewLocationColumn",
                 ValueMember = "LocationString",
                 HeaderText = lang.NEW_LOCATION,
-                Width = 229
-
+                Width = 200
             });
+            moveDataGridView.Columns.Add(
+                columnAction = new DataGridViewTextBoxColumn()
+                {
+                    Name = "ActionColumn",
+                    HeaderText = "Action",
+                    Width = 100,
+                    ReadOnly = true
+                });
 
             // Add the events to listen for
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
@@ -108,7 +114,7 @@ namespace WMS.GUI
             {
                 var LocationCell = moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell;
                 LocationCell.Items.Clear();
-                List<Location> locList = LocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
+                List<Location> locList = LocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
                 foreach (Location lc in locList)
                 {
                     LocationCell.Items.Add(lc);
@@ -126,10 +132,9 @@ namespace WMS.GUI
                 //Set new locations
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
                 NewLocationCell.Items.Clear();
-                List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex]);
+                List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
                 foreach (Location lc in newLocList)
                 {
-                    Console.WriteLine(lc.ToString());
                     NewLocationCell.Items.Add(lc);
                 }
             }
@@ -169,6 +174,17 @@ namespace WMS.GUI
                     moveDataGridView.Rows[e.RowIndex].Cells["QuantityColumn"].Value = 0;
                 }
             }
+            else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("NewLocationColumn"))
+            {
+                if (locationData[moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"].Value.ToString()].Equals(locationData[moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"].Value.ToString()]))
+                {
+                    moveDataGridView.Rows[e.RowIndex].Cells["ActionColumn"].Value = "Combine";
+                }
+                else
+                {
+                    moveDataGridView.Rows[e.RowIndex].Cells["ActionColumn"].Value = "Move";
+                }
+            }
         }
 
         private List<Item> ItemList(DataGridViewCell eventCell)
@@ -183,16 +199,32 @@ namespace WMS.GUI
             return input.Where(x => x.Description.Equals(eventCell.Value)).ToList();
         }
 
-        private List<Location> LocationList(DataGridViewCell eventCell)
+        private List<Location> LocationList(DataGridViewCell eventCell, Dictionary<string, Location> locDic)
         {
-            List<Location> input = core.DataHandler.LocationToList();
-            return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
+            List<Location> returnList = new List<Location>();
+            foreach (Location loc in locDic.Values)
+            {
+                if (loc.ItemNo.Equals(eventCell.Value))
+                {
+                    returnList.Add(loc);
+                }
+            }
+            return returnList;
         }
 
-        private List<Location> NewLocationList(DataGridViewCell eventCell)
+        private List<Location> NewLocationList(DataGridViewCell eventCell, Dictionary<string, Location> locDic)
         {
-            List<Location> input = core.DataHandler.LocationToList();
-            return input.Where((x => x.ItemNo.Equals("0"))).ToList();
+            List<Location> returnList = new List<Location>();
+            string a = moveDataGridView.Rows[eventCell.RowIndex].Cells["LocationColumn"].Value.ToString();
+
+            foreach (Location loc in locDic.Values)
+            {
+                if (loc.Quantity == 0 || (loc.ItemNo.Equals(locDic[a].ItemNo) && !loc.LocationString.Equals(locDic[a].LocationString)))
+                {
+                    returnList.Add(loc);
+                }
+            }
+            return returnList;
         }
 
         private void moveCancelButton_Click(object sender, EventArgs e)
@@ -240,7 +272,6 @@ namespace WMS.GUI
                     */
                 }
             }
-            Console.WriteLine(locUsedTwice + " " + newLocUsedTwice);
             //Check if multiple items are moved to the same location
             foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
             {
@@ -311,9 +342,18 @@ namespace WMS.GUI
                                 break;
                             }
                         }
-                        //Console.WriteLine($"{tempOldLoc.ItemNo} {tempOldLoc.LocationString}");
-                        core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value)).ToString(), tempOldLoc.ItemNo.ToString());
-                        core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value).ToString(), tempOldLoc.ItemNo.ToString());
+                        if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo))
+                        {
+                            Console.WriteLine("Combined locations");
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value)).ToString(), tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value) + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString());
+                        }
+                        else
+                        {
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value)).ToString(), tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value).ToString(), tempOldLoc.ItemNo.ToString());
+                        }
+                        
                     }
 
                     ClearDataGridView();
@@ -349,9 +389,13 @@ namespace WMS.GUI
 
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
         {
+            dic.Clear();
             foreach (Location loc in core.DataHandler.LocationToList())
             {
-                dic.Add(loc.Id, loc);
+                if (!dic.ContainsKey(loc.LocationString))
+                {
+                    dic.Add(loc.LocationString, loc);
+                }
             }
         }
 

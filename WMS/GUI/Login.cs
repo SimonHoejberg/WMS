@@ -21,8 +21,6 @@ namespace WMS.GUI
             InitializeComponent();
         }
 
-        public string User { get { return userIDTextbox.Text; } }
-
         private void UserIDBox_Load(object sender, EventArgs e)
         {
             MaximizeBox = false;
@@ -41,6 +39,7 @@ namespace WMS.GUI
             if (stringList.Contains(userIDTextbox.Text))
             {
                 DialogResult = DialogResult.OK;
+                core.User = userIDTextbox.Text;
                 userIDError_lbl.Text = "";
             }
             else
