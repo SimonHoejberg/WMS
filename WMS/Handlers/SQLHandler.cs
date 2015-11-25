@@ -112,7 +112,7 @@ namespace WMS.Handlers
         public void UpdateInfo(string itemNo, int quantity, char op)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = string.Format("UPDATE information SET inStock = inStock" + op + " {1} WHERE itemNo = {0}", itemNo, quantity);
+            string sql = $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo}";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
@@ -191,16 +191,43 @@ namespace WMS.Handlers
             ResetConnection();
             command2.ExecuteNonQuery();
         }
+
         public void moveItem(string id, string newQuantity, string newItem)
         {
-            Console.WriteLine($"{id} {newQuantity} {newItem}");
-
             MySqlCommand command = connection.CreateCommand();
-            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = '{newQuantity}' WHERE ID = '{id}'";
-            Console.WriteLine(sql);
+            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = quantity + {newQuantity} WHERE ID = '{id}'";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
+        }
+
+        public void moveItem(string id, string newQuantity, string newItem, string usage)
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {newQuantity} WHERE ID = {id}";
+            command.CommandText = sql;
+            ResetConnection();
+            command.ExecuteNonQuery();
+        }
+
+        public MySqlDataReader GetMaxShelf()
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT bestLocation FROM location";
+            ResetConnection();
+            command.CommandText = sql;
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
+        }
+
+        public MySqlDataReader GetMaxSpace()
+        {
+            MySqlCommand command = connection.CreateCommand();
+            string sql = "SELECT space FROM location";
+            ResetConnection();
+            command.CommandText = sql;
+            MySqlDataReader reader = command.ExecuteReader();
+            return reader;
         }
     }
 

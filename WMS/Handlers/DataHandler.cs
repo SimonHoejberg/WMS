@@ -94,7 +94,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
             while (reader.Read())
             {
-                temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString())));
+                temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString()),int.Parse(reader["bestLocation"].ToString()), int.Parse(reader["itemUsage"].ToString())));
             }
             sql.CloseConnection();
             return temp;
@@ -128,9 +128,12 @@ namespace WMS.Handlers
 
         public Item GetItemFromItemNo(string itemNo)
         {
+            Item item = null;
             MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
-            reader.Read();
-            Item item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString()));
+            while (reader.Read())
+            {
+                item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["size"].ToString()), int.Parse(reader["itemUsage"].ToString()));
+            }
             sql.CloseConnection();
             return item;        
         }
@@ -173,12 +176,58 @@ namespace WMS.Handlers
 
         public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string operation)
         {
-            ActionOnItem(operaton, itemNo, description, date, quantity, core.User, operation);
+            ActionOnItem(operaton, itemNo, description, date, quantity, 
+                GetUserName(core.User), operation);
         }
 
-        public void ChangeLocation(string itemNo,string location)
+        public void ChangeLocation(string id, string newQuantity, string newItem, string usage)
         {
-            sql.UpdateLocation(itemNo, location);
+            sql.moveItem(id, newQuantity, newItem,usage);
+        }
+
+        public int GetUsage(string itemNo)
+        {
+            MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO, DataBaseValues.ITEM, itemNo);
+            int usage = 0;
+            while (reader.Read())
+            {
+                usage = int.Parse(reader["itemUsage"].ToString());
+            }
+            sql.CloseConnection();
+            return usage;
+        }
+
+        public int GetMaxShelf()
+        {
+            MySqlDataReader reader = sql.GetMaxShelf();
+            int res = 0;
+            while (reader.Read())
+            {
+                int temp = int.Parse(reader["bestLocation"].ToString());
+                if (temp > res)
+                {
+                    res = temp;
+                }
+            }
+            sql.CloseConnection();
+            res++;
+            return res;
+        }
+
+        public int GetMaxSpace()
+        {
+            MySqlDataReader reader = sql.GetMaxSpace();
+            int res = 0;
+            while (reader.Read())
+            {
+                int temp = int.Parse(reader["space"].ToString());
+                if(temp > res)
+                {
+                    res = temp;
+                }
+            }
+            sql.CloseConnection();
+            return res;
         }
 
     }
