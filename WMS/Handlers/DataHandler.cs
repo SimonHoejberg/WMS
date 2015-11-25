@@ -153,6 +153,11 @@ namespace WMS.Handlers
             sql.moveItem(id, newQuantity, newItem);
         }
 
+        public void ItemMove(string item, string newLocation)
+        {
+            sql.moveItem(item, newLocation);
+        }
+
         public void CloseConnectionToServer()
         {
             sql.CloseConnection();
