@@ -183,20 +183,24 @@ namespace WMS.Handlers
             OpenConnection();
         }
 
-        public void moveItem(string id, string newQuantity, string newItem, string newLocation)
+        public void moveItem (string Item, string newLocation)
+        {
+            MySqlCommand command2 = connection.CreateCommand();
+            string sql2 = $"UPDATE information SET location = '{newLocation}' WHERE itemNo = '{Item}'";
+            command2.CommandText = sql2;
+            ResetConnection();
+            command2.ExecuteNonQuery();
+        }
+        public void moveItem(string id, string newQuantity, string newItem)
         {
             Console.WriteLine($"{id} {newQuantity} {newItem}");
 
             MySqlCommand command = connection.CreateCommand();
-            MySqlCommand command2 = connection.CreateCommand();
             string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = '{newQuantity}' WHERE ID = '{id}'";
-            string sql2 = $"UPDATE information SET location = '{newLocation}' WHERE itemNo = '{newItem}'";
             Console.WriteLine(sql);
             command.CommandText = sql;
-            command2.CommandText = sql2;
             ResetConnection();
             command.ExecuteNonQuery();
-            command2.ExecuteNonQuery();
         }
     }
 
