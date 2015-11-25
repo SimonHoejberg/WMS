@@ -145,9 +145,9 @@ namespace WMS.Handlers
             return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
         }
 
-        public void ItemMove(string id, string newQuantity, string newItem, string newLocation)
+        public void ItemMove(string id, string newQuantity, string newItem)
         {
-            sql.moveItem(id, newQuantity, newItem, newLocation);
+            sql.moveItem(id, newQuantity, newItem);
         }
 
         public void ItemMove(string item, string newLocation)
