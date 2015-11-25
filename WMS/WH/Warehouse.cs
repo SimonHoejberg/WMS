@@ -1,91 +1,71 @@
 ﻿using WMS.Interfaces;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace WMS.WH
 {
     public class Warehouse
     {
         private ICore core;
-        private Item[,] locations;
+        private Location[,] locations;
         private Dictionary<string, string> placedItems = new Dictionary<string, string>();
         private List<Item> notplaced = new List<Item>();
         private Dictionary<int, string> maxMin = new Dictionary<int, string>();
-
         private List<Item> itemsNotPlaced = new List<Item>();
+        private int maxShelf = 0;
+        private int maxSpace = 0;
 
         public Warehouse(ICore core)
         {
             this.core = core;
-            locations = new Item[6, 3];
-        }
-
-        public bool PlaceItem(Item item, string location)
-        {
-            core.DataHandler.ChangeLocation(item.ItemNo, location);
-            return true;
         }
 
         private int MaxSpace()
         {
-            return 3;
+            maxSpace = core.DataHandler.GetMaxSpace();
+            return maxSpace;
         }
 
         private int MaxShelf()
         {
-            return 6;
+            maxShelf = core.DataHandler.GetMaxShelf();
+            return maxShelf;
         }
 
         public void CreateWH()
         {
-            List<Item> temp = core.DataHandler.InfoToList();
-            foreach (Item item in temp)
+            Stopwatch st = new Stopwatch();
+            st.Start();
+            locations = new Location[MaxShelf(), MaxSpace()];
+            List<Location> temp = core.DataHandler.LocationToList();
+            foreach (Location location in temp)
             {
-                string[] tempS = item.Location.Split('.');
-                if (tempS.Length == 2)
-                {
-                    locations[int.Parse(tempS[0]), int.Parse(tempS[1])] = item;
-                }
+                locations[location.BestLocation, (int.Parse(location.Space) - 1)] = location;
             }
+            st.Stop();
+            System.Console.WriteLine("CW " + st.ElapsedMilliseconds + " ms");
         }
 
 
         private bool FindAvaliableSpace(Item item, int shelf, int space)
         {
-
-            if ((GetUsage(locations[shelf, 0]) == 0 && GetUsage(locations[shelf,(MaxSpace()-1)]) == 0) || (GetUsage(locations[shelf, 0]) > item.Usage && item.Usage > GetUsage(locations[shelf, (MaxSpace() - 1)])))
+            int max = locations[shelf, 0].Usage;
+            int min = locations[shelf, (maxSpace - 1)].Usage;
+            if (((max == 0 && min == 0) || (max > item.Usage && item.Usage > min && locations[shelf, space].ItemNo.Equals("0"))) || (locations[shelf, space].ItemNo.Equals(item.ItemNo)))
             {
-
-                if (locations[shelf, space] == null || locations[shelf, space].ItemNo.Equals(item.ItemNo))
-                {
-                    locations[shelf, space] = item;
-                    PlaceItem(item, shelf.ToString() + "." + space.ToString());
-                    return true;
-                }
-                else
-                {
-                    if (space < (MaxSpace() - 1))
-                    {
-                        space++;
-                    }
-                    else if (shelf < (MaxShelf() - 1))
-                    {
-                        space = 0;
-                        shelf++;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                    return FindAvaliableSpace(item, shelf, space);
-                }
+                string id = locations[shelf, space].Id;
+                core.DataHandler.ChangeLocation(id, item.InStock.ToString(), item.ItemNo,item.Usage.ToString());
+                locations[shelf, space] = new Location(id, "", space.ToString(), item.ItemNo, item.InStock, shelf,item.Usage);
+                
+                return true;
             }
             else
             {
-                if (space < (MaxSpace() - 1))
+                if (space < (maxSpace - 1))
                 {
                     space++;
                 }
-                else if (shelf < (MaxShelf() - 1))
+                else if (shelf < (maxShelf - 1))
                 {
                     space = 0;
                     shelf++;
@@ -98,28 +78,21 @@ namespace WMS.WH
             }
         }
 
-        private int GetUsage(Item itemNo)
-        {
-            if (itemNo != null)
-            {
-                return itemNo.Usage;
-            }
-            else
-            {
-                return 0;
-            }
-        }
 
         public List<Item> FindOptimalLocation(List<Item> items)
         {
+            Stopwatch st = new Stopwatch();
+            st.Start();
             items.Sort();
             foreach (Item item in items)
             {
-                if (!FindAvaliableSpace(item, 0,0))
+                if (!FindAvaliableSpace(item, 0, 0))
                 {
                     notplaced.Add(item);
                 }
             }
+            st.Stop();
+            System.Console.WriteLine("Algo " + st.ElapsedMilliseconds + " ms");
             return notplaced;
         }
 
