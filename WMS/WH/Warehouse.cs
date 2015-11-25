@@ -8,7 +8,7 @@ namespace WMS.WH
     {
         private ICore core;
         private Location[,] locations;
-        private Dictionary<string, string> placedItems = new Dictionary<string, string>();
+        private Dictionary<string, int> quickPlace = new Dictionary<string, int>();
         private List<Item> notplaced = new List<Item>();
         private Dictionary<int, string> maxMin = new Dictionary<int, string>();
         private List<Item> itemsNotPlaced = new List<Item>();
@@ -41,6 +41,13 @@ namespace WMS.WH
             foreach (Location location in temp)
             {
                 locations[location.BestLocation, (int.Parse(location.Space) - 1)] = location;
+                if (!location.ItemNo.Equals("0"))
+                {
+                    if (!quickPlace.ContainsKey(location.ItemNo))
+                    {
+                        quickPlace.Add(location.ItemNo, location.BestLocation);
+                    }
+                }
             }
             st.Stop();
             System.Console.WriteLine("CW " + st.ElapsedMilliseconds + " ms");
@@ -86,9 +93,21 @@ namespace WMS.WH
             items.Sort();
             foreach (Item item in items)
             {
-                if (!FindAvaliableSpace(item, 0, 0))
+                if (quickPlace.ContainsKey(item.ItemNo))
                 {
-                    notplaced.Add(item);
+                    int quickshelf;
+                    quickPlace.TryGetValue(item.ItemNo,out quickshelf);
+                    if (!FindAvaliableSpace(item, quickshelf, 0))
+                    {
+                        notplaced.Add(item);
+                    }
+                }
+                else
+                {
+                    if (!FindAvaliableSpace(item, 0, 0))
+                    {
+                        notplaced.Add(item);
+                    }
                 }
             }
             st.Stop();
