@@ -180,9 +180,10 @@ namespace WMS.Handlers
                 GetUserName(core.User), operation);
         }
 
-        public void ChangeLocation(string id, string newQuantity, string newItem, string usage)
+        public void ChangeLocation(string id, string location, string newQuantity, string newItem, string usage)
         {
             sql.moveItem(id, newQuantity, newItem,usage);
+            sql.updateInformation(newItem, location, newQuantity);
         }
 
         public int GetUsage(string itemNo)

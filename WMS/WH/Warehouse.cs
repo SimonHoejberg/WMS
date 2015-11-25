@@ -61,8 +61,9 @@ namespace WMS.WH
             if (((max == 0 && min == 0) || (max > item.Usage && item.Usage > min && locations[shelf, space].ItemNo.Equals("0"))) || (locations[shelf, space].ItemNo.Equals(item.ItemNo)))
             {
                 string id = locations[shelf, space].Id;
-                core.DataHandler.ChangeLocation(id, item.InStock.ToString(), item.ItemNo,item.Usage.ToString());
-                locations[shelf, space] = new Location(id, "", space.ToString(), item.ItemNo, item.InStock, shelf,item.Usage);
+                string locationShelf = locations[shelf, space].Shelf;
+                core.DataHandler.ChangeLocation(id, locationShelf,item.InStock.ToString(), item.ItemNo,item.Usage.ToString());
+                locations[shelf, space] = new Location(id, locationShelf, space.ToString(), item.ItemNo, item.InStock, shelf,item.Usage);
                 
                 return true;
             }

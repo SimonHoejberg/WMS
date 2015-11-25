@@ -210,6 +210,15 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
+        public void updateInformation(string Item, string newLocation,string quantity)
+        {
+            MySqlCommand command2 = connection.CreateCommand();
+            string sql2 = $"UPDATE information SET location = '{newLocation}',inStock = inStock + {quantity} WHERE itemNo = '{Item}'";
+            command2.CommandText = sql2;
+            ResetConnection();
+            command2.ExecuteNonQuery();
+        }
+
         public MySqlDataReader GetMaxShelf()
         {
             MySqlCommand command = connection.CreateCommand();
