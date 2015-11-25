@@ -130,7 +130,7 @@ namespace WMS.GUI
             else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
             {
                 //Set new locations
-                (moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Items.Clear();
+                (moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Selected
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
                 NewLocationCell.Items.Clear();
                 List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
