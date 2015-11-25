@@ -84,6 +84,8 @@ namespace WMS.Lang
 
         private string loggedInAs = "Logget ind som:";
 
+        public string ADD { get; } = "Tilføj linje";
+
         public LangDa()
         {
 

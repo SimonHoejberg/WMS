@@ -54,6 +54,7 @@ namespace WMS.Interfaces
         string ONLY_NUMBERS { get; }
         string MUST_BE_A_NUMER { get; }
         string SEACH { get; }
+        string ADD { get; }
 
         string ORDER_NO { get; }
 

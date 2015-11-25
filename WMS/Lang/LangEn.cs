@@ -83,7 +83,9 @@ namespace WMS.Lang
         private string attemptToMoveMutipleItemsToSameLocation = "Attempt to move multiple items to the same location";
 
         private string loggedInAs = "Logged in as:";
-         
+
+        public string ADD { get; } = "Add line";
+
         public LangEn()
         {
 
