@@ -191,7 +191,7 @@ namespace WMS.Handlers
             ResetConnection();
             command2.ExecuteNonQuery();
         }
-        public void moveItem(string id, string newQuantity, string newItem, string newLocation)
+        public void moveItem(string id, string newQuantity, string newItem)
         {
             Console.WriteLine($"{id} {newQuantity} {newItem}");
 
