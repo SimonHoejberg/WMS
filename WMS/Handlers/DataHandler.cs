@@ -32,8 +32,10 @@ namespace WMS.Handlers
         {
             string temp = "";
             MySqlDataReader reader = sql.GetUserName(userId);
-            reader.Read();
-            temp = reader["name"].ToString();
+            while (reader.Read())
+            {
+                temp = reader["name"].ToString();
+            }
             sql.CloseConnection();
             return temp;
         }
@@ -153,10 +155,15 @@ namespace WMS.Handlers
             sql.CloseConnection();
         }
 
-        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user,string operation)
+        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user, string operation)
         {
             sql.LogOperation(itemNo, description, date, user, operation, quantity);
             sql.UpdateInfo(itemNo, quantity, operaton);
+        }
+
+        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string operation)
+        {
+            ActionOnItem(operaton, itemNo, description, date, quantity, core.User, operation);
         }
 
         public void ChangeLocation(string itemNo,string location)

@@ -63,12 +63,11 @@ namespace WMS.GUI
             DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel);
             if (a.Equals(DialogResult.OK))
             {
-                string user = core.User;
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
                     if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[6, i].Value.Equals("0")))
                     {
-                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), user,lang.REDUCED);
+                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), lang.REDUCED);
                     }
                 }
                 MessageBox.Show(lang.SUCCESS_REDUCE, lang.SUCCESS);

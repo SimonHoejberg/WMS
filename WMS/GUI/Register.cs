@@ -85,7 +85,6 @@ namespace WMS.GUI
             DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel); 
             if (a.Equals(DialogResult.OK))
             {
-                string user = core.User;
                 int count = dataGridView.RowCount;
                 for (int i = 0; i < count; i++)
                 {
@@ -94,7 +93,7 @@ namespace WMS.GUI
                         string itemNo = dataGridView[2, i].Value.ToString();
                         string description = dataGridView[3, i].Value.ToString();
                         int quantity = int.Parse(dataGridView[5, 1].Value.ToString());
-                        core.DataHandler.ActionOnItem('+', itemNo, description, core.GetTimeStamp(), quantity, user, lang.REGISTED);
+                        core.DataHandler.ActionOnItem('+', itemNo, description, core.GetTimeStamp(), quantity, lang.REGISTED);
                         Item item = core.DataHandler.GetItemFromItemNo(itemNo);
                         tempList.Add(item);
                     }

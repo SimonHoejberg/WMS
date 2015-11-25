@@ -181,7 +181,7 @@ namespace WMS.GUI
                     {
                         core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), 
                                                       dataGridView6[1, i].Value.ToString(), core.GetTimeStamp(), 
-                                                      int.Parse(dataGridView6[6, i].Value.ToString()), user, 
+                                                      int.Parse(dataGridView6[6, i].Value.ToString()),core.DataHandler.GetUserName(user), 
                                                       dataGridView6[7, i].Value.ToString());
                     }
                 }
