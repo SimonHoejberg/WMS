@@ -15,6 +15,8 @@ namespace WMS.GUI
     public partial class Main : Form , IMain
     {
         private ICore core;
+        public ILang lang { get; set; }
+
         public Main()
         {
             InitializeComponent();
@@ -24,9 +26,10 @@ namespace WMS.GUI
         {
             MaximizeBox = false;
             MinimizeBox = false;
+            label2.Text = core.DataHandler.GetUserName("1234");
         }
 
-        public ICore Core { set { this.core = value; } }
+        public ICore Core { set { core = value; } }
 
         private void Information_pbox_Click(object sender, EventArgs e)
         {
@@ -81,11 +84,17 @@ namespace WMS.GUI
                 wasteButton.Image = Properties.Resources.wasteda;
                 langButton.Image = Properties.Resources.union_jack_30x18;
             }
+            UpdateLang();
         }
 
         private void lang_Click(object sender, EventArgs e)
         {
             core.changeLang();
+        }
+
+        public void UpdateLang()
+        {
+            label1.Text = lang.LOGGED_IN_AS;
         }
     }
 }

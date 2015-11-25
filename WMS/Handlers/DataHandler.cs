@@ -28,12 +28,16 @@ namespace WMS.Handlers
             return sql.GetAllDataFromDataBase(db);
         }
 
+        public string GetUserName(string userId)
+        {
+            string temp = "";
+            MySqlDataReader reader = sql.GetUserName(userId);
+            reader.Read();
+            return reader["name"].ToString();
+        }
         public List<string> GetUser() => UserToList();
 
-        public List<LogItem> GetLog(string itemNo)
-        {
-            return LogToList(itemNo);
-        }
+        public List<LogItem> GetLog(string itemNo) => LogToList(itemNo);
 
         public List<Item> InfoToList()
         {

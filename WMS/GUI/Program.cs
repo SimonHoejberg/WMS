@@ -27,6 +27,19 @@ namespace WMS
 
         public ICore Core {set { core = value; } }
 
+        public ILang lang
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private void registerBtn_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = registerTab;
@@ -139,6 +152,11 @@ namespace WMS
         }
 
         public void UpdatePics(bool da)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateLang()
         {
             throw new NotImplementedException();
         }

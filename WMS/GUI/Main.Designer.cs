@@ -35,6 +35,8 @@
             this.moveButton = new System.Windows.Forms.PictureBox();
             this.logButton = new System.Windows.Forms.PictureBox();
             this.informationButton = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.langButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).BeginInit();
@@ -126,10 +128,30 @@
             this.informationButton.TabStop = false;
             this.informationButton.Click += new System.EventHandler(this.Information_pbox_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 526);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 539);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "label2";
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(157, 534);
+            this.ClientSize = new System.Drawing.Size(157, 561);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.langButton);
             this.Controls.Add(this.reduceButton);
             this.Controls.Add(this.wasteButton);
@@ -151,6 +173,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.logButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.informationButton)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -163,5 +186,7 @@
         private System.Windows.Forms.PictureBox wasteButton;
         private System.Windows.Forms.PictureBox reduceButton;
         private System.Windows.Forms.PictureBox langButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
