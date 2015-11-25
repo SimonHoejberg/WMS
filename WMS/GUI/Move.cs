@@ -130,7 +130,7 @@ namespace WMS.GUI
             else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("LocationColumn"))
             {
                 //Set new locations
-                (moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Selected
+                (moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Value = DBNull.Value;
                 var NewLocationCell = moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell;
                 NewLocationCell.Items.Clear();
                 List<Location> newLocList = NewLocationList(moveDataGridView[e.ColumnIndex, e.RowIndex], locationData);
@@ -177,10 +177,16 @@ namespace WMS.GUI
             }
             else if (e.RowIndex != -1 && moveDataGridView[e.ColumnIndex, e.RowIndex].OwningColumn.Name.Equals("NewLocationColumn"))
             {
-                Console.WriteLine((moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell).Items[0] + " " + moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"].Value);
-                if ((moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell).Items.Contains((moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"] as DataGridViewComboBoxCell).Value.ToString()))
+                bool combine = false;
+                foreach (var a in (moveDataGridView.Rows[e.RowIndex].Cells["LocationColumn"] as DataGridViewComboBoxCell).Items)
                 {
-                    Console.WriteLine("YAY!");
+                    if (a.ToString().Equals(moveDataGridView.Rows[e.RowIndex].Cells["NewLocationColumn"].Value.ToString()))
+                    {
+                        combine = true;
+                    }
+                }
+                if (combine)
+                {
                     moveDataGridView.Rows[e.RowIndex].Cells["ActionColumn"].Value = "Combine";
                 }
                 else
@@ -347,7 +353,6 @@ namespace WMS.GUI
                         }
                         if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo))
                         {
-                            Console.WriteLine("Combined locations");
                             core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value)).ToString(), tempOldLoc.ItemNo.ToString());
                             core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value) + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString());
                         }
