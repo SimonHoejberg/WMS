@@ -33,7 +33,9 @@ namespace WMS.Handlers
             string temp = "";
             MySqlDataReader reader = sql.GetUserName(userId);
             reader.Read();
-            return reader["name"].ToString();
+            temp = reader["name"].ToString();
+            sql.CloseConnection();
+            return temp;
         }
         public List<string> GetUser() => UserToList();
 
