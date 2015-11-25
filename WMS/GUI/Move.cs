@@ -331,7 +331,7 @@ namespace WMS.GUI
 
                         foreach (Location loc in core.DataHandler.LocationToList())
                         {
-                            if (loc.Shelf.ToString().Equals(oldLoc[0]) && loc.ShelfNo.ToString().Equals(oldLoc[1]))
+                            if (loc.Shelf.ToString().Equals(oldLoc[0]) && loc.Space.ToString().Equals(oldLoc[1]))
                             {
                                 tempOldLoc = loc;
                                 break;
@@ -339,7 +339,7 @@ namespace WMS.GUI
                         }
                         foreach (Location loc in core.DataHandler.LocationToList())
                         {
-                            if (loc.Shelf.ToString().Equals(newLoc[0]) && loc.ShelfNo.ToString().Equals(newLoc[1]))
+                            if (loc.Shelf.ToString().Equals(newLoc[0]) && loc.Space.ToString().Equals(newLoc[1]))
                             {
                                 tempNewLoc = loc;
                                 break;
