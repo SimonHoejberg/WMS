@@ -11,13 +11,12 @@ namespace WMS.WH
         public int InStock { get; }
         public int Size { get; }
 
-        public Item(string itemNo, string description, int inStock, string location, int size, int itemUsage)
+        public Item(string itemNo, string description, int inStock, string location, int itemUsage)
         {
             ItemNo = itemNo;
             Description = description;
             InStock = inStock;
             Location = location;
-            Size = size;
             Usage = itemUsage;
         }
 

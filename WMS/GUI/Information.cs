@@ -39,7 +39,7 @@ namespace WMS.GUI
             dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
             dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
             dataGridView.Columns[3].HeaderText = lang.LOCATION;
-            dataGridView.Columns[5].Visible = false;
+            dataGridView.Columns[4].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
