@@ -304,7 +304,10 @@ namespace WMS.GUI
                     }
 
                     ClearDataGridView();
+                    populateItemDictionary(ItemListA, itemData);
                     PopulateLocationDictionary(locationData);
+                    core.WindowHandler.Update(this);
+                    
                 }
             }
             //give error message if commit could not be done
