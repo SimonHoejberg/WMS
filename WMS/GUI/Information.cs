@@ -59,7 +59,6 @@ namespace WMS.GUI
             int test = dataGridView.CurrentCell.RowIndex;
             itemNo = dataGridView[0, test].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
-            sizeLabel.Text = item.Size.ToString();
             usageLabel.Text = item.Usage.ToString();
             nameLabel.Text = item.Description;
             locationLabel.Text = item.Location;
@@ -102,7 +101,6 @@ namespace WMS.GUI
             viewItemButton.Text = lang.VIEW_ITEM;
             logButton.Text = lang.LOG;
             label4.Text = lang.DESCRIPTION;
-            label1.Text = lang.SIZE;
             label2.Text = lang.LOCATION;
             label3.Text = lang.USAGE;
             if (dataGridView.ColumnCount > 0)

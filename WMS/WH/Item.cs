@@ -9,7 +9,6 @@ namespace WMS.WH
         public string Location { get; set; }
         public int Usage { get; } = 0;
         public int InStock { get; }
-        public int Size { get; }
 
         public Item(string itemNo, string description, int inStock, string location, int itemUsage)
         {
@@ -22,7 +21,7 @@ namespace WMS.WH
 
         public string Identification => $"{ItemNo}: {Description}";
 
-        public override string ToString() => $"{ItemNo}: {Description}: {Size}: {InStock}:";
+        public override string ToString() => $"{ItemNo}: {Description}: {InStock}:";
 
         public int CompareTo(object obj)
         {

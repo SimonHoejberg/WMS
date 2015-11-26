@@ -83,7 +83,7 @@ namespace WMS.Handlers
             }
             else
             {
-                Form form = ((Form)windowsOpen.Find(x => x.Equals(gui)));
+                Form form = ((Form)windowsOpen.Find(x => x.ToString().Equals(gui.ToString())));
                 form?.BringToFront();
                 form?.Focus();
             }
@@ -112,7 +112,7 @@ namespace WMS.Handlers
 
         private bool CanCreateForm(object type)
         {
-            if ((windowsOpen.Count(x => ((IGui)x).Equals(type)) < 1))
+            if ((windowsOpen.Count(x => x.ToString().Equals(type.ToString())) < 1))
             {
                 return true;
             }
