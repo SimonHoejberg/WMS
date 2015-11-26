@@ -68,7 +68,10 @@ namespace WMS.GUI
             dataGridView.Columns[4].HeaderText = lang.OPERATION;
             dataGridView.Columns[5].HeaderText = lang.ORDER_NO;
             dataGridView.Columns[6].HeaderText = lang.AMOUNT;
-            if (dataGridView[0, 0].Value != null)
+            dataGridView.Columns[7].HeaderText = lang.OLD_QUANTITY;
+            dataGridView.Columns[8].HeaderText = lang.NEW_QUANTITY;
+
+            if (dataGridView.RowCount != 0 && dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[2], ListSortDirection.Descending);
             }
@@ -165,7 +168,10 @@ namespace WMS.GUI
                 dataGridView.Columns[2].HeaderText = lang.TIMESTAMP;
                 dataGridView.Columns[3].HeaderText = lang.USER;
                 dataGridView.Columns[4].HeaderText = lang.OPERATION;
-                dataGridView.Columns[5].HeaderText = lang.AMOUNT;
+                dataGridView.Columns[5].HeaderText = lang.ORDER_NO;
+                dataGridView.Columns[6].HeaderText = lang.AMOUNT;
+                dataGridView.Columns[7].HeaderText = lang.OLD_QUANTITY;
+                dataGridView.Columns[8].HeaderText = lang.NEW_QUANTITY;
             }
             textBox1.TextChanged += textBox1_TextChanged;
         }

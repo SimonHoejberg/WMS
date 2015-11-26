@@ -86,6 +86,9 @@ namespace WMS.Lang
 
         public string ADD { get; } = "Add line";
 
+        public string OLD_QUANTITY { get; } = "Old quantity";
+        public string NEW_QUANTITY { get; } = "New Quantity";
+
         public LangEn()
         {
 

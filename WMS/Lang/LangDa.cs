@@ -86,6 +86,9 @@ namespace WMS.Lang
 
         public string ADD { get; } = "Tilføj linje";
 
+        public string OLD_QUANTITY { get; } = "Mængde før";
+        public string NEW_QUANTITY { get; } = "Mængde efter";
+
         public LangDa()
         {
 

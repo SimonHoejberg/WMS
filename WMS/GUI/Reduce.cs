@@ -31,7 +31,7 @@ namespace WMS.GUI
             this.lang = lang;
             InitializeComponent();
             SearchBox();
-            searchBtn.Text = lang.SEACH;
+            searchBtn.Text = lang.ADD;
             Text = lang.REDUCE;
             reduceConfirmBtn.Text = lang.CONFIRM;
             reduceCancelBtn.Text = lang.CANCEL;
@@ -158,7 +158,7 @@ namespace WMS.GUI
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             this.lang = lang;
-            searchBtn.Text = lang.SEACH;
+            searchBtn.Text = lang.ADD;
             Text = lang.REDUCE;
             reduceConfirmBtn.Text = lang.CONFIRM;
             reduceCancelBtn.Text = lang.CANCEL;
