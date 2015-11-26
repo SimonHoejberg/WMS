@@ -34,19 +34,15 @@ namespace WMS.GUI
 
         private void InitializeDataGridView(ICore core)
         {
+            //Dictionary for easy reference
+            locationData = new Dictionary<string, Location>();
             itemData = new Dictionary<string, Item>();
             ItemListA = new AutoCompleteStringCollection();
 
-            foreach (Item item in core.DataHandler.InfoToList())
-            {
-                ItemListA.Add(item.Identification);
-                itemData.Add(item.Identification, item);
-            }
-            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA;
-
-            //Dictionary for easy reference
-            locationData = new Dictionary<string, Location>();
+            populateItemDictionary(ItemListA, itemData);
             PopulateLocationDictionary(locationData);
+
+            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA;
 
             #region 
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
@@ -101,7 +97,7 @@ namespace WMS.GUI
 
         // This event handler manually raises the CellValueChanged event 
         // by calling the CommitEdit method. 
-        void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
+        private void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (moveDataGridView.IsCurrentCellDirty)
             {
@@ -366,12 +362,23 @@ namespace WMS.GUI
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
         {
             dic.Clear();
-            foreach (Location loc in core.DataHandler.LocationToList()
+            foreach (Location loc in core.DataHandler.LocationToList())
             {
                 if (!dic.ContainsKey(loc.LocationString))
                 {
                     dic.Add(loc.LocationString, loc);
                 }
+            }
+        }
+        
+        private void populateItemDictionary(AutoCompleteStringCollection itemList, Dictionary<string, Item> dic)
+        {
+            itemList.Clear();
+            dic.Clear();
+            foreach (Item item in core.DataHandler.InfoToList())
+            { 
+                itemList.Add(item.Identification);
+                dic.Add(item.Identification, item);
             }
         }
 
@@ -382,7 +389,8 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-
+            populateItemDictionary(ItemListA, itemData);
+            PopulateLocationDictionary(locationData);
         }
     }
 }
