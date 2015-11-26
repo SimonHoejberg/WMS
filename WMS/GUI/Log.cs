@@ -66,7 +66,8 @@ namespace WMS.GUI
             dataGridView.Columns[2].HeaderText = lang.TIMESTAMP;
             dataGridView.Columns[3].HeaderText = lang.USER;
             dataGridView.Columns[4].HeaderText = lang.OPERATION;
-            dataGridView.Columns[5].HeaderText = lang.AMOUNT;
+            dataGridView.Columns[5].HeaderText = lang.ORDER_NO;
+            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
             if (dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[2], ListSortDirection.Descending);

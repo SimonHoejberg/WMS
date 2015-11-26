@@ -172,9 +172,10 @@ namespace WMS.GUI
                     if (!(dataGridView6[0, i].Value == null))
                     {
                         core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), 
-                                                      dataGridView6[1, i].Value.ToString(), core.GetTimeStamp(), 
-                                                      int.Parse(dataGridView6[6, i].Value.ToString()),core.DataHandler.GetUserName(user), 
-                                                      dataGridView6[7, i].Value.ToString());
+                                                      dataGridView6[1, i].Value.ToString(), 
+                                                      dataGridView6[5, i].Value.ToString(),
+                                                      core.DataHandler.GetUserName(user), 
+                                                      dataGridView6[6, i].Value.ToString());
                     }
                 }
                 data.Clear();
@@ -189,8 +190,9 @@ namespace WMS.GUI
             {
                 string itemNo = textBox1.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
+                MakeDataGridView();
             }
-            MakeDataGridView();
+            
         }
 
         private void textBox1_Enter(object sender, EventArgs e)

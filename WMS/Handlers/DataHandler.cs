@@ -163,10 +163,9 @@ namespace WMS.Handlers
             sql.CloseConnection();
         }
 
-        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string user, string operation)
+        public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string user, string operation)
         {
-            sql.LogOperation(itemNo, description, date, user, operation, quantity);
-            sql.UpdateInfo(itemNo, quantity, operaton);
+            sql.UpdateInfo(itemNo, quantity, operaton, description, operation, user);
         }
 
         public void MoveActionOnItem(string itemNo, string description, string date, int quantity, string user, string operation)
@@ -174,10 +173,9 @@ namespace WMS.Handlers
             sql.LogOperation(itemNo, description, date, user, operation, quantity);
         }
 
-        public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string operation)
+        public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string operation)
         {
-            ActionOnItem(operaton, itemNo, description, date, quantity, 
-                GetUserName(core.User), operation);
+            ActionOnItem(operaton, itemNo, description, quantity, core.UserName, operation);
         }
 
         public void PlaceItem(string id, string location, string newQuantity, string newItem, string usage,string orderNo,string description)
