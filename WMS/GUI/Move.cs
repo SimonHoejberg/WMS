@@ -54,7 +54,7 @@ namespace WMS.GUI
                 ComboColumnIdentification = new DataGridViewComboBoxColumn()
                 {
                     Name = idColumnString,
-                    DataSource = core.DataHandler.InfoToList(),
+                    DataSource = itemData.Values.ToList(),
                     DisplayMember = "Identification",
                     ValueMember = "ItemNo",
                     HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION,
@@ -157,7 +157,7 @@ namespace WMS.GUI
                 {
                     int maxQuantity = 0;
 
-                    foreach (Location loc in core.DataHandler.LocationToList())
+                    foreach (Location loc in locationData.Values.ToList())
                     {
                         if (moveDataGridView.Rows[e.RowIndex].Cells[locationColumnString].Value != null && loc.ToString().Equals(moveDataGridView.Rows[e.RowIndex].Cells[locationColumnString].Value.ToString()))
                         {
@@ -202,13 +202,13 @@ namespace WMS.GUI
 
         private List<Item> ItemList(DataGridViewCell eventCell)
         {
-            List<Item> input = core.DataHandler.InfoToList();
+            List<Item> input = itemData.Values.ToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
         private List<Item> DescriptionList(DataGridViewCell eventCell)
         {
-            List<Item> input = core.DataHandler.InfoToList();
+            List<Item> input = itemData.Values.ToList();
             return input.Where(x => x.Description.Equals(eventCell.Value)).ToList();
         }
 
@@ -366,7 +366,7 @@ namespace WMS.GUI
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
         {
             dic.Clear();
-            foreach (Location loc in core.DataHandler.LocationToList())
+            foreach (Location loc in core.DataHandler.LocationToList()
             {
                 if (!dic.ContainsKey(loc.LocationString))
                 {
