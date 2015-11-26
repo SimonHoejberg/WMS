@@ -26,7 +26,7 @@ namespace WMS.GUI
         {
             MaximizeBox = false;
             MinimizeBox = false;
-            label2.Text = core.DataHandler.GetUserName(core.User);
+            label2.Text = core.UserName;
         }
 
         public ICore Core { set { core = value; } }

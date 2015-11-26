@@ -177,12 +177,12 @@ namespace WMS.Handlers
         public void ActionOnItem(char operaton, string itemNo, string description, string date, int quantity, string operation)
         {
             ActionOnItem(operaton, itemNo, description, date, quantity, 
-                GetUserName(core.User), operation);
+                core.UserName, operation);
         }
 
         public void PlaceItem(string id, string location, string newQuantity, string newItem, string usage,string orderNo,string description)
         {
-            sql.PlaceItem(id, newQuantity, newItem, usage, location, orderNo, description, core.UserName, core.Lang.REGISTED);
+            sql.PlaceItem(id, newQuantity, newItem, usage, location, orderNo, description, core.UserName,core.Lang.REGISTED);
         }
 
         public int GetUsage(string itemNo)

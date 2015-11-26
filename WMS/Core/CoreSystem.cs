@@ -13,9 +13,8 @@ namespace WMS.Core
         private DataHandler dataHandler;
         private Warehouse wh;
         private bool da = true;
-        public string User { get; set; }
         public ILang Lang { get; private set; } = new LangDa();
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         public CoreSystem(IMain main)
         {
@@ -27,7 +26,6 @@ namespace WMS.Core
         public void Run()
         {
             windowHandler.Run();
-            UserName = dataHandler.GetUserName(User);
         }
 
         public IWindowHandler WindowHandler { get { return windowHandler; } }

@@ -38,7 +38,7 @@ namespace WMS.GUI
 
             if (stringList.Contains(userIDTextbox.Text))
             {
-                core.User = userIDTextbox.Text;
+                core.UserName = core.DataHandler.GetUserName(userIDTextbox.Text);
                 DialogResult = DialogResult.OK;
                 userIDError_lbl.Text = "";
             }
