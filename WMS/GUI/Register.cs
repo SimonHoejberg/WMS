@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using WMS.Interfaces;
 using WMS.WH;
-using System.Diagnostics;
 
 namespace WMS.GUI
 {
@@ -52,16 +51,20 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data); //Fills the dataGridView with data from the server
 
-            //Sets up what 
+            //Sets up what the columns based on the data from the server with the correct headerText
             dataGridView.Columns[0].Visible = false;
             dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
             dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
             dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
             dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
+            
+            //Adds a new column that is no on the database if doesnot already exist
             if (!data.Columns.Contains(lang.AMOUNT))
             {
                 data.Columns.Add(lang.AMOUNT);
             }
+
+            //Sets the auto size mode and sets the columns to read only
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 if (i < dataGridView.ColumnCount - 1)
@@ -70,22 +73,32 @@ namespace WMS.GUI
                 }
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
+
+            //Sets the amount from the order to the expected amount
             for (int i = 0; i < dataGridView.RowCount; i++)
             {
                 dataGridView[5, i].Value = dataGridView[4, i].Value;
             }
-            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
+
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged; //Resubscribes to the event
         }
 
+        /// <summary>
+        /// Sets the data in the combox with data from the server
+        /// </summary>
         private void UpdateComboBox()
         {
             orderComboBox.DataSource = core.DataHandler.OrderToList();
         }
 
-
+        /// <summary>
+        /// When the user clicks on confirm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConfirmButtonClick(object sender, EventArgs e)
         {
-            List<Item> tempList = new List<Item>();
+            List<Item> tempList = new List<Item>(); //
             DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel);
             if (a.Equals(DialogResult.OK))
             {
