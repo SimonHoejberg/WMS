@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
+using WMS.WH;
 using static WMS.Reference.DataBaseValues;
 using static WMS.Reference.DataBaseTypes;
 
@@ -30,7 +31,7 @@ namespace WMS.GUI
             this.core = core;
             this.lang = lang;
             InitializeComponent();
-            MakeComboBox();
+            SearchBox();
             searchBtn.Text = lang.SEACH;
             Text = lang.REDUCE;
             reduceConfirmBtn.Text = lang.CONFIRM;
@@ -45,16 +46,19 @@ namespace WMS.GUI
             reduceDataGridView.DataSource = bsource;
         }
 
-        public void UpdateGuiElements()
+        public void SearchBox()
         {
+            var source = new AutoCompleteStringCollection();
 
+            foreach (Item item in core.DataHandler.InfoToList())
+            {
+                source.Add(item.ItemNo);
+            }
+            textBox1.AutoCompleteCustomSource = source;
         }
 
-        private void MakeComboBox()
+        public void UpdateGuiElements()
         {
-            comboBox2.DataSource = core.DataHandler.InfoToList();
-            comboBox2.ValueMember = "ItemNo";
-            comboBox2.DisplayMember = "Identification";
 
         }
 
@@ -79,23 +83,23 @@ namespace WMS.GUI
         private void searchBtn_Click(object sender, EventArgs e)
         {
             int temp = 0;
-            if (!int.TryParse(textBox1.Text, out temp)) { 
+            if (int.TryParse(textBox1.Text, out temp))
+            { 
                 string itemNo = textBox1.Text;
-                comboBox2.DataSource = core.DataHandler.SearchInfoToList(itemNo);
+                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
             }
+            MakeDataGridView();
         }
 
         private void MakeDataGridView()
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
             reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
             reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
             reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
             reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
-            //reduceDataGridView.Columns[2].Visible = false;
             reduceDataGridView.Columns[4].Visible = false;
-            reduceDataGridView.Columns[5].Visible = false;
+
             if (!data.Columns.Contains(lang.AMOUNT))
             {
                 data.Columns.Add(lang.AMOUNT);
@@ -152,6 +156,7 @@ namespace WMS.GUI
 
         public void UpdateLang(ILang lang)
         {
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             this.lang = lang;
             searchBtn.Text = lang.SEACH;
             Text = lang.REDUCE;
@@ -168,19 +173,9 @@ namespace WMS.GUI
                 reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
                 reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
                 reduceDataGridView.Columns[4].Visible = false;
-                reduceDataGridView.Columns[5].Visible = false;
-                reduceDataGridView.Columns[6].HeaderText = lang.AMOUNT;
+                reduceDataGridView.Columns[5].HeaderText = lang.AMOUNT;
             }
-        }
-
-        private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if (comboBox2.SelectedValue != null)
-            {
-                itemNo = comboBox2.SelectedValue.ToString();
-                MakeComboBox();
-                MakeDataGridView();
-            }
+            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
 
         private void textBox1_Enter(object sender, EventArgs e)

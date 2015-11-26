@@ -88,7 +88,6 @@ namespace WMS.GUI
             dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;
             dataGridView6.Columns[3].HeaderText = lang.LOCATION;
             dataGridView6.Columns[4].Visible = false;
-            dataGridView6.Columns[5].Visible = false;
             if (!data.Columns.Contains(lang.AMOUNT))
             {
                 data.Columns.Add(lang.AMOUNT);
@@ -102,7 +101,7 @@ namespace WMS.GUI
                 dataGridView6.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView6.Columns[i].ReadOnly = true;
             }
-            dataGridView6.Columns[6].ReadOnly = false;
+            dataGridView6.Columns[5].ReadOnly = false;
             dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
         }
 
@@ -114,7 +113,7 @@ namespace WMS.GUI
         private void dataGridView6_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
-            if (dataGridView6.Columns[e.ColumnIndex].Equals(dataGridView6.Columns[6]))
+            if (dataGridView6.Columns[e.ColumnIndex].Equals(dataGridView6.Columns[5]))
             {
                 int temp = 0;
                 if (!int.TryParse(dataGridView6[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
@@ -143,7 +142,7 @@ namespace WMS.GUI
             dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
             panel1.Visible = false;
             dataGridView6.Focus();
-            dataGridView6[7, lastRow].Value = listBox1.SelectedItem.ToString();
+            dataGridView6[6, lastRow].Value = listBox1.SelectedItem.ToString();
             dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
         }
 
@@ -231,8 +230,8 @@ namespace WMS.GUI
                 dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;
                 dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;
                 dataGridView6.Columns[3].HeaderText = lang.LOCATION;
-                dataGridView6.Columns[6].HeaderText = lang.AMOUNT;
-                dataGridView6.Columns[7].HeaderText = lang.REASON;
+                dataGridView6.Columns[5].HeaderText = lang.AMOUNT;
+                dataGridView6.Columns[6].HeaderText = lang.REASON;
             }
             MakeList();
         }

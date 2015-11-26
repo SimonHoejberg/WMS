@@ -30,6 +30,7 @@ namespace WMS.GUI
             textBox1.Text = lang.ORDER_NO;
             confirmBtn.Text = lang.CONFIRM;
             button1.Text = lang.CANCEL;
+            button2.Text = lang.SEACH;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
@@ -117,19 +118,8 @@ namespace WMS.GUI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                int temp = 0;
-                if(int.TryParse(textBox1.Text,out temp))
-                {
-                    updateDataGridView(textBox1.Text);
-                }
-                else
-                {
-                    MessageBox.Show(onlyNumbers, error);
-                    textBox1.Text = "";
-                }
-                
+                button2_Click(sender, e);
             }
-
         }
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -184,6 +174,7 @@ namespace WMS.GUI
             textBox1.Text = lang.ORDER_NO;
             confirmBtn.Text = lang.CONFIRM;
             button1.Text = lang.CANCEL;
+            button2.Text = lang.SEACH;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
@@ -197,6 +188,20 @@ namespace WMS.GUI
                 dataGridView.Columns[5].HeaderText = lang.AMOUNT;
             }
             dataGridView.CellValueChanged += dataGridView2_CellValueChanged;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int temp = 0;
+            if (int.TryParse(textBox1.Text, out temp))
+            {
+                updateDataGridView(textBox1.Text);
+            }
+            else
+            {
+                MessageBox.Show(onlyNumbers, error);
+                textBox1.Text = "";
+            }
         }
     }
 }
