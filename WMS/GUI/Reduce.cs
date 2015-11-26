@@ -68,9 +68,9 @@ namespace WMS.GUI
             {
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
-                    if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[6, i].Value.Equals("0")))
+                    if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[5, i].Value.Equals("0")))
                     {
-                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(), core.GetTimeStamp(),int.Parse(reduceDataGridView[6,i].Value.ToString()), lang.REDUCED);
+                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), lang.REDUCED);
                     }
                 }
                 MessageBox.Show(lang.SUCCESS_REDUCE, lang.SUCCESS);
@@ -86,8 +86,9 @@ namespace WMS.GUI
             { 
                 string itemNo = textBox1.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
+                MakeDataGridView();
             }
-            MakeDataGridView();
+            
         }
 
         private void MakeDataGridView()
