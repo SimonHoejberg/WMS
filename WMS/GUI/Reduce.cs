@@ -20,7 +20,6 @@ namespace WMS.GUI
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
-        private string itemNo;
         private ILang lang;
         private string error;
         private string mustBePostive;

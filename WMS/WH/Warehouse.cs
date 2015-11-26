@@ -36,8 +36,6 @@ namespace WMS.WH
         public void CreateWH(string orderNo)
         {
             this.orderNo = orderNo;
-            Stopwatch st = new Stopwatch();
-            st.Start();
             locations = new Location[MaxShelf(), MaxSpace()];
             List<Location> temp = core.DataHandler.LocationToList();
             foreach (Location location in temp)
@@ -51,8 +49,6 @@ namespace WMS.WH
                     }
                 }
             }
-            st.Stop();
-            System.Console.WriteLine("CW " + st.ElapsedMilliseconds + " ms");
         }
 
 
@@ -91,8 +87,6 @@ namespace WMS.WH
 
         public List<Item> FindOptimalLocation(List<Item> items)
         {
-            Stopwatch st = new Stopwatch();
-            st.Start();
             items.Sort();
             foreach (Item item in items)
             {
@@ -113,8 +107,6 @@ namespace WMS.WH
                     }
                 }
             }
-            st.Stop();
-            System.Console.WriteLine("Algo " + st.ElapsedMilliseconds + " ms");
             return notplaced;
         }
 

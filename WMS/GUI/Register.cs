@@ -87,8 +87,6 @@ namespace WMS.GUI
             DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel); 
             if (a.Equals(DialogResult.OK))
             {
-                Stopwatch st = new Stopwatch();
-                st.Start();
                 int count = dataGridView.RowCount;
                 orderNo = dataGridView[1, 0].Value.ToString();
                 for (int i = 0; i < count; i++)
@@ -102,8 +100,6 @@ namespace WMS.GUI
                         tempList.Add(item);
                     }
                 }
-                st.Stop();
-                Console.WriteLine("reg " +st.ElapsedMilliseconds +" ms");
                 if (tempList.Count != 0)
                 { 
                     core.SortNewItems(tempList,orderNo);
