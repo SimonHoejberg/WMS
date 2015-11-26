@@ -109,14 +109,20 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
-        public void UpdateInfo(string itemNo, int quantity, char op)
+        public void UpdateInfo(string itemNo, string quantity, char op, string description, string operation, string user)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo}";
+            string sql = "START TRANSACTION;"+
+                         $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo};"+
+                         "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)" +
+                         $"VALUES ({ itemNo }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '0', {quantity} , (SELECT inStock FROM information WHERE itemNo = {itemNo}), (SELECT inStock {op} {quantity} FROM information WHERE itemNo = {itemNo}));" +
+                         "COMMIT;";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
         }
+
+
 
         public MySqlDataReader SearchToList(string itemNo)
         {
