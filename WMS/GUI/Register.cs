@@ -18,6 +18,7 @@ namespace WMS.GUI
         private string mustBePostive;
         private string mustBeAnumber;
         private string onlyNumbers;
+        private string orderNo;
 
         public Register(ICore core, ILang lang)
         {
@@ -87,6 +88,7 @@ namespace WMS.GUI
             if (a.Equals(DialogResult.OK))
             {
                 int count = dataGridView.RowCount;
+                orderNo = dataGridView[1, 0].Value.ToString();
                 for (int i = 0; i < count; i++)
                 {
                     if (dataGridView[5, i].Value != null)
@@ -94,14 +96,13 @@ namespace WMS.GUI
                         string itemNo = dataGridView[2, i].Value.ToString();
                         string description = dataGridView[3, i].Value.ToString();
                         int quantity = int.Parse(dataGridView[5, i].Value.ToString());
-                        core.DataHandler.ActionOnItem('+', itemNo, description, core.GetTimeStamp(), quantity, lang.REGISTED);
                         Item item = new Item(itemNo, description, quantity, null, core.DataHandler.GetUsage(itemNo));
                         tempList.Add(item);
                     }
                 }
                 if (tempList.Count != 0)
                 { 
-                    core.SortNewItems(tempList);
+                    core.SortNewItems(tempList,orderNo);
                     MessageBox.Show(lang.SUCCESS_REGISTER, lang.SUCCESS);
                 }
                 data.Clear();

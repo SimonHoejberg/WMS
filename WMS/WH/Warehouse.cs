@@ -14,6 +14,7 @@ namespace WMS.WH
         private List<Item> itemsNotPlaced = new List<Item>();
         private int maxShelf = 0;
         private int maxSpace = 0;
+        private string orderNo;
 
         public Warehouse(ICore core)
         {
@@ -32,10 +33,9 @@ namespace WMS.WH
             return maxShelf;
         }
 
-        public void CreateWH()
+        public void CreateWH(string orderNo)
         {
-            Stopwatch st = new Stopwatch();
-            st.Start();
+            this.orderNo = orderNo;
             locations = new Location[MaxShelf(), MaxSpace()];
             List<Location> temp = core.DataHandler.LocationToList();
             foreach (Location location in temp)
@@ -49,8 +49,6 @@ namespace WMS.WH
                     }
                 }
             }
-            st.Stop();
-            System.Console.WriteLine("CW " + st.ElapsedMilliseconds + " ms");
         }
 
 
@@ -62,7 +60,7 @@ namespace WMS.WH
             {
                 string id = locations[shelf, space].Id;
                 string locationShelf = locations[shelf, space].Shelf;
-                core.DataHandler.ChangeLocation(id, locationShelf,item.InStock.ToString(), item.ItemNo,item.Usage.ToString());
+                core.DataHandler.PlaceItem(id, locationShelf,item.InStock.ToString(), item.ItemNo,item.Usage.ToString(),orderNo,item.Description);
                 locations[shelf, space] = new Location(id, locationShelf, space.ToString(), item.ItemNo, item.InStock, shelf,item.Usage);
                 
                 return true;
@@ -89,8 +87,6 @@ namespace WMS.WH
 
         public List<Item> FindOptimalLocation(List<Item> items)
         {
-            Stopwatch st = new Stopwatch();
-            st.Start();
             items.Sort();
             foreach (Item item in items)
             {
@@ -111,8 +107,6 @@ namespace WMS.WH
                     }
                 }
             }
-            st.Stop();
-            System.Console.WriteLine("Algo " + st.ElapsedMilliseconds + " ms");
             return notplaced;
         }
 

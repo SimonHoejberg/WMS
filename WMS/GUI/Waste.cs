@@ -22,7 +22,6 @@ namespace WMS.GUI
         private BindingSource bsource;
         private DataTable data;
         private int lastRow;
-        string itemNo;
         private ILang lang;
         private string error;
         private string mustBePostive;
@@ -79,10 +78,6 @@ namespace WMS.GUI
         public void MakeDataGridView()
         {
             dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
-            if (itemNo != null)
-            {
-                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
-            }
             dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
             dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;
             dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;

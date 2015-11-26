@@ -14,6 +14,8 @@ namespace WMS.Core
         private Warehouse wh;
         private bool da = true;
         public string User { get; set; }
+        public ILang Lang { get; private set; } = new LangDa();
+        public string UserName { get; private set; }
 
         public CoreSystem(IMain main)
         {
@@ -25,6 +27,7 @@ namespace WMS.Core
         public void Run()
         {
             windowHandler.Run();
+            UserName = dataHandler.GetUserName(User);
         }
 
         public IWindowHandler WindowHandler { get { return windowHandler; } }
@@ -36,9 +39,9 @@ namespace WMS.Core
             return DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
         }
 
-        public void SortNewItems(List<Item> items)
+        public void SortNewItems(List<Item> items,string orderNo)
         {
-            wh.CreateWH();
+            wh.CreateWH(orderNo);
             wh.FindOptimalLocation(items);
         }
 
@@ -46,12 +49,14 @@ namespace WMS.Core
         {
             if (da)
             {
-                windowHandler.ChangeLang(new LangEn());
+                Lang = new LangEn();
+                windowHandler.ChangeLang(Lang);
                 da = false;
             }
             else
             {
-                windowHandler.ChangeLang(new LangDa());
+                Lang = new LangDa();
+                windowHandler.ChangeLang(Lang);
                 da = true;
             }
         }

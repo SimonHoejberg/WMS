@@ -12,13 +12,17 @@ namespace WMS.Interfaces
 
         DataHandler DataHandler { get; }
 
-        void SortNewItems(List<Item> items);
+        void SortNewItems(List<Item> items, string orderNo);
 
         string GetTimeStamp();
 
         void changeLang();
 
         string User { get; set; }
+        
+        string UserName { get;}
+
+        ILang Lang { get;}
 
     }
 }
