@@ -32,7 +32,6 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.orderTextBox = new System.Windows.Forms.TextBox();
-            this.orderComboBox = new System.Windows.Forms.ComboBox();
             this.searchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -74,7 +73,9 @@
             // 
             // orderTextBox
             // 
-            this.orderTextBox.Location = new System.Drawing.Point(223, 16);
+            this.orderTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.orderTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.orderTextBox.Location = new System.Drawing.Point(16, 14);
             this.orderTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.orderTextBox.Name = "orderTextBox";
             this.orderTextBox.Size = new System.Drawing.Size(132, 22);
@@ -82,21 +83,11 @@
             this.orderTextBox.Text = "Order No";
             this.orderTextBox.Enter += new System.EventHandler(this.OrderTextBoxEnter);
             this.orderTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OrderTextBoxKeyDown);
-            // 
-            // orderComboBox
-            // 
-            this.orderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.orderComboBox.FormattingEnabled = true;
-            this.orderComboBox.Location = new System.Drawing.Point(16, 15);
-            this.orderComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.orderComboBox.Name = "orderComboBox";
-            this.orderComboBox.Size = new System.Drawing.Size(160, 24);
-            this.orderComboBox.TabIndex = 6;
-            this.orderComboBox.SelectionChangeCommitted += new System.EventHandler(this.OrderComboBoxSelectionChangeCommitted);
+            this.orderTextBox.Leave += new System.EventHandler(this.OrderTextBoxLeave);
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(364, 14);
+            this.searchButton.Location = new System.Drawing.Point(177, 11);
             this.searchButton.Margin = new System.Windows.Forms.Padding(4);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(100, 28);
@@ -115,7 +106,6 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.orderTextBox);
-            this.Controls.Add(this.orderComboBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Register";
@@ -134,7 +124,6 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.TextBox orderTextBox;
-        private System.Windows.Forms.ComboBox orderComboBox;
         private System.Windows.Forms.Button searchButton;
     }
 }
