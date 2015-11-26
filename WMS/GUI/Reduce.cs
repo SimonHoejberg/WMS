@@ -21,6 +21,7 @@ namespace WMS.GUI
         private BindingSource bsource;
         private DataTable data;
         private ILang lang;
+        private DataGridViewComboBoxColumn reduceComboColumnLocation;
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
@@ -99,6 +100,16 @@ namespace WMS.GUI
             reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
             reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
             reduceDataGridView.Columns[4].Visible = false;
+
+            /*reduceDataGridView.Columns.Add(
+                reduceComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
+                {
+                    Name = "reduceComboColumn",
+                    ValueMember = "LocationString",
+                    HeaderText = lang.LOCATION,
+                    Width = 200
+
+                });*/
 
             if (!data.Columns.Contains(lang.AMOUNT))
             {
