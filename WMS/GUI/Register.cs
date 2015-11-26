@@ -29,7 +29,7 @@ namespace WMS.GUI
             orderTextBox.Text = lang.ORDER_NO;
             confirmButton.Text = lang.CONFIRM;
             cancelButton.Text = lang.CANCEL;
-            searchButton.Text = lang.SEACH;
+            searchButton.Text = lang.SEARCH;
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace WMS.GUI
             orderTextBox.Text = lang.ORDER_NO;
             confirmButton.Text = lang.CONFIRM;
             cancelButton.Text = lang.CANCEL;
-            searchButton.Text = lang.SEACH;
+            searchButton.Text = lang.SEARCH;
             if (dataGridView.ColumnCount > 0)
             {
                 dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
