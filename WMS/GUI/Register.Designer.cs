@@ -28,36 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.confirmBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.confirmButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.orderTextBox = new System.Windows.Forms.TextBox();
+            this.orderComboBox = new System.Windows.Forms.ComboBox();
+            this.searchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // confirmBtn
+            // confirmButton
             // 
-            this.confirmBtn.Location = new System.Drawing.Point(1196, 647);
-            this.confirmBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.confirmBtn.Name = "confirmBtn";
-            this.confirmBtn.Size = new System.Drawing.Size(100, 28);
-            this.confirmBtn.TabIndex = 11;
-            this.confirmBtn.Text = "Confirm";
-            this.confirmBtn.UseVisualStyleBackColor = true;
-            this.confirmBtn.Click += new System.EventHandler(this.confirmBtn_Click);
+            this.confirmButton.Location = new System.Drawing.Point(1196, 647);
+            this.confirmButton.Margin = new System.Windows.Forms.Padding(4);
+            this.confirmButton.Name = "confirmButton";
+            this.confirmButton.Size = new System.Drawing.Size(100, 28);
+            this.confirmButton.TabIndex = 11;
+            this.confirmButton.Text = "Confirm";
+            this.confirmButton.UseVisualStyleBackColor = true;
+            this.confirmButton.Click += new System.EventHandler(this.ConfirmButtonClick);
             // 
-            // button1
+            // cancelButton
             // 
-            this.button1.Location = new System.Drawing.Point(1088, 647);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cancelButton.Location = new System.Drawing.Point(1088, 647);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(100, 28);
+            this.cancelButton.TabIndex = 10;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
             // dataGridView
             // 
@@ -66,62 +66,62 @@
             this.dataGridView.AllowUserToResizeRows = false;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Location = new System.Drawing.Point(16, 75);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(1280, 529);
             this.dataGridView.TabIndex = 9;
-            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellValueChanged);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellValueChanged);
             // 
-            // textBox1
+            // orderTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(223, 16);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(132, 22);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Text = "Order No";
-            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.orderTextBox.Location = new System.Drawing.Point(223, 16);
+            this.orderTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.orderTextBox.Name = "orderTextBox";
+            this.orderTextBox.Size = new System.Drawing.Size(132, 22);
+            this.orderTextBox.TabIndex = 7;
+            this.orderTextBox.Text = "Order No";
+            this.orderTextBox.Enter += new System.EventHandler(this.OrderTextBoxEnter);
+            this.orderTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OrderTextBoxKeyDown);
             // 
-            // comboBox1
+            // orderComboBox
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(16, 15);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(160, 24);
-            this.comboBox1.TabIndex = 6;
-            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
+            this.orderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.orderComboBox.FormattingEnabled = true;
+            this.orderComboBox.Location = new System.Drawing.Point(16, 15);
+            this.orderComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.orderComboBox.Name = "orderComboBox";
+            this.orderComboBox.Size = new System.Drawing.Size(160, 24);
+            this.orderComboBox.TabIndex = 6;
+            this.orderComboBox.SelectionChangeCommitted += new System.EventHandler(this.OrderComboBoxSelectionChangeCommitted);
             // 
-            // button2
+            // searchButton
             // 
-            this.button2.Location = new System.Drawing.Point(364, 14);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 28);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.searchButton.Location = new System.Drawing.Point(364, 14);
+            this.searchButton.Margin = new System.Windows.Forms.Padding(4);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(100, 28);
+            this.searchButton.TabIndex = 12;
+            this.searchButton.Text = "button2";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.SearchButtonClick);
             // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.confirmBtn);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.searchButton);
+            this.Controls.Add(this.confirmButton);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.orderTextBox);
+            this.Controls.Add(this.orderComboBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Register";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Register";
-            this.Load += new System.EventHandler(this.Register_Load);
+            this.Load += new System.EventHandler(this.RegisterLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -130,11 +130,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Button confirmBtn;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button confirmButton;
+        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox orderTextBox;
+        private System.Windows.Forms.ComboBox orderComboBox;
+        private System.Windows.Forms.Button searchButton;
     }
 }

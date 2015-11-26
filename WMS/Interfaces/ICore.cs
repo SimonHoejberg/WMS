@@ -17,10 +17,8 @@ namespace WMS.Interfaces
         string GetTimeStamp();
 
         void changeLang();
-
-        string User { get; set; }
         
-        string UserName { get;}
+        string UserName { get; set; }
 
         ILang Lang { get;}
 
