@@ -248,11 +248,7 @@ namespace WMS.GUI
 
             if (a.Equals(DialogResult.OK))
             {
-                int rowCount = moveDataGridView.Rows.Count - 1;
-                for (int i = 0; i < rowCount; i++)
-                {
-                    moveDataGridView.Rows.RemoveAt(0);
-                }
+                ClearDataGridView();
             }
         }
 
@@ -282,11 +278,6 @@ namespace WMS.GUI
                     noProblemsEncountered = false;
                     problemList += ($"\n{lang.VALUE_IN_ITEM_ID} {(dgvRow.Index + 1)} {lang.IS_EMPTY}");
                 }
-
-
-                Console.WriteLine(noProblemsEncountered);
-                //Fix attempt to move multiple items to the same location
-
             }
             if (noProblemsEncountered == true) //Commit changes if no problems.
             {
@@ -296,27 +287,9 @@ namespace WMS.GUI
                     int rowCount = moveDataGridView.Rows.Count - 1;
                     for (int i = 0; i < rowCount; i++)
                     {
-                        string[] oldLoc = moveDataGridView.Rows[i].Cells[locationColumnString].Value.ToString().Split(':');
-                        string[] newLoc = (moveDataGridView.Rows[i].Cells[newLocationColumnString].Value as string).Split(':');
-                        Location tempOldLoc = null;
-                        Location tempNewLoc = null;
+                        Location tempOldLoc = locationData[moveDataGridView.Rows[i].Cells[locationColumnString].Value.ToString()];
+                        Location tempNewLoc = locationData[moveDataGridView.Rows[i].Cells[newLocationColumnString].Value.ToString()];
 
-                        foreach (Location loc in core.DataHandler.LocationToList())
-                        {
-                            if (loc.Shelf.ToString().Equals(oldLoc[0]) && loc.Space.ToString().Equals(oldLoc[1]))
-                            {
-                                tempOldLoc = loc;
-                                break;
-                            }
-                        }
-                        foreach (Location loc in core.DataHandler.LocationToList())
-                        {
-                            if (loc.Shelf.ToString().Equals(newLoc[0]) && loc.Space.ToString().Equals(newLoc[1]))
-                            {
-                                tempNewLoc = loc;
-                                break;
-                            }
-                        }
                         if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo))
                         {
                             core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value)).ToString(), tempOldLoc.ItemNo.ToString());
