@@ -12,12 +12,12 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
+        private ILang lang;
         private DataGridViewTextBoxColumn ColumnQuantity, columnAction;
         private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
-        Dictionary<string, Location> locationData;
-        private ILang lang;
-        AutoCompleteStringCollection ItemListA;
-        Dictionary<string, Item> itemData;
+        private AutoCompleteStringCollection ItemListA;
+        private Dictionary<string, Location> locationData;
+        private Dictionary<string, Item> itemData;
         private string idColumnString = "ItemIDColumn", quantityColumnString = "QuantityColumn", locationColumnString = "LocationColumn", 
             newLocationColumnString = "NewLocationColumn", actionColumnString = "ActionColumn";
 
@@ -30,24 +30,26 @@ namespace WMS.GUI
             moveCancelButton.Text = lang.CANCEL;
             Text = lang.MOVE;
             InitializeDataGridView(core);
+            
         }
 
         private void InitializeDataGridView(ICore core)
         {
-            //Dictionary for easy reference
+            //Dictionaries are used for easy reference and to minimize the need to refer to the database
             locationData = new Dictionary<string, Location>();
             itemData = new Dictionary<string, Item>();
             ItemListA = new AutoCompleteStringCollection();
 
+            //Populates the dictionaries (and ItemListA) with data from the database 
             populateItemDictionary(ItemListA, itemData);
             PopulateLocationDictionary(locationData);
 
-            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA;
+            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA; 
 
             #region 
-            //Creates the DataGridViewComboBoxColumns that makes up the datagridview
+            //Creates the Columns that makes up the datagridview
             moveDataGridView.Columns.Add(
-                ComboColumnIdentification = new DataGridViewComboBoxColumn()
+                ComboColumnIdentification = new DataGridViewComboBoxColumn() //Column used for showing item number/Name
                 {
                     Name = idColumnString,
                     DataSource = itemData.Values.ToList(),
@@ -57,40 +59,42 @@ namespace WMS.GUI
                     Width = 300,
                 });
             moveDataGridView.Columns.Add(
-            ComboColumnLocation = new DataGridViewComboBoxColumn()
-            {
+                ComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
+                {
                     Name = locationColumnString,
-                ValueMember = "LocationString",
-                HeaderText = lang.LOCATION,
-                Width = 200
+                    ValueMember = "LocationString",
+                    HeaderText = lang.LOCATION,
+                    Width = 200
 
-            });
+                });
             moveDataGridView.Columns.Add(
-                ColumnQuantity = new DataGridViewTextBoxColumn()
+                ColumnQuantity = new DataGridViewTextBoxColumn() //Column used for showing quantity to move
                 {
                     Name = quantityColumnString,
                     HeaderText = lang.AMOUNT,
                     Width = 130
                 });
             moveDataGridView.Columns.Add(
-            ComboColumnNewLocation = new DataGridViewComboBoxColumn()
-            {
+                ComboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing location to move to
+                {
                     Name = newLocationColumnString,
-                ValueMember = "LocationString",
-                HeaderText = lang.NEW_LOCATION,
-                Width = 200
-            });
+                    ValueMember = "LocationString",
+                    HeaderText = lang.NEW_LOCATION,
+                    Width = 200
+                });
             moveDataGridView.Columns.Add(
-                columnAction = new DataGridViewTextBoxColumn()
+                columnAction = new DataGridViewTextBoxColumn() //Column used for showing what action is made (move to new location / combine locations)
                 {
                     Name = actionColumnString,
-                    HeaderText = "Action",
+                    HeaderText = lang.DESCRIPTION,
                     Width = 100,
                     ReadOnly = true
                 });
             #endregion
 
-            // Add the events to listen for
+            /*The CellValueChanged event only fires when the relevant cell loses focus, but we want the event to fire at the exact moment the cell value changes.
+              To do this we add a new eventlistner that fires when the dirtyState (Uncommited changes in a cell) changes for a cell. This does have the downside
+              that the CellValueChanged event ends up fireing twice, but due to the nature of the system, this is not a problem.*/
             moveDataGridView.CellValueChanged += new DataGridViewCellEventHandler(moveDataGridViewCellValueChanged);
             moveDataGridView.CurrentCellDirtyStateChanged += new EventHandler(moveDataGridViewCurrentCellDirtyStateChanged);
         }
@@ -195,19 +199,14 @@ namespace WMS.GUI
                 }
             }
         }
-
+        //Returns a list of items where the itemNumber is equal to the chosen item in IdentificationColumn
         private List<Item> ItemList(DataGridViewCell eventCell)
         {
             List<Item> input = itemData.Values.ToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
-        private List<Item> DescriptionList(DataGridViewCell eventCell)
-        {
-            List<Item> input = itemData.Values.ToList();
-            return input.Where(x => x.Description.Equals(eventCell.Value)).ToList();
-        }
-
+        //Returns a list of locations that are empty or contain the same item as the chosen item in IdentificationColumn
         private List<Location> LocationList(DataGridViewCell eventCell, Dictionary<string, Location> locDic)
         {
             List<Location> returnList = new List<Location>();
@@ -331,11 +330,13 @@ namespace WMS.GUI
             this.lang = lang;
             moveConfirmButton.Text = lang.CONFIRM;
             moveCancelButton.Text = lang.CANCEL;
+            moveAddItemButton.Text = lang.ADD;
             Text = lang.MOVE;
             moveDataGridView.Columns[quantityColumnString].HeaderText = lang.AMOUNT;
             ComboColumnLocation.HeaderText = lang.LOCATION;
             ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
             ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
+            columnAction.HeaderText = lang.DESCRIPTION;
         }
 
         private void moveAddItemButton_Click(object sender, EventArgs e)

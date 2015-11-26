@@ -180,6 +180,7 @@ namespace WMS.GUI
                 }
                 data.Clear();
                 MessageBox.Show(lang.SUCCESS_WASTE, lang.SUCCESS);
+                core.WindowHandler.Update(this);
             }
         }
 
@@ -247,6 +248,11 @@ namespace WMS.GUI
             {
                 button1_Click(sender, e);
             }
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            textBox1.Text = lang.ITEM_NO;
         }
     }
 }
