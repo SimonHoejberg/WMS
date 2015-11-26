@@ -34,19 +34,15 @@ namespace WMS.GUI
 
         private void InitializeDataGridView(ICore core)
         {
+            //Dictionary for easy reference
+            locationData = new Dictionary<string, Location>();
             itemData = new Dictionary<string, Item>();
             ItemListA = new AutoCompleteStringCollection();
 
-            foreach (Item item in core.DataHandler.InfoToList())
-            {
-                ItemListA.Add(item.Identification);
-                itemData.Add(item.Identification, item);
-            }
-            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA;
-
-            //Dictionary for easy reference
-            locationData = new Dictionary<string, Location>();
+            populateItemDictionary(ItemListA, itemData);
             PopulateLocationDictionary(locationData);
+
+            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA;
 
             #region 
             //Creates the DataGridViewComboBoxColumns that makes up the datagridview
@@ -54,7 +50,7 @@ namespace WMS.GUI
                 ComboColumnIdentification = new DataGridViewComboBoxColumn()
                 {
                     Name = idColumnString,
-                    DataSource = core.DataHandler.InfoToList(),
+                    DataSource = itemData.Values.ToList(),
                     DisplayMember = "Identification",
                     ValueMember = "ItemNo",
                     HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION,
@@ -101,7 +97,7 @@ namespace WMS.GUI
 
         // This event handler manually raises the CellValueChanged event 
         // by calling the CommitEdit method. 
-        void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
+        private void moveDataGridViewCurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (moveDataGridView.IsCurrentCellDirty)
             {
@@ -157,7 +153,7 @@ namespace WMS.GUI
                 {
                     int maxQuantity = 0;
 
-                    foreach (Location loc in core.DataHandler.LocationToList())
+                    foreach (Location loc in locationData.Values.ToList())
                     {
                         if (moveDataGridView.Rows[e.RowIndex].Cells[locationColumnString].Value != null && loc.ToString().Equals(moveDataGridView.Rows[e.RowIndex].Cells[locationColumnString].Value.ToString()))
                         {
@@ -202,13 +198,13 @@ namespace WMS.GUI
 
         private List<Item> ItemList(DataGridViewCell eventCell)
         {
-            List<Item> input = core.DataHandler.InfoToList();
+            List<Item> input = itemData.Values.ToList();
             return input.Where(x => x.ItemNo.Equals(eventCell.Value)).ToList();
         }
 
         private List<Item> DescriptionList(DataGridViewCell eventCell)
         {
-            List<Item> input = core.DataHandler.InfoToList();
+            List<Item> input = itemData.Values.ToList();
             return input.Where(x => x.Description.Equals(eventCell.Value)).ToList();
         }
 
@@ -308,7 +304,10 @@ namespace WMS.GUI
                     }
 
                     ClearDataGridView();
+                    populateItemDictionary(ItemListA, itemData);
                     PopulateLocationDictionary(locationData);
+                    core.WindowHandler.Update(this);
+                    
                 }
             }
             //give error message if commit could not be done
@@ -374,6 +373,17 @@ namespace WMS.GUI
                 }
             }
         }
+        
+        private void populateItemDictionary(AutoCompleteStringCollection itemList, Dictionary<string, Item> dic)
+        {
+            itemList.Clear();
+            dic.Clear();
+            foreach (Item item in core.DataHandler.InfoToList())
+            { 
+                itemList.Add(item.Identification);
+                dic.Add(item.Identification, item);
+            }
+        }
 
         private void MoveLoad(object sender, EventArgs e)
         {
@@ -382,7 +392,8 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-
+            populateItemDictionary(ItemListA, itemData);
+            PopulateLocationDictionary(locationData);
         }
     }
 }

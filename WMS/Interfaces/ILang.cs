@@ -82,6 +82,9 @@ namespace WMS.Interfaces
         string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; }
         string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; }
 
+        string OLD_QUANTITY { get; }
+        string NEW_QUANTITY { get; }
+
         string LOGGED_IN_AS { get; }
     }
 }
