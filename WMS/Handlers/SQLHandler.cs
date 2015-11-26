@@ -201,10 +201,15 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
-        public void moveItem(string id, string newQuantity, string newItem, string usage)
+        public void PlaceItem(string id, string amount, string newItem, string usage, string newLocation,string orderNo,string description,string user,string operation)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {newQuantity} WHERE ID = {id}";
+            string sql = "START TRANSACTION;" + 
+               $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};"+
+               $"UPDATE information SET location = '{newLocation}',inStock = inStock + {amount} WHERE itemNo = '{newItem}';" +
+               "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)"+ 
+               $"VALUES ({ newItem }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {newItem}), (SELECT inStock + {amount} FROM information WHERE itemNo = {newItem}));"+
+               "COMMIT;";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
