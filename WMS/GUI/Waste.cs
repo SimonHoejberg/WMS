@@ -214,7 +214,7 @@ namespace WMS.GUI
             this.lang = lang;
             Text = lang.WASTE;
             button1.Text = lang.CHOOSE;
-            button2.Text = lang.SEACH;
+            button2.Text = lang.SEARCH;
             textBox1.Text = lang.ITEM_NO;
             button10.Text = lang.CANCEL;
             button11.Text = lang.CONFIRM;
