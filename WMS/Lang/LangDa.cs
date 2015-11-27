@@ -87,9 +87,12 @@ namespace WMS.Lang
 
         public string LOGGED_IN_AS { get; } = "Logget ind som:";
 
-        public string ADD { get; } = "Tilføj linje";
+        public string ADD { get; } = "Tilføj række";
 
         public string OLD_QUANTITY { get; } = "Mængde før";
         public string NEW_QUANTITY { get; } = "Mængde efter";
+
+        public string NOT_PLACED { get; } = "Ikke placeret";
+        public string PLACED { get; } = "Placeret";
     }
 }

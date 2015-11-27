@@ -87,9 +87,12 @@ namespace WMS.Lang
 
         public string LOGGED_IN_AS { get; } = "Logged in as:";
 
-        public string ADD { get; } = "Add line";
+        public string ADD { get; } = "Add row";
 
         public string OLD_QUANTITY { get; } = "Old quantity";
-        public string NEW_QUANTITY { get; } = "New Quantity";
+        public string NEW_QUANTITY { get; } = "New quantity";
+
+        public string NOT_PLACED { get; } = "Not placed";
+        public string PLACED { get; } = "Placed";
     }
 }

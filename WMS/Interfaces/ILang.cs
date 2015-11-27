@@ -84,5 +84,8 @@ namespace WMS.Interfaces
         string NEW_QUANTITY { get; }
 
         string LOGGED_IN_AS { get; }
+
+        string NOT_PLACED { get; }
+        string PLACED { get; }
     }
 }

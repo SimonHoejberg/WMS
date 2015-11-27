@@ -230,11 +230,15 @@ namespace WMS.GUI
                         tempList.Add(item);
                     }
                 }
-
+                //For us in displaying feedback to the user
+                Dictionary<Item, Location> itemsPlaced;
+                List<Item> itemsNotPlaced;
                 if (tempList.Count != 0)
                 {
-                    core.SortNewItems(tempList, orderNo); //Calls the algoritme
-                    MessageBox.Show(lang.SUCCESS_REGISTER, lang.SUCCESS); //Give feedback to the user
+                    itemsNotPlaced = core.SortNewItems(tempList, orderNo, out itemsPlaced); //Calls the algoritme
+                    RigisterFeedBack regFeedback = new RigisterFeedBack(core, itemsNotPlaced, itemsPlaced);
+                    regFeedback.Owner = this;
+                    regFeedback.ShowDialog();
                 }
                 data.Clear(); // Clear the dataGridView
                 core.WindowHandler.Update(this); //Update the gui's on all other windows then this  

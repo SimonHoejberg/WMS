@@ -9,9 +9,8 @@ namespace WMS.WH
         private ICore core;
         private Location[,] locations;
         private Dictionary<string, int> quickPlace = new Dictionary<string, int>();
-        private List<Item> notplaced = new List<Item>();
-        private Dictionary<int, string> maxMin = new Dictionary<int, string>();
         private List<Item> itemsNotPlaced = new List<Item>();
+        private Dictionary<Item, Location> itemsPlaced = new Dictionary<Item, Location>();
         private int maxShelf = 0;
         private int maxSpace = 0;
         private string orderNo;
@@ -52,6 +51,15 @@ namespace WMS.WH
         }
 
 
+        private void PlaceItem(string id,string locationShelf,Item item, int shelf, int space)
+        {
+            core.DataHandler.PlaceItem(id, locationShelf, item.InStock.ToString(), item.ItemNo, item.Usage.ToString(), orderNo, item.Description);
+            Location location = new Location(id, locationShelf, space.ToString(), item.ItemNo, item.InStock, shelf, item.Usage);
+            locations[shelf, space] = location;
+            itemsPlaced.Add(item, location);
+
+        }
+
         private bool FindAvaliableSpace(Item item, int shelf, int space)
         {
             int max = locations[shelf, 0].Usage;
@@ -60,9 +68,9 @@ namespace WMS.WH
             {
                 string id = locations[shelf, space].Id;
                 string locationShelf = locations[shelf, space].Shelf;
-                core.DataHandler.PlaceItem(id, locationShelf,item.InStock.ToString(), item.ItemNo,item.Usage.ToString(),orderNo,item.Description);
-                locations[shelf, space] = new Location(id, locationShelf, space.ToString(), item.ItemNo, item.InStock, shelf,item.Usage);
-                
+
+                PlaceItem(id, locationShelf, item, shelf, space);
+
                 return true;
             }
             else
@@ -85,7 +93,7 @@ namespace WMS.WH
         }
 
 
-        public List<Item> FindOptimalLocation(List<Item> items)
+        public List<Item> FindOptimalLocation(List<Item> items, out Dictionary<Item,Location> itemsPlaced)
         {
             items.Sort();
             foreach (Item item in items)
@@ -96,18 +104,19 @@ namespace WMS.WH
                     quickPlace.TryGetValue(item.ItemNo,out quickshelf);
                     if (!FindAvaliableSpace(item, quickshelf, 0))
                     {
-                        notplaced.Add(item);
+                        itemsNotPlaced.Add(item);
                     }
                 }
                 else
                 {
                     if (!FindAvaliableSpace(item, 0, 0))
                     {
-                        notplaced.Add(item);
+                        itemsNotPlaced.Add(item);
                     }
                 }
             }
-            return notplaced;
+            itemsPlaced = this.itemsPlaced;
+            return itemsNotPlaced;
         }
 
     }

@@ -12,7 +12,7 @@ namespace WMS.Interfaces
 
         DataHandler DataHandler { get; }
 
-        void SortNewItems(List<Item> items, string orderNo);
+        List<Item> SortNewItems(List<Item> items, string orderNo, out Dictionary<Item, Location> itemPlaced);
 
         string GetTimeStamp();
 
