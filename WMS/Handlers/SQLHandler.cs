@@ -86,7 +86,7 @@ namespace WMS.Handlers
             {
                 temp = 0;
             }
-            return GetItemInfo(DataBaseTypes.LOG, DataBaseValues.ITEM, itemNo, (temp).ToString(), "10");
+            return GetItemInfo(DataBases.LOG_DB, Reference.SearchTerms.ITEM, itemNo, (temp).ToString(), "10");
         }
 
         public MySqlDataReader GetDataForList(string db)

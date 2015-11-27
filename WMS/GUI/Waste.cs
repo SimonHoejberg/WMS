@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using static WMS.Reference.DataBaseValues;
-using static WMS.Reference.DataBaseTypes;
+using static WMS.Reference.SearchTerms;
+using static WMS.Reference.DataBases;
 using WMS.WH;
 
 namespace WMS.GUI

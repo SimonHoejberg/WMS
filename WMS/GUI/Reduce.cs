@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
 using WMS.WH;
-using static WMS.Reference.DataBaseValues;
-using static WMS.Reference.DataBaseTypes;
+using static WMS.Reference.SearchTerms;
+using static WMS.Reference.DataBases;
 
 namespace WMS.GUI
 {
@@ -85,7 +85,7 @@ namespace WMS.GUI
             if (int.TryParse(textBox1.Text, out temp))
             { 
                 string itemNo = textBox1.Text;
-                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
+                core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
                 MakeDataGridView();
             }
             

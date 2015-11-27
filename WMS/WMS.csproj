@@ -86,22 +86,14 @@
     <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="Lang\LangEn.cs" />
-    <Compile Include="WH\LogItem.cs" />
+    <Compile Include="WH\Log.cs" />
     <Compile Include="WH\Order.cs" />
-    <Compile Include="Reference\DataBaseTypes.cs" />
-    <Compile Include="Reference\DataBaseValues.cs" />
+    <Compile Include="Reference\DataBases.cs" />
+    <Compile Include="Reference\SearchTerms.cs" />
     <Compile Include="Lang\LangDa.cs" />
-    <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
     <Compile Include="Handlers\SqlHandler.cs" />
-    <Compile Include="Reference\WarehouseLayout.cs" />
-    <Compile Include="GUI\Program.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Program.Designer.cs">
-      <DependentUpon>Program.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Information.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,9 +153,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Program.resx">
-      <DependentUpon>Program.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Information.resx">
       <DependentUpon>Information.cs</DependentUpon>
