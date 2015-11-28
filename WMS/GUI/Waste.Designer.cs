@@ -88,7 +88,6 @@
             this.chooseButton.Name = "chooseButton";
             this.chooseButton.Size = new System.Drawing.Size(75, 23);
             this.chooseButton.TabIndex = 1;
-            this.chooseButton.Text = "Choose";
             this.chooseButton.UseVisualStyleBackColor = true;
             this.chooseButton.Click += new System.EventHandler(this.chooseButton_Click);
             // 
@@ -100,6 +99,7 @@
             this.listBox1.Size = new System.Drawing.Size(200, 108);
             this.listBox1.TabIndex = 0;
             this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown_1);
+            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
             // 
             // searchTextBox
             // 

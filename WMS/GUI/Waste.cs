@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using static WMS.Reference.SearchTerms;
-using static WMS.Reference.DataBases;
 using WMS.WH;
+using static WMS.Reference.DataBases;
 
 namespace WMS.GUI
 {
@@ -190,7 +184,7 @@ namespace WMS.GUI
             if (int.TryParse(searchTextBox.Text, out temp))
             {
                 string itemNo = searchTextBox.Text;
-                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
+                core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
                 MakeDataGridView();
             }
             
@@ -253,6 +247,11 @@ namespace WMS.GUI
         private void textBox1_Leave(object sender, EventArgs e)
         {
             searchTextBox.Text = lang.ITEM_NO;
+        }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            chooseButton_Click(sender, e);
         }
     }
 }

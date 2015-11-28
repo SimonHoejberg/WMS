@@ -63,7 +63,7 @@ namespace WMS.Lang
 
         public string ORDER_NO { get; } = "Ordre Nr.";
 
-        public string CHOOSE { get; } = "Choose";
+        public string CHOOSE { get; } = "Vælg";
         public string BROKEN { get; } = "Ødelagt / I stykker";
         public string WRONG_ITEM_DELIVRED { get; } = "Modtaget forkert vare";
         public string MISSING { get; } = "Mangler";
