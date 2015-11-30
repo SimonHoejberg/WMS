@@ -99,17 +99,16 @@ namespace WMS.GUI
             reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
             reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
             reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
-            reduceDataGridView.Columns[4].Visible = false;
+            reduceDataGridView.Columns[4].Visible = true;
 
-            /*reduceDataGridView.Columns.Add(
+            reduceDataGridView.Columns.Add(
                 reduceComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
                 {
                     Name = "reduceComboColumn",
                     ValueMember = "LocationString",
                     HeaderText = lang.LOCATION,
                     Width = 200
-
-                });*/
+                });
 
             if (!data.Columns.Contains(lang.AMOUNT))
             {
@@ -208,6 +207,20 @@ namespace WMS.GUI
             {
                 reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
             }
+        }
+
+        private void reduceDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            foreach (Location a in core.DataHandler.LocationToList())
+            {
+                Console.WriteLine(a.ItemNo + " : " + reduceDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString());
+                if (a.ItemNo.Equals(reduceDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString()))
+                {
+                    Console.WriteLine(true);
+                    (reduceDataGridView.Rows[e.RowCount].Cells["reduceComboColumn"] as DataGridViewComboBoxCell).Items.Add(a.LocationString);
+                }
+            }
+            Console.WriteLine();
         }
     }
 }

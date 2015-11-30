@@ -68,11 +68,12 @@
             this.reduceDataGridView.Size = new System.Drawing.Size(960, 465);
             this.reduceDataGridView.TabIndex = 5;
             this.reduceDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.reduceDataGridView_CellValueChanged);
+            this.reduceDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.reduceDataGridView_RowsAdded);
             // 
             // searchBtn
             // 
             this.searchBtn.Location = new System.Drawing.Point(117, 26);
-            this.searchBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchBtn.Margin = new System.Windows.Forms.Padding(2);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(75, 23);
             this.searchBtn.TabIndex = 9;
@@ -94,7 +95,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(707, 528);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 11;
