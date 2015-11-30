@@ -2,7 +2,6 @@
 using MySql.Data.MySqlClient;
 using WMS.Reference;
 using WMS.Interfaces;
-using System.Diagnostics;
 
 namespace WMS.Handlers
 {
@@ -32,6 +31,7 @@ namespace WMS.Handlers
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sqlC = "SELECT * FROM " + db + " WHERE " + searchTerm + " = " + itemNo;
+            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             return MyDA;
         }
@@ -40,6 +40,7 @@ namespace WMS.Handlers
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sqlCom = string.Format("SELECT * FROM {0}", db);
+            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
             return MyDA;
         }
@@ -122,7 +123,7 @@ namespace WMS.Handlers
             return MyDA;
         }
 
-        public void OpenConnection()
+        private void OpenConnection()
         {
             try
             {
@@ -190,15 +191,6 @@ namespace WMS.Handlers
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
-        }
-
-        public void updateInformation(string Item, string newLocation,string quantity)
-        {
-            MySqlCommand command2 = connection.CreateCommand();
-            string sql2 = $"UPDATE information SET location = '{newLocation}',inStock = inStock + {quantity} WHERE itemNo = '{Item}'";
-            command2.CommandText = sql2;
-            ResetConnection();
-            command2.ExecuteNonQuery();
         }
 
         public MySqlDataReader GetMaxShelf()

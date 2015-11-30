@@ -32,7 +32,6 @@ namespace WMS.Handlers
             {
                 temp = reader["name"].ToString();
             }
-            sql.CloseConnection();
             return temp;
         }
         public List<string> GetUser() => UserToList();
@@ -48,7 +47,6 @@ namespace WMS.Handlers
                 temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString())));
 
             }
-            sql.CloseConnection();
             return temp;
         }
 
@@ -60,7 +58,6 @@ namespace WMS.Handlers
             {
                 temp.Add(reader["userId"].ToString());
             }
-            sql.CloseConnection();
             return temp;
         }
 
@@ -80,7 +77,6 @@ namespace WMS.Handlers
                 }
 
             }
-            sql.CloseConnection();
             return temp;
         }
 
@@ -92,7 +88,6 @@ namespace WMS.Handlers
             {
                 temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString()),int.Parse(reader["bestLocation"].ToString()), int.Parse(reader["itemUsage"].ToString())));
             }
-            sql.CloseConnection();
             return temp;
         }
 
@@ -104,7 +99,6 @@ namespace WMS.Handlers
             {
                 temp.Add(new Log(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
-            sql.CloseConnection();
             return temp;
         }
         public MySqlDataAdapter Search(string itemNo, string db, string searchTerm) => sql.Search(itemNo, db, searchTerm);
@@ -117,7 +111,6 @@ namespace WMS.Handlers
             {
                 item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString()));
             }
-            sql.CloseConnection();
             return item;        
         }
 
@@ -139,11 +132,6 @@ namespace WMS.Handlers
         public void ItemMove(string item, string newLocation)
         {
             sql.moveItem(item, newLocation);
-        }
-
-        public void CloseConnectionToServer()
-        {
-            sql.CloseConnection();
         }
 
         public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string user, string operation,string id)
@@ -174,7 +162,6 @@ namespace WMS.Handlers
             {
                 usage = int.Parse(reader["itemUsage"].ToString());
             }
-            sql.CloseConnection();
             return usage;
         }
 
@@ -190,7 +177,6 @@ namespace WMS.Handlers
                     res = temp;
                 }
             }
-            sql.CloseConnection();
             res++;
             return res;
         }
@@ -207,8 +193,12 @@ namespace WMS.Handlers
                     res = temp;
                 }
             }
-            sql.CloseConnection();
             return res;
+        }
+
+        public void CloseConnectionToServer()
+        {
+            sql.CloseConnection();
         }
 
     }
