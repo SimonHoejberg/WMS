@@ -127,8 +127,8 @@ namespace WMS.GUI
                     panel1.Visible = true;
                     listBox1.Focus();
                 }
-                wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
             }
+            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
         private void chooseButton_Click(object sender, EventArgs e)
@@ -174,7 +174,7 @@ namespace WMS.GUI
                                                       wasteDataGridView[1, i].Value.ToString(), 
                                                       wasteDataGridView[6, i].Value.ToString(),
                                                       core.DataHandler.GetUserName(user), 
-                                                      wasteDataGridView[7, i].Value.ToString(),(wasteDataGridView[5,i].Value as Location).Id);
+                                                      wasteDataGridView[7, i].Value.ToString(),(wasteDataGridView[5,i].Value as WH.Location).Id);
                     }
                 }
                 data.Clear();
