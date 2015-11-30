@@ -2,7 +2,6 @@
 using System.Data;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
 using WMS.WH;
 using static WMS.Reference.SearchTerms;
 using static WMS.Reference.DataBases;
@@ -13,18 +12,16 @@ namespace WMS.GUI
     {
         private ICore core;
         private string itemNo;
-        private ILang lang;
-        BindingSource bsource;
-        DataTable data;
+        private BindingSource bsource;
+        private DataTable data;
 
         public Form Main { get; set; }
 
-        public Information(ICore core, ILang lang)
+        public Information(ICore core)
         {
             InitializeComponent();
-            this.lang = lang;
             this.core = core;
-            UpdateLang(lang);
+            UpdateLang();
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -41,10 +38,10 @@ namespace WMS.GUI
         {
             core.DataHandler.GetData(INFOMATION_DB).Fill(data);
 
-            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-            dataGridView.Columns[3].HeaderText = lang.LOCATION;
+            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             dataGridView.Columns[4].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
@@ -81,56 +78,45 @@ namespace WMS.GUI
             core.WindowHandler.OpenLog(itemNo);
         }
 
-        private void DataGridViewCellClick(object sender, DataGridViewCellEventArgs e)
+        public void UpdateLang()
         {
-
-        }
-
-        private void InformationEnter(object sender, System.EventArgs e)
-        {
-
-        }
-
-        public void UpdateLang(ILang lang)
-        {
-            textBox1.TextChanged -= textBox1_TextChanged;
-            this.lang = lang;
-            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
-            Text = lang.INFORMATION;
-            closeButton.Text = lang.CLOSE;
-            viewItemButton.Text = lang.VIEW_ITEM;
-            logButton.Text = lang.LOG;
-            label4.Text = lang.DESCRIPTION;
-            label2.Text = lang.LOCATION;
-            label3.Text = lang.USAGE;
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            Text = core.Lang.INFORMATION;
+            closeButton.Text = core.Lang.CLOSE;
+            viewItemButton.Text = core.Lang.VIEW_ITEM;
+            logButton.Text = core.Lang.LOG;
+            label4.Text = core.Lang.DESCRIPTION;
+            label2.Text = core.Lang.LOCATION;
+            label3.Text = core.Lang.USAGE;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-                dataGridView.Columns[3].HeaderText = lang.LOCATION;
+                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             }
-            textBox1.TextChanged += textBox1_TextChanged;
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
             int a = 0;
             data?.Clear();
-            if (int.TryParse(textBox1.Text, out a))
+            if (int.TryParse(SearchTextBox.Text, out a))
             {
-                core.DataHandler.Search(textBox1.Text, INFOMATION_DB, ITEM).Fill(data);
+                core.DataHandler.Search(SearchTextBox.Text, INFOMATION_DB, ITEM).Fill(data);
             }
             else
             {
-                core.DataHandler.Search(textBox1.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
+                core.DataHandler.Search(SearchTextBox.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
             }
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void SearchTextBoxEnter(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            SearchTextBox.Text = "";
         }
     }
 }

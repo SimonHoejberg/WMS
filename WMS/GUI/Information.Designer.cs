@@ -40,7 +40,7 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.logButton = new System.Windows.Forms.Button();
             this.logListBox = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SearchTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.itemInfoPanel.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +68,6 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(1280, 572);
             this.dataGridView.TabIndex = 2;
-            this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellClick);
             // 
             // itemInfoPanel
             // 
@@ -182,19 +181,19 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(47, 7);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(171, 22);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+            this.SearchTextBox.Location = new System.Drawing.Point(47, 7);
+            this.SearchTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.SearchTextBox.Name = "textBox1";
+            this.SearchTextBox.Size = new System.Drawing.Size(171, 22);
+            this.SearchTextBox.TabIndex = 5;
+            this.SearchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
             // 
             // Information
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.itemInfoPanel);
             this.Controls.Add(this.viewItemButton);
             this.Controls.Add(this.dataGridView);
@@ -204,7 +203,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Information";
             this.Load += new System.EventHandler(this.InformationLoad);
-            this.Enter += new System.EventHandler(this.InformationEnter);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.itemInfoPanel.ResumeLayout(false);
             this.itemInfoPanel.PerformLayout();
@@ -227,6 +225,6 @@
         private System.Windows.Forms.Label usageLabel;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SearchTextBox;
     }
 }

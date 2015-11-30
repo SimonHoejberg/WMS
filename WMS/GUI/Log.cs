@@ -19,12 +19,11 @@ namespace WMS.GUI
     {
         private ICore core;
         private bool sortToggle = false;
-        private ILang lang;
         private MySqlDataAdapter inputFromInfo = null;
         BindingSource bsource;
         DataTable data;
 
-        public Log(ICore core, ILang lang)
+        public Log(ICore core)
         {
             InitializeComponent();
             bsource = new BindingSource();
@@ -32,15 +31,13 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             this.core = core;
-            this.lang = lang;
-            UpdateLang(lang);
+            UpdateLang();
 
         }
 
-        public Log(ICore core, string itemNo, ILang lang)
+        public Log(ICore core, string itemNo)
         {
             this.core = core;
-            this.lang = lang;
             InitializeComponent();
             bsource = new BindingSource();
             data = new DataTable();
@@ -48,8 +45,8 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
             inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, LOG_DB);
             sortToggle = true;
-            UpdateLang(lang);
-            sortButton.Text = lang.UNSORT;
+            UpdateLang();
+            sortButton.Text = core.Lang.UNSORT;
         }
 
         private void UpdateLog()
@@ -61,15 +58,15 @@ namespace WMS.GUI
         {
 
             mysqlData.Fill(data);
-            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = lang.TIMESTAMP;
-            dataGridView.Columns[3].HeaderText = lang.USER;
-            dataGridView.Columns[4].HeaderText = lang.OPERATION;
-            dataGridView.Columns[5].HeaderText = lang.ORDER_NO;
-            dataGridView.Columns[6].HeaderText = lang.AMOUNT;
-            dataGridView.Columns[7].HeaderText = lang.OLD_QUANTITY;
-            dataGridView.Columns[8].HeaderText = lang.NEW_QUANTITY;
+            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = core.Lang.TIMESTAMP;
+            dataGridView.Columns[3].HeaderText = core.Lang.USER;
+            dataGridView.Columns[4].HeaderText = core.Lang.OPERATION;
+            dataGridView.Columns[5].HeaderText = core.Lang.ORDER_NO;
+            dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+            dataGridView.Columns[7].HeaderText = core.Lang.OLD_QUANTITY;
+            dataGridView.Columns[8].HeaderText = core.Lang.NEW_QUANTITY;
 
             if (dataGridView.RowCount != 0 && dataGridView[0, 0].Value != null)
             {
@@ -112,13 +109,13 @@ namespace WMS.GUI
                 sortToggle = true;
                 string temp = dataGridView[0, dataGridView.CurrentCell.RowIndex].Value.ToString();
                 UpdateLog(core.DataHandler.GetDataFromItemNo(temp, LOG_DB));
-                sortButton.Text = lang.UNSORT;
+                sortButton.Text = core.Lang.UNSORT;
             }
             else if(sortToggle)
             {
                 sortToggle = false;
                 UpdateLog();
-                sortButton.Text = lang.SORT;
+                sortButton.Text = core.Lang.SORT;
             }
         }
 
@@ -140,38 +137,35 @@ namespace WMS.GUI
             }
         }
 
-        public void UpdateLang(ILang lang)
+        public void UpdateLang()
         {
             textBox1.TextChanged -= textBox1_TextChanged;
-            this.lang = lang;
-            Text = lang.LOG;
-            closeButton.Text = lang.CLOSE;
-            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
-            viewItemButton.Text = lang.VIEW_ITEM;
-            label4.Text = lang.DESCRIPTION;
-            label2.Text = lang.LOCATION;
-            label3.Text = lang.USAGE;
+            Text = core.Lang.LOG;
+            closeButton.Text = core.Lang.CLOSE;
+            textBox1.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            viewItemButton.Text = core.Lang.VIEW_ITEM;
+            label4.Text = core.Lang.DESCRIPTION;
+            label2.Text = core.Lang.LOCATION;
+            label3.Text = core.Lang.USAGE;
             if (sortToggle)
             {
-                sortButton.Text = lang.UNSORT;
-                sortToggle = false;
+                sortButton.Text = core.Lang.UNSORT;
             }
             else
             {
-                sortButton.Text = lang.SORT;
-                sortToggle = true;
+                sortButton.Text = core.Lang.SORT;
             }
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = lang.TIMESTAMP;
-                dataGridView.Columns[3].HeaderText = lang.USER;
-                dataGridView.Columns[4].HeaderText = lang.OPERATION;
-                dataGridView.Columns[5].HeaderText = lang.ORDER_NO;
-                dataGridView.Columns[6].HeaderText = lang.AMOUNT;
-                dataGridView.Columns[7].HeaderText = lang.OLD_QUANTITY;
-                dataGridView.Columns[8].HeaderText = lang.NEW_QUANTITY;
+                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns[2].HeaderText = core.Lang.TIMESTAMP;
+                dataGridView.Columns[3].HeaderText = core.Lang.USER;
+                dataGridView.Columns[4].HeaderText = core.Lang.OPERATION;
+                dataGridView.Columns[5].HeaderText = core.Lang.ORDER_NO;
+                dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Columns[7].HeaderText = core.Lang.OLD_QUANTITY;
+                dataGridView.Columns[8].HeaderText = core.Lang.NEW_QUANTITY;
             }
             textBox1.TextChanged += textBox1_TextChanged;
         }
@@ -200,7 +194,7 @@ namespace WMS.GUI
         private void textBox1_Leave(object sender, EventArgs e)
         {
             textBox1.TextChanged -= textBox1_TextChanged;
-            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
+            textBox1.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
             textBox1.TextChanged += textBox1_TextChanged;
         }
     }
