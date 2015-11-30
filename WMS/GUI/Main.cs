@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
 
 namespace WMS.GUI
 {
     public partial class Main : Form , IMain
     {
-        private ICore core;
+        //Properties for objects this class needs to fuction but only can get after creation
+        public ICore Core { get; set; }
         public ILang lang { get; set; }
 
         public Main()
@@ -26,44 +19,42 @@ namespace WMS.GUI
         {
             MaximizeBox = false;
             MinimizeBox = false;
-            label2.Text = core.UserName;
+            userNameLabel.Text = Core.UserName;
         }
 
-        public ICore Core { set { core = value; } }
-
-        private void Information_pbox_Click(object sender, EventArgs e)
+        private void InformationButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenInformation();
+            Core.WindowHandler.OpenInformation();
         }
 
         private void LogButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenLog();
+            Core.WindowHandler.OpenLog();
         }
 
         private void MoveButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenMove();
+            Core.WindowHandler.OpenMove();
         }
 
         private void RegisterButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenRegister();
+            Core.WindowHandler.OpenRegister();
         }
 
         private void WasteButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenWaste();
+            Core.WindowHandler.OpenWaste();
         }
 
         private void ReduceButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenReduce();
+            Core.WindowHandler.OpenReduce();
         }
 
         private void MainFormClosing(object sender, FormClosingEventArgs e)
         {
-            core.DataHandler.CloseConnectionToServer();
+            Core.DataHandler.CloseConnectionToServer();
         }
 
         public void UpdatePics(bool da)
@@ -89,12 +80,12 @@ namespace WMS.GUI
 
         private void lang_Click(object sender, EventArgs e)
         {
-            core.changeLang();
+            Core.changeLang();
         }
 
         public void UpdateLang()
         {
-            label1.Text = lang.LOGGED_IN_AS;
+            loggedInLabel.Text = lang.LOGGED_IN_AS;
         }
     }
 }

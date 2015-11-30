@@ -67,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\CoreSystem.cs" />
-    <Compile Include="Core\Localization.cs" />
     <Compile Include="GUI\CancelBox.cs">
       <SubType>Form</SubType>
     </Compile>
