@@ -20,6 +20,8 @@ namespace WMS.GUI
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
+        private DataGridViewComboBoxColumn locationComboBox;
+        private List<Location> location;
 
         public Waste(ICore core, ILang lang)
         {
@@ -27,6 +29,8 @@ namespace WMS.GUI
             this.lang = lang;
             InitializeComponent();
             SearchBox();
+            location = new List<Location>();
+            locationComboBox = new DataGridViewComboBoxColumn();
             Text = lang.WASTE;
             chooseButton.Text = lang.CHOOSE;
             addLineButton.Text = lang.ADD;
@@ -59,7 +63,7 @@ namespace WMS.GUI
 
         }
 
-        public void SearchBox()
+        private void SearchBox()
         {
             var source = new AutoCompleteStringCollection();
             foreach (Item item in core.DataHandler.InfoToList())
@@ -69,14 +73,17 @@ namespace WMS.GUI
             searchTextBox.AutoCompleteCustomSource = source;
         }
 
-        public void MakeDataGridView()
+        private void MakeDataGridView()
         {
             wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
             wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
             wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
             wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-            wasteDataGridView.Columns[3].HeaderText = lang.LOCATION;
+            wasteDataGridView.Columns[3].Visible = false;
             wasteDataGridView.Columns[4].Visible = false;
+            wasteDataGridView.Columns.Add(locationComboBox);
+            wasteDataGridView.Columns[5].HeaderText = lang.LOCATION;
+
             if (!data.Columns.Contains(lang.AMOUNT))
             {
                 data.Columns.Add(lang.AMOUNT);
@@ -90,7 +97,8 @@ namespace WMS.GUI
                 wasteDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 wasteDataGridView.Columns[i].ReadOnly = true;
             }
-            wasteDataGridView.Columns[5].ReadOnly = false;
+
+            wasteDataGridView.Columns[6].ReadOnly = false;
             wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
@@ -102,7 +110,7 @@ namespace WMS.GUI
         private void wasteDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
-            if (wasteDataGridView.Columns[e.ColumnIndex].Equals(wasteDataGridView.Columns[5]))
+            if (wasteDataGridView.Columns[e.ColumnIndex].Equals(wasteDataGridView.Columns[6]))
             {
                 int temp = 0;
                 if (!int.TryParse(wasteDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
@@ -131,7 +139,7 @@ namespace WMS.GUI
             wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
             panel1.Visible = false;
             wasteDataGridView.Focus();
-            wasteDataGridView[6, lastRow].Value = listBox1.SelectedItem.ToString();
+            wasteDataGridView[7, lastRow].Value = listBox1.SelectedItem.ToString();
             wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
@@ -167,9 +175,9 @@ namespace WMS.GUI
                     {
                         core.DataHandler.ActionOnItem('-', wasteDataGridView[0, i].Value.ToString(), 
                                                       wasteDataGridView[1, i].Value.ToString(), 
-                                                      wasteDataGridView[5, i].Value.ToString(),
+                                                      wasteDataGridView[6, i].Value.ToString(),
                                                       core.DataHandler.GetUserName(user), 
-                                                      wasteDataGridView[6, i].Value.ToString());
+                                                      wasteDataGridView[7, i].Value.ToString());
                     }
                 }
                 data.Clear();
@@ -185,6 +193,7 @@ namespace WMS.GUI
             {
                 string itemNo = searchTextBox.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
+                addItemsToList();
                 MakeDataGridView();
             }
             
@@ -221,11 +230,16 @@ namespace WMS.GUI
                 wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
                 wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
                 wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-                wasteDataGridView.Columns[3].HeaderText = lang.LOCATION;
-                wasteDataGridView.Columns[5].HeaderText = lang.AMOUNT;
-                wasteDataGridView.Columns[6].HeaderText = lang.REASON;
+                wasteDataGridView.Columns[5].HeaderText = lang.LOCATION;
+                wasteDataGridView.Columns[6].HeaderText = lang.AMOUNT;
+                wasteDataGridView.Columns[7].HeaderText = lang.REASON;
             }
             MakeList();
+        }
+
+        private void addItemsToList()
+        {
+            locationComboBox.DataSource = location;
         }
 
         private void button3_Click(object sender, EventArgs e)
