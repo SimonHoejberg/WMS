@@ -69,7 +69,7 @@ namespace WMS.GUI
                 {
                     if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[5, i].Value.Equals("0")))
                     {
-                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), core.Lang.REDUCED);
+                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), core.Lang.REDUCED,"");
                     }
                 }
                 MessageBox.Show(core.Lang.SUCCESS_REDUCE, core.Lang.SUCCESS);

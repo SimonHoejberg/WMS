@@ -18,7 +18,6 @@ namespace WMS.GUI
     public partial class Log : Form , IGui
     {
         private ICore core;
-        private bool sortToggle = false;
         private MySqlDataAdapter inputFromInfo = null;
         BindingSource bsource;
         DataTable data;
@@ -31,6 +30,10 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             this.core = core;
+            logListView.Columns.Add(core.Lang.TIMESTAMP, 40, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
             UpdateLang();
 
         }
@@ -44,9 +47,11 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, LOG_DB);
-            sortToggle = true;
+            logListView.Columns.Add(core.Lang.TIMESTAMP, 40, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
             UpdateLang();
-            sortButton.Text = core.Lang.UNSORT;
         }
 
         private void UpdateLog()
@@ -56,7 +61,7 @@ namespace WMS.GUI
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
         {
-
+            data.Clear();
             mysqlData.Fill(data);
             dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
@@ -91,31 +96,30 @@ namespace WMS.GUI
         {
             if (dataGridView.CurrentCell != null)
             {
-                itemInfoPanel.Visible = true;
+                List<ListViewItem> items = new List<ListViewItem>();
                 int test = dataGridView.CurrentCell.RowIndex;
                 string itemNo = dataGridView[0, test].Value.ToString();
                 Item item = core.DataHandler.GetItemFromItemNo(itemNo);
                 usageLabel.Text = item.Usage.ToString();
                 nameLabel.Text = item.Description;
                 locationLabel.Text = item.Location;
-                logListBox.DataSource = core.DataHandler.GetLog(itemNo);
-            }
-        }
-
-        private void SortButtonClick(object sender, EventArgs e)
-        {
-            if(dataGridView.CurrentCell != null && !sortToggle)
-            {
-                sortToggle = true;
-                string temp = dataGridView[0, dataGridView.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.DataHandler.GetDataFromItemNo(temp, LOG_DB));
-                sortButton.Text = core.Lang.UNSORT;
-            }
-            else if(sortToggle)
-            {
-                sortToggle = false;
-                UpdateLog();
-                sortButton.Text = core.Lang.SORT;
+                logListView.View = View.Details;
+                List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
+                foreach (LogItem logItem in logItems)
+                {
+                    ListViewItem lvi = new ListViewItem(logItem.Date);
+                    lvi.SubItems.Add(logItem.Operation);
+                    lvi.SubItems.Add(logItem.Amount);
+                    lvi.SubItems.Add(logItem.User);
+                    items.Add(lvi);
+                }
+                foreach (var lviItem in items)
+                {
+                    logListView.Items.Add(lviItem);
+                }
+                logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                itemInfoPanel.Visible = true;
             }
         }
 
@@ -139,22 +143,14 @@ namespace WMS.GUI
 
         public void UpdateLang()
         {
-            textBox1.TextChanged -= textBox1_TextChanged;
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
             Text = core.Lang.LOG;
             closeButton.Text = core.Lang.CLOSE;
-            textBox1.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
             viewItemButton.Text = core.Lang.VIEW_ITEM;
             label4.Text = core.Lang.DESCRIPTION;
             label2.Text = core.Lang.LOCATION;
             label3.Text = core.Lang.USAGE;
-            if (sortToggle)
-            {
-                sortButton.Text = core.Lang.UNSORT;
-            }
-            else
-            {
-                sortButton.Text = core.Lang.SORT;
-            }
             if (dataGridView.ColumnCount > 0)
             {
                 dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
@@ -167,35 +163,41 @@ namespace WMS.GUI
                 dataGridView.Columns[7].HeaderText = core.Lang.OLD_QUANTITY;
                 dataGridView.Columns[8].HeaderText = core.Lang.NEW_QUANTITY;
             }
-            textBox1.TextChanged += textBox1_TextChanged;
+            logListView.Columns[0].Text = core.Lang.TIMESTAMP;
+            logListView.Columns[1].Text = core.Lang.OPERATION;
+            logListView.Columns[2].Text = core.Lang.AMOUNT;
+            logListView.Columns[3].Text = core.Lang.USER;
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
             int a = 0;
             data.Clear();
-            if (int.TryParse(textBox1.Text, out a))
+            if (int.TryParse(SearchTextBox.Text, out a))
             {
-                core.DataHandler.Search(textBox1.Text, LOG_DB, ITEM).Fill(data);
+                core.DataHandler.Search(SearchTextBox.Text, LOG_DB, ITEM).Fill(data);
             }
             else
             {
-                core.DataHandler.Search(textBox1.Text, LOG_DB, DESCRIPTION).Fill(data);
+                core.DataHandler.Search(SearchTextBox.Text, LOG_DB, DESCRIPTION).Fill(data);
             }
             
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void SearchTextBoxEnter(object sender, EventArgs e)
         {
-            textBox1.TextChanged -= textBox1_TextChanged;
-            textBox1.Text = "";
-            textBox1.TextChanged += textBox1_TextChanged;
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = "";
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
 
-        private void textBox1_Leave(object sender, EventArgs e)
+        private void SearchTextBoxLeave(object sender, EventArgs e)
         {
-            textBox1.TextChanged -= textBox1_TextChanged;
-            textBox1.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
-            textBox1.TextChanged += textBox1_TextChanged;
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
     }
 }
