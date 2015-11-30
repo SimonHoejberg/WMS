@@ -18,12 +18,12 @@ namespace WMS.Handlers
             this.core = core;
             sql = new SqlHandler(core);
         }
-
+        
         public MySqlDataAdapter GetData(string db)
         {
             return sql.GetAllDataFromDataBase(db);
         }
-
+        
         public string GetUserName(string userId)
         {
             string temp = "";
