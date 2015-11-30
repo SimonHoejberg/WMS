@@ -23,7 +23,6 @@ namespace WMS.Handlers
             this.core = core;
             main.Core = core;
             this.main = (Form)main;
-            main.lang = lang;
             main.UpdateLang();
             this.main.LocationChanged += MainLocationChanged;
         }
@@ -37,37 +36,37 @@ namespace WMS.Handlers
 
         public void OpenInformation()
         {
-            CreateWindow(new Information(core,lang));
+            CreateWindow(new Information(core));
         }
 
         public void OpenLog()
         {
-            CreateWindow(new Log(core,lang));
+            CreateWindow(new Log(core));
         }
 
         public void OpenLog(string itemNo)
         {
-            CreateWindow(new Log(core, itemNo,lang));
+            CreateWindow(new Log(core, itemNo));
         }
 
         public void OpenMove()
         {
-            CreateWindow(new Move(core,lang));
+            CreateWindow(new Move(core));
         }
 
         public void OpenRegister()
         {
-            CreateWindow(new Register(core,lang));
+            CreateWindow(new Register(core));
         }
 
         public void OpenReduce()
         {
-            CreateWindow(new Reduce(core,lang));
+            CreateWindow(new Reduce(core));
         }
 
         public void OpenWaste()
         {
-            CreateWindow(new Waste(core,lang));
+            CreateWindow(new Waste(core));
         }
 
         private void CreateWindow(IGui gui)
@@ -140,11 +139,10 @@ namespace WMS.Handlers
         public void ChangeLang(ILang lang)
         {
             this.lang = lang;
-            ((IMain)main).lang = lang;
             ((IMain)main).UpdateLang();
             foreach (var item in WindowsOpen)
             {
-                item.UpdateLang(lang);
+                item.UpdateLang();
             }
             ((IMain)main).UpdatePics(da);
             if (da)

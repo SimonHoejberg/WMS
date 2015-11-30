@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
 using WMS.WH;
 using static WMS.Reference.SearchTerms;
 using static WMS.Reference.DataBases;
@@ -12,23 +12,24 @@ namespace WMS.GUI
     public partial class Information : Form, IGui
     {
         private ICore core;
-        private string itemNo;
-        private ILang lang;
-        BindingSource bsource;
-        DataTable data;
+        private string itemNo; //Used for the panel because it is needed in more methodes 
+        private BindingSource bsource;
+        private DataTable data;
 
-        public Form Main { get; set; }
-
-        public Information(ICore core, ILang lang)
+        public Information(ICore core)
         {
             InitializeComponent();
-            this.lang = lang;
             this.core = core;
-            UpdateLang(lang);
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
+            //For use in the view item panel
+            logListView.Columns.Add(core.Lang.TIMESTAMP, 40, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
+            logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
+            UpdateLang(); //Sets the text on buttons, labels etc.
         }
 
         private void InformationLoad(object sender, System.EventArgs e)
@@ -37,15 +38,21 @@ namespace WMS.GUI
             UpdateInfo();
         }
 
+        /// <summary>
+        /// Fills the dataGridView with data from the database
+        /// </summary>
         private void UpdateInfo()
         {
+            //Fills the data into the dataGridView
             core.DataHandler.GetData(INFOMATION_DB).Fill(data);
 
-            dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-            dataGridView.Columns[3].HeaderText = lang.LOCATION;
+            //Sets headertext and visiblity
+            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+            dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             dataGridView.Columns[4].Visible = false;
+            //Auto sizes colums and sets readonly 
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -60,15 +67,31 @@ namespace WMS.GUI
 
         private void ViewItemButtonClick(object sender, System.EventArgs e)
         {
-
-            itemInfoPanel.Visible = true;
+            List<ListViewItem> items = new List<ListViewItem>();
             int test = dataGridView.CurrentCell.RowIndex;
             itemNo = dataGridView[0, test].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
             usageLabel.Text = item.Usage.ToString();
+            itemNoLabel.Text = itemNo;
             nameLabel.Text = item.Description;
             locationLabel.Text = item.Location;
-            logListBox.DataSource = core.DataHandler.GetLog(itemNo);
+            logListView.View = View.Details;
+            List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
+            foreach (LogItem logItem in logItems)
+            {
+                ListViewItem lvi = new ListViewItem(logItem.Date);
+                lvi.SubItems.Add(logItem.Operation);
+                lvi.SubItems.Add(logItem.Amount);
+                lvi.SubItems.Add(logItem.User);
+                items.Add(lvi);
+            }
+            foreach (var lviItem in items)
+            {
+                logListView.Items.Add(lviItem);
+            }
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            itemInfoPanel.Visible = true;
         }
 
         private void CloseButtonClick(object sender, System.EventArgs e)
@@ -81,56 +104,61 @@ namespace WMS.GUI
             core.WindowHandler.OpenLog(itemNo);
         }
 
-        private void DataGridViewCellClick(object sender, DataGridViewCellEventArgs e)
+        public void UpdateLang()
         {
-
-        }
-
-        private void InformationEnter(object sender, System.EventArgs e)
-        {
-
-        }
-
-        public void UpdateLang(ILang lang)
-        {
-            textBox1.TextChanged -= textBox1_TextChanged;
-            this.lang = lang;
-            textBox1.Text = $"{lang.ITEM_NO}/{lang.DESCRIPTION}";
-            Text = lang.INFORMATION;
-            closeButton.Text = lang.CLOSE;
-            viewItemButton.Text = lang.VIEW_ITEM;
-            logButton.Text = lang.LOG;
-            label4.Text = lang.DESCRIPTION;
-            label2.Text = lang.LOCATION;
-            label3.Text = lang.USAGE;
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            Text = core.Lang.INFORMATION;
+            closeButton.Text = core.Lang.CLOSE;
+            viewItemButton.Text = core.Lang.VIEW_ITEM;
+            logButton.Text = core.Lang.LOG;
+            itemNoLabelHead.Text = core.Lang.ITEM_NO;
+            nameLabelHead.Text = core.Lang.DESCRIPTION;
+            locationLabelHead.Text = core.Lang.LOCATION;
+            usageLabelHead.Text = core.Lang.USAGE;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-                dataGridView.Columns[3].HeaderText = lang.LOCATION;
+                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             }
-            textBox1.TextChanged += textBox1_TextChanged;
+            logListView.Columns[0].Text = core.Lang.TIMESTAMP;
+            logListView.Columns[1].Text = core.Lang.OPERATION;
+            logListView.Columns[2].Text = core.Lang.AMOUNT;
+            logListView.Columns[3].Text = core.Lang.USER;
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
             int a = 0;
             data?.Clear();
-            if (int.TryParse(textBox1.Text, out a))
+            if (int.TryParse(SearchTextBox.Text, out a))
             {
-                core.DataHandler.Search(textBox1.Text, INFOMATION_DB, ITEM).Fill(data);
+                core.DataHandler.Search(SearchTextBox.Text, INFOMATION_DB, ITEM).Fill(data);
             }
             else
             {
-                core.DataHandler.Search(textBox1.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
+                core.DataHandler.Search(SearchTextBox.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
             }
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void SearchTextBoxEnter(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = "";
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
+        }
+
+        private void SearchTextBoxLeave(object sender, EventArgs e)
+        {
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
     }
 }

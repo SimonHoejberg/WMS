@@ -12,22 +12,20 @@ namespace WMS.GUI
         private ICore core;
         private BindingSource bsource = new BindingSource();
         private DataTable data = new DataTable();
-        private ILang lang;
         private string orderNo;
 
-        public Register(ICore core, ILang lang)
+        public Register(ICore core)
         {
             this.core = core;
-            this.lang = lang;
             InitializeComponent();
             Search(); //Sets the suggestiongs source
 
             //For the language to switch between Da and En
-            Text = lang.REGISTER;
-            orderTextBox.Text = lang.ORDER_NO;
-            confirmButton.Text = lang.CONFIRM;
-            cancelButton.Text = lang.CANCEL;
-            searchButton.Text = lang.SEARCH;
+            Text = core.Lang.REGISTER;
+            orderTextBox.Text = core.Lang.ORDER_NO;
+            confirmButton.Text = core.Lang.CONFIRM;
+            cancelButton.Text = core.Lang.CANCEL;
+            searchButton.Text = core.Lang.SEARCH;
         }
 
         /// <summary>
@@ -66,15 +64,15 @@ namespace WMS.GUI
 
             //Sets up what the columns based on the data from the server with the correct headerText
             dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
-            dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
-            dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
-            dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
+            dataGridView.Columns[1].HeaderText = core.Lang.ORDER_NO;
+            dataGridView.Columns[2].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns[3].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns[4].HeaderText = core.Lang.EXPECTED_AMOUNT;
             
             //Adds a new column that is no on the database if doesnot already exist
-            if (!data.Columns.Contains(lang.AMOUNT))
+            if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
-                data.Columns.Add(lang.AMOUNT);
+                data.Columns.Add(core.Lang.AMOUNT);
             }
 
             //Sets the auto size mode and sets the columns to read only
@@ -113,7 +111,7 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void OrderTextBoxLeave(object sender, EventArgs e)
         {
-            orderTextBox.Text = lang.ORDER_NO;
+            orderTextBox.Text = core.Lang.ORDER_NO;
         }
 
         /// <summary>
@@ -144,12 +142,12 @@ namespace WMS.GUI
             {
                 if (!int.TryParse(value, out tempInt))
                 {
-                    MessageBox.Show(lang.MUST_BE_A_NUMER, lang.ERROR);
+                    MessageBox.Show(core.Lang.MUST_BE_A_NUMER, core.Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if (tempInt < 0)
                 {
-                    MessageBox.Show(lang.MUST_BE_A_POSITIVE, lang.ERROR);
+                    MessageBox.Show(core.Lang.MUST_BE_A_POSITIVE, core.Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
             }
@@ -174,7 +172,7 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void CancelButtonClick(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox(lang); //Makes the cancel dialog box with the proper language
+            CancelBox cancel = new CancelBox(core.Lang); //Makes the cancel dialog box with the proper language
             cancel.Owner = this; //Sets the owner so it shows in the middle of this window
             DialogResult a = cancel.ShowDialog();
             if (a.Equals(DialogResult.OK))
@@ -198,7 +196,7 @@ namespace WMS.GUI
             }
             else
             {
-                MessageBox.Show(lang.ONLY_NUMBERS, lang.ERROR);
+                MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
                 orderTextBox.Text = "";
             }
         }
@@ -211,7 +209,7 @@ namespace WMS.GUI
         private void ConfirmButtonClick(object sender, EventArgs e)
         {
             List<Item> tempList = new List<Item>(); //Makes a temporary list used to store items for the sort algoritme
-            DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel); //Shows a dialogbox with confirmation they need to accept
+            DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel); //Shows a dialogbox with confirmation they need to accept
             if (a.Equals(DialogResult.OK))
             {
                 orderNo = dataGridView[1, 0].Value.ToString(); //Gets the order number from the data
@@ -246,22 +244,21 @@ namespace WMS.GUI
         }
 
         #region Lang
-        public void UpdateLang(ILang lang)
+        public void UpdateLang()
         {
             dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
-            this.lang = lang;
-            Text = lang.REGISTER;
-            orderTextBox.Text = lang.ORDER_NO;
-            confirmButton.Text = lang.CONFIRM;
-            cancelButton.Text = lang.CANCEL;
-            searchButton.Text = lang.SEARCH;
+            Text = core.Lang.REGISTER;
+            orderTextBox.Text = core.Lang.ORDER_NO;
+            confirmButton.Text = core.Lang.CONFIRM;
+            cancelButton.Text = core.Lang.CANCEL;
+            searchButton.Text = core.Lang.SEARCH;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[1].HeaderText = lang.ORDER_NO;
-                dataGridView.Columns[2].HeaderText = lang.ITEM_NO;
-                dataGridView.Columns[3].HeaderText = lang.DESCRIPTION;
-                dataGridView.Columns[4].HeaderText = lang.EXPECTED_AMOUNT;
-                dataGridView.Columns[5].HeaderText = lang.AMOUNT;
+                dataGridView.Columns[1].HeaderText = core.Lang.ORDER_NO;
+                dataGridView.Columns[2].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns[3].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns[4].HeaderText = core.Lang.EXPECTED_AMOUNT;
+                dataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
             }
             dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }

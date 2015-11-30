@@ -17,38 +17,27 @@ namespace WMS.GUI
         public CancelBox(ILang lang)
         {
             InitializeComponent();
-            this.label1.Text = lang.CANCELBOXTEXT;
-            this.userConfirm_btn.Text = lang.YES;
-            this.userCancel_btn.Text = lang.NO;
-            this.Text = lang.CANCEL;
+            //Sets text based on language
+            cancelLabel.Text = lang.CANCELBOXTEXT;
+            yesButton.Text = lang.YES;
+            noButton.Text = lang.NO;
+            Text = lang.CANCEL;
         }
         
-        public void CancelBox_Load(object sender, EventArgs e)
+        private void CancelBoxLoad(object sender, EventArgs e)
         {
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            MaximizeBox = false;
+            MinimizeBox = false;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void NoButtonClick(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
-        private void userConfirm_btn_Click(object sender, EventArgs e)
+        private void YesButtonClick(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-        }
-
-        private void userID_tbx_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                userConfirm_btn_Click(this, new EventArgs());
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                button2_Click(this, new EventArgs());
-            }
+            DialogResult = DialogResult.OK;
         }
     }
 }

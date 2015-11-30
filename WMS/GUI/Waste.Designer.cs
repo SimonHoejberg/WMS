@@ -37,8 +37,12 @@
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.addLineButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.locationPanel = new System.Windows.Forms.Panel();
+            this.chooseLocationButton = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.wasteDataGridView)).BeginInit();
             this.panel1.SuspendLayout();
+            this.locationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // button11
@@ -134,11 +138,40 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // locationPanel
+            // 
+            this.locationPanel.Controls.Add(this.chooseLocationButton);
+            this.locationPanel.Controls.Add(this.listBox2);
+            this.locationPanel.Location = new System.Drawing.Point(393, 208);
+            this.locationPanel.Name = "locationPanel";
+            this.locationPanel.Size = new System.Drawing.Size(200, 142);
+            this.locationPanel.TabIndex = 2;
+            this.locationPanel.Visible = false;
+            // 
+            // chooseLocationButton
+            // 
+            this.chooseLocationButton.Location = new System.Drawing.Point(122, 105);
+            this.chooseLocationButton.Name = "chooseLocationButton";
+            this.chooseLocationButton.Size = new System.Drawing.Size(75, 23);
+            this.chooseLocationButton.TabIndex = 1;
+            this.chooseLocationButton.UseVisualStyleBackColor = true;
+            this.chooseLocationButton.Click += new System.EventHandler(this.chooseLocationButton_Click);
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(4, 4);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(193, 95);
+            this.listBox2.TabIndex = 0;
+            this.listBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox2_KeyDown);
+            // 
             // Waste
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.locationPanel);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.addLineButton);
             this.Controls.Add(this.searchTextBox);
@@ -154,6 +187,7 @@
             this.Load += new System.EventHandler(this.Waste_Load);
             ((System.ComponentModel.ISupportInitialize)(this.wasteDataGridView)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.locationPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,5 +204,8 @@
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button addLineButton;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel locationPanel;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button chooseLocationButton;
     }
 }

@@ -5,7 +5,7 @@ namespace WMS.Interfaces
     {
         void UpdateGuiElements();
 
-        void UpdateLang(ILang lang);
+        void UpdateLang();
 
     }
 }

@@ -10,8 +10,6 @@ namespace WMS.Interfaces
     {
         ICore Core { set; }
 
-        ILang lang { get; set; }
-
         void UpdatePics(bool da);
 
         void UpdateLang();

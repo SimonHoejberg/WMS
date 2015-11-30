@@ -22,8 +22,8 @@ namespace WMS.GUI
             feedbackListView.Columns.Add(core.Lang.ITEM_NO, 20, HorizontalAlignment.Left);
             feedbackListView.Columns.Add(core.Lang.DESCRIPTION, 20, HorizontalAlignment.Left);
             feedbackListView.Columns.Add(core.Lang.LOCATION, 20, HorizontalAlignment.Left);
-            feedbackListView.Columns[0].Width = -2;
-            feedbackListView.Columns[1].Width = -2;
+            feedbackListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            feedbackListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             feedbackListView.Columns[2].Width = -2;
             if (notPlaced.Count == 0)
             {
