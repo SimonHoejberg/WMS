@@ -19,11 +19,6 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
 
-        public void UpdateProduct(string coloumn, string value, string id, string db, string searchTerm)
-        {
-            sql.update(coloumn, value, id, db, searchTerm);
-        }
-
         public MySqlDataAdapter GetData(string db)
         {
             return sql.GetAllDataFromDataBase(db);
@@ -112,19 +107,6 @@ namespace WMS.Handlers
             sql.CloseConnection();
             return temp;
         }
-
-        public List<Item> SearchInfoToList(string itemNo)
-        {
-            List<Item> temp = new List<Item>();
-            MySqlDataReader reader = sql.SearchToList(itemNo);
-            while (reader.Read())
-            {
-                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString())));
-
-            }
-            sql.CloseConnection();
-            return temp;
-        }
         public MySqlDataAdapter Search(string itemNo, string db, string searchTerm) => sql.Search(itemNo, db, searchTerm);
 
         public Item GetItemFromItemNo(string itemNo)
@@ -164,9 +146,9 @@ namespace WMS.Handlers
             sql.CloseConnection();
         }
 
-        public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string user, string operation)
+        public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string user, string operation,string id)
         {
-            sql.UpdateInfo(itemNo, quantity, operaton, description, operation, user);
+            sql.UpdateInfo(id,itemNo, quantity, operaton, description, operation, user);
         }
 
         public void MoveActionOnItem(string itemNo, string description, string date, int quantity, string user, string operation)
@@ -174,9 +156,9 @@ namespace WMS.Handlers
             sql.LogOperation(itemNo, description, date, user, operation, quantity);
         }
 
-        public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string operation)
+        public void ActionOnItem(char operaton, string itemNo, string description, string quantity, string operation, string id)
         {
-            ActionOnItem(operaton, itemNo, description, quantity, core.UserName, operation);
+            ActionOnItem(operaton, itemNo, description, quantity, core.UserName, operation,id);
         }
 
         public void PlaceItem(string id, string location, string newQuantity, string newItem, string usage,string orderNo,string description)

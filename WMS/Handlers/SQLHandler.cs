@@ -19,15 +19,6 @@ namespace WMS.Handlers
             OpenConnection();
         }
 
-        public void update(string coloumn, string value, string id, string db, string searchTerm)
-        {
-            MySqlCommand command = connection.CreateCommand();
-
-            string sql = string.Format("UPDATE {3} SET {0} = '{1}' WHERE {4} = {2}", coloumn, value, id, db, searchTerm);
-            command.CommandText = sql;
-            command.ExecuteNonQuery();
-        }
-
         public MySqlDataReader GetUserName(string userId)
         {
             MySqlCommand command = connection.CreateCommand();
@@ -109,10 +100,11 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
-        public void UpdateInfo(string itemNo, string quantity, char op, string description, string operation, string user)
+        public void UpdateInfo(string id, string itemNo, string quantity, char op, string description, string operation, string user)
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = "START TRANSACTION;"+
+                         $"UPDATE location SET itemNo = {itemNo}, quantity = quantity {op} {quantity} WHERE ID = {id};" +
                          $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo};"+
                          "INSERT INTO log (itemNo, description, date, user, operation, amount, prevQuantity, newQuantity)" +
                          $"VALUES ({ itemNo }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', {quantity} , (SELECT inStock FROM information WHERE itemNo = {itemNo}), (SELECT inStock {op} {quantity} FROM information WHERE itemNo = {itemNo}));" +
@@ -122,33 +114,12 @@ namespace WMS.Handlers
             command.ExecuteNonQuery();
         }
 
-
-
-        public MySqlDataReader SearchToList(string itemNo)
-        {
-            MySqlCommand command = connection.CreateCommand();
-            string sql = "SELECT * FROM information WHERE itemNo LIKE '" + itemNo + "%'";
-            ResetConnection();
-            command.CommandText = sql;
-            MySqlDataReader reader = command.ExecuteReader();
-            return reader;
-        }
-
         public MySqlDataAdapter Search(string itemNo, string db, string searchTerm)
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sql = $"SELECT * FROM {db} WHERE {searchTerm} LIKE '{itemNo}%'";
             MyDA.SelectCommand = new MySqlCommand(sql, connection);
             return MyDA;
-        }
-
-        public void UpdateLocation(string itemNo, string location)
-        {
-            MySqlCommand command = connection.CreateCommand();
-            string sql = string.Format("UPDATE information SET location = {1} WHERE itemNo = {0}", itemNo, location);
-            command.CommandText = sql;
-            ResetConnection();
-            command.ExecuteNonQuery();
         }
 
         public void OpenConnection()
