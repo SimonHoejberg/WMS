@@ -69,7 +69,7 @@ namespace WMS.GUI
                 {
                     if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[5, i].Value.Equals("0")))
                     {
-                        core.DataHandler.ActionOnItem('-',reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), core.Lang.REDUCED,"");
+                        core.DataHandler.ActionOnItem('-', reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), core.Lang.REDUCED, "");
                     }
                 }
                 MessageBox.Show(core.Lang.SUCCESS_REDUCE, core.Lang.SUCCESS);
@@ -98,15 +98,6 @@ namespace WMS.GUI
             reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
             reduceDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             reduceDataGridView.Columns[4].Visible = true;
-
-            reduceDataGridView.Columns.Add(
-                reduceComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
-                {
-                    Name = "reduceComboColumn",
-                    ValueMember = "LocationString",
-                    HeaderText = core.Lang.LOCATION,
-                    Width = 200
-                });
 
             if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
@@ -208,16 +199,20 @@ namespace WMS.GUI
 
         private void reduceDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            foreach (Location a in core.DataHandler.LocationToList())
-            {
-                Console.WriteLine(a.ItemNo + " : " + reduceDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString());
-                if (a.ItemNo.Equals(reduceDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString()))
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+                foreach (Location a in core.DataHandler.LocationToList())
                 {
-                    Console.WriteLine(true);
-                    (reduceDataGridView.Rows[e.RowCount].Cells["reduceComboColumn"] as DataGridViewComboBoxCell).Items.Add(a.LocationString);
+                    if (a.ItemNo.Equals(reduceDataGridView[0,0].Value))
+                    {
+                        (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items.Add(a.LocationString);
+                    }
                 }
-            }
-            Console.WriteLine();
+
+            (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Value = (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items[0];
         }
     }
 }
