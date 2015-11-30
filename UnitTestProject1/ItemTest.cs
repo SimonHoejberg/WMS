@@ -18,6 +18,7 @@ namespace UnitTestProject1
        [TestMethod]
        public void TestMethod1()
         { 
+            //??????????????
             //Arrange
             int a = 0;
             Item anItem = new Item("1000", "An Item", 9, "2.3", 10);
@@ -48,6 +49,7 @@ namespace UnitTestProject1
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
+            //More name
             string name = "";
 
             name = temp.GetUserName("1234");
@@ -63,11 +65,13 @@ namespace UnitTestProject1
             DataHandler temp = new DataHandler(core);
 
 
-            List<string> uList = temp.UserToList();
-            List<string> testList = new List<string>();
+            List<string> output;
+            List<string> test = new List<string>();
 
+            output = temp.UserToList();
 
-            Assert.IsNotNull(uList);
+            CollectionAssert.ReferenceEquals(test, output);
+            Assert.IsNotNull(output);
            // test for equals list<string>
 
 
@@ -91,12 +95,14 @@ namespace UnitTestProject1
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            MySqlDataAdapter test;
+            MySqlDataAdapter output;
+            MySqlDataAdapter test = new MySqlDataAdapter();
 
 
-            test = temp.GetDataFromItemNo("215250", "Information");
+            output = temp.GetDataFromItemNo("215250", "Information");
 
-            Assert.IsNotNull(test);
+            Assert.ReferenceEquals(test, output);
+            Assert.IsNotNull(output);
         }
 
         [TestMethod]
@@ -105,12 +111,13 @@ namespace UnitTestProject1
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            MySqlDataAdapter test;
+            MySqlDataAdapter output;
+            MySqlDataAdapter test = new MySqlDataAdapter();
 
 
-            test = temp.GetData("Information");
-        //    Assert.IsNull(test);
-           Assert.IsNotNull(test);
+            output = temp.GetData("Information");
+            Assert.ReferenceEquals(test, output);
+           Assert.IsNotNull(output);
         }
 
         [TestMethod]
@@ -119,12 +126,14 @@ namespace UnitTestProject1
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
+            List<Location> output;
             List<Location> test = new List<Location>();
 
 
-            test = temp.LocationToList();
+            output = temp.LocationToList();
 
-            Assert.IsNotNull(test);
+            CollectionAssert.ReferenceEquals(test, output);
+            Assert.IsNotNull(output);
         }
 
 
@@ -134,12 +143,17 @@ namespace UnitTestProject1
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
+            List<Order> output = new List<Order>();
             List<Order> test = new List<Order>();
 
 
-            test = temp.OrderToList();
 
-            Assert.IsNotNull(test);
+            output = temp.OrderToList();
+
+
+
+            CollectionAssert.Equals(output, test);
+            Assert.IsNotNull(output);
         }
 
         [TestMethod]
@@ -148,12 +162,14 @@ namespace UnitTestProject1
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
+            List<Item> output;
             List<Item> test = new List<Item>();
 
 
-            test = temp.InfoToList();
+            output = temp.InfoToList();
 
-            Assert.IsNotNull(test);
+            CollectionAssert.ReferenceEquals(test, output);
+            Assert.IsNotNull(output);
         }
 
 
