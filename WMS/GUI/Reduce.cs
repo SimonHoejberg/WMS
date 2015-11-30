@@ -100,17 +100,6 @@ namespace WMS.GUI
             reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
             reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
             reduceDataGridView.Columns[4].Visible = true;
-            reduceDataGridView.ReadOnly = false;
-            reduceDataGridView.Columns.Add(
-                reduceComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
-                {
-                    Name = "reduceComboColumn",
-                    ValueMember = "LocationString",
-                    DisplayMember = "LocationString",
-                    HeaderText = lang.LOCATION,
-                    Width = 200,
-                    ReadOnly = false
-                });
 
             if (!data.Columns.Contains(lang.AMOUNT))
             {
@@ -213,20 +202,7 @@ namespace WMS.GUI
 
         private void reduceDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            
-        }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-                foreach (Location a in core.DataHandler.LocationToList())
-                {
-                    if (a.ItemNo.Equals(reduceDataGridView[0,0].Value))
-                    {
-                        (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items.Add(a.LocationString);
-                    }
-                }
-
-            (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Value = (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items[0];
         }
     }
 }

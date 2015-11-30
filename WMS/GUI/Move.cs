@@ -325,6 +325,16 @@ namespace WMS.GUI
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            moveDataGridView.Rows.Remove(moveDataGridView.CurrentRow);
+        }
+
+        private void moveRemoveRowButton_click(object sender, EventArgs e)
+        {
+            moveDataGridView.Rows.Remove(moveDataGridView.CurrentRow);
+        }
+
         public void UpdateLang(ILang lang)
         {
             this.lang = lang;
@@ -345,9 +355,8 @@ namespace WMS.GUI
             {
                 moveSearchLabel.Visible = false;
                 moveDataGridView.Rows.Add(new DataGridViewRow());
-                moveDataGridView.Rows[moveDataGridView.RowCount - 2].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
+                moveDataGridView.Rows[moveDataGridView.RowCount - 1].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
                 moveAddItemTextBox.Text = "";
-                
             }
             else
             {
