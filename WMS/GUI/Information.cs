@@ -31,6 +31,12 @@ namespace WMS.GUI
             dataGridView.DataSource = bsource;
         }
 
+        private void InformationLoad(object sender, System.EventArgs e)
+        {
+            MaximizeBox = false;
+            UpdateInfo();
+        }
+
         private void UpdateInfo()
         {
             core.DataHandler.GetData(INFOMATION_DB).Fill(data);
@@ -83,12 +89,6 @@ namespace WMS.GUI
         private void InformationEnter(object sender, System.EventArgs e)
         {
 
-        }
-
-        private void InformationLoad(object sender, System.EventArgs e)
-        {
-            MaximizeBox = false;
-            UpdateInfo();
         }
 
         public void UpdateLang(ILang lang)

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.langButton = new System.Windows.Forms.PictureBox();
+            this.flagButton = new System.Windows.Forms.PictureBox();
             this.reduceButton = new System.Windows.Forms.PictureBox();
             this.wasteButton = new System.Windows.Forms.PictureBox();
             this.registerButton = new System.Windows.Forms.PictureBox();
@@ -37,7 +37,7 @@
             this.informationButton = new System.Windows.Forms.PictureBox();
             this.loggedInLabel = new System.Windows.Forms.Label();
             this.userNameLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.langButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flagButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.registerButton)).BeginInit();
@@ -48,13 +48,13 @@
             // 
             // langButton
             // 
-            this.langButton.BackgroundImage = global::WMS.Properties.Resources.union_jack_30x18;
-            this.langButton.Location = new System.Drawing.Point(11, 2);
-            this.langButton.Name = "langButton";
-            this.langButton.Size = new System.Drawing.Size(30, 18);
-            this.langButton.TabIndex = 7;
-            this.langButton.TabStop = false;
-            this.langButton.Click += new System.EventHandler(this.lang_Click);
+            this.flagButton.BackgroundImage = global::WMS.Properties.Resources.union_jack_30x18;
+            this.flagButton.Location = new System.Drawing.Point(11, 2);
+            this.flagButton.Name = "langButton";
+            this.flagButton.Size = new System.Drawing.Size(30, 18);
+            this.flagButton.TabIndex = 7;
+            this.flagButton.TabStop = false;
+            this.flagButton.Click += new System.EventHandler(this.flagButtonClick);
             // 
             // reduceButton
             // 
@@ -152,7 +152,7 @@
             this.ClientSize = new System.Drawing.Size(157, 572);
             this.Controls.Add(this.userNameLabel);
             this.Controls.Add(this.loggedInLabel);
-            this.Controls.Add(this.langButton);
+            this.Controls.Add(this.flagButton);
             this.Controls.Add(this.reduceButton);
             this.Controls.Add(this.wasteButton);
             this.Controls.Add(this.registerButton);
@@ -165,7 +165,7 @@
             this.Text = "Menu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainLoad);
-            ((System.ComponentModel.ISupportInitialize)(this.langButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flagButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.registerButton)).EndInit();
@@ -185,7 +185,7 @@
         private System.Windows.Forms.PictureBox registerButton;
         private System.Windows.Forms.PictureBox wasteButton;
         private System.Windows.Forms.PictureBox reduceButton;
-        private System.Windows.Forms.PictureBox langButton;
+        private System.Windows.Forms.PictureBox flagButton;
         private System.Windows.Forms.Label loggedInLabel;
         private System.Windows.Forms.Label userNameLabel;
     }
