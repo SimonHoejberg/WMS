@@ -16,29 +16,27 @@ namespace WMS.GUI
         private BindingSource bsource;
         private DataTable data;
         private int lastRow;
-        private ILang lang;
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
 
-        public Waste(ICore core, ILang lang)
+        public Waste(ICore core)
         {
             this.core = core;
-            this.lang = lang;
             InitializeComponent();
             locationList = core.DataHandler.LocationToList();
             SearchBox();
-            Text = lang.WASTE;
-            chooseButton.Text = lang.CHOOSE;
-            addLineButton.Text = lang.ADD;
-            searchTextBox.Text = lang.ITEM_NO;
-            button10.Text = lang.CANCEL;
-            button11.Text = lang.CONFIRM;
-            button3.Text = lang.REMOVE_ROW;
-            chooseLocationButton.Text = lang.CHOOSE;
-            error = lang.ERROR;
-            mustBePostive = lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            Text = core.Lang.WASTE;
+            chooseButton.Text = core.Lang.CHOOSE;
+            addLineButton.Text = core.Lang.ADD;
+            searchTextBox.Text = core.Lang.ITEM_NO;
+            button10.Text = core.Lang.CANCEL;
+            button11.Text = core.Lang.CONFIRM;
+            button3.Text = core.Lang.REMOVE_ROW;
+            chooseLocationButton.Text = core.Lang.CHOOSE;
+            error = core.Lang.ERROR;
+            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -49,9 +47,9 @@ namespace WMS.GUI
         private void MakeList()
         {
             reasons = new List<string>();
-            reasons.Add(lang.BROKEN);
-            reasons.Add(lang.WRONG_ITEM_DELIVRED);
-            reasons.Add(lang.MISSING);
+            reasons.Add(core.Lang.BROKEN);
+            reasons.Add(core.Lang.WRONG_ITEM_DELIVRED);
+            reasons.Add(core.Lang.MISSING);
 
             listBox1.DataSource = reasons;
         }
@@ -74,22 +72,22 @@ namespace WMS.GUI
         public void MakeDataGridView()
         {
             wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
-            wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+            wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+            wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
             wasteDataGridView.Columns[3].Visible = false;
             wasteDataGridView.Columns[4].Visible = false;
-            if (!data.Columns.Contains(lang.LOCATION))
+            if (!data.Columns.Contains(core.Lang.LOCATION))
             {
-                data.Columns.Add(lang.LOCATION);
+                data.Columns.Add(core.Lang.LOCATION);
             }
-            if (!data.Columns.Contains(lang.AMOUNT))
+            if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
-                data.Columns.Add(lang.AMOUNT);
+                data.Columns.Add(core.Lang.AMOUNT);
             }
-            if (!data.Columns.Contains(lang.REASON))
+            if (!data.Columns.Contains(core.Lang.REASON))
             {
-                data.Columns.Add(lang.REASON);
+                data.Columns.Add(core.Lang.REASON);
             }
             
             for (int i = 0; i < wasteDataGridView.ColumnCount; i++)
@@ -152,7 +150,7 @@ namespace WMS.GUI
 
         private void button10_Click(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox(lang);
+            CancelBox cancel = new CancelBox(core.Lang);
             DialogResult a = cancel.ShowDialog();
 
             if (a.Equals(DialogResult.OK))
@@ -163,7 +161,7 @@ namespace WMS.GUI
 
         private void button11_Click(object sender, EventArgs e)
         {
-            UserIDBox user_dialog = new UserIDBox(core,lang);
+            UserIDBox user_dialog = new UserIDBox(core);
             DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
             if (a.Equals(DialogResult.OK))
             {
@@ -180,7 +178,7 @@ namespace WMS.GUI
                     }
                 }
                 data.Clear();
-                MessageBox.Show(lang.SUCCESS_WASTE, lang.SUCCESS);
+                MessageBox.Show(core.Lang.SUCCESS_WASTE, core.Lang.SUCCESS);
                 core.WindowHandler.Update(this);
             }
         }
@@ -220,28 +218,27 @@ namespace WMS.GUI
             }
         }
 
-        public void UpdateLang(ILang lang)
+        public void UpdateLang()
         {
-            this.lang = lang;
-            Text = lang.WASTE;
-            chooseButton.Text = lang.CHOOSE;
-            addLineButton.Text = lang.SEARCH;
-            searchTextBox.Text = lang.ITEM_NO;
-            button10.Text = lang.CANCEL;
-            button11.Text = lang.CONFIRM;
-            button3.Text = lang.REMOVE_ROW;
-            chooseLocationButton.Text = lang.CHOOSE;
-            error = lang.ERROR;
-            mustBePostive = lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            Text = core.Lang.WASTE;
+            chooseButton.Text = core.Lang.CHOOSE;
+            addLineButton.Text = core.Lang.SEARCH;
+            searchTextBox.Text = core.Lang.ITEM_NO;
+            button10.Text = core.Lang.CANCEL;
+            button11.Text = core.Lang.CONFIRM;
+            button3.Text = core.Lang.REMOVE_ROW;
+            chooseLocationButton.Text = core.Lang.CHOOSE;
+            error = core.Lang.ERROR;
+            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             if (wasteDataGridView.ColumnCount > 0)
             {
-                wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-                wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-                wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-                wasteDataGridView.Columns[3].HeaderText = lang.LOCATION;
-                wasteDataGridView.Columns[5].HeaderText = lang.AMOUNT;
-                wasteDataGridView.Columns[6].HeaderText = lang.REASON;
+                wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                wasteDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
+                wasteDataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
+                wasteDataGridView.Columns[6].HeaderText = core.Lang.REASON;
             }
             MakeList();
         }
@@ -264,7 +261,7 @@ namespace WMS.GUI
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            searchTextBox.Text = lang.ITEM_NO;
+            searchTextBox.Text = core.Lang.ITEM_NO;
         }
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)

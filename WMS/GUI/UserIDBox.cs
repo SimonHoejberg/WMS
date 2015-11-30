@@ -16,17 +16,15 @@ namespace WMS.GUI
     public partial class UserIDBox : Form
     {
         private ICore core;
-        private ILang lang;
 
-        public UserIDBox(ICore core, ILang lang)
+        public UserIDBox(ICore core)
         {
             this.core = core;
-            this.lang = lang;
             InitializeComponent();
-            Text = lang.CONFIRM;
-            label1.Text = lang.USER_ID;
-            userConfirm_btn.Text = lang.ACCEPT;
-            userCancel_btn.Text = lang.CANCEL;
+            Text = core.Lang.CONFIRM;
+            label1.Text = core.Lang.USER_ID;
+            userConfirm_btn.Text = core.Lang.ACCEPT;
+            userCancel_btn.Text = core.Lang.CANCEL;
         }
 
         public string User { get { return getInputFromTextbox; } }
@@ -53,7 +51,7 @@ namespace WMS.GUI
             }
             else
             {
-                userIDError_lbl.Text = lang.INVILD_USER_ID;
+                userIDError_lbl.Text = core.Lang.INVILD_USER_ID;
             }
         }
 
