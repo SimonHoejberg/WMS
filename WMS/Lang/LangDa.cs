@@ -9,164 +9,90 @@ namespace WMS.Lang
 {
     public class LangDa : ILang
     {
-        private string information = "Information";
-        private string log = "Log";
-        private string move = "Flyt Vare";
-        private string reduce = "Reducer";
-        private string register = "Registrer";
-        private string waste = "Nedskriv";
-        private string main = "Menu";
-
-        private string moved = "Flyttet";
-        private string reduced = "Taget";
-        private string registed = "Registret";
-
-        private string close = "Luk";
-        private string accept = "Accepter";
-        private string confirm = "Bekræft";
-        private string cancel = "Annuller";
-
-        private string description = "Beskrivelse";
-        private string itemNo = "Vare Nr.";
-        private string inStock = "På lager";
-        private string location = "Lokation";
-        private string newLocation = "Ny Lokation";
-        private string size = "Størelse";
-        private string timeStamp = "Dato / Tid";
-        private string user = "Bruger";
-        private string amount = "Antal";
-        private string expectedAmount = "Forventet antal";
-        private string operaton = "Operation";
-
-        private string viewItem = "Vis Vare";
-        private string usage = "Forbrug";
-        private string sort = "Sorter";
-        private string unsort = "Usorter";
-
-        private string cancelBoxText = "Er du sikker på du vil annullere";
-        private string confirmText = "Er du sikker på du vil forsætte";
-        private string yes = "Ja";
-        private string no = "Nej";
-        private string userId = "Brugernavn";
-        private string invildUserId = "Forkert brugernavn";
-
-        private string error = "Fejl";
-        private string mustBePositive = "Skal være et positivt nummer";
-        private string onlyNumbers = "Skriv kun tal";
-        private string mustBeANumber = "Skal være et nummer";
-        private string seach = "Søg";
-
-        private string orderNo = "Ordre Nr.";
-
-        private string choose = "Vælg";
-        private string broken = "Ødelagt / I stykker";
-        private string wrongItemDelivred = "Modtaget forkert vare";
-        private string missing = "Mangler";
-        private string reason = "Årsag";
-
-        private string tooManyWindows = "For mange vinduere åbnet af typen";
-        private string removeRow = "Fjern række";
-
-        private string success = "Succes";
-        private string successReduce = "Varer reduceret";
-        private string successMove = "Varer flyttet";
-        private string successWaste = "Varer nedskrevet";
-        private string successRegister = "Ordre registreret";
-
-        private string itemsMoved = "Varer flyttet";
-        private string isEmpty = "er tom!";
-        private string valueItemIDError = "Værdi i Vare Nr. i række";
-        private string valueLocationError = "Værdi i lokation i række";
-        private string valueAmountError = "Værdi i mængde i række";
-        private string valueNewLocationError = "Værdi i ny lokation i række";
-        private string attemptToMoveFromSameTwice = "Forsgøt at flytte fra samme lokation to gange";
-        private string attemptToMoveMutipleItemsToSameLocation = "Forsøgt at flytte flere varer til samme lokation";
-
-        private string loggedInAs = "Logget ind som:";
-
-        public string ADD { get; } = "Tilføj linje";
-
-        public string OLD_QUANTITY { get; } = "Mængde før";
-        public string NEW_QUANTITY { get; } = "Mængde efter";
-
         public LangDa()
         {
 
         }
 
-        public string INFORMATION { get { return information; } }
-        public string LOG { get { return log; } }
-        public string MOVE { get { return move; } }
-        public string REDUCE { get { return reduce; } }
-        public string REGISTER { get { return register; } }
-        public string WASTE { get { return waste; } }
-        public string MAIN { get { return main; } }
+        public string INFORMATION { get; } = "Information";
+        public string LOG { get; } = "Log";
+        public string MOVE { get; } = "Flyt vare";
+        public string REDUCE { get; } = "Udlevering fra lager";
+        public string REGISTER { get; } = "Registrer";
+        public string WASTE { get; } = "Nedskriv";
+        public string MAIN { get; } = "Menu";
 
-        public string MOVED { get { return moved; } }
-        public string REDUCED { get { return reduced; } }
-        public string REGISTED { get { return registed; } }
+        public string MOVED { get; } = "Flyttet";
+        public string REDUCED { get; } = "Taget";
+        public string REGISTED { get; } = "Registreret";
 
-        public string CLOSE { get { return close; } }
-        public string ACCEPT { get { return accept; } }
-        public string CONFIRM { get { return confirm; } }
-        public string CANCEL { get { return cancel; } }
+        public string CLOSE { get; } = "Luk";
+        public string ACCEPT { get; } = "Accepter";
+        public string CONFIRM { get; } = "Bekræft";
+        public string CANCEL { get; } = "Annuller";
 
-        public string DESCRIPTION { get { return description; } }
-        public string ITEM_NO { get { return itemNo; } }
-        public string IN_STOCK { get { return inStock; } }
-        public string LOCATION { get { return location; } }
-        public string NEW_LOCATION { get { return newLocation; } }
-        public string SIZE { get { return size; } }
-        public string TIMESTAMP { get { return timeStamp; } }
-        public string USER { get { return user; } }
-        public string AMOUNT { get { return amount; } }
-        public string EXPECTED_AMOUNT { get { return expectedAmount; } }
-        public string OPERATION { get { return operaton; } }
+        public string DESCRIPTION { get; } = "Beskrivelse";
+        public string ITEM_NO { get; } = "Vare Nr.";
+        public string IN_STOCK { get; } = "På lager";
+        public string LOCATION { get; } = "Lokation";
+        public string NEW_LOCATION { get; } = "Ny lokation";
+        public string SIZE { get; } = "Størrelse";
+        public string TIMESTAMP { get; } = "Dato / Tid";
+        public string USER { get; } = "Bruger";
+        public string AMOUNT { get; } = "Antal";
+        public string EXPECTED_AMOUNT { get; } = "Forventet antal";
+        public string OPERATION { get; } = "Operation";
 
-        public string VIEW_ITEM { get { return viewItem; } }
-        public string USAGE { get { return usage; } }
-        public string SORT { get { return sort; } }
-        public string UNSORT { get { return unsort; } }
+        public string VIEW_ITEM { get; } = "Vis vare";
+        public string USAGE { get; } = "Forbrug";
+        public string SORT { get; } = "Sorter";
+        public string UNSORT { get; } = "Usorter";
 
-        public string CANCELBOXTEXT { get { return cancelBoxText; } }
-        public string CONFIRM_TEXT { get { return confirmText; } }
-        public string YES { get { return yes; } }
-        public string NO { get { return no; } }
-        public string USER_ID { get { return userId; } }
-        public string INVILD_USER_ID { get { return invildUserId; } }
+        public string CANCELBOXTEXT { get; } = "Er du sikker på du vil annullere?";
+        public string CONFIRM_TEXT { get; } = "Er du sikker på du vil fortsætte?";
+        public string YES { get; } = "Ja";
+        public string NO { get; } = "Nej";
+        public string USER_ID { get; } = "Brugernavn";
+        public string INVILD_USER_ID { get; } = "Forkert brugernavn";
 
-        public string ERROR { get { return error; } }
-        public string MUST_BE_A_POSITIVE { get { return mustBePositive; } }
-        public string ONLY_NUMBERS { get { return onlyNumbers; } }
-        public string MUST_BE_A_NUMER { get { return mustBeANumber; } }
-        public string SEACH { get { return seach; } }
+        public string ERROR { get; } = "Fejl";
+        public string MUST_BE_A_POSITIVE { get; } = "Skal være et positivt tal";
+        public string ONLY_NUMBERS { get; } = "Skal kun tal";
+        public string MUST_BE_A_NUMER { get; } = "Skal være et nummer";
+        public string SEARCH { get; } = "Søg";
 
-        public string ORDER_NO { get { return orderNo; } }
+        public string ORDER_NO { get; } = "Ordre Nr.";
 
-        public string CHOOSE { get { return choose; } }
-        public string BROKEN { get { return broken; } }
-        public string WRONG_ITEM_DELIVRED { get { return wrongItemDelivred; } }
-        public string MISSING { get { return missing; } }
-        public string REASON { get { return reason; } }
+        public string CHOOSE { get; } = "Vælg";
+        public string BROKEN { get; } = "Ødelagt / I stykker";
+        public string WRONG_ITEM_DELIVRED { get; } = "Modtaget forkert vare";
+        public string MISSING { get; } = "Mangler";
+        public string REASON { get; } = "Årsag";
 
-        public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
-        public string REMOVE_ROW { get { return removeRow; } }
+        public string REMOVE_ROW { get; } = "Fjern række";
 
-        public string SUCCESS { get { return success; } }
-        public string SUCCESS_REDUCE { get { return successReduce; } }
-        public string SUCCESS_WASTE { get { return successWaste; } }
-        public string SUCCESS_MOVE { get { return successMove; } }
-        public string SUCCESS_REGISTER { get { return successRegister; } }
+        public string SUCCESS { get; } = "Succes";
+        public string SUCCESS_REDUCE { get; } = "Varer reduceret";
+        public string SUCCESS_WASTE { get; } = "Varer nedskrevet";
+        public string SUCCESS_MOVE { get; } = "Varer flyttet";
+        public string SUCCESS_REGISTER { get; } = "Ordre registreret";
 
-        public string ITEMS_MOVED { get { return itemsMoved; } }
-        public string IS_EMPTY { get { return isEmpty; } }
-        public string VALUE_IN_ITEM_ID { get { return valueItemIDError; } }
-        public string VALUE_IN_LOCATION { get { return valueLocationError; } }
-        public string VALUE_IN_AMOUNT { get { return valueAmountError; } }
-        public string VALUE_IN_NEW_LOCATION { get { return valueNewLocationError; } }
-        public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get { return attemptToMoveFromSameTwice; } }
-        public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get { return attemptToMoveMutipleItemsToSameLocation; } }
+        public string IS_EMPTY { get; } = "er tom!";
+        public string VALUE_IN_ITEM_ID { get; } = "Værdi i Vare Nr. i række";
+        public string VALUE_IN_LOCATION { get; } = "Værdi i lokation i række";
+        public string VALUE_IN_AMOUNT { get; } = "Værdi i mængde i række";
+        public string VALUE_IN_NEW_LOCATION { get; } = "Værdi i ny lokation i række";
+        public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; } = "Forsøgt at flytte fra samme lokation to gange";
+        public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; } = "Forsøgt at flytte flere varer til samme lokation";
 
-        public string LOGGED_IN_AS { get { return loggedInAs; } }
+        public string LOGGED_IN_AS { get; } = "Logget ind som:";
+
+        public string ADD { get; } = "Tilføj række";
+
+        public string OLD_QUANTITY { get; } = "Mængde før";
+        public string NEW_QUANTITY { get; } = "Mængde efter";
+
+        public string NOT_PLACED { get; } = "Ikke placeret";
+        public string PLACED { get; } = "Placeret";
     }
 }

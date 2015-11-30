@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using static WMS.Reference.DataBaseValues;
-using static WMS.Reference.DataBaseTypes;
 using WMS.WH;
+using static WMS.Reference.DataBases;
 
 namespace WMS.GUI
 {
@@ -34,9 +28,9 @@ namespace WMS.GUI
             InitializeComponent();
             SearchBox();
             Text = lang.WASTE;
-            button1.Text = lang.CHOOSE;
-            button2.Text = lang.ADD;
-            textBox1.Text = lang.ITEM_NO;
+            chooseButton.Text = lang.CHOOSE;
+            addLineButton.Text = lang.ADD;
+            searchTextBox.Text = lang.ITEM_NO;
             button10.Text = lang.CANCEL;
             button11.Text = lang.CONFIRM;
             button3.Text = lang.REMOVE_ROW;
@@ -46,7 +40,7 @@ namespace WMS.GUI
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
-            dataGridView6.DataSource = bsource;
+            wasteDataGridView.DataSource = bsource;
             MakeList();
         }
 
@@ -72,17 +66,17 @@ namespace WMS.GUI
             {
                 source.Add(item.ItemNo);
             }
-            textBox1.AutoCompleteCustomSource = source;
+            searchTextBox.AutoCompleteCustomSource = source;
         }
 
         public void MakeDataGridView()
         {
-            dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
-            dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
-            dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;
-            dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;
-            dataGridView6.Columns[3].HeaderText = lang.LOCATION;
-            dataGridView6.Columns[4].Visible = false;
+            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
+            wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+            wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+            wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+            wasteDataGridView.Columns[3].HeaderText = lang.LOCATION;
+            wasteDataGridView.Columns[4].Visible = false;
             if (!data.Columns.Contains(lang.AMOUNT))
             {
                 data.Columns.Add(lang.AMOUNT);
@@ -91,13 +85,13 @@ namespace WMS.GUI
             {
                 data.Columns.Add(lang.REASON);
             }
-            for (int i = 0; i < dataGridView6.ColumnCount; i++)
+            for (int i = 0; i < wasteDataGridView.ColumnCount; i++)
             {
-                dataGridView6.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView6.Columns[i].ReadOnly = true;
+                wasteDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                wasteDataGridView.Columns[i].ReadOnly = true;
             }
-            dataGridView6.Columns[5].ReadOnly = false;
-            dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
+            wasteDataGridView.Columns[5].ReadOnly = false;
+            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
         private void Waste_Load(object sender, EventArgs e)
@@ -105,21 +99,21 @@ namespace WMS.GUI
             MaximizeBox = false;
         }
 
-        private void dataGridView6_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void wasteDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
-            if (dataGridView6.Columns[e.ColumnIndex].Equals(dataGridView6.Columns[5]))
+            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
+            if (wasteDataGridView.Columns[e.ColumnIndex].Equals(wasteDataGridView.Columns[5]))
             {
                 int temp = 0;
-                if (!int.TryParse(dataGridView6[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
+                if (!int.TryParse(wasteDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
                 {
                     MessageBox.Show(mustBeAnumber, error);
-                    dataGridView6[e.ColumnIndex, e.RowIndex].Value = null;
+                    wasteDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if (temp < 0)
                 {
                     MessageBox.Show(mustBePostive, error);
-                    dataGridView6[e.ColumnIndex, e.RowIndex].Value = null;
+                    wasteDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else
                 {   
@@ -128,24 +122,24 @@ namespace WMS.GUI
                     panel1.Visible = true;
                     listBox1.Focus();
                 }
-                dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
+                wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void chooseButton_Click(object sender, EventArgs e)
         {
-            dataGridView6.CellValueChanged -= dataGridView6_CellValueChanged;
+            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
             panel1.Visible = false;
-            dataGridView6.Focus();
-            dataGridView6[6, lastRow].Value = listBox1.SelectedItem.ToString();
-            dataGridView6.CellValueChanged += dataGridView6_CellValueChanged;
+            wasteDataGridView.Focus();
+            wasteDataGridView[6, lastRow].Value = listBox1.SelectedItem.ToString();
+            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                button1_Click(sender, e);
+                chooseButton_Click(sender, e);
             }
         }
 
@@ -167,29 +161,30 @@ namespace WMS.GUI
             if (a.Equals(DialogResult.OK))
             {
                 string user = user_dialog.User;
-                for (int i = 0; i < dataGridView6.RowCount; i++)
+                for (int i = 0; i < wasteDataGridView.RowCount; i++)
                 {
-                    if (!(dataGridView6[0, i].Value == null))
+                    if (!(wasteDataGridView[0, i].Value == null))
                     {
-                        core.DataHandler.ActionOnItem('-', dataGridView6[0, i].Value.ToString(), 
-                                                      dataGridView6[1, i].Value.ToString(), 
-                                                      dataGridView6[5, i].Value.ToString(),
+                        core.DataHandler.ActionOnItem('-', wasteDataGridView[0, i].Value.ToString(), 
+                                                      wasteDataGridView[1, i].Value.ToString(), 
+                                                      wasteDataGridView[5, i].Value.ToString(),
                                                       core.DataHandler.GetUserName(user), 
-                                                      dataGridView6[6, i].Value.ToString());
+                                                      wasteDataGridView[6, i].Value.ToString());
                     }
                 }
                 data.Clear();
                 MessageBox.Show(lang.SUCCESS_WASTE, lang.SUCCESS);
+                core.WindowHandler.Update(this);
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void addLineButton_Click(object sender, EventArgs e)
         {
             int temp = 0;
-            if (int.TryParse(textBox1.Text, out temp))
+            if (int.TryParse(searchTextBox.Text, out temp))
             {
-                string itemNo = textBox1.Text;
-                core.DataHandler.GetDataFromItemNo(itemNo, INFO).Fill(data);
+                string itemNo = searchTextBox.Text;
+                core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
                 MakeDataGridView();
             }
             
@@ -197,14 +192,14 @@ namespace WMS.GUI
 
         private void textBox1_Enter(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            searchTextBox.Text = "";
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                button2_Click(sender, e);
+                addLineButton_Click(sender, e);
             }
         }
 
@@ -212,32 +207,32 @@ namespace WMS.GUI
         {
             this.lang = lang;
             Text = lang.WASTE;
-            button1.Text = lang.CHOOSE;
-            button2.Text = lang.SEACH;
-            textBox1.Text = lang.ITEM_NO;
+            chooseButton.Text = lang.CHOOSE;
+            addLineButton.Text = lang.SEARCH;
+            searchTextBox.Text = lang.ITEM_NO;
             button10.Text = lang.CANCEL;
             button11.Text = lang.CONFIRM;
             button3.Text = lang.REMOVE_ROW;
             error = lang.ERROR;
             mustBePostive = lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = lang.MUST_BE_A_NUMER;
-            if (dataGridView6.ColumnCount > 0)
+            if (wasteDataGridView.ColumnCount > 0)
             {
-                dataGridView6.Columns[0].HeaderText = lang.ITEM_NO;
-                dataGridView6.Columns[1].HeaderText = lang.DESCRIPTION;
-                dataGridView6.Columns[2].HeaderText = lang.IN_STOCK;
-                dataGridView6.Columns[3].HeaderText = lang.LOCATION;
-                dataGridView6.Columns[5].HeaderText = lang.AMOUNT;
-                dataGridView6.Columns[6].HeaderText = lang.REASON;
+                wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
+                wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
+                wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
+                wasteDataGridView.Columns[3].HeaderText = lang.LOCATION;
+                wasteDataGridView.Columns[5].HeaderText = lang.AMOUNT;
+                wasteDataGridView.Columns[6].HeaderText = lang.REASON;
             }
             MakeList();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataGridView6.CurrentCell != null)
+            if (wasteDataGridView.CurrentCell != null)
             {
-                dataGridView6.Rows.RemoveAt(dataGridView6.CurrentCell.RowIndex);
+                wasteDataGridView.Rows.RemoveAt(wasteDataGridView.CurrentCell.RowIndex);
             }
         }
 
@@ -245,8 +240,18 @@ namespace WMS.GUI
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                button1_Click(sender, e);
+                chooseButton_Click(sender, e);
             }
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            searchTextBox.Text = lang.ITEM_NO;
+        }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            chooseButton_Click(sender, e);
         }
     }
 }

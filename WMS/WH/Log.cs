@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WMS.WH
 {
-    public class LogItem
+    public class Log
     {
         private string itemNo;
         private string name;
@@ -15,7 +15,7 @@ namespace WMS.WH
         private string amount;
         private string user;
 
-        public LogItem(string itemNo, string name, string date, string operation, string amount, string user)
+        public Log(string itemNo, string name, string date, string operation, string amount, string user)
         {
             this.itemNo = itemNo;
             this.name = name;

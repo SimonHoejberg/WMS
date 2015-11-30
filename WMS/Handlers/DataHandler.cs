@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
-using WMS.Reference;
+using static WMS.Reference.DataBases;
+using static WMS.Reference.SearchTerms;
 using WMS.WH;
 
 namespace WMS.Handlers
@@ -41,12 +42,12 @@ namespace WMS.Handlers
         }
         public List<string> GetUser() => UserToList();
 
-        public List<LogItem> GetLog(string itemNo) => LogToList(itemNo);
+        public List<Log> GetLog(string itemNo) => LogToList(itemNo);
 
         public List<Item> InfoToList()
         {
             List<Item> temp = new List<Item>();
-            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.INFO);
+            MySqlDataReader reader = sql.GetDataForList(INFOMATION_DB);
             while (reader.Read())
             {
                 temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString())));
@@ -71,7 +72,7 @@ namespace WMS.Handlers
         public List<Order> OrderToList()
         {
             List<Order> temp = new List<Order>();
-            MySqlDataReader reader = sql.GetDataForList(WindowTypes.REGISTER);
+            MySqlDataReader reader = sql.GetDataForList(REGISTER_DB);
             while (reader.Read())
             {
                 int tempOrderNo = 0;
@@ -91,7 +92,7 @@ namespace WMS.Handlers
         public List<Location> LocationToList()
         {
             List<Location> temp = new List<Location>();
-            MySqlDataReader reader = sql.GetDataForList(DataBaseTypes.LOCATION);
+            MySqlDataReader reader = sql.GetDataForList(LOCATION_DB);
             while (reader.Read())
             {
                 temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString()),int.Parse(reader["bestLocation"].ToString()), int.Parse(reader["itemUsage"].ToString())));
@@ -100,13 +101,13 @@ namespace WMS.Handlers
             return temp;
         }
 
-        public List<LogItem> LogToList(string itemNo)
+        public List<Log> LogToList(string itemNo)
         {
-            List<LogItem> temp = new List<LogItem>();
+            List<Log> temp = new List<Log>();
             MySqlDataReader reader = sql.GetItemLatestLog(itemNo);
             while (reader.Read())
             {
-                temp.Add(new LogItem(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
+                temp.Add(new Log(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
             sql.CloseConnection();
             return temp;
@@ -129,7 +130,7 @@ namespace WMS.Handlers
         public Item GetItemFromItemNo(string itemNo)
         {
             Item item = null;
-            MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO,DataBaseValues.ITEM,itemNo);
+            MySqlDataReader reader = sql.GetItemInfo(INFOMATION_DB,ITEM,itemNo);
             while (reader.Read())
             {
                 item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString()));
@@ -140,12 +141,12 @@ namespace WMS.Handlers
 
         public MySqlDataAdapter GetDataFromItemNo(string itemNo, string db)
         {
-            return sql.GetDataForItemNo(db,DataBaseValues.ITEM,itemNo);
+            return sql.GetDataForItemNo(db,ITEM,itemNo);
         }
 
         public MySqlDataAdapter GetDataFromOrderNo(string orderNo)
         {
-            return sql.GetDataForItemNo(DataBaseTypes.REGISTER, DataBaseValues.ORDER, orderNo);
+            return sql.GetDataForItemNo(REGISTER_DB, ORDER, orderNo);
         }
 
         public void ItemMove(string id, string newQuantity, string newItem)
@@ -185,7 +186,7 @@ namespace WMS.Handlers
 
         public int GetUsage(string itemNo)
         {
-            MySqlDataReader reader = sql.GetItemInfo(DataBaseTypes.INFO, DataBaseValues.ITEM, itemNo);
+            MySqlDataReader reader = sql.GetItemInfo(INFOMATION_DB, ITEM, itemNo);
             int usage = 0;
             while (reader.Read())
             {

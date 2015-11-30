@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace WMS.Reference
 {
-    public static class DataBaseValues
+    public static class SearchTerms
     {
         public static string ITEM = "itemNo";
-        public static string ID = "id";
         public static string ORDER = "orderNo";
         public static string DESCRIPTION = "description";
     }

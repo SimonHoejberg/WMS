@@ -53,7 +53,7 @@ namespace WMS.Interfaces
         string MUST_BE_A_POSITIVE { get; }
         string ONLY_NUMBERS { get; }
         string MUST_BE_A_NUMER { get; }
-        string SEACH { get; }
+        string SEARCH { get; }
         string ADD { get; }
 
         string ORDER_NO { get; }
@@ -64,7 +64,6 @@ namespace WMS.Interfaces
         string MISSING { get; }
         string REASON { get; }
 
-        string TOO_MANY_WINDOWS { get; }
         string REMOVE_ROW { get; }
 
         string SUCCESS { get; }
@@ -73,7 +72,6 @@ namespace WMS.Interfaces
         string SUCCESS_MOVE { get; }
         string SUCCESS_REGISTER { get; }
 
-        string ITEMS_MOVED { get; }
         string IS_EMPTY { get; }
         string VALUE_IN_ITEM_ID { get; }
         string VALUE_IN_LOCATION { get; }
@@ -86,5 +84,8 @@ namespace WMS.Interfaces
         string NEW_QUANTITY { get; }
 
         string LOGGED_IN_AS { get; }
+
+        string NOT_PLACED { get; }
+        string PLACED { get; }
     }
 }

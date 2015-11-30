@@ -80,28 +80,26 @@
     <Compile Include="GUI\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\RigisterFeedBack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\RigisterFeedBack.Designer.cs">
+      <DependentUpon>RigisterFeedBack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Handlers\DataHandler.cs" />
     <Compile Include="Handlers\WindowHandler.cs" />
     <Compile Include="Interfaces\ILang.cs" />
     <Compile Include="Interfaces\IMenuWindows.cs" />
     <Compile Include="Interfaces\IWindowHandler.cs" />
     <Compile Include="Lang\LangEn.cs" />
-    <Compile Include="WH\LogItem.cs" />
+    <Compile Include="WH\Log.cs" />
     <Compile Include="WH\Order.cs" />
-    <Compile Include="Reference\DataBaseTypes.cs" />
-    <Compile Include="Reference\DataBaseValues.cs" />
+    <Compile Include="Reference\DataBases.cs" />
+    <Compile Include="Reference\SearchTerms.cs" />
     <Compile Include="Lang\LangDa.cs" />
-    <Compile Include="Reference\WindowTypes.cs" />
     <Compile Include="WH\Item.cs" />
     <Compile Include="WH\Location.cs" />
     <Compile Include="Handlers\SqlHandler.cs" />
-    <Compile Include="Reference\WarehouseLayout.cs" />
-    <Compile Include="GUI\Program.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Program.Designer.cs">
-      <DependentUpon>Program.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Information.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,9 +160,6 @@
     <EmbeddedResource Include="GUI\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Program.resx">
-      <DependentUpon>Program.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Information.resx">
       <DependentUpon>Information.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RigisterFeedBack.resx">
+      <DependentUpon>RigisterFeedBack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserIDBox.resx">
       <DependentUpon>UserIDBox.cs</DependentUpon>

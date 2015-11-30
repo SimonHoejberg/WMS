@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
-using static WMS.Reference.DataBaseValues;
-using static WMS.Reference.DataBaseTypes;
+using static WMS.Reference.SearchTerms;
+using static WMS.Reference.DataBases;
 using WMS.WH;
 
 namespace WMS.GUI
@@ -46,7 +46,7 @@ namespace WMS.GUI
             data = new DataTable();
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
-            inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, LOG);
+            inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, LOG_DB);
             sortToggle = true;
             UpdateLang(lang);
             sortButton.Text = lang.UNSORT;
@@ -54,7 +54,7 @@ namespace WMS.GUI
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.GetData(LOG));
+            UpdateLog(core.DataHandler.GetData(LOG_DB));
         }
 
         private void UpdateLog(MySqlDataAdapter mysqlData)
@@ -111,7 +111,7 @@ namespace WMS.GUI
             {
                 sortToggle = true;
                 string temp = dataGridView[0, dataGridView.CurrentCell.RowIndex].Value.ToString();
-                UpdateLog(core.DataHandler.GetDataFromItemNo(temp, LOG));
+                UpdateLog(core.DataHandler.GetDataFromItemNo(temp, LOG_DB));
                 sortButton.Text = lang.UNSORT;
             }
             else if(sortToggle)
@@ -181,11 +181,11 @@ namespace WMS.GUI
             data.Clear();
             if (int.TryParse(textBox1.Text, out a))
             {
-                core.DataHandler.Search(textBox1.Text, LOG, ITEM).Fill(data);
+                core.DataHandler.Search(textBox1.Text, LOG_DB, ITEM).Fill(data);
             }
             else
             {
-                core.DataHandler.Search(textBox1.Text, LOG, DESCRIPTION).Fill(data);
+                core.DataHandler.Search(textBox1.Text, LOG_DB, DESCRIPTION).Fill(data);
             }
             
         }

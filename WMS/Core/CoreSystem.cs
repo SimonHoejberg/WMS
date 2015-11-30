@@ -37,10 +37,10 @@ namespace WMS.Core
             return DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
         }
 
-        public void SortNewItems(List<Item> items,string orderNo)
+        public List<Item> SortNewItems(List<Item> items,string orderNo, out Dictionary<Item,Location> itemPlaced)
         {
             wh.CreateWH(orderNo);
-            wh.FindOptimalLocation(items);
+            return wh.FindOptimalLocation(items, out itemPlaced);
         }
 
         public void changeLang()

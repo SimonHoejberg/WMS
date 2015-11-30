@@ -9,166 +9,90 @@ namespace WMS.Lang
 {
     public class LangEn : ILang
     {
-        private string information = "Information";
-        private string log = "Log";
-        private string move = "Move";
-        private string reduce = "Reduce";
-        private string register = "Register";
-        private string waste = "Waste";
-        private string main = "Menu";
-
-        private string moved = "Moved";
-        private string reduced = "Taken";
-        private string registed = "Registered";
-
-        private string close = "Close";
-        private string accept = "Accept";
-        private string confirm = "Confirm";
-        private string cancel = "Cancel";
-
-        private string description = "Description";
-        private string itemNo = "Item No.";
-        private string inStock = "In stock";
-        private string location = "Location";
-        private string newLocation = "New location";
-        private string size = "Size";
-        private string timeStamp = "Date / Time";
-        private string user = "User";
-        private string amount = "Amount";
-        private string expectedAmount = "Expected amount";
-        private string operaton = "Operation";
-
-        private string viewItem = "Show item";
-        private string usage = "Usage";
-        private string sort = "Sort";
-        private string unsort = "Unsort";
-
-        private string cancelBoxText = "Are you sure you want to cancel?";
-        private string confirmText = "Are you sure you want to continue";
-        private string yes = "Yes";
-        private string no = "No";
-        private string userId = "Username";
-        private string invildUserId = "Wrong username";
-
-        private string error = "Error";
-        private string mustBePositive = "Must be a positive number";
-        private string onlyNumbers = "Write only numbers";
-        private string mustBeANumber = "Must be a number";
-        private string seach = "Search";
-
-        private string orderNo = "Order No.";
-
-        private string choose = "Choose";
-        private string broken = "Broken";
-        private string wrongItemDelivred = "Wrong item delivered";
-        private string missing = "Missing";
-        private string reason = "Reason";
-
-        private string tooManyWindows = "Cannot open any more windows of the type";
-        private string removeRow = "Remove row";
-
-        private string success = "Success";
-        private string successReduce = "Successfully reduced items";
-        private string successMove = "Successfully moved items";
-        private string successWaste = "Successfully wasted items ";
-        private string successRegister = "Successfully registered items";
-
-        private string itemsMoved = "Items moved";
-        private string isEmpty = "is empty!";
-        private string valueItemIDError = "Value in ItemID on row";
-        private string valueLocationError = "Value in Location on row";
-        private string valueAmountError = "Value in Quantity on row";
-        private string valueNewLocationError = "Value in New Location on row";
-        private string attemptToMoveFromSameTwice = "Attempt to move from the same location twice";
-        private string attemptToMoveMutipleItemsToSameLocation = "Attempt to move multiple items to the same location";
-
-        private string loggedInAs = "Logged in as:";
-
-        public string ADD { get; } = "Add line";
-
-        public string OLD_QUANTITY { get; } = "Old quantity";
-        public string NEW_QUANTITY { get; } = "New Quantity";
-
         public LangEn()
         {
 
         }
 
-        public string INFORMATION { get { return information; } }
-        public string LOG { get { return log; } }
-        public string MOVE { get { return move; } }
-        public string REDUCE { get { return reduce; } }
-        public string REGISTER { get { return register; } }
-        public string WASTE { get { return waste; } }
-        public string MAIN { get { return main; } }
+        public string INFORMATION { get; } = "Information";
+        public string LOG { get; } = "Log";
+        public string MOVE { get; } = "Move";
+        public string REDUCE { get; } = "Reduce";
+        public string REGISTER { get; } = "Register";
+        public string WASTE { get; } = "Waste";
+        public string MAIN { get; } = "Menu";
 
-        public string MOVED { get { return moved; } }
-        public string REDUCED { get { return reduced; } }
-        public string REGISTED { get { return registed; } }
+        public string MOVED { get; } = "Moved";
+        public string REDUCED { get; } = "Taken";
+        public string REGISTED { get; } = "Registered";
 
-        public string CLOSE { get { return close; } }
-        public string ACCEPT { get { return accept; } }
-        public string CONFIRM { get { return confirm; } }
-        public string CANCEL { get { return cancel; } }
+        public string CLOSE { get; } = "Close";
+        public string ACCEPT { get; } = "Accept";
+        public string CONFIRM { get; } = "Confirm";
+        public string CANCEL { get; } = "Cancel";
 
-        public string DESCRIPTION { get { return description; } }
-        public string ITEM_NO { get { return itemNo; } }
-        public string IN_STOCK { get { return inStock; } }
-        public string LOCATION { get { return location; } }
-        public string NEW_LOCATION { get { return newLocation; } }
-        public string SIZE { get { return size; } }
-        public string TIMESTAMP { get { return timeStamp; } }
-        public string USER { get { return user; } }
-        public string AMOUNT { get { return amount; } }
-        public string EXPECTED_AMOUNT { get { return expectedAmount; } }
-        public string OPERATION { get { return operaton; } }
+        public string DESCRIPTION { get; } = "Description";
+        public string ITEM_NO { get; } = "Item No";
+        public string IN_STOCK { get; } = "In Stock";
+        public string LOCATION { get; } = "Location";
+        public string NEW_LOCATION { get; } = "New Location";
+        public string SIZE { get; } = "Size";
+        public string TIMESTAMP { get; } = "Date / Time";
+        public string USER { get; } = "User";
+        public string AMOUNT { get; } = "Amount";
+        public string EXPECTED_AMOUNT { get; } = "Expected amount";
+        public string OPERATION { get; } = "Operation";
 
-        public string VIEW_ITEM { get { return viewItem; } }
-        public string USAGE { get { return usage; } }
-        public string SORT { get { return sort; } }
-        public string UNSORT { get { return unsort; } }
+        public string VIEW_ITEM { get; } = "Show Item";
+        public string USAGE { get; } = "Usage";
+        public string SORT { get; } = "Sort";
+        public string UNSORT { get; } = "Unsort";
 
-        public string CANCELBOXTEXT { get { return cancelBoxText; } }
-        public string CONFIRM_TEXT { get { return confirmText; } }
-        public string YES { get { return yes; } }
-        public string NO { get { return no; } }
-        public string USER_ID { get { return userId; } }
-        public string INVILD_USER_ID { get { return invildUserId; } }
+        public string CANCELBOXTEXT { get; } = "Are you sure you want to cancel?";
+        public string CONFIRM_TEXT { get; } = "Are you sure you want to continue?";
+        public string YES { get; } = "Yes";
+        public string NO { get; } = "No";
+        public string USER_ID { get; } = "Username";
+        public string INVILD_USER_ID { get; } = "Wrong username";
 
-        public string ERROR { get { return error; } }
-        public string MUST_BE_A_POSITIVE { get { return mustBePositive; } }
-        public string ONLY_NUMBERS { get { return onlyNumbers; } }
-        public string MUST_BE_A_NUMER { get { return mustBeANumber; } }
-        public string SEACH { get { return seach; } }
+        public string ERROR { get; } = "Error";
+        public string MUST_BE_A_POSITIVE { get; } = "Must be a positive number";
+        public string ONLY_NUMBERS { get; } = "Write only numbers";
+        public string MUST_BE_A_NUMER { get; } = "Must be a number";
+        public string SEARCH { get; } = "Search";
 
-        public string ORDER_NO { get { return orderNo; } }
+        public string ORDER_NO { get; } = "Order No.";
 
-        public string CHOOSE { get { return choose; } }
-        public string BROKEN { get { return broken; } }
-        public string WRONG_ITEM_DELIVRED { get { return wrongItemDelivred; } }
-        public string MISSING { get { return missing; } }
-        public string REASON { get { return reason; } }
+        public string CHOOSE { get; } = "Choose";
+        public string BROKEN { get; } = "Broken";
+        public string WRONG_ITEM_DELIVRED { get; } = "Wrong item delivered";
+        public string MISSING { get; } = "Missing";
+        public string REASON { get; } = "Reason";
 
-        public string TOO_MANY_WINDOWS { get { return tooManyWindows; } }
-        public string REMOVE_ROW { get { return removeRow; } }
+        public string REMOVE_ROW { get; } = "Remove row";
 
-        public string SUCCESS { get { return success; } }
-        public string SUCCESS_REDUCE { get { return successReduce; } }
-        public string SUCCESS_WASTE { get { return successWaste; } }
-        public string SUCCESS_MOVE { get { return successMove; } }
-        public string SUCCESS_REGISTER { get { return successRegister; } }
+        public string SUCCESS { get; } = "Success";
+        public string SUCCESS_REDUCE { get; } = "Successfully reduced items";
+        public string SUCCESS_WASTE { get; } = "Successfully moved items";
+        public string SUCCESS_MOVE { get; } = "Successfully wasted items";
+        public string SUCCESS_REGISTER { get; } = "Successfully registered items";
 
-        public string ITEMS_MOVED { get { return itemsMoved; } }
-        public string IS_EMPTY { get { return isEmpty; } }
-        public string VALUE_IN_ITEM_ID { get { return valueItemIDError; } }
-        public string VALUE_IN_LOCATION { get { return valueLocationError; } }
-        public string VALUE_IN_AMOUNT { get { return valueAmountError; } }
-        public string VALUE_IN_NEW_LOCATION { get { return valueNewLocationError; } }
-        public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get { return attemptToMoveFromSameTwice; } }
-        public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get { return attemptToMoveMutipleItemsToSameLocation; } }
+        public string IS_EMPTY { get; } = "is empty!";
+        public string VALUE_IN_ITEM_ID { get; } = "Value in Item No. on row";
+        public string VALUE_IN_LOCATION { get; } = "Value in Location on row";
+        public string VALUE_IN_AMOUNT { get; } = "Value in Quantity on row";
+        public string VALUE_IN_NEW_LOCATION { get; } = "Value in New Location on row";
+        public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; } = "Attempt to move from same location twice";
+        public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; } = "Attempt to move multiple items to the same location";
 
-        public string LOGGED_IN_AS { get { return loggedInAs; } }
+        public string LOGGED_IN_AS { get; } = "Logged in as:";
 
+        public string ADD { get; } = "Add row";
 
+        public string OLD_QUANTITY { get; } = "Old quantity";
+        public string NEW_QUANTITY { get; } = "New quantity";
+
+        public string NOT_PLACED { get; } = "Not placed";
+        public string PLACED { get; } = "Placed";
     }
 }
