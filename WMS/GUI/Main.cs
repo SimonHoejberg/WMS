@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using WMS.Reference;
 
 namespace WMS.GUI
 {
     public partial class Main : Form , IMain
     {
-        private ICore core;
+        //Properties for objects this class needs to fuction but only can get after creation
+        public ICore Core { get; set; }
         public ILang lang { get; set; }
 
         public Main()
@@ -24,57 +17,67 @@ namespace WMS.GUI
 
         private void MainLoad(object sender, EventArgs e)
         {
+            //Disables both the maximize and minimize buttons
             MaximizeBox = false;
             MinimizeBox = false;
-            label2.Text = core.UserName;
+            userNameLabel.Text = Core.UserName; //Sets the user name from the login
         }
 
-        public ICore Core { set { core = value; } }
-
-        private void Information_pbox_Click(object sender, EventArgs e)
+        #region Window buttons events 
+        /*
+        Events from button that creates new windows through the windowHandler
+        */
+        private void InformationButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenInformation();
+            Core.WindowHandler.OpenInformation();
         }
 
         private void LogButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenLog();
+            Core.WindowHandler.OpenLog();
         }
 
         private void MoveButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenMove();
+            Core.WindowHandler.OpenMove();
         }
 
         private void RegisterButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenRegister();
+            Core.WindowHandler.OpenRegister();
         }
 
         private void WasteButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenWaste();
+            Core.WindowHandler.OpenWaste();
         }
 
         private void ReduceButtonClick(object sender, EventArgs e)
         {
-            core.WindowHandler.OpenReduce();
+            Core.WindowHandler.OpenReduce();
         }
+        #endregion
 
         private void MainFormClosing(object sender, FormClosingEventArgs e)
         {
-            core.DataHandler.CloseConnectionToServer();
+            //When main form closes disconnect from the database
+            Core.DataHandler.CloseConnectionToServer();
         }
 
+        /// <summary>
+        /// Updates the button pictures and flag on main menu
+        /// </summary>
+        /// <param name="da"></param>
         public void UpdatePics(bool da)
         {
+            //Uses the resources to set the pictures
             if (da)
             {
                 moveButton.Image = Properties.Resources.move;
                 reduceButton.Image = Properties.Resources.reduce;
                 registerButton.Image = Properties.Resources.register;
                 wasteButton.Image = Properties.Resources.waste;
-                langButton.Image = Properties.Resources.dannebro;
+                flagButton.Image = Properties.Resources.dannebro;
             }
             else
             {
@@ -82,19 +85,22 @@ namespace WMS.GUI
                 reduceButton.Image = Properties.Resources.reduceda;
                 registerButton.Image = Properties.Resources.registerda;
                 wasteButton.Image = Properties.Resources.wasteda;
-                langButton.Image = Properties.Resources.union_jack_30x18;
+                flagButton.Image = Properties.Resources.union_jack_30x18;
             }
             UpdateLang();
         }
 
-        private void lang_Click(object sender, EventArgs e)
-        {
-            core.changeLang();
-        }
-
+        /// <summary>
+        /// Updates the labels and normal windows buttons on a window
+        /// </summary>
         public void UpdateLang()
         {
-            label1.Text = lang.LOGGED_IN_AS;
+            loggedInLabel.Text = lang.LOGGED_IN_AS;
+        }
+
+        private void flagButtonClick(object sender, EventArgs e)
+        {
+            Core.changeLang();
         }
     }
 }

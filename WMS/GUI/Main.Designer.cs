@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.langButton = new System.Windows.Forms.PictureBox();
+            this.flagButton = new System.Windows.Forms.PictureBox();
             this.reduceButton = new System.Windows.Forms.PictureBox();
             this.wasteButton = new System.Windows.Forms.PictureBox();
             this.registerButton = new System.Windows.Forms.PictureBox();
             this.moveButton = new System.Windows.Forms.PictureBox();
             this.logButton = new System.Windows.Forms.PictureBox();
             this.informationButton = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.langButton)).BeginInit();
+            this.loggedInLabel = new System.Windows.Forms.Label();
+            this.userNameLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.flagButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.registerButton)).BeginInit();
@@ -48,13 +48,13 @@
             // 
             // langButton
             // 
-            this.langButton.BackgroundImage = global::WMS.Properties.Resources.union_jack_30x18;
-            this.langButton.Location = new System.Drawing.Point(11, 2);
-            this.langButton.Name = "langButton";
-            this.langButton.Size = new System.Drawing.Size(30, 18);
-            this.langButton.TabIndex = 7;
-            this.langButton.TabStop = false;
-            this.langButton.Click += new System.EventHandler(this.lang_Click);
+            this.flagButton.BackgroundImage = global::WMS.Properties.Resources.union_jack_30x18;
+            this.flagButton.Location = new System.Drawing.Point(11, 2);
+            this.flagButton.Name = "langButton";
+            this.flagButton.Size = new System.Drawing.Size(30, 18);
+            this.flagButton.TabIndex = 7;
+            this.flagButton.TabStop = false;
+            this.flagButton.Click += new System.EventHandler(this.flagButtonClick);
             // 
             // reduceButton
             // 
@@ -126,33 +126,33 @@
             this.informationButton.Size = new System.Drawing.Size(128, 75);
             this.informationButton.TabIndex = 0;
             this.informationButton.TabStop = false;
-            this.informationButton.Click += new System.EventHandler(this.Information_pbox_Click);
+            this.informationButton.Click += new System.EventHandler(this.InformationButtonClick);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 526);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "label1";
+            this.loggedInLabel.AutoSize = true;
+            this.loggedInLabel.Location = new System.Drawing.Point(13, 526);
+            this.loggedInLabel.Name = "label1";
+            this.loggedInLabel.Size = new System.Drawing.Size(46, 17);
+            this.loggedInLabel.TabIndex = 8;
+            this.loggedInLabel.Text = "label1";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 546);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 17);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "label2";
+            this.userNameLabel.AutoSize = true;
+            this.userNameLabel.Location = new System.Drawing.Point(13, 546);
+            this.userNameLabel.Name = "label2";
+            this.userNameLabel.Size = new System.Drawing.Size(46, 17);
+            this.userNameLabel.TabIndex = 9;
+            this.userNameLabel.Text = "label2";
             // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(157, 572);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.langButton);
+            this.Controls.Add(this.userNameLabel);
+            this.Controls.Add(this.loggedInLabel);
+            this.Controls.Add(this.flagButton);
             this.Controls.Add(this.reduceButton);
             this.Controls.Add(this.wasteButton);
             this.Controls.Add(this.registerButton);
@@ -165,7 +165,7 @@
             this.Text = "Menu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainLoad);
-            ((System.ComponentModel.ISupportInitialize)(this.langButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.flagButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.registerButton)).EndInit();
@@ -185,8 +185,8 @@
         private System.Windows.Forms.PictureBox registerButton;
         private System.Windows.Forms.PictureBox wasteButton;
         private System.Windows.Forms.PictureBox reduceButton;
-        private System.Windows.Forms.PictureBox langButton;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox flagButton;
+        private System.Windows.Forms.Label loggedInLabel;
+        private System.Windows.Forms.Label userNameLabel;
     }
 }
