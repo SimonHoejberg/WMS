@@ -11,7 +11,7 @@ namespace WMS.GUI
     public partial class Waste : Form, IGui
     {
         private List<string> reasons;
-        
+        private List<Location> locationList;
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
@@ -19,13 +19,12 @@ namespace WMS.GUI
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
-        private DataGridViewComboBoxColumn locationComboBox;
-        private List<Location> location;
 
         public Waste(ICore core)
         {
             this.core = core;
             InitializeComponent();
+            locationList = core.DataHandler.LocationToList();
             SearchBox();
             Text = core.Lang.WASTE;
             chooseButton.Text = core.Lang.CHOOSE;
@@ -34,11 +33,10 @@ namespace WMS.GUI
             button10.Text = core.Lang.CANCEL;
             button11.Text = core.Lang.CONFIRM;
             button3.Text = core.Lang.REMOVE_ROW;
+            chooseLocationButton.Text = core.Lang.CHOOSE;
             error = core.Lang.ERROR;
             mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
-            location = new List<Location>();
-            locationComboBox = new DataGridViewComboBoxColumn();
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -61,7 +59,7 @@ namespace WMS.GUI
 
         }
 
-        private void SearchBox()
+        public void SearchBox()
         {
             var source = new AutoCompleteStringCollection();
             foreach (Item item in core.DataHandler.InfoToList())
@@ -71,7 +69,7 @@ namespace WMS.GUI
             searchTextBox.AutoCompleteCustomSource = source;
         }
 
-        private void MakeDataGridView()
+        public void MakeDataGridView()
         {
             wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
             wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
@@ -79,9 +77,10 @@ namespace WMS.GUI
             wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
             wasteDataGridView.Columns[3].Visible = false;
             wasteDataGridView.Columns[4].Visible = false;
-            wasteDataGridView.Columns.Add(locationComboBox);
-            wasteDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
-
+            if (!data.Columns.Contains(core.Lang.LOCATION))
+            {
+                data.Columns.Add(core.Lang.LOCATION);
+            }
             if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
                 data.Columns.Add(core.Lang.AMOUNT);
@@ -90,12 +89,12 @@ namespace WMS.GUI
             {
                 data.Columns.Add(core.Lang.REASON);
             }
+            
             for (int i = 0; i < wasteDataGridView.ColumnCount; i++)
             {
                 wasteDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 wasteDataGridView.Columns[i].ReadOnly = true;
             }
-
             wasteDataGridView.Columns[6].ReadOnly = false;
             wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
@@ -175,7 +174,7 @@ namespace WMS.GUI
                                                       wasteDataGridView[1, i].Value.ToString(), 
                                                       wasteDataGridView[6, i].Value.ToString(),
                                                       core.DataHandler.GetUserName(user), 
-                                                      wasteDataGridView[7, i].Value.ToString());
+                                                      wasteDataGridView[7, i].Value.ToString(),(wasteDataGridView[5,i].Value as Location).Id);
                     }
                 }
                 data.Clear();
@@ -191,8 +190,17 @@ namespace WMS.GUI
             {
                 string itemNo = searchTextBox.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
-                addItemsToList();
                 MakeDataGridView();
+                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
+                {
+                    listBox2.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationPanel.Visible = true;
+                    listBox2.Focus();
+                }
+                else
+                {
+                    wasteDataGridView[5,wasteDataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                }
             }
             
         }
@@ -219,6 +227,7 @@ namespace WMS.GUI
             button10.Text = core.Lang.CANCEL;
             button11.Text = core.Lang.CONFIRM;
             button3.Text = core.Lang.REMOVE_ROW;
+            chooseLocationButton.Text = core.Lang.CHOOSE;
             error = core.Lang.ERROR;
             mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
@@ -227,16 +236,11 @@ namespace WMS.GUI
                 wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
                 wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
                 wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                wasteDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
-                wasteDataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
-                wasteDataGridView.Columns[7].HeaderText = core.Lang.REASON;
+                wasteDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
+                wasteDataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
+                wasteDataGridView.Columns[6].HeaderText = core.Lang.REASON;
             }
             MakeList();
-        }
-
-        private void addItemsToList()
-        {
-            locationComboBox.DataSource = location;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -263,6 +267,23 @@ namespace WMS.GUI
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             chooseButton_Click(sender, e);
+        }
+
+        private void chooseLocationButton_Click(object sender, EventArgs e)
+        {
+            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
+            locationPanel.Visible = false;
+            wasteDataGridView.Focus();
+            wasteDataGridView[5, wasteDataGridView.RowCount - 1].Value = listBox2.SelectedItem;
+            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
+        }
+
+        private void listBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                chooseLocationButton_Click(sender, e);
+            }
         }
     }
 }
