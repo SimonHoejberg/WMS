@@ -99,8 +99,62 @@ namespace UnitTestProject1
             Assert.IsNotNull(test);
         }
 
+        [TestMethod]
+        public void TestMethod7()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            MySqlDataAdapter test;
 
 
+            test = temp.GetData("Information");
+        //    Assert.IsNull(test);
+           Assert.IsNotNull(test);
+        }
+
+        [TestMethod]
+        public void TestMethod8()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            List<Location> test = new List<Location>();
+
+
+            test = temp.LocationToList();
+
+            Assert.IsNotNull(test);
+        }
+
+
+        [TestMethod]
+        public void TestMethod9()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            List<Order> test = new List<Order>();
+
+
+            test = temp.OrderToList();
+
+            Assert.IsNotNull(test);
+        }
+
+        [TestMethod]
+        public void TestMethod10()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            List<Item> test = new List<Item>();
+
+
+            test = temp.InfoToList();
+
+            Assert.IsNotNull(test);
+        }
 
 
 
