@@ -19,6 +19,7 @@ namespace WMS.GUI
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
+        private Dictionary<string, string> locationIds = new Dictionary<string, string>();
 
         public Waste(ICore core)
         {
@@ -170,11 +171,12 @@ namespace WMS.GUI
                 {
                     if (!(wasteDataGridView[0, i].Value == null))
                     {
+                        string locId = locationList.Find(x => x.LocationString.Equals(wasteDataGridView[5, i].Value.ToString())).Id;
                         core.DataHandler.ActionOnItem('-', wasteDataGridView[0, i].Value.ToString(), 
                                                       wasteDataGridView[1, i].Value.ToString(), 
                                                       wasteDataGridView[6, i].Value.ToString(),
                                                       core.DataHandler.GetUserName(user), 
-                                                      wasteDataGridView[7, i].Value.ToString(),(wasteDataGridView[5,i].Value as WH.Location).Id);
+                                                      wasteDataGridView[7, i].Value.ToString(),locId);
                     }
                 }
                 data.Clear();
@@ -275,6 +277,8 @@ namespace WMS.GUI
             locationPanel.Visible = false;
             wasteDataGridView.Focus();
             wasteDataGridView[5, wasteDataGridView.RowCount - 1].Value = listBox2.SelectedItem;
+            Location location = ((Location)listBox2.SelectedItem);
+            locationIds.Add(location.ToString(), location.Id);
             wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
