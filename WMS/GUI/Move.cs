@@ -54,7 +54,7 @@ namespace WMS.GUI
                     DisplayMember = "Identification",
                     ValueMember = "ItemNo",
                     HeaderText = core.Lang.ITEM_NO + " / " + core.Lang.DESCRIPTION,
-                    Width = 300,
+                    Width = 300
                 });
             moveDataGridView.Columns.Add(
                 ComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
@@ -62,7 +62,7 @@ namespace WMS.GUI
                     Name = locationColumnString,
                     ValueMember = "LocationString",
                     HeaderText = core.Lang.LOCATION,
-                    Width = 200
+                    
 
                 });
             moveDataGridView.Columns.Add(
@@ -70,7 +70,7 @@ namespace WMS.GUI
                 {
                     Name = quantityColumnString,
                     HeaderText = core.Lang.AMOUNT,
-                    Width = 130
+                    
                 });
             moveDataGridView.Columns.Add(
                 ComboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing location to move to
@@ -78,14 +78,14 @@ namespace WMS.GUI
                     Name = newLocationColumnString,
                     ValueMember = "LocationString",
                     HeaderText = core.Lang.NEW_LOCATION,
-                    Width = 200
+                    
                 });
             moveDataGridView.Columns.Add(
                 columnAction = new DataGridViewTextBoxColumn() //Column used for showing what action is made (move to new location / combine locations)
                 {
                     Name = actionColumnString,
                     HeaderText = core.Lang.DESCRIPTION,
-                    Width = 100,
+                    
                     ReadOnly = true
                 });
             #endregion
@@ -323,11 +323,20 @@ namespace WMS.GUI
             }
         }
 
+        private void moveRemoveRowButton_Click(object sender, EventArgs e)
+        {
+            if(moveDataGridView.CurrentRow != null)
+            {
+                moveDataGridView.Rows.Remove(moveDataGridView.CurrentRow);
+            }
+        }
+
         public void UpdateLang()
         {
             moveConfirmButton.Text = core.Lang.CONFIRM;
             moveCancelButton.Text = core.Lang.CANCEL;
             moveAddItemButton.Text = core.Lang.ADD;
+            moveRemoveRowButton.Text = core.Lang.REMOVE_ROW;
             Text = core.Lang.MOVE;
             moveDataGridView.Columns[quantityColumnString].HeaderText = core.Lang.AMOUNT;
             ComboColumnLocation.HeaderText = core.Lang.LOCATION;
@@ -342,7 +351,7 @@ namespace WMS.GUI
             {
                 moveSearchLabel.Visible = false;
                 moveDataGridView.Rows.Add(new DataGridViewRow());
-                moveDataGridView.Rows[moveDataGridView.RowCount - 2].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
+                moveDataGridView.Rows[moveDataGridView.RowCount - 1].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
                 moveAddItemTextBox.Text = "";
                 
             }

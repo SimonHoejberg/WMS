@@ -64,6 +64,7 @@
             this.moveDataGridView.AllowUserToDeleteRows = false;
             this.moveDataGridView.AllowUserToResizeColumns = false;
             this.moveDataGridView.AllowUserToResizeRows = false;
+            this.moveDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.moveDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.moveDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.moveDataGridView.Location = new System.Drawing.Point(12, 53);
@@ -105,13 +106,13 @@
             // 
             // moveRemoveRowButton
             // 
-            this.moveRemoveRowButton.Location = new System.Drawing.Point(711, 526);
+            this.moveRemoveRowButton.Location = new System.Drawing.Point(679, 526);
             this.moveRemoveRowButton.Name = "moveRemoveRowButton";
-            this.moveRemoveRowButton.Size = new System.Drawing.Size(75, 23);
+            this.moveRemoveRowButton.Size = new System.Drawing.Size(89, 23);
             this.moveRemoveRowButton.TabIndex = 11;
-            this.moveRemoveRowButton.Text = "Remove";
+            this.moveRemoveRowButton.Text = "Fjern række";
             this.moveRemoveRowButton.UseVisualStyleBackColor = true;
-            this.moveRemoveRowButton.Click += new System.EventHandler(this.moveRemoveRowButton_click);
+            this.moveRemoveRowButton.Click += new System.EventHandler(this.moveRemoveRowButton_Click);
             // 
             // Move
             // 
