@@ -133,7 +133,7 @@ namespace WMS.Handlers
             catch (MySqlException ex)
             {
                 Console.WriteLine("Connetion to DB failed \nError: " + ex.Number);
-                string temp = null;
+                string temp = "Error";
                 switch (ex.Number)
                 {
                     case 0:

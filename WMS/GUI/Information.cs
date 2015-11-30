@@ -12,11 +12,9 @@ namespace WMS.GUI
     public partial class Information : Form, IGui
     {
         private ICore core;
-        private string itemNo;
+        private string itemNo; //Used for the panel because it is needed in more methodes 
         private BindingSource bsource;
         private DataTable data;
-
-        public Form Main { get; set; }
 
         public Information(ICore core)
         {
@@ -31,7 +29,7 @@ namespace WMS.GUI
             logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
-            UpdateLang();
+            UpdateLang(); //Sets the text on buttons, labels etc.
         }
 
         private void InformationLoad(object sender, System.EventArgs e)
@@ -40,15 +38,21 @@ namespace WMS.GUI
             UpdateInfo();
         }
 
+        /// <summary>
+        /// Fills the dataGridView with data from the database
+        /// </summary>
         private void UpdateInfo()
         {
+            //Fills the data into the dataGridView
             core.DataHandler.GetData(INFOMATION_DB).Fill(data);
 
+            //Sets headertext and visiblity
             dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
             dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
             dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             dataGridView.Columns[4].Visible = false;
+            //Auto sizes colums and sets readonly 
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
