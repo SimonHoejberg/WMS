@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sortButton = new System.Windows.Forms.Button();
             this.viewItemButton = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -39,22 +38,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
             this.itemInfoPanel = new System.Windows.Forms.Panel();
-            this.logListBox = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.logListView = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.itemInfoPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // sortButton
-            // 
-            this.sortButton.Location = new System.Drawing.Point(1088, 647);
-            this.sortButton.Margin = new System.Windows.Forms.Padding(4);
-            this.sortButton.Name = "sortButton";
-            this.sortButton.Size = new System.Drawing.Size(100, 28);
-            this.sortButton.TabIndex = 5;
-            this.sortButton.Text = "Sort";
-            this.sortButton.UseVisualStyleBackColor = true;
-            this.sortButton.Click += new System.EventHandler(this.SortButtonClick);
             // 
             // viewItemButton
             // 
@@ -152,7 +140,7 @@
             // 
             // itemInfoPanel
             // 
-            this.itemInfoPanel.Controls.Add(this.logListBox);
+            this.itemInfoPanel.Controls.Add(this.logListView);
             this.itemInfoPanel.Controls.Add(this.nameLabel);
             this.itemInfoPanel.Controls.Add(this.label4);
             this.itemInfoPanel.Controls.Add(this.locationLabel);
@@ -167,34 +155,33 @@
             this.itemInfoPanel.TabIndex = 6;
             this.itemInfoPanel.Visible = false;
             // 
-            // logListBox
-            // 
-            this.logListBox.FormattingEnabled = true;
-            this.logListBox.ItemHeight = 16;
-            this.logListBox.Location = new System.Drawing.Point(4, 236);
-            this.logListBox.Margin = new System.Windows.Forms.Padding(4);
-            this.logListBox.Name = "logListBox";
-            this.logListBox.Size = new System.Drawing.Size(441, 244);
-            this.logListBox.TabIndex = 7;
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(29, 5);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(188, 22);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
-            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.SearchTextBox.Location = new System.Drawing.Point(29, 5);
+            this.SearchTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.SearchTextBox.Name = "textBox1";
+            this.SearchTextBox.Size = new System.Drawing.Size(188, 22);
+            this.SearchTextBox.TabIndex = 7;
+            this.SearchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
+            this.SearchTextBox.Leave += new System.EventHandler(this.SearchTextBoxLeave);
+            // 
+            // logListView
+            // 
+            this.logListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.logListView.Location = new System.Drawing.Point(11, 249);
+            this.logListView.MultiSelect = false;
+            this.logListView.Name = "logListView";
+            this.logListView.Size = new System.Drawing.Size(420, 268);
+            this.logListView.TabIndex = 15;
+            this.logListView.UseCompatibleStateImageBehavior = false;
             // 
             // Log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.itemInfoPanel);
-            this.Controls.Add(this.sortButton);
             this.Controls.Add(this.viewItemButton);
             this.Controls.Add(this.dataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -212,8 +199,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button sortButton;
         private System.Windows.Forms.Button viewItemButton;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Label nameLabel;
@@ -224,7 +209,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Panel itemInfoPanel;
-        private System.Windows.Forms.ListBox logListBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.ListView logListView;
     }
 }

@@ -36,7 +36,7 @@ namespace WMS.Handlers
         }
         public List<string> GetUser() => UserToList();
 
-        public List<Log> GetLog(string itemNo) => LogToList(itemNo);
+        public List<LogItem> GetLog(string itemNo) => LogToList(itemNo);
 
         public List<Item> InfoToList()
         {
@@ -91,13 +91,13 @@ namespace WMS.Handlers
             return temp;
         }
 
-        public List<Log> LogToList(string itemNo)
+        public List<LogItem> LogToList(string itemNo)
         {
-            List<Log> temp = new List<Log>();
+            List<LogItem> temp = new List<LogItem>();
             MySqlDataReader reader = sql.GetItemLatestLog(itemNo);
             while (reader.Read())
             {
-                temp.Add(new Log(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
+                temp.Add(new LogItem(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
             return temp;
         }

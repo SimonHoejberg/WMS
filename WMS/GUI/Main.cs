@@ -8,7 +8,6 @@ namespace WMS.GUI
     {
         //Properties for objects this class needs to fuction but only can get after creation
         public ICore Core { get; set; }
-        public ILang lang { get; set; }
 
         public Main()
         {
@@ -95,7 +94,7 @@ namespace WMS.GUI
         /// </summary>
         public void UpdateLang()
         {
-            loggedInLabel.Text = lang.LOGGED_IN_AS;
+            loggedInLabel.Text = Core.Lang.LOGGED_IN_AS;
         }
 
         private void flagButtonClick(object sender, EventArgs e)
