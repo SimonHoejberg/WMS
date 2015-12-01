@@ -15,69 +15,57 @@ namespace UnitTestProject1
     [TestClass]
     public class ItemTest
     {
-       [TestMethod]
-       public void TestMethod1()
-        { 
-            //??????????????
-            //Arrange
-            int a = 0;
-            Item anItem = new Item("1000", "An Item", 9, "2.3", 10);
-
-            //Act
-            a = anItem.CompareTo(new Item("1000", "An Item", 9, "2.3", 10));
-
-            //Assert
-            Assert.AreEqual(1, 1);
-        }
+       
         [TestMethod]
-        public void TestMethod2()
+        public void TestMethodTimeStamp()
         {
             
             IMain main = new Main();
-            string temp = "";
             CoreSystem Test = new CoreSystem(main);
-
+            string temp = "";
 
             temp = Test.GetTimeStamp();
-
+            
             Assert.IsNotNull(temp);
         }
 
+
         [TestMethod]
-        public void TestMethod3()
+        public void TestMethodGetUser()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            //More name
             string name = "";
+            string name2 = "";
 
             name = temp.GetUserName("1234");
+            name2 = temp.GetUserName("4242");
 
             Assert.AreEqual("Jonas Ibrahim", name);
+            Assert.AreEqual("DonF", name2);
         }
 
+
         [TestMethod]
-        public void TestMethod4()
+        public void TestMethodUserToList()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-
-
             List<string> output;
             List<string> test = new List<string>();
 
             output = temp.UserToList();
 
-            CollectionAssert.ReferenceEquals(test, output);
             Assert.IsNotNull(output);
-           // test for equals list<string>
-
-
+            Assert.AreEqual(output.Count, 5);
         }
+
+
+
         [TestMethod]
-        public void TestMethod5()
+        public void TestMethodMaxSpace()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -89,8 +77,10 @@ namespace UnitTestProject1
             Assert.AreEqual(test, 5);
         }
 
+
+
         [TestMethod]
-        public void TestMethod6()
+        public void TestMethodGetDataFromItemNo()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -98,15 +88,13 @@ namespace UnitTestProject1
             MySqlDataAdapter output;
             MySqlDataAdapter test = new MySqlDataAdapter();
 
-
             output = temp.GetDataFromItemNo("215250", "Information");
 
-            Assert.ReferenceEquals(test, output);
             Assert.IsNotNull(output);
         }
 
         [TestMethod]
-        public void TestMethod7()
+        public void TestMethodGetData()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -114,31 +102,29 @@ namespace UnitTestProject1
             MySqlDataAdapter output;
             MySqlDataAdapter test = new MySqlDataAdapter();
 
-
             output = temp.GetData("Information");
-            Assert.ReferenceEquals(test, output);
-           Assert.IsNotNull(output);
+
+            Assert.IsNotNull(output);
         }
 
         [TestMethod]
-        public void TestMethod8()
+        public void TestMethodLocationToList()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
             List<Location> output;
-            List<Location> test = new List<Location>();
-
+            List<Order> test = new List<Order>();
 
             output = temp.LocationToList();
 
-            CollectionAssert.ReferenceEquals(test, output);
+            Assert.AreEqual(output.Count, 30);
             Assert.IsNotNull(output);
         }
 
 
         [TestMethod]
-        public void TestMethod9()
+        public void TestMethodOrderToList()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -146,18 +132,16 @@ namespace UnitTestProject1
             List<Order> output = new List<Order>();
             List<Order> test = new List<Order>();
 
-
-
             output = temp.OrderToList();
 
-
-
-            CollectionAssert.Equals(output, test);
+            Assert.AreEqual(output.Count, 3);
             Assert.IsNotNull(output);
         }
 
+
+
         [TestMethod]
-        public void TestMethod10()
+        public void TestMethodInfoToList()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -168,13 +152,9 @@ namespace UnitTestProject1
 
             output = temp.InfoToList();
 
-            CollectionAssert.ReferenceEquals(test, output);
+            Assert.AreEqual(output.Count, 11);
             Assert.IsNotNull(output);
         }
-
-
-
-
 
     }
 
