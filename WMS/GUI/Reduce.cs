@@ -20,26 +20,24 @@ namespace WMS.GUI
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
-        private ILang lang;
         private DataGridViewComboBoxColumn reduceComboColumnLocation;
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
        
-        public Reduce(ICore core, ILang lang)
+        public Reduce(ICore core)
         {
             this.core = core;
-            this.lang = lang;
             InitializeComponent();
             SearchBox();
-            searchBtn.Text = lang.ADD;
-            Text = lang.REDUCE;
-            reduceConfirmBtn.Text = lang.CONFIRM;
-            reduceCancelBtn.Text = lang.CANCEL;
-            error = lang.ERROR;
-            button1.Text = lang.REMOVE_ROW;
-            mustBePostive = lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = lang.MUST_BE_A_NUMER;
+            searchBtn.Text = core.Lang.ADD;
+            Text = core.Lang.REDUCE;
+            reduceConfirmBtn.Text = core.Lang.CONFIRM;
+            reduceCancelBtn.Text = core.Lang.CANCEL;
+            error = core.Lang.ERROR;
+            button1.Text = core.Lang.REMOVE_ROW;
+            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -64,17 +62,17 @@ namespace WMS.GUI
 
         private void reduceConfirmBtn_Click(object sender, EventArgs e)
         {
-            DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel);
+            DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
             if (a.Equals(DialogResult.OK))
             {
                 for (int i = 0; i < reduceDataGridView.RowCount; i++)
                 {
                     if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[5, i].Value.Equals("0")))
                     {
-                        core.DataHandler.ActionOnItem('-', reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), lang.REDUCED, "");
+                        core.DataHandler.ActionOnItem('-', reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), core.Lang.REDUCED, "");
                     }
                 }
-                MessageBox.Show(lang.SUCCESS_REDUCE, lang.SUCCESS);
+                MessageBox.Show(core.Lang.SUCCESS_REDUCE, core.Lang.SUCCESS);
                 core.WindowHandler.Update(this);
                 data.Clear();
             }
@@ -95,30 +93,19 @@ namespace WMS.GUI
         private void MakeDataGridView()
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-            reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-            reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-            reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
+            reduceDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+            reduceDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+            reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+            reduceDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             reduceDataGridView.Columns[4].Visible = true;
-            reduceDataGridView.ReadOnly = false;
-            reduceDataGridView.Columns.Add(
-                reduceComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
-                {
-                    Name = "reduceComboColumn",
-                    ValueMember = "LocationString",
-                    DisplayMember = "LocationString",
-                    HeaderText = lang.LOCATION,
-                    Width = 200,
-                    ReadOnly = false
-                });
 
-            if (!data.Columns.Contains(lang.AMOUNT))
+            if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
-                data.Columns.Add(lang.AMOUNT);
+                data.Columns.Add(core.Lang.AMOUNT);
             }
             for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
             {
-                if (!reduceDataGridView.Columns[i].HeaderText.Equals(lang.AMOUNT))
+                if (!reduceDataGridView.Columns[i].HeaderText.Equals(core.Lang.AMOUNT))
                 {
                     reduceDataGridView.Columns[i].ReadOnly = true;
                 }
@@ -156,7 +143,7 @@ namespace WMS.GUI
 
         private void reduceCancelBtn_Click(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox(lang);
+            CancelBox cancel = new CancelBox(core.Lang);
             cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
@@ -166,26 +153,25 @@ namespace WMS.GUI
             }
         }
 
-        public void UpdateLang(ILang lang)
+        public void UpdateLang()
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            this.lang = lang;
-            searchBtn.Text = lang.ADD;
-            Text = lang.REDUCE;
-            reduceConfirmBtn.Text = lang.CONFIRM;
-            reduceCancelBtn.Text = lang.CANCEL;
-            error = lang.ERROR;
-            mustBePostive = lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = lang.MUST_BE_A_NUMER;
-            button1.Text = lang.REMOVE_ROW;
+            searchBtn.Text = core.Lang.ADD;
+            Text = core.Lang.REDUCE;
+            reduceConfirmBtn.Text = core.Lang.CONFIRM;
+            reduceCancelBtn.Text = core.Lang.CANCEL;
+            error = core.Lang.ERROR;
+            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
+            button1.Text = core.Lang.REMOVE_ROW;
             if (reduceDataGridView.ColumnCount > 0)
             {
-                reduceDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-                reduceDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-                reduceDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-                reduceDataGridView.Columns[3].HeaderText = lang.LOCATION;
+                reduceDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                reduceDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                reduceDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
                 reduceDataGridView.Columns[4].Visible = false;
-                reduceDataGridView.Columns[5].HeaderText = lang.AMOUNT;
+                reduceDataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
             }
             reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }

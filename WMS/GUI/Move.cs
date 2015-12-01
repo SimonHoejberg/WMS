@@ -12,7 +12,6 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private ILang lang;
         private DataGridViewTextBoxColumn ColumnQuantity, columnAction;
         private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
         private AutoCompleteStringCollection ItemListA;
@@ -21,14 +20,13 @@ namespace WMS.GUI
         private string idColumnString = "ItemIDColumn", quantityColumnString = "QuantityColumn", locationColumnString = "LocationColumn", 
             newLocationColumnString = "NewLocationColumn", actionColumnString = "ActionColumn";
 
-        public Move(ICore core, ILang lang)
+        public Move(ICore core)
         {
             InitializeComponent();
             this.core = core;
-            this.lang = lang;
-            moveConfirmButton.Text = lang.CONFIRM;
-            moveCancelButton.Text = lang.CANCEL;
-            Text = lang.MOVE;
+            moveConfirmButton.Text = core.Lang.CONFIRM;
+            moveCancelButton.Text = core.Lang.CANCEL;
+            Text = core.Lang.MOVE;
             InitializeDataGridView(core);
             
         }
@@ -55,39 +53,39 @@ namespace WMS.GUI
                     DataSource = itemData.Values.ToList(),
                     DisplayMember = "Identification",
                     ValueMember = "ItemNo",
-                    HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION,
-                    Width = 300,
+                    HeaderText = core.Lang.ITEM_NO + " / " + core.Lang.DESCRIPTION,
+                    Width = 300
                 });
             moveDataGridView.Columns.Add(
                 ComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
                 {
                     Name = locationColumnString,
                     ValueMember = "LocationString",
-                    HeaderText = lang.LOCATION,
-                    Width = 200
+                    HeaderText = core.Lang.LOCATION,
+                    
 
                 });
             moveDataGridView.Columns.Add(
                 ColumnQuantity = new DataGridViewTextBoxColumn() //Column used for showing quantity to move
                 {
                     Name = quantityColumnString,
-                    HeaderText = lang.AMOUNT,
-                    Width = 130
+                    HeaderText = core.Lang.AMOUNT,
+                    
                 });
             moveDataGridView.Columns.Add(
                 ComboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing location to move to
                 {
                     Name = newLocationColumnString,
                     ValueMember = "LocationString",
-                    HeaderText = lang.NEW_LOCATION,
-                    Width = 200
+                    HeaderText = core.Lang.NEW_LOCATION,
+                    
                 });
             moveDataGridView.Columns.Add(
                 columnAction = new DataGridViewTextBoxColumn() //Column used for showing what action is made (move to new location / combine locations)
                 {
                     Name = actionColumnString,
-                    HeaderText = lang.DESCRIPTION,
-                    Width = 100,
+                    HeaderText = core.Lang.DESCRIPTION,
+                    
                     ReadOnly = true
                 });
             #endregion
@@ -237,7 +235,7 @@ namespace WMS.GUI
 
         private void moveCancelButton_Click(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox(lang);
+            CancelBox cancel = new CancelBox(core.Lang);
             cancel.Owner = this;
             DialogResult a = cancel.ShowDialog();
 
@@ -261,22 +259,22 @@ namespace WMS.GUI
                 if (dgvRow.Cells[newLocationColumnString].Value == DBNull.Value)
                     {
                     noProblemsEncountered = false;
-                    problemList += ($"\n{lang.VALUE_IN_NEW_LOCATION} {(dgvRow.Index + 1)} {lang.IS_EMPTY}");
+                    problemList += ($"\n{core.Lang.VALUE_IN_NEW_LOCATION} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
                 }
                 if (dgvRow.Cells[quantityColumnString].Value == DBNull.Value)
                 {
                     noProblemsEncountered = false;
-                    problemList += ($"\n{lang.VALUE_IN_AMOUNT} {(dgvRow.Index + 1)} {lang.IS_EMPTY}");
+                    problemList += ($"\n{core.Lang.VALUE_IN_AMOUNT} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
                 }
                 if (dgvRow.Cells[idColumnString].Value == DBNull.Value)
                 {
                     noProblemsEncountered = false;
-                    problemList += ($"\n{lang.VALUE_IN_ITEM_ID} {(dgvRow.Index + 1)} {lang.IS_EMPTY}");
+                    problemList += ($"\n{core.Lang.VALUE_IN_ITEM_ID} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
                 }
             }
             if (noProblemsEncountered == true) //Commit changes if no problems.
             {
-                DialogResult a = MessageBox.Show(lang.CONFIRM_TEXT, lang.CONFIRM, MessageBoxButtons.OKCancel);
+                DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
                 if (a.Equals(DialogResult.OK))
                 {
                     int rowCount = moveDataGridView.Rows.Count - 1;
@@ -312,7 +310,7 @@ namespace WMS.GUI
             //give error message if commit could not be done
             else if (noProblemsEncountered == false)
             {
-                MessageBox.Show(problemList, lang.ERROR);
+                MessageBox.Show(problemList, core.Lang.ERROR);
             }
         }
 
@@ -325,18 +323,26 @@ namespace WMS.GUI
             }
         }
 
-        public void UpdateLang(ILang lang)
+        private void moveRemoveRowButton_Click(object sender, EventArgs e)
         {
-            this.lang = lang;
-            moveConfirmButton.Text = lang.CONFIRM;
-            moveCancelButton.Text = lang.CANCEL;
-            moveAddItemButton.Text = lang.ADD;
-            Text = lang.MOVE;
-            moveDataGridView.Columns[quantityColumnString].HeaderText = lang.AMOUNT;
-            ComboColumnLocation.HeaderText = lang.LOCATION;
-            ComboColumnNewLocation.HeaderText = lang.NEW_LOCATION;
-            ComboColumnIdentification.HeaderText = lang.ITEM_NO + " / " + lang.DESCRIPTION;
-            columnAction.HeaderText = lang.DESCRIPTION;
+            if(moveDataGridView.CurrentRow != null)
+            {
+                moveDataGridView.Rows.Remove(moveDataGridView.CurrentRow);
+            }
+        }
+
+        public void UpdateLang()
+        {
+            moveConfirmButton.Text = core.Lang.CONFIRM;
+            moveCancelButton.Text = core.Lang.CANCEL;
+            moveAddItemButton.Text = core.Lang.ADD;
+            moveRemoveRowButton.Text = core.Lang.REMOVE_ROW;
+            Text = core.Lang.MOVE;
+            moveDataGridView.Columns[quantityColumnString].HeaderText = core.Lang.AMOUNT;
+            ComboColumnLocation.HeaderText = core.Lang.LOCATION;
+            ComboColumnNewLocation.HeaderText = core.Lang.NEW_LOCATION;
+            ComboColumnIdentification.HeaderText = core.Lang.ITEM_NO + " / " + core.Lang.DESCRIPTION;
+            columnAction.HeaderText = core.Lang.DESCRIPTION;
         }
 
         private void moveAddItemButton_Click(object sender, EventArgs e)
@@ -345,7 +351,7 @@ namespace WMS.GUI
             {
                 moveSearchLabel.Visible = false;
                 moveDataGridView.Rows.Add(new DataGridViewRow());
-                moveDataGridView.Rows[moveDataGridView.RowCount - 2].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
+                moveDataGridView.Rows[moveDataGridView.RowCount - 1].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
                 moveAddItemTextBox.Text = "";
                 
             }

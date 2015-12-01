@@ -34,6 +34,7 @@
             this.moveAddItemTextBox = new System.Windows.Forms.TextBox();
             this.moveAddItemButton = new System.Windows.Forms.Button();
             this.moveSearchLabel = new System.Windows.Forms.Label();
+            this.moveRemoveRowButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.moveDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,8 +60,11 @@
             // 
             // moveDataGridView
             // 
+            this.moveDataGridView.AllowUserToAddRows = false;
+            this.moveDataGridView.AllowUserToDeleteRows = false;
             this.moveDataGridView.AllowUserToResizeColumns = false;
             this.moveDataGridView.AllowUserToResizeRows = false;
+            this.moveDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.moveDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.moveDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.moveDataGridView.Location = new System.Drawing.Point(12, 53);
@@ -100,11 +104,22 @@
             this.moveSearchLabel.Text = "Item doesn\'t exist";
             this.moveSearchLabel.Visible = false;
             // 
+            // moveRemoveRowButton
+            // 
+            this.moveRemoveRowButton.Location = new System.Drawing.Point(679, 526);
+            this.moveRemoveRowButton.Name = "moveRemoveRowButton";
+            this.moveRemoveRowButton.Size = new System.Drawing.Size(89, 23);
+            this.moveRemoveRowButton.TabIndex = 11;
+            this.moveRemoveRowButton.Text = "Fjern række";
+            this.moveRemoveRowButton.UseVisualStyleBackColor = true;
+            this.moveRemoveRowButton.Click += new System.EventHandler(this.moveRemoveRowButton_Click);
+            // 
             // Move
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.moveRemoveRowButton);
             this.Controls.Add(this.moveSearchLabel);
             this.Controls.Add(this.moveAddItemButton);
             this.Controls.Add(this.moveAddItemTextBox);
@@ -129,5 +144,6 @@
         private System.Windows.Forms.TextBox moveAddItemTextBox;
         private System.Windows.Forms.Button moveAddItemButton;
         private System.Windows.Forms.Label moveSearchLabel;
+        private System.Windows.Forms.Button moveRemoveRowButton;
     }
 }
