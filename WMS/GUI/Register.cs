@@ -229,8 +229,8 @@ namespace WMS.GUI
                     }
                 }
                 //For us in displaying feedback to the user
-                Dictionary<Item, Location> itemsPlaced;
-                List<Item> itemsNotPlaced;
+                Dictionary<Item, Location> itemsPlaced = new Dictionary<Item, Location>();
+                List<Item> itemsNotPlaced = new List<Item>();
                 if (tempList.Count != 0)
                 {
                     itemsNotPlaced = core.SortNewItems(tempList, orderNo, out itemsPlaced); //Calls the algoritme

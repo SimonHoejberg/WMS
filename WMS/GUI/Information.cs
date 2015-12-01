@@ -68,6 +68,7 @@ namespace WMS.GUI
         private void ViewItemButtonClick(object sender, System.EventArgs e)
         {
             List<ListViewItem> items = new List<ListViewItem>();
+            logListView.Items.Clear();
             int test = dataGridView.CurrentCell.RowIndex;
             itemNo = dataGridView[0, test].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
