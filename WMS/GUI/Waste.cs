@@ -235,12 +235,12 @@ namespace WMS.GUI
             mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             if (wasteDataGridView.ColumnCount > 0)
             {
-                wasteDataGridView.Columns[0].HeaderText = lang.ITEM_NO;
-                wasteDataGridView.Columns[1].HeaderText = lang.DESCRIPTION;
-                wasteDataGridView.Columns[2].HeaderText = lang.IN_STOCK;
-                wasteDataGridView.Columns[5].HeaderText = lang.LOCATION;
-                wasteDataGridView.Columns[6].HeaderText = lang.AMOUNT;
-                wasteDataGridView.Columns[7].HeaderText = lang.REASON;
+                wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                wasteDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
+                wasteDataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+                wasteDataGridView.Columns[7].HeaderText = core.Lang.REASON;
             }
             MakeList();
         }
