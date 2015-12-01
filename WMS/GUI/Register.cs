@@ -128,7 +128,7 @@ namespace WMS.GUI
         }
 
         /// <summary>
-        /// When a cell in the dataGridView changes this event is fired
+        /// When a cell in the dataGridView changes this event is fired to check if content in cell is okay
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -202,7 +202,7 @@ namespace WMS.GUI
         }
 
         /// <summary>
-        /// When the user clicks on confirm
+        /// When the user clicks on confirm makes a list of the items an sort them in warehouse
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
