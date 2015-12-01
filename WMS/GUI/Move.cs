@@ -252,7 +252,7 @@ namespace WMS.GUI
 
             foreach (DataGridViewRow dgvRow in moveDataGridView.Rows)
             {
-                if (dgvRow.Index == moveDataGridView.Rows.Count - 1)//We don't want the last and empty row
+                if (dgvRow.Index == moveDataGridView.Rows.Count)//We don't want the last and empty row
                 {
                     break;
                 }
@@ -277,7 +277,7 @@ namespace WMS.GUI
                 DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
                 if (a.Equals(DialogResult.OK))
                 {
-                    int rowCount = moveDataGridView.Rows.Count - 1;
+                    int rowCount = moveDataGridView.Rows.Count;
                     for (int i = 0; i < rowCount; i++)
                     {
                         Location tempOldLoc = locationData[moveDataGridView.Rows[i].Cells[locationColumnString].Value.ToString()];
@@ -285,17 +285,23 @@ namespace WMS.GUI
 
                         if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo))
                         {
-                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value)).ToString(), tempOldLoc.ItemNo.ToString());
-                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value) + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value)).ToString(), 
+                                tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value) + tempNewLoc.Quantity).ToString(), 
+                                tempOldLoc.ItemNo.ToString());
                             core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
-                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, core.DataHandler.GetItemFromItemNo(tempOldLoc.ItemNo).Description, core.GetTimeStamp(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value), core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
+                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, core.DataHandler.GetItemFromItemNo(tempOldLoc.ItemNo).Description, core.GetTimeStamp(), 
+                                Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value), core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
                         }
                         else
                         {
-                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value)).ToString(), tempOldLoc.ItemNo.ToString());
-                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value).ToString(), tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), (tempOldLoc.Quantity - Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value)).ToString(), 
+                                tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value).ToString(), 
+                                tempOldLoc.ItemNo.ToString());
                             core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
-                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, core.DataHandler.GetItemFromItemNo(tempOldLoc.ItemNo).Description, core.GetTimeStamp(), Convert.ToInt32(moveDataGridView.Rows[i].Cells["QuantityColumn"].Value), core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
+                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, core.DataHandler.GetItemFromItemNo(tempOldLoc.ItemNo).Description, core.GetTimeStamp(), 
+                                Convert.ToInt32(moveDataGridView.Rows[i].Cells[quantityColumnString].Value), core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
                         }
                         
                     }
@@ -316,7 +322,7 @@ namespace WMS.GUI
 
         private void ClearDataGridView()
         {
-            int rowCount = moveDataGridView.Rows.Count - 1;
+            int rowCount = moveDataGridView.Rows.Count;
             for (int i = 0; i < rowCount; i++)
             {
                 moveDataGridView.Rows.RemoveAt(0);
