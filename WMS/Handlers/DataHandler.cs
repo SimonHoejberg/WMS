@@ -44,7 +44,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetDataForList(INFOMATION_DB);
             while (reader.Read())
             {
-                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString())));
+                temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location1"].ToString(), int.Parse(reader["itemUsage"].ToString())));
 
             }
             return temp;
@@ -109,7 +109,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetItemInfo(INFOMATION_DB,ITEM,itemNo);
             while (reader.Read())
             {
-                item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString()));
+                item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location1"].ToString(), int.Parse(reader["itemUsage"].ToString()));
             }
             return item;        
         }

@@ -164,7 +164,7 @@ namespace WMS.Handlers
         public void moveItem (string Item, string newLocation)
         {
             MySqlCommand command2 = connection.CreateCommand();
-            string sql2 = $"UPDATE information SET location = '{newLocation}' WHERE itemNo = '{Item}'";
+            string sql2 = $"UPDATE information SET location1 = '{newLocation}' WHERE itemNo = '{Item}'";
             command2.CommandText = sql2;
             ResetConnection();
             command2.ExecuteNonQuery();
@@ -184,7 +184,7 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = "START TRANSACTION;" + 
                $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};"+
-               $"UPDATE information SET location = '{newLocation}',inStock = inStock + {amount} WHERE itemNo = '{newItem}';" +
+               $"UPDATE information SET location1 = '{newLocation}',inStock = inStock + {amount} WHERE itemNo = '{newItem}';" +
                "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)"+ 
                $"VALUES ({ newItem }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {newItem}), (SELECT inStock + {amount} FROM information WHERE itemNo = {newItem}));"+
                "COMMIT;";

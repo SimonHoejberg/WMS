@@ -83,6 +83,7 @@
             this.userIDTextbox.Location = new System.Drawing.Point(8, 29);
             this.userIDTextbox.Margin = new System.Windows.Forms.Padding(4);
             this.userIDTextbox.Name = "userIDTextbox";
+            this.userIDTextbox.PasswordChar = '*';
             this.userIDTextbox.Size = new System.Drawing.Size(261, 22);
             this.userIDTextbox.TabIndex = 6;
             this.userIDTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.userIDTextboxKeyDown);

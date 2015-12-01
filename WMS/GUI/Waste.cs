@@ -238,9 +238,9 @@ namespace WMS.GUI
                 wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
                 wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
                 wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                wasteDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
-                wasteDataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
-                wasteDataGridView.Columns[6].HeaderText = core.Lang.REASON;
+                wasteDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
+                wasteDataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+                wasteDataGridView.Columns[7].HeaderText = core.Lang.REASON;
             }
             MakeList();
         }
