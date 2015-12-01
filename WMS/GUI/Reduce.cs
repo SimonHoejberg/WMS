@@ -207,14 +207,6 @@ namespace WMS.GUI
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (reduceDataGridView.CurrentCell != null)
-            {
-                reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
-            }
-        }
-
         private void reduceDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             
