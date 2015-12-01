@@ -72,7 +72,7 @@
             this.feedbackListView.TabIndex = 4;
             this.feedbackListView.UseCompatibleStateImageBehavior = false;
             // 
-            // RigsterFeedBack
+            // RigisterFeedBack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -83,9 +83,8 @@
             this.Controls.Add(this.placedButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "RigsterFeedBack";
+            this.Name = "RigisterFeedBack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "RigsterFeedBack";
             this.ResumeLayout(false);
 
         }

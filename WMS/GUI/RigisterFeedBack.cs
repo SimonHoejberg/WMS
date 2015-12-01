@@ -25,18 +25,18 @@ namespace WMS.GUI
             feedbackListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             feedbackListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             feedbackListView.Columns[2].Width = -2;
-            /*if (notPlaced.Count == 0)
+            if (notPlaced.Count == 0)
             {
                 notPlacedButton.Enabled = false;
             }
             else
-            {*/
+            {
                 foreach (var item in notPlaced)
                 {
                     ListViewItem lvi = new ListViewItem(item.ItemNo);
                     notPlacedList.Add(lvi);
                 }
-            //}
+            }
             foreach (KeyValuePair<Item,Location> KvP in placed)
             {
                 ListViewItem lvi = new ListViewItem(KvP.Key.ItemNo);

@@ -129,8 +129,8 @@ namespace WMS.GUI
                     listBox1.Focus();
                 }
             }
-            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
-        }
+                wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
+            }
 
         private void chooseButton_Click(object sender, EventArgs e)
         {

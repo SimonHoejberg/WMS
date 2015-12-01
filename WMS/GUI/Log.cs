@@ -97,7 +97,6 @@ namespace WMS.GUI
             if (dataGridView.CurrentCell != null)
             {
                 List<ListViewItem> items = new List<ListViewItem>();
-                logListView.Items.Clear();
                 int test = dataGridView.CurrentCell.RowIndex;
                 string itemNo = dataGridView[0, test].Value.ToString();
                 Item item = core.DataHandler.GetItemFromItemNo(itemNo);

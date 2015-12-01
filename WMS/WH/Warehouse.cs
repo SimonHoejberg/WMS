@@ -9,8 +9,8 @@ namespace WMS.WH
         private ICore core;
         private Location[,] locations;
         private Dictionary<string, int> quickPlace = new Dictionary<string, int>();
-        private List<Item> itemsNotPlaced = new List<Item>();
-        private Dictionary<Item, Location> itemsPlaced = new Dictionary<Item, Location>();
+        private List<Item> itemsNotPlaced;
+        private Dictionary<Item, Location> itemsPlaced;
         private int maxShelf = 0;
         private int maxSpace = 0;
         private string orderNo;
@@ -35,6 +35,7 @@ namespace WMS.WH
         public void CreateWH(string orderNo)
         {
             this.orderNo = orderNo;
+            quickPlace = new Dictionary<string, int>();
             locations = new Location[MaxShelf(), MaxSpace()];
             List<Location> temp = core.DataHandler.LocationToList();
             foreach (Location location in temp)
@@ -44,6 +45,11 @@ namespace WMS.WH
                 {
                     if (!quickPlace.ContainsKey(location.ItemNo))
                     {
+                        quickPlace.Add(location.ItemNo, location.BestLocation);
+                    }
+                    else
+                    {
+                        quickPlace.Remove(location.ItemNo);
                         quickPlace.Add(location.ItemNo, location.BestLocation);
                     }
                 }
@@ -64,7 +70,7 @@ namespace WMS.WH
         {
             int max = locations[shelf, 0].Usage;
             int min = locations[shelf, (maxSpace - 1)].Usage;
-            if (((max == 0 && min == 0) || (max > item.Usage && item.Usage > min && locations[shelf, space].ItemNo.Equals("0"))) || (locations[shelf, space].ItemNo.Equals(item.ItemNo)))
+            if (((max == 0 && min == 0) || (max > item.Usage && locations[shelf, space].ItemNo.Equals("0"))) || (locations[shelf, space].ItemNo.Equals(item.ItemNo)))
             {
                 string id = locations[shelf, space].Id;
                 string locationShelf = locations[shelf, space].Shelf;
@@ -95,6 +101,8 @@ namespace WMS.WH
 
         public List<Item> FindOptimalLocation(List<Item> items, out Dictionary<Item,Location> itemsPlaced)
         {
+            this.itemsPlaced = new Dictionary<Item, Location>();
+            itemsNotPlaced = new List<Item>();
             items.Sort();
             foreach (Item item in items)
             {
