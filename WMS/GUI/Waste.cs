@@ -25,7 +25,6 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
-            locationList = core.DataHandler.LocationToList();
             SearchBox();
             Text = core.Lang.WASTE;
             chooseButton.Text = core.Lang.CHOOSE;
@@ -193,6 +192,7 @@ namespace WMS.GUI
                 string itemNo = searchTextBox.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
                 MakeDataGridView();
+                locationList = core.DataHandler.LocationToList();
                 if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
                 {
                     listBox2.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));

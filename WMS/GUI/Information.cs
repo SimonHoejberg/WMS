@@ -73,8 +73,15 @@ namespace WMS.GUI
             Item item = core.DataHandler.GetItemFromItemNo(itemNo);
             usageLabel.Text = item.Usage.ToString();
             itemNoLabel.Text = itemNo;
+            List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
+            string temp = "";
+            foreach (var location in locationList)
+            {
+                temp += $"{location.ToString()}, ";
+            }
+            temp = temp.Remove(temp.Length - 2,2);
             nameLabel.Text = item.Description;
-            locationLabel.Text = item.Location;
+            locationLabel.Text = temp;
             logListView.View = View.Details;
             List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
             foreach (LogItem logItem in logItems)

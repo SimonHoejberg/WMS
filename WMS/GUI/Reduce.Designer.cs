@@ -34,7 +34,11 @@
             this.searchBtn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.locationPanel = new System.Windows.Forms.Panel();
+            this.chooseLocationButton = new System.Windows.Forms.Button();
+            this.locationListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).BeginInit();
+            this.locationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // reduceCancelBtn
@@ -92,11 +96,51 @@
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(707, 528);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // locationPanel
+            // 
+            this.locationPanel.Controls.Add(this.chooseLocationButton);
+            this.locationPanel.Controls.Add(this.locationListBox);
+            this.locationPanel.Location = new System.Drawing.Point(356, 182);
+            this.locationPanel.Name = "locationPanel";
+            this.locationPanel.Size = new System.Drawing.Size(200, 132);
+            this.locationPanel.TabIndex = 12;
+            this.locationPanel.Visible = false;
+            // 
+            // chooseLocationButton
+            // 
+            this.chooseLocationButton.Location = new System.Drawing.Point(122, 101);
+            this.chooseLocationButton.Name = "chooseLocationButton";
+            this.chooseLocationButton.Size = new System.Drawing.Size(75, 23);
+            this.chooseLocationButton.TabIndex = 1;
+            this.chooseLocationButton.Text = "Choose";
+            this.chooseLocationButton.UseVisualStyleBackColor = true;
+            this.chooseLocationButton.Click += new System.EventHandler(this.chooseLocationButton_Click);
+            // 
+            // locationListBox
+            // 
+            this.locationListBox.FormattingEnabled = true;
+            this.locationListBox.Location = new System.Drawing.Point(0, 0);
+            this.locationListBox.Name = "locationListBox";
+            this.locationListBox.Size = new System.Drawing.Size(200, 95);
+            this.locationListBox.TabIndex = 0;
+            // 
             // Reduce
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 561);
+            this.Controls.Add(this.locationPanel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.searchBtn);
@@ -109,6 +153,7 @@
             this.Text = "Reduce";
             this.Load += new System.EventHandler(this.Reduce_Load);
             ((System.ComponentModel.ISupportInitialize)(this.reduceDataGridView)).EndInit();
+            this.locationPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,5 +167,8 @@
         private System.Windows.Forms.Button searchBtn;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel locationPanel;
+        private System.Windows.Forms.ListBox locationListBox;
+        private System.Windows.Forms.Button chooseLocationButton;
     }
 }
