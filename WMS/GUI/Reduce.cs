@@ -71,7 +71,11 @@ namespace WMS.GUI
                 {
                     if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[5, i].Value.Equals("0")))
                     {
-                        core.DataHandler.ActionOnItem('-', reduceDataGridView[0, i].Value.ToString(), reduceDataGridView[1, i].Value.ToString(),reduceDataGridView[5,i].Value.ToString(), core.Lang.REDUCED, "");
+                        string locId = locationList.Find(x => x.LocationString.Equals(reduceDataGridView[5, i].Value.ToString())).Id;
+                        core.DataHandler.ActionOnItem('-', reduceDataGridView[0, i].Value.ToString(), 
+                                                      reduceDataGridView[1, i].Value.ToString(),
+                                                      reduceDataGridView[6,i].Value.ToString(), 
+                                                      core.Lang.REDUCED, locId);
                     }
                 }
                 MessageBox.Show(core.Lang.SUCCESS_REDUCE, core.Lang.SUCCESS);
@@ -88,6 +92,7 @@ namespace WMS.GUI
                 locationList = core.DataHandler.LocationToList();
                 string itemNo = textBox1.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
+                MakeDataGridView();
                 if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
                 {
                     locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
@@ -100,7 +105,6 @@ namespace WMS.GUI
                     reduceDataGridView[5, reduceDataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
                     reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
                 }
-                MakeDataGridView();
             }
             
         }
@@ -130,6 +134,7 @@ namespace WMS.GUI
                 }
                 reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
+            reduceDataGridView.Columns[6].ReadOnly = false;
             reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
 
@@ -234,6 +239,14 @@ namespace WMS.GUI
             Location location = ((Location)locationListBox.SelectedItem);
             locationIds.Add(location.ToString(), location.Id);
             reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (reduceDataGridView.CurrentCell != null)
+            {
+                reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
+            }
         }
     }
 }
