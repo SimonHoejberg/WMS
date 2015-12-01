@@ -20,11 +20,13 @@ namespace WMS.GUI
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
-        private DataGridViewComboBoxColumn reduceComboColumnLocation;
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
-       
+
+        private Dictionary<string, string> locationIds = new Dictionary<string, string>();
+        private List<Location> locationList;
+
         public Reduce(ICore core)
         {
             this.core = core;
@@ -82,9 +84,22 @@ namespace WMS.GUI
         {
             int temp = 0;
             if (int.TryParse(textBox1.Text, out temp))
-            { 
+            {
+                locationList = core.DataHandler.LocationToList();
                 string itemNo = textBox1.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
+                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
+                {
+                    locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationPanel.Visible = true;
+                    locationListBox.Focus();
+                }
+                else
+                {
+                    reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+                    reduceDataGridView[5, reduceDataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
+                }
                 MakeDataGridView();
             }
             
@@ -96,9 +111,13 @@ namespace WMS.GUI
             reduceDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
             reduceDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
             reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-            reduceDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
-            reduceDataGridView.Columns[4].Visible = true;
+            reduceDataGridView.Columns[3].Visible = false;
+            reduceDataGridView.Columns[4].Visible = false;
 
+            if (!data.Columns.Contains(core.Lang.LOCATION))
+            {
+                data.Columns.Add(core.Lang.LOCATION);
+            }
             if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
                 data.Columns.Add(core.Lang.AMOUNT);
@@ -169,9 +188,8 @@ namespace WMS.GUI
                 reduceDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
                 reduceDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
                 reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                reduceDataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
-                reduceDataGridView.Columns[4].Visible = false;
-                reduceDataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
+                reduceDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
+                reduceDataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
             }
             reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
@@ -213,6 +231,17 @@ namespace WMS.GUI
                 }
 
             (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Value = (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items[0];
+        }
+
+        private void chooseLocationButton_Click(object sender, EventArgs e)
+        {
+            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
+            locationPanel.Visible = false;
+            reduceDataGridView.Focus();
+            reduceDataGridView[5, reduceDataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
+            Location location = ((Location)locationListBox.SelectedItem);
+            locationIds.Add(location.ToString(), location.Id);
+            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
     }
 }
