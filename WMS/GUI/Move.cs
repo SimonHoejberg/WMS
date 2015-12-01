@@ -12,9 +12,9 @@ namespace WMS.GUI
     public partial class Move : Form, IGui
     {
         private ICore core;
-        private DataGridViewTextBoxColumn ColumnQuantity, columnAction;
-        private DataGridViewComboBoxColumn ComboColumnLocation, ComboColumnNewLocation, ComboColumnIdentification;
-        private AutoCompleteStringCollection ItemListA;
+        private DataGridViewTextBoxColumn columnQuantity, columnAction;
+        private DataGridViewComboBoxColumn comboColumnLocation, comboColumnNewLocation, comboColumnIdentification;
+        private AutoCompleteStringCollection itemListA;
         private Dictionary<string, Location> locationData;
         private Dictionary<string, Item> itemData;
         private string idColumnString = "ItemIDColumn", quantityColumnString = "QuantityColumn", locationColumnString = "LocationColumn", 
@@ -37,18 +37,18 @@ namespace WMS.GUI
             //Dictionaries are used for easy reference and to minimize the need to refer to the database
             locationData = new Dictionary<string, Location>();
             itemData = new Dictionary<string, Item>();
-            ItemListA = new AutoCompleteStringCollection();
+            itemListA = new AutoCompleteStringCollection();
 
             //Populates the dictionaries (and ItemListA) with data from the database 
-            populateItemDictionary(ItemListA, itemData);
+            populateItemDictionary(itemListA, itemData);
             PopulateLocationDictionary(locationData);
 
-            moveAddItemTextBox.AutoCompleteCustomSource = ItemListA; 
+            moveAddItemTextBox.AutoCompleteCustomSource = itemListA; 
 
             #region 
             //Creates the Columns that makes up the datagridview
             dataGridView.Columns.Add(
-                ComboColumnIdentification = new DataGridViewComboBoxColumn() //Column used for showing item number/Name
+                comboColumnIdentification = new DataGridViewComboBoxColumn() //Column used for showing item number/Name
                 {
                     Name = idColumnString,
                     DataSource = itemData.Values.ToList(),
@@ -58,7 +58,7 @@ namespace WMS.GUI
                     Width = 300
                 });
             dataGridView.Columns.Add(
-                ComboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
+                comboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
                 {
                     Name = locationColumnString,
                     ValueMember = "LocationString",
@@ -67,14 +67,14 @@ namespace WMS.GUI
 
                 });
             dataGridView.Columns.Add(
-                ColumnQuantity = new DataGridViewTextBoxColumn() //Column used for showing quantity to move
+                columnQuantity = new DataGridViewTextBoxColumn() //Column used for showing quantity to move
                 {
                     Name = quantityColumnString,
                     HeaderText = core.Lang.AMOUNT,
                     
                 });
             dataGridView.Columns.Add(
-                ComboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing location to move to
+                comboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing location to move to
                 {
                     Name = newLocationColumnString,
                     ValueMember = "LocationString",
@@ -113,7 +113,7 @@ namespace WMS.GUI
         private void DataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //if the change happened in ItemIDColumn
-            if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == ComboColumnIdentification)
+            if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnIdentification)
             {
                 var LocationCell = dataGridView.Rows[e.RowIndex].Cells[locationColumnString] as DataGridViewComboBoxCell;
                 LocationCell.Items.Clear();
@@ -130,7 +130,7 @@ namespace WMS.GUI
                 dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = 0;
             }
             //if the change happened in LocationColumn
-            else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == ComboColumnLocation)
+            else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnLocation)
             {
                 //Set new locations
                 (dataGridView.Rows[e.RowIndex].Cells[newLocationColumnString] as DataGridViewComboBoxCell).Value = DBNull.Value;
@@ -143,7 +143,7 @@ namespace WMS.GUI
                 }
             }
             //if the change happened in QuantityColumn
-            else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == ColumnQuantity)
+            else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == columnQuantity)
             {
                 int a = 0;
 
@@ -178,7 +178,7 @@ namespace WMS.GUI
                     dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = 0;
                 }
             }
-            else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == ComboColumnNewLocation)
+            else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnNewLocation)
             {
                 bool combine = false;
                 foreach (var a in (dataGridView.Rows[e.RowIndex].Cells[locationColumnString] as DataGridViewComboBoxCell).Items)
@@ -302,7 +302,7 @@ namespace WMS.GUI
                     }
 
                     ClearDataGridView();
-                    populateItemDictionary(ItemListA, itemData);
+                    populateItemDictionary(itemListA, itemData);
                     PopulateLocationDictionary(locationData);
                     core.WindowHandler.Update(this);
                     
@@ -340,9 +340,9 @@ namespace WMS.GUI
             rmoveRowButton.Text = core.Lang.REMOVE_ROW;
             Text = core.Lang.MOVE;
             dataGridView.Columns[quantityColumnString].HeaderText = core.Lang.AMOUNT;
-            ComboColumnLocation.HeaderText = core.Lang.LOCATION;
-            ComboColumnNewLocation.HeaderText = core.Lang.NEW_LOCATION;
-            ComboColumnIdentification.HeaderText = core.Lang.ITEM_NO + " / " + core.Lang.DESCRIPTION;
+            comboColumnLocation.HeaderText = core.Lang.LOCATION;
+            comboColumnNewLocation.HeaderText = core.Lang.NEW_LOCATION;
+            comboColumnIdentification.HeaderText = core.Lang.ITEM_NO + " / " + core.Lang.DESCRIPTION;
             columnAction.HeaderText = core.Lang.DESCRIPTION;
         }
 
@@ -400,7 +400,7 @@ namespace WMS.GUI
 
         public void UpdateGuiElements()
         {
-            populateItemDictionary(ItemListA, itemData);
+            populateItemDictionary(itemListA, itemData);
             PopulateLocationDictionary(locationData);
         }
     }
