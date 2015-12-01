@@ -112,46 +112,55 @@ namespace WMS.GUI
         //Fires when changes have been comitted to a cell in dataGridView
         private void DataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            //if the change happened in ItemIDColumn
+            //if the change happened in ItemIDColumn, do this.
             if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnIdentification)
             {
+                //Sets LocationCell to the cell where the user choses the location, on the row where the event fired
                 var LocationCell = dataGridView.Rows[e.RowIndex].Cells[locationColumnString] as DataGridViewComboBoxCell;
                 LocationCell.Items.Clear();
+                //Sets the list for the CoboboxCell LocationCell which contains the items. This is done in a foreach loop as datasource causes problems.
                 List<Location> locList = LocationList(dataGridView[e.ColumnIndex, e.RowIndex], locationData);
                 foreach (Location lc in locList)
                 {
                     LocationCell.Items.Add(lc);
                 }
+                //If items exist in the´location list set the selected value in the LocationCell to item nr. 1
                 if (LocationCell.Items.Count != 0)
                 {
                     LocationCell.Value = LocationCell.Items[0];
                 }
 
+                //Sets the quantity to 0 to make sure a null reference can't happen.
                 dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = 0;
             }
-            //if the change happened in LocationColumn
+            //if the change happened in LocationColumn, do this.
             else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnLocation)
             {
-                //Set new locations
+                //We want to set a value in the New Location cell. To set a new value, we start by setting the cellvalue to DBNull.Value.
                 (dataGridView.Rows[e.RowIndex].Cells[newLocationColumnString] as DataGridViewComboBoxCell).Value = DBNull.Value;
+                //Sets NewLocationCell to the cell where the user choses the new location, on the row where the event fired
                 var NewLocationCell = dataGridView.Rows[e.RowIndex].Cells[newLocationColumnString] as DataGridViewComboBoxCell;
-                NewLocationCell.Items.Clear();
+                NewLocationCell.Items.Clear(); //Clear the items, if any exist
                 List<Location> newLocList = NewLocationList(dataGridView[e.ColumnIndex, e.RowIndex], locationData);
+                //add items to newLocationCell based on the list gained from the NewLocationList method.
                 foreach (Location lc in newLocList)
                 {
                     NewLocationCell.Items.Add(lc);
                 }
             }
-            //if the change happened in QuantityColumn
+            //if the change happened in QuantityColumn, do this.
             else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == columnQuantity)
             {
                 int a = 0;
 
+                //If the cellvalue is null, set it to zero
                 if (dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value == null)
                 {
                     dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = 0;
                 }
+                //Check if the value is an integer
                 bool checkIfInt = Int32.TryParse(dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value.ToString(), out a);
+                //If it is, check if its less than zero or more than the maximum quantity.
                 if (checkIfInt)
                 {
                     int maxQuantity = 0;
@@ -163,21 +172,25 @@ namespace WMS.GUI
                             maxQuantity = loc.Quantity;
                         }
                     }
-
+                    //If less than zero, set the value to zero
                     if (0 > a)
                     {
                         dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = 0;
                     }
+                    //If higher than max, set value to max
                     else if (a > maxQuantity)
                     {
                         dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = maxQuantity;
                     }
                 }
+                //If not an integer, set the value to max
                 else
                 {
                     dataGridView.Rows[e.RowIndex].Cells[quantityColumnString].Value = 0;
                 }
             }
+            //If the change happened in the New Location column, do this
+            //Here we check what operation is going to happen. Move item to new location, or combine new locations. We set the message in the ActionColumn accordingly.
             else if (e.RowIndex != -1 && dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnNewLocation)
             {
                 bool combine = false;
@@ -320,7 +333,9 @@ namespace WMS.GUI
                 MessageBox.Show(problemList, core.Lang.ERROR);
             }
         }
-
+        /// <summary>
+        /// Clears all rows from the dataGridView
+        /// </summary>
         private void ClearDataGridView()
         {
             int rowCount = dataGridView.Rows.Count;
@@ -330,6 +345,11 @@ namespace WMS.GUI
             }
         }
 
+        /// <summary>
+        /// Removes the currently selected row in the dataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveRowButtonClick(object sender, EventArgs e)
         {
             if(dataGridView.CurrentRow != null)
@@ -338,6 +358,9 @@ namespace WMS.GUI
             }
         }
 
+        /// <summary>
+        /// Updates all GUI elemets with respect to the chosen language.
+        /// </summary>
         public void UpdateLang()
         {
             confirmButton.Text = core.Lang.CONFIRM;
@@ -352,6 +375,11 @@ namespace WMS.GUI
             columnAction.HeaderText = core.Lang.DESCRIPTION;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void moveAddItemButton_Click(object sender, EventArgs e)
         {
             if (itemData.ContainsKey(moveAddItemTextBox.Text))
