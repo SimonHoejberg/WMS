@@ -109,7 +109,7 @@ namespace WMS.Handlers
             MySqlDataReader reader = sql.GetItemInfo(INFOMATION_DB,ITEM,itemNo);
             while (reader.Read())
             {
-                item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location"].ToString(), int.Parse(reader["itemUsage"].ToString()));
+                item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location1"].ToString(), int.Parse(reader["itemUsage"].ToString()));
             }
             return item;        
         }
