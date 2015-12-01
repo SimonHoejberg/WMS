@@ -20,7 +20,6 @@ namespace WMS.GUI
         private ICore core;
         private BindingSource bsource;
         private DataTable data;
-        private DataGridViewComboBoxColumn reduceComboColumnLocation;
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
@@ -186,14 +185,6 @@ namespace WMS.GUI
             if (e.KeyCode.Equals(Keys.Enter))
             {
                 searchBtn_Click(sender, e);
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (reduceDataGridView.
-            {
-                reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
             }
         }
 
