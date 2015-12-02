@@ -141,7 +141,7 @@
             // 
             this.locationPanel.Controls.Add(this.chooseLocationButton);
             this.locationPanel.Controls.Add(this.locationListBox);
-            this.locationPanel.Location = new System.Drawing.Point(396, 208);
+            this.locationPanel.Location = new System.Drawing.Point(394, 208);
             this.locationPanel.Name = "locationPanel";
             this.locationPanel.Size = new System.Drawing.Size(200, 142);
             this.locationPanel.TabIndex = 2;

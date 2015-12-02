@@ -349,12 +349,12 @@ namespace WMS.GUI
             mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                dataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
-                dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
-                dataGridView.Columns[7].HeaderText = core.Lang.REASON;
+                dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns["location"].HeaderText = core.Lang.LOCATION;
+                dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Columns["reason"].HeaderText = core.Lang.REASON;
             }
             MakeList();
             dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
