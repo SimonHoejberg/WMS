@@ -99,6 +99,7 @@ namespace WMS.Handlers
             string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount, prevQuantity, newQuantity)"+ 
                          $"VALUES ({ itemNo }, '{ description }', '{date}', '{user }', '{operation}', {amount}, {selectInfo}, {selectInfo})";
             command.CommandText = sql;
+            ResetConnection();
             command.ExecuteNonQuery();
         }
 
@@ -120,6 +121,7 @@ namespace WMS.Handlers
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sql = $"SELECT * FROM {db} WHERE {searchTerm} LIKE '{itemNo}%'";
+            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sql, connection);
             return MyDA;
         }
@@ -183,7 +185,7 @@ namespace WMS.Handlers
         public void PlaceItem(string id, string amount, string newItem, string usage, string newLocation,string orderNo,string description,string user,string operation)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = "START TRANSACTION;" +
+            string sql = "START TRANSACTION;" + 
                "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)" +
                $"VALUES ({ newItem }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {newItem}), (SELECT inStock + {amount} FROM information WHERE itemNo = {newItem}));" +
                $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};"+
