@@ -62,7 +62,7 @@
             this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButtonClick);
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
             // loginButton
             // 
@@ -72,7 +72,7 @@
             this.loginButton.TabIndex = 7;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.userLoginButtonClick);
+            this.loginButton.Click += new System.EventHandler(this.UserLoginButtonClick);
             // 
             // userIDTextbox
             // 

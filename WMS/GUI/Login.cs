@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
 
@@ -21,20 +16,25 @@ namespace WMS.GUI
             InitializeComponent();
         }
 
-        private void UserIDBox_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Disables 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserIDBoxLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
             MinimizeBox = false;
         }
 
-        private void cancelButtonClick(object sender, EventArgs e)
+        private void CancelButtonClick(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void userLoginButtonClick(object sender, EventArgs e)
+        private void UserLoginButtonClick(object sender, EventArgs e)
         {
-            var stringList = core.DataHandler.GetUser().OfType<string>();
+            List<string> stringList = core.DataHandler.GetUser();
 
             if (stringList.Contains(userIDTextbox.Text))
             {
@@ -44,7 +44,7 @@ namespace WMS.GUI
             }
             else
             {
-                userIDError_lbl.Text = "Wrong username";
+                userIDError_lbl.Text = core.Lang.INVILD_USER_ID;
             }
         }
 
@@ -52,11 +52,11 @@ namespace WMS.GUI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                userLoginButtonClick(this, new EventArgs());
+                UserLoginButtonClick(this, new EventArgs());
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                cancelButtonClick(this, new EventArgs());
+                CancelButtonClick(this, new EventArgs());
             }
         }
     }
