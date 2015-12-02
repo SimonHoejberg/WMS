@@ -134,6 +134,8 @@
             this.locationListBox.Name = "locationListBox";
             this.locationListBox.Size = new System.Drawing.Size(200, 95);
             this.locationListBox.TabIndex = 0;
+            this.locationListBox.DoubleClick += new System.EventHandler(this.locationListBox_DoubleClick);
+            this.locationListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.locationListBox_KeyDown);
             // 
             // Reduce
             // 
