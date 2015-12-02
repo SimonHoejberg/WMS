@@ -108,7 +108,7 @@ namespace WMS.GUI
                 {
                     temp += $"{location.ToString()}, ";
                 }
-                temp = temp.Remove(temp.Length - 2,2);
+                temp = temp.Remove(temp.Length - 2, 2);
                 locationLabel.Text = temp;
                 logListView.View = View.Details;
                 List<LogItem> logItems = core.DataHandler.GetLog(itemNo);

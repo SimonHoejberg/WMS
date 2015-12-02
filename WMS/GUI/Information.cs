@@ -60,17 +60,26 @@ namespace WMS.GUI
             }
         }
 
+        /// <summary>
+        /// Updates the dataGridView
+        /// </summary>
         public void UpdateGuiElements()
         {
             UpdateInfo();
         }
 
+        /// <summary>
+        /// Shows the item information panel with information about the item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewItemButtonClick(object sender, System.EventArgs e)
         {
-            List<ListViewItem> items = new List<ListViewItem>();
-            int test = dataGridView.CurrentCell.RowIndex;
-            itemNo = dataGridView[0, test].Value.ToString();
-            Item item = core.DataHandler.GetItemFromItemNo(itemNo);
+            List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item
+            int row = dataGridView.CurrentCell.RowIndex;
+            itemNo = dataGridView[0, row].Value.ToString();
+            Item item = core.DataHandler.GetItemFromItemNo(itemNo); //Gets the item 
+            //Sets the two label
             usageLabel.Text = item.Usage.ToString();
             itemNoLabel.Text = itemNo;
             List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));

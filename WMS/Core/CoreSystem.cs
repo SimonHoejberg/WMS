@@ -45,7 +45,7 @@ namespace WMS.Core
         /// <returns></returns>
         public string GetTimeStamp()
         {
-            return DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         /// <summary>
