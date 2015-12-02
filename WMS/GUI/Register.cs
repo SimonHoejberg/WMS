@@ -226,7 +226,7 @@ namespace WMS.GUI
                 if (tempList.Count != 0)
                 {
                     itemsNotPlaced = core.SortNewItems(tempList, orderNo, out itemsPlaced); //Calls the algoritme
-                    RigisterFeedBack regFeedback = new RigisterFeedBack(core, itemsNotPlaced, itemsPlaced);
+                    RegisterFeedBack regFeedback = new RegisterFeedBack(core, itemsNotPlaced, itemsPlaced);
                     regFeedback.Owner = this;
                     regFeedback.ShowDialog();
                 }

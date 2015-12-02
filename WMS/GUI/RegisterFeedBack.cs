@@ -6,13 +6,13 @@ using WMS.WH;
 
 namespace WMS.GUI
 {
-    public partial class RigisterFeedBack : Form
+    public partial class RegisterFeedBack : Form
     {
         //List for the two list for the listView
         private List<ListViewItem> notPlacedList = new List<ListViewItem>();
         private List<ListViewItem> placedList = new List<ListViewItem>();
 
-        public RigisterFeedBack(ICore core, List<Item> notPlaced, Dictionary<Item,Location> placed)
+        public RegisterFeedBack(ICore core, List<Item> notPlaced, Dictionary<Item,Location> placed)
         {
             InitializeComponent();
             //Language 

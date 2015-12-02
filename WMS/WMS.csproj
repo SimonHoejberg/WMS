@@ -79,11 +79,11 @@
     <Compile Include="GUI\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\RigisterFeedBack.cs">
+    <Compile Include="GUI\RegisterFeedBack.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\RigisterFeedBack.Designer.cs">
-      <DependentUpon>RigisterFeedBack.cs</DependentUpon>
+    <Compile Include="GUI\RegisterFeedBack.Designer.cs">
+      <DependentUpon>RegisterFeedBack.cs</DependentUpon>
     </Compile>
     <Compile Include="Handlers\DataHandler.cs" />
     <Compile Include="Handlers\WindowHandler.cs" />
@@ -177,8 +177,8 @@
     <EmbeddedResource Include="GUI\Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\RigisterFeedBack.resx">
-      <DependentUpon>RigisterFeedBack.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\RegisterFeedBack.resx">
+      <DependentUpon>RegisterFeedBack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UserIDBox.resx">
       <DependentUpon>UserIDBox.cs</DependentUpon>
