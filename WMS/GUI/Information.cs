@@ -75,23 +75,39 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void ViewItemButtonClick(object sender, System.EventArgs e)
         {
-            List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item
             int row = dataGridView.CurrentCell.RowIndex;
             itemNo = dataGridView[0, row].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo); //Gets the item 
+            
             //Sets the two label
             usageLabel.Text = item.Usage.ToString();
             itemNoLabel.Text = itemNo;
+            
+            //Finds all the locations where the item is stored
+            //And makes a string ("location",) for each location  
             List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
             string temp = "";
             foreach (var location in locationList)
             {
                 temp += $"{location.ToString()}, ";
             }
-            temp = temp.Remove(temp.Length - 2,2);
+            temp = temp.Remove(temp.Length - 2); //Removes the "," 
+            
+            //Sets description and location label
             nameLabel.Text = item.Description;
             locationLabel.Text = temp;
-            logListView.View = View.Details;
+            FillLogListView();
+            itemInfoPanel.Visible = true;
+        }
+
+        /// <summary>
+        /// Fills the logListView with logItems from the dataBase
+        /// </summary>
+        private void FillLogListView()
+        {
+            List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item to display it in a listview
+            logListView.View = View.Details; //Sets the view mode
+            //Gets the logItems and 
             List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
             foreach (LogItem logItem in logItems)
             {
@@ -107,7 +123,6 @@ namespace WMS.GUI
             }
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            itemInfoPanel.Visible = true;
         }
 
         private void CloseButtonClick(object sender, System.EventArgs e)
