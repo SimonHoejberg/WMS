@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using WMS.Interfaces;
 
@@ -58,7 +57,7 @@ namespace WMS.GUI
         }
 
         /// <summary>
-        /// When the 
+        /// When a button is pressed on the textbox it checks if the key is enter or escape and fires an event based on the key
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -66,11 +65,11 @@ namespace WMS.GUI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                LoginButtonClick(this, new EventArgs());
+                LoginButtonClick(sender, new EventArgs());
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                CancelButtonClick(this, new EventArgs());
+                CancelButtonClick(sender, new EventArgs());
             }
         }
     }
