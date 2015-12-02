@@ -37,7 +37,7 @@ namespace WMS.Lang
         public string LOCATION { get; } = "Lokation";
         public string NEW_LOCATION { get; } = "Ny lokation";
         public string SIZE { get; } = "Størrelse";
-        public string TIMESTAMP { get; } = "Dato / Tid";
+        public string TIMESTAMP { get; } = "År-Måned-Dag Tid";
         public string USER { get; } = "Bruger";
         public string AMOUNT { get; } = "Antal";
         public string EXPECTED_AMOUNT { get; } = "Forventet antal";

@@ -18,13 +18,14 @@ namespace WMS.GUI
     public partial class Reduce : Form , IGui
     {
         private ICore core;
+
         private BindingSource bsource;
         private DataTable data;
+
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
 
-        private Dictionary<string, string> locationIds = new Dictionary<string, string>();
         private List<Location> locationList;
 
         public Reduce(ICore core)
@@ -32,18 +33,28 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             SearchBox();
-            searchBtn.Text = core.Lang.ADD;
+            searchButton.Text = core.Lang.ADD;
             Text = core.Lang.REDUCE;
-            reduceConfirmBtn.Text = core.Lang.CONFIRM;
-            reduceCancelBtn.Text = core.Lang.CANCEL;
+            confirmBtn.Text = core.Lang.CONFIRM;
+            cancelButton.Text = core.Lang.CANCEL;
             error = core.Lang.ERROR;
-            button1.Text = core.Lang.REMOVE_ROW;
+            removeLineButton.Text = core.Lang.REMOVE_ROW;
             mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
-            reduceDataGridView.DataSource = bsource;
+            dataGridView.DataSource = bsource;
+        }
+
+        private void Reduce_Load(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
+
+        public void UpdateGuiElements()
+        {
+
         }
 
         public void SearchBox()
@@ -54,27 +65,77 @@ namespace WMS.GUI
             {
                 source.Add(item.ItemNo);
             }
-            textBox1.AutoCompleteCustomSource = source;
+            searchTextBox.AutoCompleteCustomSource = source;
         }
 
-        public void UpdateGuiElements()
+        
+        #region DataGridView and relating events
+        private void MakeDataGridView()
         {
+            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+            dataGridView.Columns[3].Visible = false;
+            dataGridView.Columns[4].Visible = false;
 
+            if (!data.Columns.Contains(core.Lang.LOCATION))
+            {
+                data.Columns.Add(core.Lang.LOCATION);
+            }
+            if (!data.Columns.Contains(core.Lang.AMOUNT))
+            {
+                data.Columns.Add(core.Lang.AMOUNT);
+            }
+            for (int i = 0; i < dataGridView.ColumnCount; i++)
+            {
+                if (!dataGridView.Columns[i].HeaderText.Equals(core.Lang.AMOUNT))
+                {
+                    dataGridView.Columns[i].ReadOnly = true;
+                }
+                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            dataGridView.Columns[6].ReadOnly = false;
+            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
         }
 
-        private void reduceConfirmBtn_Click(object sender, EventArgs e)
+        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            string temp = dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            Regex regex = new Regex("^[0-9]+$");
+            int tempInt = 0;
+            if (temp != null)
+            {
+                if (!int.TryParse(temp, out tempInt))
+                {
+                    MessageBox.Show(mustBeAnumber, error);
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else if (tempInt < 0)
+                {
+                    MessageBox.Show(mustBePostive, error);
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+            }
+            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+        }
+        #endregion
+
+        #region Buttons and relation events
+        private void confirmBtn_Click(object sender, EventArgs e)
         {
             DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
             if (a.Equals(DialogResult.OK))
             {
-                for (int i = 0; i < reduceDataGridView.RowCount; i++)
+                for (int i = 0; i < dataGridView.RowCount; i++)
                 {
-                    if (reduceDataGridView[0, i].Value != null && !(reduceDataGridView[5, i].Value.Equals("0")))
+                    if (dataGridView[0, i].Value != null && !(dataGridView[5, i].Value.Equals("0")))
                     {
-                        string locId = locationList.Find(x => x.LocationString.Equals(reduceDataGridView[5, i].Value.ToString())).Id;
-                        core.DataHandler.ActionOnItem('-', reduceDataGridView[0, i].Value.ToString(), 
-                                                      reduceDataGridView[1, i].Value.ToString(),
-                                                      reduceDataGridView[6,i].Value.ToString(), 
+                        string locId = locationList.Find(x => x.LocationString.Equals(dataGridView[5, i].Value.ToString())).Id;
+                        core.DataHandler.ActionOnItem('-', dataGridView[0, i].Value.ToString(),
+                                                      dataGridView[1, i].Value.ToString(),
+                                                      dataGridView[6, i].Value.ToString(),
                                                       core.Lang.REDUCED, locId);
                     }
                 }
@@ -87,10 +148,10 @@ namespace WMS.GUI
         private void searchBtn_Click(object sender, EventArgs e)
         {
             int temp = 0;
-            if (int.TryParse(textBox1.Text, out temp))
+            if (int.TryParse(searchTextBox.Text, out temp))
             {
                 locationList = core.DataHandler.LocationToList();
-                string itemNo = textBox1.Text;
+                string itemNo = searchTextBox.Text;
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
                 MakeDataGridView();
                 if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
@@ -101,71 +162,14 @@ namespace WMS.GUI
                 }
                 else
                 {
-                    reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-                    reduceDataGridView[5, reduceDataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
-                    reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
+                    dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+                    dataGridView[5, dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    dataGridView.CellValueChanged += dataGridView_CellValueChanged;
                 }
             }
-            
         }
 
-        private void MakeDataGridView()
-        {
-            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            reduceDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-            reduceDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-            reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-            reduceDataGridView.Columns[3].Visible = false;
-            reduceDataGridView.Columns[4].Visible = false;
-
-            if (!data.Columns.Contains(core.Lang.LOCATION))
-            {
-                data.Columns.Add(core.Lang.LOCATION);
-            }
-            if (!data.Columns.Contains(core.Lang.AMOUNT))
-            {
-                data.Columns.Add(core.Lang.AMOUNT);
-            }
-            for (int i = 0; i < reduceDataGridView.ColumnCount; i++)
-            {
-                if (!reduceDataGridView.Columns[i].HeaderText.Equals(core.Lang.AMOUNT))
-                {
-                    reduceDataGridView.Columns[i].ReadOnly = true;
-                }
-                reduceDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            }
-            reduceDataGridView.Columns[6].ReadOnly = false;
-            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
-        }
-
-        private void Reduce_Load(object sender, EventArgs e)
-        {
-            MaximizeBox = false;
-        }
-
-        private void reduceDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            string temp = reduceDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
-            Regex regex = new Regex("^[0-9]+$");
-            int tempInt = 0;
-            if (temp != null)
-            {
-                if (!int.TryParse(temp,out tempInt))
-                {
-                    MessageBox.Show(mustBeAnumber, error);
-                    reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
-                }
-                else if (tempInt < 0)
-                {
-                    MessageBox.Show(mustBePostive, error);
-                    reduceDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
-                }
-            }
-            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
-        }
-
-        private void reduceCancelBtn_Click(object sender, EventArgs e)
+        private void cancelButton_Click(object sender, EventArgs e)
         {
             CancelBox cancel = new CancelBox(core.Lang);
             cancel.Owner = this;
@@ -177,34 +181,31 @@ namespace WMS.GUI
             }
         }
 
-        public void UpdateLang()
+        private void chooseLocationButton_Click(object sender, EventArgs e)
         {
-            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            searchBtn.Text = core.Lang.ADD;
-            Text = core.Lang.REDUCE;
-            reduceConfirmBtn.Text = core.Lang.CONFIRM;
-            reduceCancelBtn.Text = core.Lang.CANCEL;
-            error = core.Lang.ERROR;
-            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
-            button1.Text = core.Lang.REMOVE_ROW;
-            if (reduceDataGridView.ColumnCount > 0)
+            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            locationPanel.Visible = false;
+            searchTextBox.Focus();
+            dataGridView[5, dataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
+            Location location = ((Location)locationListBox.SelectedItem);
+            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+        }
+
+        private void removeLineButton_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.CurrentCell != null)
             {
-                reduceDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                reduceDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                reduceDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                reduceDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
-                reduceDataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Rows.RemoveAt(dataGridView.CurrentCell.RowIndex);
             }
-            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
         }
+        #endregion
 
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void searchTextBox_Enter(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            searchTextBox.Text = "";
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
@@ -212,42 +213,8 @@ namespace WMS.GUI
             }
         }
 
-        private void reduceDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            
-        }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-                foreach (Location a in core.DataHandler.LocationToList())
-                {
-                    if (a.ItemNo.Equals(reduceDataGridView[0,0].Value))
-                    {
-                        (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items.Add(a.LocationString);
-                    }
-                }
-
-            (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Value = (reduceDataGridView.Rows[0].Cells[5] as DataGridViewComboBoxCell).Items[0];
-        }
-
-        private void chooseLocationButton_Click(object sender, EventArgs e)
-        {
-            reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
-            locationPanel.Visible = false;
-            textBox1.Focus();
-            reduceDataGridView[5, reduceDataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
-            Location location = ((Location)locationListBox.SelectedItem);
-            locationIds.Add(location.ToString(), location.Id);
-            reduceDataGridView.CellValueChanged += reduceDataGridView_CellValueChanged;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (reduceDataGridView.CurrentCell != null)
-            {
-                reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
-            }
-        }
+        #region Listboxes and related events
 
         private void locationListBox_DoubleClick(object sender, EventArgs e)
         {
@@ -261,5 +228,31 @@ namespace WMS.GUI
                 chooseLocationButton_Click(sender, e);
             }
         }
+        #endregion
+        
+
+        #region Updates the language
+        public void UpdateLang()
+        {
+            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            searchButton.Text = core.Lang.ADD;
+            Text = core.Lang.REDUCE;
+            confirmBtn.Text = core.Lang.CONFIRM;
+            cancelButton.Text = core.Lang.CANCEL;
+            error = core.Lang.ERROR;
+            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
+            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
+            removeLineButton.Text = core.Lang.REMOVE_ROW;
+            if (dataGridView.ColumnCount > 0)
+            {
+                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
+                dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+            }
+            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+        }
+        #endregion
     }
 }

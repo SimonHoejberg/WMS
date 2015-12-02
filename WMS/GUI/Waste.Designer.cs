@@ -114,9 +114,8 @@
             this.searchTextBox.Size = new System.Drawing.Size(100, 20);
             this.searchTextBox.TabIndex = 9;
             this.searchTextBox.Text = "Item No";
-            this.searchTextBox.Enter += new System.EventHandler(this.textBox1_Enter);
-            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.searchTextBox.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.searchTextBox.Enter += new System.EventHandler(this.searchTextBox_Enter);
+            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchTextBox_KeyDown);
             // 
             // addLineButton
             // 

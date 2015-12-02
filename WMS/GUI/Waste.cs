@@ -202,17 +202,18 @@ namespace WMS.GUI
                 else
                 {
                     wasteDataGridView[5,wasteDataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    searchTextBox.Focus();
                 }
             }
-            
+           
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
+        private void searchTextBox_Enter(object sender, EventArgs e)
         {
             searchTextBox.Text = "";
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
@@ -261,11 +262,6 @@ namespace WMS.GUI
             }
         }
 
-        private void textBox1_Leave(object sender, EventArgs e)
-        {
-            searchTextBox.Text = core.Lang.ITEM_NO;
-        }
-
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             chooseButton_Click(sender, e);
@@ -279,6 +275,7 @@ namespace WMS.GUI
             wasteDataGridView[5, wasteDataGridView.RowCount - 1].Value = listBox2.SelectedItem;
             Location location = ((Location)listBox2.SelectedItem);
             locationIds.Add(location.ToString(), location.Id);
+            searchTextBox.Focus();
             wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
         }
 
