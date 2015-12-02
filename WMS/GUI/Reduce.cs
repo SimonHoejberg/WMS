@@ -19,9 +19,11 @@ namespace WMS.GUI
     {
         private ICore core;
 
+        //Variables for the datagridview
         private BindingSource bsource;
         private DataTable data;
 
+        //Error messages
         private string error;
         private string mustBePostive;
         private string mustBeAnumber;
@@ -33,14 +35,7 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             SearchBox();
-            searchButton.Text = core.Lang.ADD;
-            Text = core.Lang.REDUCE;
-            confirmBtn.Text = core.Lang.CONFIRM;
-            cancelButton.Text = core.Lang.CANCEL;
-            error = core.Lang.ERROR;
-            removeLineButton.Text = core.Lang.REMOVE_ROW;
-            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
+            UpdateLang();
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
@@ -57,28 +52,21 @@ namespace WMS.GUI
 
         }
 
-        public void SearchBox()
-        {
-            var source = new AutoCompleteStringCollection();
-
-            foreach (Item item in core.DataHandler.InfoToList())
-            {
-                source.Add(item.ItemNo);
-            }
-            searchTextBox.AutoCompleteCustomSource = source;
-        }
-
         
-        #region DataGridView and relating events
+        #region DataGridView and related events
+
+        //Makes the datagridview
         private void MakeDataGridView()
         {
             dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            //Sets the header text on the columns
             dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
             dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
             dataGridView.Columns[3].Visible = false;
             dataGridView.Columns[4].Visible = false;
 
+            //Adds the location and amount columns if they have not already been made
             if (!data.Columns.Contains(core.Lang.LOCATION))
             {
                 data.Columns.Add(core.Lang.LOCATION);
@@ -87,32 +75,36 @@ namespace WMS.GUI
             {
                 data.Columns.Add(core.Lang.AMOUNT);
             }
+
+            //Sets all columns except the Amount to readonly
+            //We do it this way because if the datagridview is readonly we cant change one column to not be readonly
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 if (!dataGridView.Columns[i].HeaderText.Equals(core.Lang.AMOUNT))
                 {
                     dataGridView.Columns[i].ReadOnly = true;
                 }
+                //Sets the size of all columns to automatically resize
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-            dataGridView.Columns[6].ReadOnly = false;
             dataGridView.CellValueChanged += dataGridView_CellValueChanged;
         }
 
         private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
-            string temp = dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
-            Regex regex = new Regex("^[0-9]+$");
-            int tempInt = 0;
-            if (temp != null)
+            string amount = dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+            int output = 0;
+            //Check if the input amount is null, if it is an int and if it is greater than 0
+            if (amount != null)
             {
-                if (!int.TryParse(temp, out tempInt))
+                if (!int.TryParse(amount, out output))
                 {
                     MessageBox.Show(mustBeAnumber, error);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
-                else if (tempInt < 0)
+                else if (output < 0)
                 {
                     MessageBox.Show(mustBePostive, error);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
@@ -122,9 +114,12 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region Buttons and relation events
-        private void confirmBtn_Click(object sender, EventArgs e)
+        #region Buttons and related events
+
+        //Event fired when the confirm button is clicked
+        private void confirmButton_Click(object sender, EventArgs e)
         {
+            //Checks the result from the dialog box
             DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
             if (a.Equals(DialogResult.OK))
             {
@@ -132,20 +127,24 @@ namespace WMS.GUI
                 {
                     if (dataGridView[0, i].Value != null && !(dataGridView[5, i].Value.Equals("0")))
                     {
+                        //Gets the location id from the location list
                         string locId = locationList.Find(x => x.LocationString.Equals(dataGridView[5, i].Value.ToString())).Id;
+                        //Sends the data to the mysql server
                         core.DataHandler.ActionOnItem('-', dataGridView[0, i].Value.ToString(),
                                                       dataGridView[1, i].Value.ToString(),
                                                       dataGridView[6, i].Value.ToString(),
                                                       core.Lang.REDUCED, locId);
                     }
                 }
+                //Message box to tell the user that the items are reduced with success
                 MessageBox.Show(core.Lang.SUCCESS_REDUCE, core.Lang.SUCCESS);
                 core.WindowHandler.Update(this);
+                //Clears the datagridview
                 data.Clear();
             }
         }
 
-        private void searchBtn_Click(object sender, EventArgs e)
+        private void searchButton_Click(object sender, EventArgs e)
         {
             int temp = 0;
             if (int.TryParse(searchTextBox.Text, out temp))
@@ -200,27 +199,47 @@ namespace WMS.GUI
         }
         #endregion
 
+        #region Textboxes and related events
+
+        //Creates the autofill for the searchbox
+        public void SearchBox()
+        {
+            var source = new AutoCompleteStringCollection();
+
+            foreach (Item item in core.DataHandler.InfoToList())
+            {
+                source.Add(item.ItemNo);
+            }
+            searchTextBox.AutoCompleteCustomSource = source;
+        }
+
+        //Event to clear the searchtextbox when entered
         private void searchTextBox_Enter(object sender, EventArgs e)
         {
             searchTextBox.Text = "";
         }
 
+        //Event that fires when enter is pressed which then fires searchButton_Click
         private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                searchBtn_Click(sender, e);
+                searchButton_Click(sender, e);
             }
         }
-
+        #endregion
 
         #region Listboxes and related events
 
+        //Event fired when an item in the locationListBox is double clicked
+        //Fires the chooseLocationButton_Click event
         private void locationListBox_DoubleClick(object sender, EventArgs e)
         {
             chooseLocationButton_Click(sender, e);
         }
 
+        //Event fired when the enter button is pressed
+        //Fires the chooseLocationButton_Click event
         private void locationListBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
@@ -230,7 +249,6 @@ namespace WMS.GUI
         }
         #endregion
         
-
         #region Updates the language
         public void UpdateLang()
         {
@@ -243,6 +261,7 @@ namespace WMS.GUI
             mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
             mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             removeLineButton.Text = core.Lang.REMOVE_ROW;
+            searchTextBox.Text = core.Lang.ITEM_NO;
             if (dataGridView.ColumnCount > 0)
             {
                 dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
