@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WMS.Interfaces;
 using WMS.GUI;
 using WMS.Lang;
@@ -14,26 +12,51 @@ namespace WMS.Handlers
     {
         private ICore core;
         private Form main;
-        private List<IGui> windowsOpen = new List<IGui>();
-        private ILang lang = new LangDa();
-        private bool da = true;
+        private List<IGui> windowsOpen = new List<IGui>(); //The windows that are open
+        private ILang lang = new LangDa(); //The start Language
+        private bool da = true; //If the start language is danish
 
         public WindowHandler(ICore core, IMain main)
         {
-            this.core = core;
-            main.Core = core;
-            this.main = (Form)main;
-            main.UpdateLang();
-            this.main.LocationChanged += MainLocationChanged;
+            this.core = core; 
+            main.Core = core; //Sets the core for main
+            this.main = (Form)main; 
+            main.UpdateLang(); //Sets the language for main
         }
 
-        public List<IGui> WindowsOpen { get { return windowsOpen; } }
-
+        #region Run, Update and Exit Method
+        /// <summary>
+        /// Runs the main window
+        /// </summary>
         public void Run()
         {
             Application.Run(main);
         }
 
+        /// <summary>
+        /// Calls UpdateGuiElements on every open window from WMS, but the caller
+        /// </summary>
+        /// <param name="caller"></param>
+        public void Update(object caller)
+        {
+            foreach (var item in windowsOpen.FindAll(x => !(x.Equals(caller))))
+            {
+                item.UpdateGuiElements();
+            }
+        }
+
+        /// <summary>
+        /// Shows a error message if an sql connection error is found and closes the program 
+        /// </summary>
+        /// <param name="error"></param>
+        public void Exit(string error)
+        {
+            MessageBox.Show(error, lang.ERROR);
+            Environment.Exit(0);
+        }
+#endregion
+
+        #region Open new windows
         public void OpenInformation()
         {
             CreateWindow(new Information(core));
@@ -63,50 +86,43 @@ namespace WMS.Handlers
         {
             CreateWindow(new Waste(core));
         }
+        #endregion
 
-        private void CreateWindow(IGui gui)
+        #region Create Windows Methods
+        /// <summary>
+        /// Creates or shows the given form based on if a window of the same type is already open
+        /// </summary>
+        /// <param name="igui"></param>
+        private void CreateWindow(IGui igui)
         {
-            if (CanCreateForm(gui))
+            //Checks if the form can be open
+            if (CanCreateForm(igui))
             {
-                Form temp = (Form)gui;
-                temp.FormClosing += FormClosing;
-                windowsOpen.Add(gui);
-                temp.Move += Temp_Move;
-                temp.Show();
-                temp.Focus();
-            }
+                // Casts it to a form and adds the events
+                Form gui = (Form)igui;
+                gui.FormClosing += IGuiClosingEvent;
+                gui.Move += IGuiMoveEvent;
+                windowsOpen.Add(igui); //Adds it to the windows open list
+                gui.Show(); 
+                gui.Focus();
+            } 
             else
             {
-                Form form = ((Form)windowsOpen.Find(x => x.ToString().Equals(gui.ToString())));
-                form?.BringToFront();
+                Form form = ((Form)windowsOpen.Find(x => x.ToString().Equals(igui.ToString()))); //Finds the form of the same type
+                form?.BringToFront(); //Brings it to the front
                 form?.Focus();
             }
         }
 
-        private void Temp_Move(object sender, EventArgs e)
+        /// <summary>
+        /// Checks if any window is open based on the input form
+        /// Returns true if non is found and false if a window is found
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        private bool CanCreateForm(object form)
         {
-            IGui gui = ((IGui)sender);
-            Form form = ((Form)sender);
-            main.Left = form.Left - main.Width;
-            main.Top = form.Top;
-        }
-
-        private void FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (sender is IGui)
-            {
-                windowsOpen.Remove((IGui)sender);
-            }
-        }
-
-        private void MainLocationChanged(object sender, EventArgs e)
-        {
-            main.BringToFront();
-        }
-
-        private bool CanCreateForm(object type)
-        {
-            if ((windowsOpen.Count(x => x.ToString().Equals(type.ToString())) < 1))
+            if ((windowsOpen.Count(x => x.ToString().Equals(form.ToString())) < 1))
             {
                 return true;
             }
@@ -116,26 +132,48 @@ namespace WMS.Handlers
             }
 
         }
+#endregion
 
-        public void Update(object caller)
+        #region IGui Events
+        /// <summary>
+        /// A move event that every IGui form have
+        /// Changes mains location based on the location of the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IGuiMoveEvent(object sender, EventArgs e)
         {
-            foreach (var item in WindowsOpen.FindAll(x => !(x.Equals(caller))))
+            Form form = ((Form)sender); //Gets the sender of the event 
+            //Moves main
+            main.Left = form.Left - main.Width;
+            main.Top = form.Top;
+        }
+
+        /// <summary>
+        /// A closing event that every IGui form have
+        /// Removes the form from the windows open list 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IGuiClosingEvent(object sender, FormClosingEventArgs e)
+        {
+            if (sender is IGui)
             {
-                item.UpdateGuiElements();
+                windowsOpen.Remove((IGui)sender);
             }
         }
+#endregion
 
-        public void Exit(string error)
-        {
-                MessageBox.Show(error, lang.ERROR);
-                Environment.Exit(0);
-        }
-
+        #region Language
+        /// <summary>
+        /// Changes the language on every form
+        /// </summary>
+        /// <param name="lang"></param>
         public void ChangeLang(ILang lang)
         {
             this.lang = lang;
             ((IMain)main).UpdateLang();
-            foreach (var item in WindowsOpen)
+            foreach (var item in windowsOpen)
             {
                 item.UpdateLang();
             }
@@ -150,5 +188,6 @@ namespace WMS.Handlers
             }
            
         }
+        #endregion
     }
 }

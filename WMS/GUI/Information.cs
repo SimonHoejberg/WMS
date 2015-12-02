@@ -36,11 +36,6 @@ namespace WMS.GUI
             UpdateLang(); //Sets the text on buttons, labels etc.
         }
 
-        /// <summary>
-        /// When the form is show it fills in data to prevent errors
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void InformationLoad(object sender, System.EventArgs e)
         {
             MaximizeBox = false;
@@ -55,7 +50,7 @@ namespace WMS.GUI
             UpdateInfo();
         }
 
-        #region DataGridView Methode
+        #region DataGridView Methods
         /// <summary>
         /// Fills the dataGridView with data from the database
         /// </summary>
@@ -78,7 +73,7 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region View item information panel Events and Methodes  
+        #region View item information panel Events and Methods  
         /// <summary>
         /// Shows the item information panel with information about the item
         /// </summary>

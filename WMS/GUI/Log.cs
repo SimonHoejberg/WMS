@@ -38,11 +38,6 @@ namespace WMS.GUI
 
         }
 
-        /// <summary>
-        /// When the form is show it fills in data to prevent errors
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void LogLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
@@ -57,7 +52,7 @@ namespace WMS.GUI
             UpdateLog();
         }
 
-        #region DataGridView Methode
+        #region DataGridView Method
         /// <summary>
         /// Fills the dataGridView with data from the database
         /// </summary>
@@ -92,7 +87,7 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region View item information panel Events and Methodes
+        #region View item information panel Events and Methods
         private void ViewItemButtonClick(object sender, EventArgs e)
         {
             int test = dataGridView.CurrentCell.RowIndex;

@@ -19,37 +19,20 @@ namespace WMS.GUI
             this.core = core;
             InitializeComponent();
             Search(); //Sets the suggestiongs source
-
-            //For the language to switch between Da and En
-            Text = core.Lang.REGISTER;
-            orderTextBox.Text = core.Lang.ORDER_NO;
-            confirmButton.Text = core.Lang.CONFIRM;
-            cancelButton.Text = core.Lang.CANCEL;
-            searchButton.Text = core.Lang.SEARCH;
+            UpdateLang(); //Sets the language
         }
 
-        /// <summary>
-        /// Updates the Gui's elements if needed
-        /// </summary>
+        private void RegisterLoad(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
+
         public void UpdateGuiElements()
         {
             //NOOP
         }
 
-        /// <summary>
-        /// Sets up the suggestions in the textbox
-        /// </summary>
-        private void Search()
-        {
-            var source = new AutoCompleteStringCollection();
-            List<Order> temp = core.DataHandler.OrderToList();
-            foreach (var item in temp)
-            {
-                source.Add(item.OrderNo.ToString());
-            }
-            orderTextBox.AutoCompleteCustomSource = source;
-        }
-
+        #region DataGidView Methods and Events 
         /// <summary>
         /// Updates the dataGridView with the data from the Sql server based on a order no
         /// </summary>
@@ -95,39 +78,6 @@ namespace WMS.GUI
         }
 
         /// <summary>
-        /// Removes the predefined text when the user enters the textbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OrderTextBoxEnter(object sender, EventArgs e)
-        {
-            orderTextBox.Text = "";
-        }
-
-        /// <summary>
-        /// Sets the predefined text when the user leaves the textbox 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OrderTextBoxLeave(object sender, EventArgs e)
-        {
-            orderTextBox.Text = core.Lang.ORDER_NO;
-        }
-
-        /// <summary>
-        /// When the user presses the enter button when in the textbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OrderTextBoxKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                SearchButtonClick(sender, e); //Fire the clickbutton event
-            }
-        }
-
-        /// <summary>
         /// When a cell in the dataGridView changes this event is fired to check if content in cell is okay
         /// </summary>
         /// <param name="sender"></param>
@@ -154,17 +104,59 @@ namespace WMS.GUI
             dataGridView.CellValueChanged += DataGridViewCellValueChanged; //Subscribes to the event again
 
         }
+        #endregion
+
+        #region SearchTextBox Events and Methods
 
         /// <summary>
-        /// Disables the maximizebox on load
+        /// Sets up the suggestions in the textbox
+        /// </summary>
+        private void Search()
+        {
+            var source = new AutoCompleteStringCollection();
+            List<Order> temp = core.DataHandler.OrderToList();
+            foreach (var item in temp)
+            {
+                source.Add(item.OrderNo.ToString());
+            }
+            searchTextBox.AutoCompleteCustomSource = source;
+        }
+
+        /// <summary>
+        /// Removes the predefined text when the user enters the textbox
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RegisterLoad(object sender, EventArgs e)
+        private void SearchTextBoxEnter(object sender, EventArgs e)
         {
-            MaximizeBox = false;
+            searchTextBox.Text = "";
         }
 
+        /// <summary>
+        /// Sets the predefined text when the user leaves the textbox 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchTextBoxLeave(object sender, EventArgs e)
+        {
+            searchTextBox.Text = core.Lang.ORDER_NO;
+        }
+
+        /// <summary>
+        /// When the user presses the enter button when in the textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchButtonClick(sender, e); //Fire the clickButton event
+            }
+        }
+        #endregion
+
+        #region Button Events
         /// <summary>
         /// Shows a cancel dialog box 
         /// </summary>
@@ -190,14 +182,14 @@ namespace WMS.GUI
         {
             //Makes sure that the order number only is numbers else it shows an error message to the user
             int temp = 0;
-            if (int.TryParse(orderTextBox.Text, out temp))
+            if (int.TryParse(searchTextBox.Text, out temp))
             {
-                UpdateDataGridView(orderTextBox.Text);
+                UpdateDataGridView(searchTextBox.Text);
             }
             else
             {
                 MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
-                orderTextBox.Text = "";
+                searchTextBox.Text = "";
             }
         }
 
@@ -234,7 +226,7 @@ namespace WMS.GUI
                 if (tempList.Count != 0)
                 {
                     itemsNotPlaced = core.SortNewItems(tempList, orderNo, out itemsPlaced); //Calls the algoritme
-                    RigisterFeedBack regFeedback = new RigisterFeedBack(core, itemsNotPlaced, itemsPlaced);
+                    RegisterFeedBack regFeedback = new RegisterFeedBack(core, itemsNotPlaced, itemsPlaced);
                     regFeedback.Owner = this;
                     regFeedback.ShowDialog();
                 }
@@ -242,13 +234,14 @@ namespace WMS.GUI
                 core.WindowHandler.Update(this); //Update the gui's on all other windows then this  
             }
         }
+        #endregion
 
-        #region Lang
+        #region Language
         public void UpdateLang()
         {
             dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             Text = core.Lang.REGISTER;
-            orderTextBox.Text = core.Lang.ORDER_NO;
+            searchTextBox.Text = core.Lang.ORDER_NO;
             confirmButton.Text = core.Lang.CONFIRM;
             cancelButton.Text = core.Lang.CANCEL;
             searchButton.Text = core.Lang.SEARCH;

@@ -10,55 +10,139 @@ namespace WMS.GUI
 {
     public partial class Waste : Form, IGui
     {
+        private ICore core;
+        
+        //Lists for reasons and locations
         private List<string> reasons;
         private List<Location> locationList;
-        private ICore core;
+
+        //Variables for the datagridview
         private BindingSource bsource;
         private DataTable data;
+
+        //Integer used to input reason in the datagridview
         private int lastRow;
-        private string error;
-        private string mustBePostive;
-        private string mustBeAnumber;
-        private Dictionary<string, string> locationIds = new Dictionary<string, string>();
 
         public Waste(ICore core)
         {
             this.core = core;
             InitializeComponent();
             SearchBox();
-            Text = core.Lang.WASTE;
-            chooseButton.Text = core.Lang.CHOOSE;
-            addLineButton.Text = core.Lang.ADD;
-            searchTextBox.Text = core.Lang.ITEM_NO;
-            button10.Text = core.Lang.CANCEL;
-            button11.Text = core.Lang.CONFIRM;
-            button3.Text = core.Lang.REMOVE_ROW;
-            chooseLocationButton.Text = core.Lang.CHOOSE;
-            error = core.Lang.ERROR;
-            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
+            UpdateLang();
             bsource = new BindingSource();
             data = new DataTable();
             bsource.DataSource = data;
-            wasteDataGridView.DataSource = bsource;
+            dataGridView.DataSource = bsource;
             MakeList();
         }
 
-        private void MakeList()
+        private void WasteLoad(object sender, EventArgs e)
         {
-            reasons = new List<string>();
-            reasons.Add(core.Lang.BROKEN);
-            reasons.Add(core.Lang.WRONG_ITEM_DELIVRED);
-            reasons.Add(core.Lang.MISSING);
-
-            listBox1.DataSource = reasons;
+            MaximizeBox = false;
         }
 
-        public void UpdateGuiElements()
-        {
+        public void UpdateGuiElements() { /*NOOP*/ }
 
+
+        #region DataGridView Events and Methods
+        /// <summary>
+        /// Makes the datagridview
+        /// </summary>
+        private void MakeDataGridView()
+        {
+            //Turn the cellvaluechanged event off, so it does not fire
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
+            //Set the header text on the columns
+            dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+            dataGridView.Columns["location1"].Visible = false;
+            dataGridView.Columns["itemUsage"].Visible = false;
+            //If the location, amount and reason columns does not exist we make them
+            if (!data.Columns.Contains(core.Lang.LOCATION))
+            {
+                data.Columns.Add(core.Lang.LOCATION);
+                dataGridView.Columns[5].Name = "location";
+            }
+            if (!data.Columns.Contains(core.Lang.AMOUNT))
+            {
+                data.Columns.Add(core.Lang.AMOUNT);
+                dataGridView.Columns[6].Name = "amount";
+            }
+            if (!data.Columns.Contains(core.Lang.REASON))
+            {
+                data.Columns.Add(core.Lang.REASON);
+                dataGridView.Columns[7].Name = "reason";
+            }
+            //Sets the all columns to readonly except the amount column
+            for (int i = 0; i < dataGridView.ColumnCount; i++)
+            {
+                if (!(dataGridView.Columns[i].Name == "amount"))
+                {
+                    dataGridView.Columns[i].ReadOnly = true;
+                }
+                //Set the size of all columns
+                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            //Turn the cellvaluechanged event on again
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
 
+        /// <summary>
+        /// Fires the cellvaluechanged event when a cell in the datagridview is changed
+        /// </summary>
+        private void DataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
+            //Checks if the amount column has changed
+            if (dataGridView.Columns[e.ColumnIndex].Equals(dataGridView.Columns["amount"]))
+            {
+                int output = 0;
+                //Checks if the input is an integer and if its less than 0
+                if (!int.TryParse(dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out output))
+                {
+                    MessageBox.Show(core.Lang.MUST_BE_A_NUMER, core.Lang.ERROR);
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else if (output < 0)
+                {
+                    MessageBox.Show(core.Lang.MUST_BE_A_POSITIVE, core.Lang.ERROR);
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else
+                {
+                    lastRow = e.RowIndex;
+                    reasonPanel.Visible = true;
+                    reasonsListBox.Focus();
+                }
+            }
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
+        }
+        #endregion
+
+        #region Search TextBox Events and Methods
+        /// <summary>
+        /// Removes the value in the textbox
+        /// </summary>
+        private void SearchTextBoxEnter(object sender, EventArgs e)
+        {
+            searchTextBox.Text = "";
+        }
+
+        /// <summary>
+        /// Event fires when the enter key is pressed and adds a new row
+        /// </summary>
+        private void SearchTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                AddRowButtonClick(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Makes the autocomplete source for the searchtextbox
+        /// </summary>
         public void SearchBox()
         {
             var source = new AutoCompleteStringCollection();
@@ -68,223 +152,207 @@ namespace WMS.GUI
             }
             searchTextBox.AutoCompleteCustomSource = source;
         }
+        #endregion
 
-        public void MakeDataGridView()
+        #region Reason Button and List Events and Methods
+
+        /// <summary>
+        /// Makes a list of reasons
+        /// </summary>
+        private void MakeList()
         {
-            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
-            wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-            wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-            wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-            wasteDataGridView.Columns[3].Visible = false;
-            wasteDataGridView.Columns[4].Visible = false;
-            if (!data.Columns.Contains(core.Lang.LOCATION))
-            {
-                data.Columns.Add(core.Lang.LOCATION);
-            }
-            if (!data.Columns.Contains(core.Lang.AMOUNT))
-            {
-                data.Columns.Add(core.Lang.AMOUNT);
-            }
-            if (!data.Columns.Contains(core.Lang.REASON))
-            {
-                data.Columns.Add(core.Lang.REASON);
-            }
-            
-            for (int i = 0; i < wasteDataGridView.ColumnCount; i++)
-            {
-                wasteDataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                wasteDataGridView.Columns[i].ReadOnly = true;
-            }
-            wasteDataGridView.Columns[6].ReadOnly = false;
-            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
+            reasons = new List<string>();
+            reasons.Add(core.Lang.BROKEN);
+            reasons.Add(core.Lang.WRONG_ITEM_DELIVRED);
+            reasons.Add(core.Lang.MISSING);
+
+            reasonsListBox.DataSource = reasons;
         }
 
-        private void Waste_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Sets the reason column in the datagridview to the selected item in the reasonsListBox
+        /// </summary>
+        private void ChooseReasonButtonClick(object sender, EventArgs e)
         {
-            MaximizeBox = false;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
+            reasonPanel.Visible = false;
+            dataGridView.Focus();
+            dataGridView["reason", lastRow].Value = reasonsListBox.SelectedItem.ToString();
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
 
-        private void wasteDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// Event fired when an item in the reasonsListbox is doubleclicked
+        /// </summary>
+        private void ReasonsListBoxDoubleClick(object sender, EventArgs e)
         {
-            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
-            if (wasteDataGridView.Columns[e.ColumnIndex].Equals(wasteDataGridView.Columns[6]))
-            {
-                int temp = 0;
-                if (!int.TryParse(wasteDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out temp))
-                {
-                    MessageBox.Show(mustBeAnumber, error);
-                    wasteDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
-                }
-                else if (temp < 0)
-                {
-                    MessageBox.Show(mustBePostive, error);
-                    wasteDataGridView[e.ColumnIndex, e.RowIndex].Value = null;
-                }
-                else
-                {   
-                    lastRow = e.RowIndex;
-        
-                    panel1.Visible = true;
-                    listBox1.Focus();
-                }
-            }
-                wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
-            }
-
-        private void chooseButton_Click(object sender, EventArgs e)
-        {
-            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
-            panel1.Visible = false;
-            wasteDataGridView.Focus();
-            wasteDataGridView[7, lastRow].Value = listBox1.SelectedItem.ToString();
-            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
+            ChooseReasonButtonClick(sender, e);
         }
 
-        private void listBox1_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// Event fired when the enter key is pressed in the reasonsListBox
+        /// </summary>
+        private void ReasonsListBoxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                chooseButton_Click(sender, e);
+                ChooseReasonButtonClick(sender, e);
+            }
+        }
+        #endregion
+
+        #region Location Button and List Events and Methods
+
+        /// <summary>
+        /// Sets the location column in the datagridview to the selected item in the locationListBox
+        /// </summary>
+        private void ChooseLocationButtonClick(object sender, EventArgs e)
+        {
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
+            locationPanel.Visible = false;
+            dataGridView.Focus();
+            dataGridView["location", dataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
+            Location location = ((Location)locationListBox.SelectedItem);
+            searchTextBox.Focus();
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
+        }
+
+        /// <summary>
+        /// Event fired when the enter key is pressed in the locationListBox
+        /// </summary>
+        private void LocationListBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                ChooseLocationButtonClick(sender, e);
             }
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Event fired when an item in the locationListbox is doubleclicked
+        /// </summary>
+        private void LocationListBoxDoubleClick(object sender, EventArgs e)
         {
-            CancelBox cancel = new CancelBox(core.Lang);
-            DialogResult a = cancel.ShowDialog();
+            ChooseLocationButtonClick(sender, e);
+        }
+        #endregion
 
-            if (a.Equals(DialogResult.OK))
+        #region Misc Button Events
+        /// <summary>
+        /// Removes the selected row in the datagridview
+        /// </summary>
+        private void RemoveRowButtonClick(object sender, EventArgs e)
+        {
+            if (dataGridView.CurrentCell != null)
             {
-                data.Clear();
+                dataGridView.Rows.RemoveAt(dataGridView.CurrentCell.RowIndex);
             }
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Adds a row with the information from the information database
+        /// </summary>
+        private void AddRowButtonClick(object sender, EventArgs e)
         {
-            UserIDBox user_dialog = new UserIDBox(core);
-            DialogResult a = user_dialog.ShowDialog(); //Dialogresult is either OK or Cancel. OK only if correct userID was entered
-            if (a.Equals(DialogResult.OK))
+            int output = 0;
+            if (int.TryParse(searchTextBox.Text, out output))
             {
-                string user = user_dialog.User;
-                for (int i = 0; i < wasteDataGridView.RowCount; i++)
+                string itemNo = searchTextBox.Text;
+                //Fills the datatable with information from the database
+                core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
+                MakeDataGridView();
+                //Creates a list with all locations from the database
+                locationList = core.DataHandler.LocationToList();
+                //Checks how many locations an item has and if it has more than 1 it opens the locationPanel
+                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
                 {
-                    if (!(wasteDataGridView[0, i].Value == null))
+                    locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationPanel.Visible = true;
+                    locationListBox.Focus();
+                }
+                //If there is only 1 location it just inputs that in the datagridview
+                else
+                {
+                    dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    searchTextBox.Focus();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prompts the user with a custom dialogbox
+        /// </summary>
+        private void ConfirmButtonClick(object sender, EventArgs e)
+        {
+            UserIDBox dialog = new UserIDBox(core);
+            DialogResult a = dialog.ShowDialog();
+            //Checks the dialog result
+            if (a.Equals(DialogResult.OK))
+            {
+                //Gets the user from the userid
+                string user = dialog.User;
+                for (int i = 0; i < dataGridView.RowCount; i++)
+                {
+                    if (!(dataGridView[0, i].Value == null))
                     {
-                        string locId = locationList.Find(x => x.LocationString.Equals(wasteDataGridView[5, i].Value.ToString())).Id;
-                        core.DataHandler.ActionOnItem('-', wasteDataGridView[0, i].Value.ToString(), 
-                                                      wasteDataGridView[1, i].Value.ToString(), 
-                                                      wasteDataGridView[6, i].Value.ToString(),
-                                                      core.DataHandler.GetUserName(user), 
-                                                      wasteDataGridView[7, i].Value.ToString(),locId);
+                        //Gets the location id from the locationList
+                        string locId = locationList.Find(x => x.LocationString.Equals(dataGridView["location", i].Value.ToString())).Id;
+                        //Updates the database with the proper information
+                        core.DataHandler.ActionOnItem('-', dataGridView["itemNo", i].Value.ToString(),
+                                                      dataGridView["description", i].Value.ToString(),
+                                                      dataGridView["amount", i].Value.ToString(),
+                                                      core.DataHandler.GetUserName(user),
+                                                      dataGridView["reason", i].Value.ToString(), locId);
                     }
                 }
+                //clears the datatable which clears the datagrid
                 data.Clear();
+                //Prompts the user with a dialogbox telling it succeeded 
                 MessageBox.Show(core.Lang.SUCCESS_WASTE, core.Lang.SUCCESS);
                 core.WindowHandler.Update(this);
             }
         }
 
-        private void addLineButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Prompts the user with a dialogbox asking if they want to cancel
+        /// </summary>
+        private void CancelButtonClick(object sender, EventArgs e)
         {
-            int temp = 0;
-            if (int.TryParse(searchTextBox.Text, out temp))
+            CancelBox cancel = new CancelBox(core.Lang);
+            DialogResult a = cancel.ShowDialog();
+            //checks the user input 
+            if (a.Equals(DialogResult.OK))
             {
-                string itemNo = searchTextBox.Text;
-                core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data);
-                MakeDataGridView();
-                locationList = core.DataHandler.LocationToList();
-                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
-                {
-                    listBox2.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
-                    locationPanel.Visible = true;
-                    listBox2.Focus();
-                }
-                else
-                {
-                    wasteDataGridView[5,wasteDataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
-                    searchTextBox.Focus();
-                }
-            }
-           
-        }
-
-        private void searchTextBox_Enter(object sender, EventArgs e)
-        {
-            searchTextBox.Text = "";
-        }
-
-        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.Equals(Keys.Enter))
-            {
-                addLineButton_Click(sender, e);
+                data.Clear();
             }
         }
+        #endregion
 
+        #region Language
         public void UpdateLang()
         {
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             Text = core.Lang.WASTE;
             chooseButton.Text = core.Lang.CHOOSE;
             addLineButton.Text = core.Lang.SEARCH;
             searchTextBox.Text = core.Lang.ITEM_NO;
-            button10.Text = core.Lang.CANCEL;
-            button11.Text = core.Lang.CONFIRM;
-            button3.Text = core.Lang.REMOVE_ROW;
+            cancelButton.Text = core.Lang.CANCEL;
+            confirmButton.Text = core.Lang.CONFIRM;
+            removeRowButton.Text = core.Lang.REMOVE_ROW;
             chooseLocationButton.Text = core.Lang.CHOOSE;
-            error = core.Lang.ERROR;
-            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
-            if (wasteDataGridView.ColumnCount > 0)
+            if (dataGridView.ColumnCount > 0)
             {
-                wasteDataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                wasteDataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                wasteDataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                wasteDataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
-                wasteDataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
-                wasteDataGridView.Columns[7].HeaderText = core.Lang.REASON;
+                dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns["location"].HeaderText = core.Lang.LOCATION;
+                dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Columns["reason"].HeaderText = core.Lang.REASON;
             }
             MakeList();
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
         }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (wasteDataGridView.CurrentCell != null)
-            {
-                wasteDataGridView.Rows.RemoveAt(wasteDataGridView.CurrentCell.RowIndex);
-            }
-        }
-
-        private void listBox1_KeyDown_1(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.Equals(Keys.Enter))
-            {
-                chooseButton_Click(sender, e);
-            }
-        }
-
-        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            chooseButton_Click(sender, e);
-        }
-
-        private void chooseLocationButton_Click(object sender, EventArgs e)
-        {
-            wasteDataGridView.CellValueChanged -= wasteDataGridView_CellValueChanged;
-            locationPanel.Visible = false;
-            wasteDataGridView.Focus();
-            wasteDataGridView[5, wasteDataGridView.RowCount - 1].Value = listBox2.SelectedItem;
-            Location location = ((Location)listBox2.SelectedItem);
-            locationIds.Add(location.ToString(), location.Id);
-            searchTextBox.Focus();
-            wasteDataGridView.CellValueChanged += wasteDataGridView_CellValueChanged;
-        }
-
-        private void listBox2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.Equals(Keys.Enter))
-            {
-                chooseLocationButton_Click(sender, e);
-            }
-        }
+        #endregion
+        
     }
 }

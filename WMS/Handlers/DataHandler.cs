@@ -19,23 +19,44 @@ namespace WMS.Handlers
             sql = new SqlHandler(core);
         }
         
+        /// <summary>
+        /// Returns a MySqlDataAdapter which contains all data from one database
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
         public MySqlDataAdapter GetData(string db)
         {
             return sql.GetAllDataFromDataBase(db);
         }
         
+        /// <summary>
+        /// Returns a string containing a username
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public string GetUserName(string userId)
         {
-            string temp = "";
+            string userName = "";
             MySqlDataReader reader = sql.GetUserName(userId);
+            //While loop to get the userName
             while (reader.Read())
             {
-                temp = reader["name"].ToString();
+                userName = reader["name"].ToString();
             }
-            return temp;
+            return userName;
         }
+
+        /// <summary>
+        /// Returns a user used in test
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetUser() => UserToList();
 
+        /// <summary>
+        /// Returns a list of the log with specific itemNo
+        /// </summary>
+        /// <param name="itemNo"></param>
+        /// <returns></returns>
         public List<LogItem> GetLog(string itemNo) => LogToList(itemNo);
 
         public List<Item> InfoToList()

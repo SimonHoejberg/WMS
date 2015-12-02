@@ -7,11 +7,11 @@ namespace WMS.WH
     public class Warehouse
     {
         private ICore core;
-        private Location[,] locations;
-        private Dictionary<string, int> quickPlace = new Dictionary<string, int>();
-        private List<Item> itemsNotPlaced;
-        private Dictionary<Item, Location> itemsPlaced;
-        private int maxShelf = 0;
+        private Location[,] locations; //A two dimensional array that holds every location with a item from the database 
+        private Dictionary<string, int> quickPlace = new Dictionary<string, int>(); //A dictionary used to help the algorithm to fast place
+        private List<Item> itemsNotPlaced; //A list which contains the items not placed in the algorithm
+        private Dictionary<Item, Location> itemsPlaced; //A dictionary which contains the item and locations placed in the algorithm
+        private int maxShelf = 0; //A value used to create the location array an stop the algorithm if there is no more place
         private int maxSpace = 0;
         private string orderNo;
 
@@ -40,17 +40,20 @@ namespace WMS.WH
             List<Location> temp = core.DataHandler.LocationToList();
             foreach (Location location in temp)
             {
-                locations[location.BestLocation, (int.Parse(location.Space) - 1)] = location;
-                if (!location.ItemNo.Equals("0"))
+                if (location.Quantity != 0)
                 {
-                    if (!quickPlace.ContainsKey(location.ItemNo))
+                    locations[location.BestLocation, (int.Parse(location.Space) - 1)] = location;
+                    if (!location.ItemNo.Equals("0"))
                     {
-                        quickPlace.Add(location.ItemNo, location.BestLocation);
-                    }
-                    else
-                    {
-                        quickPlace.Remove(location.ItemNo);
-                        quickPlace.Add(location.ItemNo, location.BestLocation);
+                        if (!quickPlace.ContainsKey(location.ItemNo))
+                        {
+                            quickPlace.Add(location.ItemNo, location.BestLocation);
+                        }
+                        else
+                        {
+                            quickPlace.Remove(location.ItemNo);
+                            quickPlace.Add(location.ItemNo, location.BestLocation);
+                        }
                     }
                 }
             }
