@@ -234,7 +234,7 @@ namespace WMS.GUI
         {
             reduceDataGridView.CellValueChanged -= reduceDataGridView_CellValueChanged;
             locationPanel.Visible = false;
-            reduceDataGridView.Focus();
+            textBox1.Focus();
             reduceDataGridView[5, reduceDataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
             Location location = ((Location)locationListBox.SelectedItem);
             locationIds.Add(location.ToString(), location.Id);
@@ -246,6 +246,19 @@ namespace WMS.GUI
             if (reduceDataGridView.CurrentCell != null)
             {
                 reduceDataGridView.Rows.RemoveAt(reduceDataGridView.CurrentCell.RowIndex);
+            }
+        }
+
+        private void locationListBox_DoubleClick(object sender, EventArgs e)
+        {
+            chooseLocationButton_Click(sender, e);
+        }
+
+        private void locationListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                chooseLocationButton_Click(sender, e);
             }
         }
     }
