@@ -18,7 +18,6 @@ namespace WMS.GUI
     public partial class Log : Form , IGui
     {
         private ICore core;
-        private MySqlDataAdapter inputFromInfo = null;
         BindingSource bsource;
         DataTable data;
 
@@ -34,6 +33,10 @@ namespace WMS.GUI
             logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
+            //Makes the label word warp kind of
+            locationLabel.AutoSize = false;
+            locationLabel.MaximumSize = new Size(150, 0);
+            locationLabel.AutoSize = true;
             UpdateLang();
 
         }
@@ -46,7 +49,6 @@ namespace WMS.GUI
             data = new DataTable();
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
-            inputFromInfo = core.DataHandler.GetDataFromItemNo(itemNo, LOG_DB);
             logListView.Columns.Add(core.Lang.TIMESTAMP, 40, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
@@ -56,13 +58,8 @@ namespace WMS.GUI
 
         private void UpdateLog()
         {
-            UpdateLog(core.DataHandler.GetData(LOG_DB));
-        }
-
-        private void UpdateLog(MySqlDataAdapter mysqlData)
-        {
             data.Clear();
-            mysqlData.Fill(data);
+            core.DataHandler.GetData(LOG_DB).Fill(data);
             dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
             dataGridView.Columns[2].HeaderText = core.Lang.TIMESTAMP;
@@ -101,14 +98,15 @@ namespace WMS.GUI
                 string itemNo = dataGridView[0, test].Value.ToString();
                 Item item = core.DataHandler.GetItemFromItemNo(itemNo);
                 usageLabel.Text = item.Usage.ToString();
+                itemNoLabel.Text = itemNo;
                 nameLabel.Text = item.Description;
                 List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
                 string temp = "";
                 foreach (var location in locationList)
                 {
-                    temp += $"{location.ToString()}, ";
+                    temp += $"{location.ToString()} : {location.Quantity}, ";
                 }
-                temp = temp.Remove(temp.Length - 2, 2);
+                temp = temp.Remove(temp.Length - 2);
                 locationLabel.Text = temp;
                 logListView.View = View.Details;
                 List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
@@ -138,14 +136,7 @@ namespace WMS.GUI
         private void LogLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
-            if(inputFromInfo != null)
-            {
-                UpdateLog(inputFromInfo);
-            }
-            else
-            {
-                UpdateLog();
-            }
+            UpdateLog();
         }
 
         public void UpdateLang()
@@ -155,9 +146,10 @@ namespace WMS.GUI
             closeButton.Text = core.Lang.CLOSE;
             SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
             viewItemButton.Text = core.Lang.VIEW_ITEM;
-            label4.Text = core.Lang.DESCRIPTION;
-            label2.Text = core.Lang.LOCATION;
-            label3.Text = core.Lang.USAGE;
+            itemNoLabelHead.Text = core.Lang.ITEM_NO;
+            nameLabelHead.Text = core.Lang.DESCRIPTION;
+            locationLabelHead.Text = $"{core.Lang.LOCATION} : {core.Lang.AMOUNT}";
+            usageLabelHead.Text = core.Lang.USAGE;
             if (dataGridView.ColumnCount > 0)
             {
                 dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;

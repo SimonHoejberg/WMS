@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using WMS.Interfaces;
@@ -29,6 +30,10 @@ namespace WMS.GUI
             logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
+            //Makes the label word warp kind of
+            locationLabel.AutoSize = false;
+            locationLabel.MaximumSize = new Size(150, 0);
+            locationLabel.AutoSize = true;
             UpdateLang(); //Sets the text on buttons, labels etc.
         }
 
@@ -38,6 +43,15 @@ namespace WMS.GUI
             UpdateInfo();
         }
 
+        /// <summary>
+        /// Updates the dataGridView
+        /// </summary>
+        public void UpdateGuiElements()
+        {
+            UpdateInfo();
+        }
+
+        #region DataGridView Methodes and Event
         /// <summary>
         /// Fills the dataGridView with data from the database
         /// </summary>
@@ -59,15 +73,9 @@ namespace WMS.GUI
                 dataGridView.Columns[i].ReadOnly = true;
             }
         }
+        #endregion
 
-        /// <summary>
-        /// Updates the dataGridView
-        /// </summary>
-        public void UpdateGuiElements()
-        {
-            UpdateInfo();
-        }
-
+        #region View item information panel Events and Methodes  
         /// <summary>
         /// Shows the item information panel with information about the item
         /// </summary>
@@ -89,7 +97,7 @@ namespace WMS.GUI
             string temp = "";
             foreach (var location in locationList)
             {
-                temp += $"{location.ToString()}, ";
+                temp += $"{location.ToString()} : {location.Quantity}, ";
             }
             temp = temp.Remove(temp.Length - 2); //Removes the "," 
             
@@ -107,7 +115,7 @@ namespace WMS.GUI
         {
             List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item to display it in a listview
             logListView.View = View.Details; //Sets the view mode
-            //Gets the logItems and 
+            //Gets the logItems and makes a listView item of it with sub items
             List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
             foreach (LogItem logItem in logItems)
             {
@@ -117,24 +125,32 @@ namespace WMS.GUI
                 lvi.SubItems.Add(logItem.User);
                 items.Add(lvi);
             }
+            logListView.Items.Clear();
+            //Adds them to the logListView
             foreach (var lviItem in items)
             {
                 logListView.Items.Add(lviItem);
             }
+            //Resizes the columns based on both the header and content in the cells
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
+        /// <summary>
+        /// Closes the item information panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButtonClick(object sender, System.EventArgs e)
         {
             itemInfoPanel.Visible = false;
         }
+        #endregion
 
-        private void LogButtonClick(object sender, System.EventArgs e)
-        {
-            core.WindowHandler.OpenLog(itemNo);
-        }
-
+        #region Language
+        /// <summary>
+        /// Updates the buttons, labels tex to the correct lang
+        /// </summary>
         public void UpdateLang()
         {
             SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
@@ -142,10 +158,9 @@ namespace WMS.GUI
             Text = core.Lang.INFORMATION;
             closeButton.Text = core.Lang.CLOSE;
             viewItemButton.Text = core.Lang.VIEW_ITEM;
-            logButton.Text = core.Lang.LOG;
             itemNoLabelHead.Text = core.Lang.ITEM_NO;
             nameLabelHead.Text = core.Lang.DESCRIPTION;
-            locationLabelHead.Text = core.Lang.LOCATION;
+            locationLabelHead.Text = $"{core.Lang.LOCATION} : {core.Lang.AMOUNT}";
             usageLabelHead.Text = core.Lang.USAGE;
             if (dataGridView.ColumnCount > 0)
             {
@@ -162,8 +177,9 @@ namespace WMS.GUI
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
+        #endregion
 
-
+        #region Search Textbox Events
         private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
             int a = 0;
@@ -192,4 +208,7 @@ namespace WMS.GUI
             SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
     }
+
+    #endregion
 }
+
