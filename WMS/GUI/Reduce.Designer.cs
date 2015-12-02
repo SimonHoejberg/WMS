@@ -59,7 +59,7 @@
             this.confirmBtn.TabIndex = 6;
             this.confirmBtn.Text = "Confirm";
             this.confirmBtn.UseVisualStyleBackColor = true;
-            this.confirmBtn.Click += new System.EventHandler(this.confirmBtn_Click);
+            this.confirmBtn.Click += new System.EventHandler(this.confirmButton_Click);
             // 
             // dataGridView
             // 
@@ -82,7 +82,7 @@
             this.searchButton.TabIndex = 9;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchBtn_Click);
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // searchTextBox
             // 
@@ -102,7 +102,7 @@
             this.removeLineButton.Name = "removeLineButton";
             this.removeLineButton.Size = new System.Drawing.Size(75, 23);
             this.removeLineButton.TabIndex = 11;
-            this.removeLineButton.Text = "button1";
+            this.removeLineButton.Text = "Remove row";
             this.removeLineButton.UseVisualStyleBackColor = true;
             this.removeLineButton.Click += new System.EventHandler(this.removeLineButton_Click);
             // 

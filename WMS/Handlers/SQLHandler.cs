@@ -93,9 +93,11 @@ namespace WMS.Handlers
 
         public void LogOperation(string itemNo, string description, string date, string user, string operation, int amount)
         {
+            ResetConnection();
+            string selectInfo = $"(SELECT inStock FROM information WHERE itemNo = {itemNo})";
             MySqlCommand command = connection.CreateCommand();
-            string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount)"+ 
-                         $"VALUES ({ itemNo }, '{ description }', '{date}', '{user }', '{operation}', {amount})";
+            string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount, prevQuantity, newQuantity)"+ 
+                         $"VALUES ({ itemNo }, '{ description }', '{date}', '{user }', '{operation}', {amount}, {selectInfo}, {selectInfo})";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
@@ -105,10 +107,10 @@ namespace WMS.Handlers
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = "START TRANSACTION;"+
-                         $"UPDATE location SET itemNo = {itemNo}, quantity = quantity {op} {quantity} WHERE ID = {id};" +
-                         $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo};"+
                          "INSERT INTO log (itemNo, description, date, user, operation, amount, prevQuantity, newQuantity)" +
                          $"VALUES ({ itemNo }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', {quantity} , (SELECT inStock FROM information WHERE itemNo = {itemNo}), (SELECT inStock {op} {quantity} FROM information WHERE itemNo = {itemNo}));" +
+                         $"UPDATE location SET itemNo = {itemNo}, quantity = quantity {op} {quantity} WHERE ID = {id};" +
+                         $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo};"+
                          "COMMIT;";
             command.CommandText = sql;
             ResetConnection();
@@ -184,10 +186,10 @@ namespace WMS.Handlers
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = "START TRANSACTION;" + 
+               "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)" +
+               $"VALUES ({ newItem }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {newItem}), (SELECT inStock + {amount} FROM information WHERE itemNo = {newItem}));" +
                $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};"+
                $"UPDATE information SET location1 = '{newLocation}' ,inStock = inStock + {amount} WHERE itemNo = '{newItem}';" +
-               "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)"+ 
-               $"VALUES ({ newItem }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {newItem}), (SELECT inStock + {amount} FROM information WHERE itemNo = {newItem}));"+
                "COMMIT;";
             command.CommandText = sql;
             ResetConnection();
