@@ -41,20 +41,23 @@ namespace WMS.GUI
                     notPlacedList.Add(lvi);
                 }
             }
-            //Makes a listViewItem for every item with the item no, name and location 
-            foreach (KeyValuePair<Item,Location> KvP in placed)
+            if(placed.Count == 0)
             {
-                ListViewItem lvi = new ListViewItem(KvP.Key.ItemNo);
-                lvi.SubItems.Add(KvP.Key.Description);
-                lvi.SubItems.Add(KvP.Value.Shelf + "." + KvP.Value.Space);
-                placedList.Add(lvi);
+                placedButton.Enabled = false;
+                NotPlacedButtonClick(this, new EventArgs()); //Shows the not placed items in the listView because of none placed items
             }
-            //Then it starts with showing the placed items in the listView
-            foreach (var item in placedList)
+            else
             {
-                feedbackListView.Items.Add(item);
+                //Makes a listViewItem for every item with the item no, name and location 
+                foreach (KeyValuePair<Item, Location> KvP in placed)
+                {
+                    ListViewItem lvi = new ListViewItem(KvP.Key.ItemNo);
+                    lvi.SubItems.Add(KvP.Key.Description);
+                    lvi.SubItems.Add(KvP.Value.Shelf + "." + KvP.Value.Space);
+                    placedList.Add(lvi);
+                }
+                PlacedButtonClick(this, new EventArgs()); //Shows the placed items in the listView
             }
-            
         }
 
         /// <summary>

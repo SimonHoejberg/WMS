@@ -23,11 +23,6 @@ namespace WMS.GUI
         //Integer used to input reason in the datagridview
         private int lastRow;
 
-        //Error messages
-        private string error;
-        private string mustBePostive;
-        private string mustBeAnumber;
-
         public Waste(ICore core)
         {
             this.core = core;
@@ -41,7 +36,7 @@ namespace WMS.GUI
             MakeList();
         }
 
-        private void Waste_Load(object sender, EventArgs e)
+        private void WasteLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
         }
@@ -56,7 +51,7 @@ namespace WMS.GUI
         private void MakeDataGridView()
         {
             //Turn the cellvaluechanged event off, so it does not fire
-            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             //Set the header text on the columns
             dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
@@ -90,15 +85,15 @@ namespace WMS.GUI
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             //Turn the cellvaluechanged event on again
-            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
 
         /// <summary>
         /// Fires the cellvaluechanged event when a cell in the datagridview is changed
         /// </summary>
-        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             //Checks if the amount column has changed
             if (dataGridView.Columns[e.ColumnIndex].Equals(dataGridView.Columns["amount"]))
             {
@@ -106,31 +101,30 @@ namespace WMS.GUI
                 //Checks if the input is an integer and if its less than 0
                 if (!int.TryParse(dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out output))
                 {
-                    MessageBox.Show(mustBeAnumber, error);
+                    MessageBox.Show(core.Lang.MUST_BE_A_NUMER, core.Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else if (output < 0)
                 {
-                    MessageBox.Show(mustBePostive, error);
+                    MessageBox.Show(core.Lang.MUST_BE_A_POSITIVE, core.Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
                 else
                 {
                     lastRow = e.RowIndex;
-
                     reasonPanel.Visible = true;
                     reasonsListBox.Focus();
                 }
             }
-            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
         #endregion
 
-        #region Textbox Events and Methods
+        #region Search TextBox Events and Methods
         /// <summary>
         /// Removes the value in the textbox
         /// </summary>
-        private void searchTextBox_Enter(object sender, EventArgs e)
+        private void SearchTextBoxEnter(object sender, EventArgs e)
         {
             searchTextBox.Text = "";
         }
@@ -138,11 +132,11 @@ namespace WMS.GUI
         /// <summary>
         /// Event fires when the enter key is pressed and adds a new row
         /// </summary>
-        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void SearchTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
             {
-                addRowButton_Click(sender, e);
+                AddRowButtonClick(sender, e);
             }
         }
 
@@ -160,37 +154,94 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region Button Events
+        #region Reason Button and List Events and Methods
+
         /// <summary>
-        /// Sets the location column in the datagridview to the selected item in the locationListBox
+        /// Makes a list of reasons
         /// </summary>
-        private void chooseLocationButton_Click(object sender, EventArgs e)
+        private void MakeList()
         {
-            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
-            locationPanel.Visible = false;
-            dataGridView.Focus();
-            dataGridView["location", dataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
-            Location location = ((Location)locationListBox.SelectedItem);
-            searchTextBox.Focus();
-            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+            reasons = new List<string>();
+            reasons.Add(core.Lang.BROKEN);
+            reasons.Add(core.Lang.WRONG_ITEM_DELIVRED);
+            reasons.Add(core.Lang.MISSING);
+
+            reasonsListBox.DataSource = reasons;
         }
 
         /// <summary>
         /// Sets the reason column in the datagridview to the selected item in the reasonsListBox
         /// </summary>
-        private void chooseButton_Click(object sender, EventArgs e)
+        private void ChooseReasonButtonClick(object sender, EventArgs e)
         {
-            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             reasonPanel.Visible = false;
             dataGridView.Focus();
             dataGridView["reason", lastRow].Value = reasonsListBox.SelectedItem.ToString();
-            dataGridView.CellValueChanged += dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
 
         /// <summary>
+        /// Event fired when an item in the reasonsListbox is doubleclicked
+        /// </summary>
+        private void ReasonsListBoxDoubleClick(object sender, EventArgs e)
+        {
+            ChooseReasonButtonClick(sender, e);
+        }
+
+        /// <summary>
+        /// Event fired when the enter key is pressed in the reasonsListBox
+        /// </summary>
+        private void ReasonsListBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                ChooseReasonButtonClick(sender, e);
+            }
+        }
+        #endregion
+
+        #region Location Button and List Events and Methods
+
+        /// <summary>
+        /// Sets the location column in the datagridview to the selected item in the locationListBox
+        /// </summary>
+        private void ChooseLocationButtonClick(object sender, EventArgs e)
+        {
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
+            locationPanel.Visible = false;
+            dataGridView.Focus();
+            dataGridView["location", dataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
+            Location location = ((Location)locationListBox.SelectedItem);
+            searchTextBox.Focus();
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
+        }
+
+        /// <summary>
+        /// Event fired when the enter key is pressed in the locationListBox
+        /// </summary>
+        private void LocationListBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                ChooseLocationButtonClick(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Event fired when an item in the locationListbox is doubleclicked
+        /// </summary>
+        private void LocationListBoxDoubleClick(object sender, EventArgs e)
+        {
+            ChooseLocationButtonClick(sender, e);
+        }
+        #endregion
+
+        #region Misc Button Events
+        /// <summary>
         /// Removes the selected row in the datagridview
         /// </summary>
-        private void removeRowButton_Click(object sender, EventArgs e)
+        private void RemoveRowButtonClick(object sender, EventArgs e)
         {
             if (dataGridView.CurrentCell != null)
             {
@@ -201,7 +252,7 @@ namespace WMS.GUI
         /// <summary>
         /// Adds a row with the information from the information database
         /// </summary>
-        private void addRowButton_Click(object sender, EventArgs e)
+        private void AddRowButtonClick(object sender, EventArgs e)
         {
             int output = 0;
             if (int.TryParse(searchTextBox.Text, out output))
@@ -231,15 +282,15 @@ namespace WMS.GUI
         /// <summary>
         /// Prompts the user with a custom dialogbox
         /// </summary>
-        private void confirmButton_Click(object sender, EventArgs e)
+        private void ConfirmButtonClick(object sender, EventArgs e)
         {
-            UserIDBox user_dialog = new UserIDBox(core);
-            DialogResult a = user_dialog.ShowDialog();
+            UserIDBox dialog = new UserIDBox(core);
+            DialogResult a = dialog.ShowDialog();
             //Checks the dialog result
             if (a.Equals(DialogResult.OK))
             {
                 //Gets the user from the userid
-                string user = user_dialog.User;
+                string user = dialog.User;
                 for (int i = 0; i < dataGridView.RowCount; i++)
                 {
                     if (!(dataGridView[0, i].Value == null))
@@ -265,7 +316,7 @@ namespace WMS.GUI
         /// <summary>
         /// Prompts the user with a dialogbox asking if they want to cancel
         /// </summary>
-        private void cancelButton_Click(object sender, EventArgs e)
+        private void CancelButtonClick(object sender, EventArgs e)
         {
             CancelBox cancel = new CancelBox(core.Lang);
             DialogResult a = cancel.ShowDialog();
@@ -275,67 +326,12 @@ namespace WMS.GUI
                 data.Clear();
             }
         }
-
-
         #endregion
 
-        #region Listbox Events and Methods
-        /// <summary>
-        /// Makes a list of reasons
-        /// </summary>
-        private void MakeList()
-        {
-            reasons = new List<string>();
-            reasons.Add(core.Lang.BROKEN);
-            reasons.Add(core.Lang.WRONG_ITEM_DELIVRED);
-            reasons.Add(core.Lang.MISSING);
-
-            reasonsListBox.DataSource = reasons;
-        }
-
-        /// <summary>
-        /// Event fired when an item in the reasonsListbox is doubleclicked
-        /// </summary>
-        private void reasonsListBox_DoubleClick(object sender, EventArgs e)
-        {
-            chooseButton_Click(sender, e);
-        }
-
-        /// <summary>
-        /// Event fired when the enter key is pressed in the reasonsListBox
-        /// </summary>
-        private void reasonsListBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.Equals(Keys.Enter))
-            {
-                chooseButton_Click(sender, e);
-            }
-        }
-
-        /// <summary>
-        /// Event fired when the enter key is pressed in the locationListBox
-        /// </summary>
-        private void locationListBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.Equals(Keys.Enter))
-            {
-                chooseLocationButton_Click(sender, e);
-            }
-        }
-
-        /// <summary>
-        /// Event fired when an item in the locationListbox is doubleclicked
-        /// </summary>
-        private void locationListBox_DoubleClick(object sender, EventArgs e)
-        {
-            chooseLocationButton_Click(sender, e);
-        }
-        #endregion
-
-        #region UpdateLang
+        #region Language
         public void UpdateLang()
         {
-            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             Text = core.Lang.WASTE;
             chooseButton.Text = core.Lang.CHOOSE;
             addLineButton.Text = core.Lang.SEARCH;
@@ -344,9 +340,6 @@ namespace WMS.GUI
             confirmButton.Text = core.Lang.CONFIRM;
             removeRowButton.Text = core.Lang.REMOVE_ROW;
             chooseLocationButton.Text = core.Lang.CHOOSE;
-            error = core.Lang.ERROR;
-            mustBePostive = core.Lang.MUST_BE_A_POSITIVE;
-            mustBeAnumber = core.Lang.MUST_BE_A_NUMER;
             if (dataGridView.ColumnCount > 0)
             {
                 dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
@@ -357,7 +350,7 @@ namespace WMS.GUI
                 dataGridView.Columns["reason"].HeaderText = core.Lang.REASON;
             }
             MakeList();
-            dataGridView.CellValueChanged -= dataGridView_CellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
         }
         #endregion
         

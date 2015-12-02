@@ -53,7 +53,7 @@
             this.confirmButton.TabIndex = 7;
             this.confirmButton.Text = "Confirm";
             this.confirmButton.UseVisualStyleBackColor = true;
-            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
+            this.confirmButton.Click += new System.EventHandler(this.ConfirmButtonClick);
             // 
             // cancelButton
             // 
@@ -63,7 +63,7 @@
             this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
             // dataGridView
             // 
@@ -93,7 +93,7 @@
             this.chooseButton.Size = new System.Drawing.Size(75, 23);
             this.chooseButton.TabIndex = 1;
             this.chooseButton.UseVisualStyleBackColor = true;
-            this.chooseButton.Click += new System.EventHandler(this.chooseButton_Click);
+            this.chooseButton.Click += new System.EventHandler(this.ChooseReasonButtonClick);
             // 
             // reasonsListBox
             // 
@@ -102,8 +102,8 @@
             this.reasonsListBox.Name = "reasonsListBox";
             this.reasonsListBox.Size = new System.Drawing.Size(200, 108);
             this.reasonsListBox.TabIndex = 0;
-            this.reasonsListBox.DoubleClick += new System.EventHandler(this.reasonsListBox_DoubleClick);
-            this.reasonsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reasonsListBox_KeyDown);
+            this.reasonsListBox.DoubleClick += new System.EventHandler(this.ReasonsListBoxDoubleClick);
+            this.reasonsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReasonsListBoxKeyDown);
             // 
             // searchTextBox
             // 
@@ -114,8 +114,8 @@
             this.searchTextBox.Size = new System.Drawing.Size(100, 20);
             this.searchTextBox.TabIndex = 9;
             this.searchTextBox.Text = "Item No";
-            this.searchTextBox.Enter += new System.EventHandler(this.searchTextBox_Enter);
-            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchTextBox_KeyDown);
+            this.searchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
+            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchTextBoxKeyDown);
             // 
             // addLineButton
             // 
@@ -124,7 +124,7 @@
             this.addLineButton.Size = new System.Drawing.Size(75, 23);
             this.addLineButton.TabIndex = 10;
             this.addLineButton.UseVisualStyleBackColor = true;
-            this.addLineButton.Click += new System.EventHandler(this.addRowButton_Click);
+            this.addLineButton.Click += new System.EventHandler(this.AddRowButtonClick);
             // 
             // removeRowButton
             // 
@@ -135,7 +135,7 @@
             this.removeRowButton.TabIndex = 12;
             this.removeRowButton.Text = "Remove Row";
             this.removeRowButton.UseVisualStyleBackColor = true;
-            this.removeRowButton.Click += new System.EventHandler(this.removeRowButton_Click);
+            this.removeRowButton.Click += new System.EventHandler(this.RemoveRowButtonClick);
             // 
             // locationPanel
             // 
@@ -154,7 +154,7 @@
             this.chooseLocationButton.Size = new System.Drawing.Size(75, 23);
             this.chooseLocationButton.TabIndex = 1;
             this.chooseLocationButton.UseVisualStyleBackColor = true;
-            this.chooseLocationButton.Click += new System.EventHandler(this.chooseLocationButton_Click);
+            this.chooseLocationButton.Click += new System.EventHandler(this.ChooseLocationButtonClick);
             // 
             // locationListBox
             // 
@@ -163,8 +163,8 @@
             this.locationListBox.Name = "locationListBox";
             this.locationListBox.Size = new System.Drawing.Size(193, 95);
             this.locationListBox.TabIndex = 0;
-            this.locationListBox.DoubleClick += new System.EventHandler(this.locationListBox_DoubleClick);
-            this.locationListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.locationListBox_KeyDown);
+            this.locationListBox.DoubleClick += new System.EventHandler(this.LocationListBoxDoubleClick);
+            this.locationListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LocationListBoxKeyDown);
             // 
             // Waste
             // 
@@ -184,7 +184,7 @@
             this.Name = "Waste";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Waste";
-            this.Load += new System.EventHandler(this.Waste_Load);
+            this.Load += new System.EventHandler(this.WasteLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.reasonPanel.ResumeLayout(false);
             this.locationPanel.ResumeLayout(false);
