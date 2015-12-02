@@ -93,11 +93,11 @@ namespace WMS.Handlers
 
         public void LogOperation(string itemNo, string description, string date, string user, string operation, int amount)
         {
-            ResetConnection();
             MySqlCommand command = connection.CreateCommand();
             string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount)"+ 
                          $"VALUES ({ itemNo }, '{ description }', '{date}', '{user }', '{operation}', {amount})";
             command.CommandText = sql;
+            ResetConnection();
             command.ExecuteNonQuery();
         }
 
@@ -119,6 +119,7 @@ namespace WMS.Handlers
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sql = $"SELECT * FROM {db} WHERE {searchTerm} LIKE '{itemNo}%'";
+            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sql, connection);
             return MyDA;
         }

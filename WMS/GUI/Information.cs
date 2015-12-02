@@ -13,7 +13,6 @@ namespace WMS.GUI
     public partial class Information : Form, IGui
     {
         private ICore core;
-        private string itemNo; //Used for the panel because it is needed in more methodes 
         private BindingSource bsource;
         private DataTable data;
 
@@ -56,7 +55,7 @@ namespace WMS.GUI
             UpdateInfo();
         }
 
-        #region DataGridView Methodes and Event
+        #region DataGridView Methode
         /// <summary>
         /// Fills the dataGridView with data from the database
         /// </summary>
@@ -89,13 +88,13 @@ namespace WMS.GUI
         private void ViewItemButtonClick(object sender, System.EventArgs e)
         {
             int row = dataGridView.CurrentCell.RowIndex;
-            itemNo = dataGridView[0, row].Value.ToString();
+            string itemNo = dataGridView[0, row].Value.ToString();
             Item item = core.DataHandler.GetItemFromItemNo(itemNo); //Gets the item 
-            
+
             //Sets the two label
             usageLabel.Text = item.Usage.ToString();
             itemNoLabel.Text = itemNo;
-            
+
             //Finds all the locations where the item is stored
             //And makes a string ("location",) for each location  
             List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
@@ -105,18 +104,18 @@ namespace WMS.GUI
                 temp += $"{location.ToString()} : {location.Quantity}, ";
             }
             temp = temp.Remove(temp.Length - 2); //Removes the "," 
-            
+
             //Sets description and location label
             nameLabel.Text = item.Description;
             locationLabel.Text = temp;
-            FillLogListView();
+            FillLogListView(itemNo);
             itemInfoPanel.Visible = true;
         }
 
         /// <summary>
         /// Fills the logListView with logItems from the dataBase
         /// </summary>
-        private void FillLogListView()
+        private void FillLogListView(string itemNo)
         {
             List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item to display it in a listview
             logListView.View = View.Details; //Sets the view mode
@@ -149,38 +148,6 @@ namespace WMS.GUI
         private void CloseButtonClick(object sender, System.EventArgs e)
         {
             itemInfoPanel.Visible = false;
-        }
-        #endregion
-
-        #region Language
-        /// <summary>
-        /// Updates the buttons, labels text to the correct lang
-        /// </summary>
-        public void UpdateLang()
-        {
-            searchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            searchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
-            Text = core.Lang.INFORMATION;
-            closeButton.Text = core.Lang.CLOSE;
-            viewItemButton.Text = core.Lang.VIEW_ITEM;
-            itemNoLabelHead.Text = core.Lang.ITEM_NO;
-            nameLabelHead.Text = core.Lang.DESCRIPTION;
-            locationLabelHead.Text = $"{core.Lang.LOCATION} : {core.Lang.AMOUNT}";
-            usageLabelHead.Text = core.Lang.USAGE;
-            if (dataGridView.ColumnCount > 0)
-            {
-                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
-            }
-            logListView.Columns[0].Text = core.Lang.TIMESTAMP;
-            logListView.Columns[1].Text = core.Lang.OPERATION;
-            logListView.Columns[2].Text = core.Lang.AMOUNT;
-            logListView.Columns[3].Text = core.Lang.USER;
-            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            searchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
         #endregion
 
@@ -228,8 +195,39 @@ namespace WMS.GUI
             searchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}"; //Sets the text
             searchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
-    }
+        #endregion
 
-    #endregion
+        #region Language
+        /// <summary>
+        /// Updates the buttons, labels text to the correct lang
+        /// </summary>
+        public void UpdateLang()
+        {
+            searchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            searchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            Text = core.Lang.INFORMATION;
+            closeButton.Text = core.Lang.CLOSE;
+            viewItemButton.Text = core.Lang.VIEW_ITEM;
+            itemNoLabelHead.Text = core.Lang.ITEM_NO;
+            nameLabelHead.Text = core.Lang.DESCRIPTION;
+            locationLabelHead.Text = $"{core.Lang.LOCATION} : {core.Lang.AMOUNT}";
+            usageLabelHead.Text = core.Lang.USAGE;
+            if (dataGridView.ColumnCount > 0)
+            {
+                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
+            }
+            logListView.Columns[0].Text = core.Lang.TIMESTAMP;
+            logListView.Columns[1].Text = core.Lang.OPERATION;
+            logListView.Columns[2].Text = core.Lang.AMOUNT;
+            logListView.Columns[3].Text = core.Lang.USER;
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            searchTextBox.TextChanged += SearchTextBoxTextChanged;
+        }
+        #endregion
+    }
 }
 

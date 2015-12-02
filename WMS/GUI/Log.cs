@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
-using MySql.Data.MySqlClient;
 using static WMS.Reference.SearchTerms;
 using static WMS.Reference.DataBases;
 using WMS.WH;
@@ -29,6 +25,7 @@ namespace WMS.GUI
             bsource.DataSource = data;
             dataGridView.DataSource = bsource;
             this.core = core;
+            //For use in the view item panel
             logListView.Columns.Add(core.Lang.TIMESTAMP, 40, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
@@ -37,25 +34,30 @@ namespace WMS.GUI
             locationLabel.AutoSize = false;
             locationLabel.MaximumSize = new Size(150, 0);
             locationLabel.AutoSize = true;
-            UpdateLang();
+            UpdateLang(); //Sets the text on buttons, labels etc.
 
         }
 
-        public Log(ICore core, string itemNo)
+        /// <summary>
+        /// When the form is show it fills in data to prevent errors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LogLoad(object sender, EventArgs e)
         {
-            this.core = core;
-            InitializeComponent();
-            bsource = new BindingSource();
-            data = new DataTable();
-            bsource.DataSource = data;
-            dataGridView.DataSource = bsource;
-            logListView.Columns.Add(core.Lang.TIMESTAMP, 40, HorizontalAlignment.Left);
-            logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
-            logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
-            logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
-            UpdateLang();
+            MaximizeBox = false;
+            UpdateLog();
         }
 
+        /// <summary>
+        /// Updates the dataGridView
+        /// </summary>
+        public void UpdateGuiElements()
+        {
+            UpdateLog();
+        }
+
+        #region DataGridView Methode
         private void UpdateLog()
         {
             data.Clear();
@@ -82,18 +84,11 @@ namespace WMS.GUI
                 dataGridView.Columns[i].ReadOnly = true;
             }
         }
+        #endregion
 
-
-        public void UpdateGuiElements()
-        {
-            UpdateLog();
-        }
-
+        #region View item information panel Events and Methodes
         private void ViewItemButtonClick(object sender, EventArgs e)
         {
-            if (dataGridView.CurrentCell != null)
-            {
-                List<ListViewItem> items = new List<ListViewItem>();
                 int test = dataGridView.CurrentCell.RowIndex;
                 string itemNo = dataGridView[0, test].Value.ToString();
                 Item item = core.DataHandler.GetItemFromItemNo(itemNo);
@@ -108,37 +103,69 @@ namespace WMS.GUI
                 }
                 temp = temp.Remove(temp.Length - 2);
                 locationLabel.Text = temp;
-                logListView.View = View.Details;
-                List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
-                foreach (LogItem logItem in logItems)
-                {
-                    ListViewItem lvi = new ListViewItem(logItem.Date);
-                    lvi.SubItems.Add(logItem.Operation);
-                    lvi.SubItems.Add(logItem.Amount);
-                    lvi.SubItems.Add(logItem.User);
-                    items.Add(lvi);
-                }
-                foreach (var lviItem in items)
-                {
-                    logListView.Items.Add(lviItem);
-                }
-                logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                FillLogListView(itemNo);
                 itemInfoPanel.Visible = true;
+        }
+
+        private void FillLogListView(string itemNo)
+        {
+            List<ListViewItem> items = new List<ListViewItem>();
+            logListView.View = View.Details;
+            List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
+            foreach (LogItem logItem in logItems)
+            {
+                ListViewItem lvi = new ListViewItem(logItem.Date);
+                lvi.SubItems.Add(logItem.Operation);
+                lvi.SubItems.Add(logItem.Amount);
+                lvi.SubItems.Add(logItem.User);
+                items.Add(lvi);
             }
+            foreach (var lviItem in items)
+            {
+                logListView.Items.Add(lviItem);
+            }
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void CloseButtonClick(object sender, EventArgs e)
         {
             itemInfoPanel.Visible = false;
         }
+#endregion
 
-        private void LogLoad(object sender, EventArgs e)
+        #region Search TextBox Events
+        private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
-            MaximizeBox = false;
-            UpdateLog();
+            int a = 0;
+            data.Clear();
+            if (int.TryParse(SearchTextBox.Text, out a))
+            {
+                core.DataHandler.Search(SearchTextBox.Text, LOG_DB, ITEM).Fill(data);
+            }
+            else
+            {
+                core.DataHandler.Search(SearchTextBox.Text, LOG_DB, DESCRIPTION).Fill(data);
+            }
+            
         }
 
+        private void SearchTextBoxEnter(object sender, EventArgs e)
+        {
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = "";
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
+        }
+
+        private void SearchTextBoxLeave(object sender, EventArgs e)
+        {
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
+        }
+        #endregion
+
+        #region Language
         public void UpdateLang()
         {
             SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
@@ -170,33 +197,6 @@ namespace WMS.GUI
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
-        private void SearchTextBoxTextChanged(object sender, EventArgs e)
-        {
-            int a = 0;
-            data.Clear();
-            if (int.TryParse(SearchTextBox.Text, out a))
-            {
-                core.DataHandler.Search(SearchTextBox.Text, LOG_DB, ITEM).Fill(data);
-            }
-            else
-            {
-                core.DataHandler.Search(SearchTextBox.Text, LOG_DB, DESCRIPTION).Fill(data);
-            }
-            
-        }
-
-        private void SearchTextBoxEnter(object sender, EventArgs e)
-        {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = "";
-            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
-        }
-
-        private void SearchTextBoxLeave(object sender, EventArgs e)
-        {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
-            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
-        }
+        #endregion
     }
 }
