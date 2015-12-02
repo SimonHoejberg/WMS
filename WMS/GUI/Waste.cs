@@ -44,7 +44,7 @@ namespace WMS.GUI
         public void UpdateGuiElements() { /*NOOP*/ }
 
 
-        #region Datagridview Events and Methods
+        #region DataGridView Events and Methods
         /// <summary>
         /// Makes the datagridview
         /// </summary>
