@@ -17,7 +17,7 @@ namespace WMS.GUI
         }
 
         /// <summary>
-        /// Disables 
+        /// Disables maximize and minimize button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -27,32 +27,46 @@ namespace WMS.GUI
             MinimizeBox = false;
         }
 
+        /// <summary>
+        /// Closes the form when the user click on cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButtonClick(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void UserLoginButtonClick(object sender, EventArgs e)
+        /// <summary>
+        /// Checks if the user exist on the database and logges in
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoginButtonClick(object sender, EventArgs e)
         {
-            List<string> stringList = core.DataHandler.GetUser();
+            List<string> stringList = core.DataHandler.GetUser(); // Gets the user from the database
 
-            if (stringList.Contains(userIDTextbox.Text))
+            if (stringList.Contains(userTextbox.Text))
             {
-                core.UserName = core.DataHandler.GetUserName(userIDTextbox.Text);
-                DialogResult = DialogResult.OK;
-                userIDError_lbl.Text = "";
+                core.UserName = core.DataHandler.GetUserName(userTextbox.Text); //Sets the user name in the core to the user who is logged in
+                DialogResult = DialogResult.OK; //returns a result
             }
             else
             {
-                userIDError_lbl.Text = core.Lang.INVILD_USER_ID;
+                ErrorLabel.Text = core.Lang.INVILD_USER_ID; //tells the user that the user id does not exist
             }
         }
 
-        private void userIDTextboxKeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// When the 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserTextboxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                UserLoginButtonClick(this, new EventArgs());
+                LoginButtonClick(this, new EventArgs());
             }
             else if (e.KeyCode == Keys.Escape)
             {

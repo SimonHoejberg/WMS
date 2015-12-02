@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.userIDError_lbl = new System.Windows.Forms.Label();
+            this.ErrorLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.loginButton = new System.Windows.Forms.Button();
-            this.userIDTextbox = new System.Windows.Forms.TextBox();
+            this.userTextbox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // userIDError_lbl
             // 
-            this.userIDError_lbl.AutoSize = true;
-            this.userIDError_lbl.ForeColor = System.Drawing.Color.Red;
-            this.userIDError_lbl.Location = new System.Drawing.Point(6, 46);
-            this.userIDError_lbl.Name = "userIDError_lbl";
-            this.userIDError_lbl.Size = new System.Drawing.Size(0, 13);
-            this.userIDError_lbl.TabIndex = 10;
+            this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
+            this.ErrorLabel.Location = new System.Drawing.Point(6, 46);
+            this.ErrorLabel.Name = "userIDError_lbl";
+            this.ErrorLabel.Size = new System.Drawing.Size(0, 13);
+            this.ErrorLabel.TabIndex = 10;
             // 
             // label1
             // 
@@ -72,27 +72,27 @@
             this.loginButton.TabIndex = 7;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.UserLoginButtonClick);
+            this.loginButton.Click += new System.EventHandler(this.LoginButtonClick);
             // 
             // userIDTextbox
             // 
-            this.userIDTextbox.Location = new System.Drawing.Point(6, 24);
-            this.userIDTextbox.Name = "userIDTextbox";
-            this.userIDTextbox.PasswordChar = '*';
-            this.userIDTextbox.Size = new System.Drawing.Size(197, 20);
-            this.userIDTextbox.TabIndex = 6;
-            this.userIDTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.userIDTextboxKeyDown);
+            this.userTextbox.Location = new System.Drawing.Point(6, 24);
+            this.userTextbox.Name = "userIDTextbox";
+            this.userTextbox.PasswordChar = '*';
+            this.userTextbox.Size = new System.Drawing.Size(197, 20);
+            this.userTextbox.TabIndex = 6;
+            this.userTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserTextboxKeyDown);
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(212, 97);
-            this.Controls.Add(this.userIDError_lbl);
+            this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.loginButton);
-            this.Controls.Add(this.userIDTextbox);
+            this.Controls.Add(this.userTextbox);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -104,10 +104,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label userIDError_lbl;
+        private System.Windows.Forms.Label ErrorLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.TextBox userIDTextbox;
+        private System.Windows.Forms.TextBox userTextbox;
     }
 }
