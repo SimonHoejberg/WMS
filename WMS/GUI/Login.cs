@@ -52,7 +52,7 @@ namespace WMS.GUI
             }
             else
             {
-                ErrorLabel.Text = core.Lang.INVILD_USER_ID; //tells the user that the user id does not exist
+                ErrorLabel.Text = core.Lang.INVILD_USER_ID; //Tells the user that the user id does not exist
             }
         }
 

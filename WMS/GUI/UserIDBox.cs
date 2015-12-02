@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WMS.Core;
 using WMS.Interfaces;
-using WMS.Reference;
 
 namespace WMS.GUI
 {
@@ -21,49 +13,66 @@ namespace WMS.GUI
         {
             this.core = core;
             InitializeComponent();
+            //Langauge
             Text = core.Lang.CONFIRM;
-            label1.Text = core.Lang.USER_ID;
-            userConfirm_btn.Text = core.Lang.ACCEPT;
-            userCancel_btn.Text = core.Lang.CANCEL;
+            userIdLabel.Text = core.Lang.USER_ID;
+            ConfirmButton.Text = core.Lang.ACCEPT;
+            CancelButton.Text = core.Lang.CANCEL;
         }
 
+        //The userId from this dialog
         public string User { get { return getInputFromTextbox; } }
 
-        private void UserIDBox_Load(object sender, EventArgs e)
+        private void UserIDBoxLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
             MinimizeBox = false;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Closes the form if the cancel is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CancelButtonClick(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void userConfirm_btn_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Checks if the user exist on the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConfirmButtonClick(object sender, EventArgs e)
         {
-            var stringList = core.DataHandler.GetUser().OfType<string>();
-            
+            List<string> stringList = core.DataHandler.GetUser(); // Gets the user from the database
+
             if (stringList.Contains(getInputFromTextbox))
             {
-                DialogResult = DialogResult.OK;
-                userIDError_lbl.Text = "";
+                DialogResult = DialogResult.OK; //Returns the dialogResult Okay
+                ErrorLabel.Text = "";
             }
             else
             {
-                userIDError_lbl.Text = core.Lang.INVILD_USER_ID;
+                ErrorLabel.Text = core.Lang.INVILD_USER_ID; //Tells the user that the user id does not exist
             }
         }
 
-        private void userID_tbx_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// When a button is pressed on the textbox it checks if the key is enter or escape and fires an event based on the key
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserIdTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter)
             {
-                userConfirm_btn_Click(this, new EventArgs());
+                ConfirmButtonClick(this, new EventArgs());
             }
             else if(e.KeyCode == Keys.Escape)
             {
-                button2_Click(this, new EventArgs());
+                CancelButtonClick(this, new EventArgs());
             }
         }
 

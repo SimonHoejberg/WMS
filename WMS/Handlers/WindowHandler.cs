@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WMS.Interfaces;
 using WMS.GUI;
 using WMS.Lang;
@@ -14,9 +12,9 @@ namespace WMS.Handlers
     {
         private ICore core;
         private Form main;
-        private List<IGui> windowsOpen = new List<IGui>();
-        private ILang lang = new LangDa();
-        private bool da = true;
+        private List<IGui> windowsOpen = new List<IGui>(); //The windows that are open
+        private ILang lang = new LangDa(); //The start Language
+        private bool da = true; //If the start language is danish
 
         public WindowHandler(ICore core, IMain main)
         {
