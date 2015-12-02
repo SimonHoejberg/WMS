@@ -40,6 +40,7 @@
             this.userID_tbx.Location = new System.Drawing.Point(16, 31);
             this.userID_tbx.Margin = new System.Windows.Forms.Padding(4);
             this.userID_tbx.Name = "userID_tbx";
+            this.userID_tbx.PasswordChar = '*';
             this.userID_tbx.Size = new System.Drawing.Size(261, 22);
             this.userID_tbx.TabIndex = 1;
             this.userID_tbx.KeyDown += new System.Windows.Forms.KeyEventHandler(this.userID_tbx_KeyDown);

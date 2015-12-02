@@ -70,12 +70,11 @@ namespace WMS.GUI
             dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
             dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
             dataGridView.Columns[4].Visible = false;
-            //Auto sizes colums and sets readonly 
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
-                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView.Columns[i].ReadOnly = true;
+                dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //Auto sizes colums
             }
+            dataGridView.ReadOnly = true; //Sets so the dataGridView is only
         }
         #endregion
 
@@ -96,18 +95,18 @@ namespace WMS.GUI
             itemNoLabel.Text = itemNo;
 
             //Finds all the locations where the item is stored
-            //And makes a string ("location",) for each location  
+            //And makes a string ("location : amount",) for each location  
             List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
-            string temp = "";
+            string locationString = "";
             foreach (var location in locationList)
             {
-                temp += $"{location.ToString()} : {location.Quantity}, ";
+                locationString += $"{location.ToString()} : {location.Quantity}, ";
             }
-            temp = temp.Remove(temp.Length - 2); //Removes the "," 
+            locationString = locationString.Remove(locationString.Length - 2); //Removes the "," from the end
 
             //Sets description and location label
             nameLabel.Text = item.Description;
-            locationLabel.Text = temp;
+            locationLabel.Text = locationString;
             FillLogListView(itemNo);
             itemInfoPanel.Visible = true;
         }
@@ -115,6 +114,7 @@ namespace WMS.GUI
         /// <summary>
         /// Fills the logListView with logItems from the dataBase
         /// </summary>
+        /// <param name="itemNo"></param>
         private void FillLogListView(string itemNo)
         {
             List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item to display it in a listview

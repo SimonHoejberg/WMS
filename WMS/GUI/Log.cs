@@ -11,7 +11,7 @@ using WMS.WH;
 
 namespace WMS.GUI
 {
-    public partial class Log : Form , IGui
+    public partial class Log : Form, IGui
     {
         private ICore core;
         BindingSource bsource;
@@ -58,10 +58,14 @@ namespace WMS.GUI
         }
 
         #region DataGridView Methode
+        /// <summary>
+        /// Fills the dataGridView with data from the database
+        /// </summary>
         private void UpdateLog()
         {
-            data.Clear();
-            core.DataHandler.GetData(LOG_DB).Fill(data);
+            data.Clear(); //Clears the dataGridView
+            core.DataHandler.GetData(LOG_DB).Fill(data); //Fills with data
+            //Sets headerText on every column
             dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
             dataGridView.Columns[2].HeaderText = core.Lang.TIMESTAMP;
@@ -72,45 +76,58 @@ namespace WMS.GUI
             dataGridView.Columns[7].HeaderText = core.Lang.OLD_QUANTITY;
             dataGridView.Columns[8].HeaderText = core.Lang.NEW_QUANTITY;
 
+            //If there is data in the dataGridView sets the sort order on the timestamp column to descending 
             if (dataGridView.RowCount != 0 && dataGridView[0, 0].Value != null)
             {
                 dataGridView.Sort(dataGridView.Columns[2], ListSortDirection.Descending);
             }
 
+            //Auto sizes the columns and disables the headercell click sort
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                dataGridView.Columns[i].ReadOnly = true;
             }
+            dataGridView.ReadOnly = true; //Sets the dataGridView to readOnly
         }
         #endregion
 
         #region View item information panel Events and Methodes
         private void ViewItemButtonClick(object sender, EventArgs e)
         {
-                int test = dataGridView.CurrentCell.RowIndex;
-                string itemNo = dataGridView[0, test].Value.ToString();
-                Item item = core.DataHandler.GetItemFromItemNo(itemNo);
-                usageLabel.Text = item.Usage.ToString();
-                itemNoLabel.Text = itemNo;
-                nameLabel.Text = item.Description;
-                List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
-                string temp = "";
-                foreach (var location in locationList)
-                {
-                    temp += $"{location.ToString()} : {location.Quantity}, ";
-                }
-                temp = temp.Remove(temp.Length - 2);
-                locationLabel.Text = temp;
-                FillLogListView(itemNo);
-                itemInfoPanel.Visible = true;
+            int test = dataGridView.CurrentCell.RowIndex;
+            string itemNo = dataGridView[0, test].Value.ToString();
+            Item item = core.DataHandler.GetItemFromItemNo(itemNo); //Gets the item 
+
+            //Sets the labels
+            usageLabel.Text = item.Usage.ToString();
+            itemNoLabel.Text = itemNo;
+            nameLabel.Text = item.Description;
+
+            //Finds all the locations where the item is stored
+            //And makes a string ("location : amount",) for each location 
+            List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
+            string locationString = "";
+            foreach (var location in locationList)
+            {
+                locationString += $"{location.ToString()} : {location.Quantity}, ";
+            }
+            locationString = locationString.Remove(locationString.Length - 2); //Removes the "," from the end
+            //Sets the location label to the formated string
+            locationLabel.Text = locationString;
+            FillLogListView(itemNo);
+            itemInfoPanel.Visible = true;
         }
 
+        /// <summary>
+        /// Fills the logListView with logItems from the dataBase
+        /// </summary>
+        /// <param name="itemNo"></param>
         private void FillLogListView(string itemNo)
         {
-            List<ListViewItem> items = new List<ListViewItem>();
-            logListView.View = View.Details;
+            List<ListViewItem> items = new List<ListViewItem>(); //Used for the log of a an item to display it in a listview
+            logListView.View = View.Details; //Sets the view mode
+            //Gets the logItems and makes a listView item of it with sub items
             List<LogItem> logItems = core.DataHandler.GetLog(itemNo);
             foreach (LogItem logItem in logItems)
             {
@@ -120,26 +137,40 @@ namespace WMS.GUI
                 lvi.SubItems.Add(logItem.User);
                 items.Add(lvi);
             }
+            logListView.Items.Clear();
+            //Adds them to the logListView
             foreach (var lviItem in items)
             {
                 logListView.Items.Add(lviItem);
             }
+            //Resizes the columns based on both the header and content in the cells
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
+        /// <summary>
+        /// Closes the item information panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButtonClick(object sender, EventArgs e)
         {
             itemInfoPanel.Visible = false;
         }
-#endregion
+        #endregion
 
         #region Search TextBox Events
+        /// <summary>
+        /// When the user types something in the search textbox it it filters the dataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
-            int a = 0;
+            int outValue = 0; //use for the int try parse only
             data.Clear();
-            if (int.TryParse(SearchTextBox.Text, out a))
+            //Determines if search should search by item no or description
+            if (int.TryParse(SearchTextBox.Text, out outValue))
             {
                 core.DataHandler.Search(SearchTextBox.Text, LOG_DB, ITEM).Fill(data);
             }
@@ -147,20 +178,30 @@ namespace WMS.GUI
             {
                 core.DataHandler.Search(SearchTextBox.Text, LOG_DB, DESCRIPTION).Fill(data);
             }
-            
+
         }
 
+        /// <summary>
+        /// When the user focuses the textbox it removes the predefined text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTextBoxEnter(object sender, EventArgs e)
         {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = "";
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged; //Stops the event from fireing
+            SearchTextBox.Text = ""; //Removes text
             SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
 
+        /// <summary>
+        /// When the user leaves the control it resets the predefined text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTextBoxLeave(object sender, EventArgs e)
         {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            SearchTextBox.TextChanged -= SearchTextBoxTextChanged; //Stops the event from fireing
+            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}"; ////Sets the text
             SearchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
         #endregion
