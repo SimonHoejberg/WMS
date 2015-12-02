@@ -49,7 +49,7 @@
             this.cancelButton.TabIndex = 7;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
             // confirmBtn
             // 
@@ -59,7 +59,7 @@
             this.confirmBtn.TabIndex = 6;
             this.confirmBtn.Text = "Confirm";
             this.confirmBtn.UseVisualStyleBackColor = true;
-            this.confirmBtn.Click += new System.EventHandler(this.confirmButton_Click);
+            this.confirmBtn.Click += new System.EventHandler(this.ConfirmButtonClick);
             // 
             // dataGridView
             // 
@@ -71,7 +71,7 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(960, 465);
             this.dataGridView.TabIndex = 5;
-            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCellValueChanged);
             // 
             // searchButton
             // 
@@ -82,7 +82,7 @@
             this.searchButton.TabIndex = 9;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            this.searchButton.Click += new System.EventHandler(this.SearchButtonClick);
             // 
             // searchTextBox
             // 
@@ -92,8 +92,8 @@
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(100, 20);
             this.searchTextBox.TabIndex = 10;
-            this.searchTextBox.Enter += new System.EventHandler(this.searchTextBox_Enter);
-            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchTextBox_KeyDown);
+            this.searchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
+            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchTextBoxKeyDown);
             // 
             // removeLineButton
             // 
@@ -104,7 +104,7 @@
             this.removeLineButton.TabIndex = 11;
             this.removeLineButton.Text = "Remove row";
             this.removeLineButton.UseVisualStyleBackColor = true;
-            this.removeLineButton.Click += new System.EventHandler(this.removeLineButton_Click);
+            this.removeLineButton.Click += new System.EventHandler(this.RemoveLineButtonClick);
             // 
             // locationPanel
             // 
@@ -124,7 +124,7 @@
             this.chooseLocationButton.TabIndex = 1;
             this.chooseLocationButton.Text = "Choose";
             this.chooseLocationButton.UseVisualStyleBackColor = true;
-            this.chooseLocationButton.Click += new System.EventHandler(this.chooseLocationButton_Click);
+            this.chooseLocationButton.Click += new System.EventHandler(this.ChooseLocationButtonClick);
             // 
             // locationListBox
             // 
@@ -133,8 +133,8 @@
             this.locationListBox.Name = "locationListBox";
             this.locationListBox.Size = new System.Drawing.Size(200, 95);
             this.locationListBox.TabIndex = 0;
-            this.locationListBox.DoubleClick += new System.EventHandler(this.locationListBox_DoubleClick);
-            this.locationListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.locationListBox_KeyDown);
+            this.locationListBox.DoubleClick += new System.EventHandler(this.LocationListBoxDoubleClick);
+            this.locationListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LocationListBoxKeyDown);
             // 
             // Reduce
             // 
@@ -152,7 +152,7 @@
             this.Name = "Reduce";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reduce";
-            this.Load += new System.EventHandler(this.Reduce_Load);
+            this.Load += new System.EventHandler(this.ReduceLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.locationPanel.ResumeLayout(false);
             this.ResumeLayout(false);

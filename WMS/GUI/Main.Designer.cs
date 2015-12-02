@@ -54,7 +54,7 @@
             this.flagButton.Size = new System.Drawing.Size(30, 18);
             this.flagButton.TabIndex = 7;
             this.flagButton.TabStop = false;
-            this.flagButton.Click += new System.EventHandler(this.flagButtonClick);
+            this.flagButton.Click += new System.EventHandler(this.FlagButtonClick);
             // 
             // reduceButton
             // 

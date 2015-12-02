@@ -31,7 +31,7 @@
             this.confirmButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.orderTextBox = new System.Windows.Forms.TextBox();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -73,17 +73,17 @@
             // 
             // orderTextBox
             // 
-            this.orderTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.orderTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.orderTextBox.Location = new System.Drawing.Point(16, 14);
-            this.orderTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.orderTextBox.Name = "orderTextBox";
-            this.orderTextBox.Size = new System.Drawing.Size(132, 22);
-            this.orderTextBox.TabIndex = 7;
-            this.orderTextBox.Text = "Order No";
-            this.orderTextBox.Enter += new System.EventHandler(this.OrderTextBoxEnter);
-            this.orderTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OrderTextBoxKeyDown);
-            this.orderTextBox.Leave += new System.EventHandler(this.OrderTextBoxLeave);
+            this.searchTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.searchTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.searchTextBox.Location = new System.Drawing.Point(16, 14);
+            this.searchTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.searchTextBox.Name = "orderTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(132, 22);
+            this.searchTextBox.TabIndex = 7;
+            this.searchTextBox.Text = "Order No";
+            this.searchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
+            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchTextBoxKeyDown);
+            this.searchTextBox.Leave += new System.EventHandler(this.SearchTextBoxLeave);
             // 
             // searchButton
             // 
@@ -105,7 +105,7 @@
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.orderTextBox);
+            this.Controls.Add(this.searchTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Register";
@@ -123,7 +123,7 @@
         private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.TextBox orderTextBox;
+        private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button searchButton;
     }
 }

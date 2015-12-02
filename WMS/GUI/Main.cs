@@ -97,7 +97,12 @@ namespace WMS.GUI
             loggedInLabel.Text = Core.Lang.LOGGED_IN_AS;
         }
 
-        private void flagButtonClick(object sender, EventArgs e)
+        /// <summary>
+        /// When the flag is pressed it tells the core to change language
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FlagButtonClick(object sender, EventArgs e)
         {
             Core.changeLang();
         }
