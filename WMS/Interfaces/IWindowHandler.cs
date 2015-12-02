@@ -8,8 +8,6 @@ namespace WMS.Interfaces
 {
     public interface IWindowHandler : IMenuWindows
     {
-        List<IGui> WindowsOpen { get; }
-
         void Update(object caller);
 
         void Run();

@@ -57,6 +57,16 @@ namespace WMS.GUI
         }
         #endregion
 
+        /// <summary>
+        /// When main changes location it brings main to front
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainLocationChanged(object sender, EventArgs e)
+        {
+            BringToFront();
+        }
+
         private void MainFormClosing(object sender, FormClosingEventArgs e)
         {
             //When main form closes disconnect from the database
@@ -106,5 +116,6 @@ namespace WMS.GUI
         {
             Core.changeLang();
         }
+
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.userIdTextBox = new System.Windows.Forms.TextBox();
-            this.ConfirmButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.confirmButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.userIdLabel = new System.Windows.Forms.Label();
-            this.ErrorLabel = new System.Windows.Forms.Label();
+            this.errorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // userIdTextBox
@@ -47,26 +47,26 @@
             // 
             // ConfirmButton
             // 
-            this.ConfirmButton.Location = new System.Drawing.Point(16, 79);
-            this.ConfirmButton.Margin = new System.Windows.Forms.Padding(4);
-            this.ConfirmButton.Name = "ConfirmButton";
-            this.ConfirmButton.Size = new System.Drawing.Size(100, 28);
-            this.ConfirmButton.TabIndex = 2;
-            this.ConfirmButton.Text = "Accept";
-            this.ConfirmButton.UseVisualStyleBackColor = true;
-            this.ConfirmButton.Click += new System.EventHandler(this.ConfirmButtonClick);
+            this.confirmButton.Location = new System.Drawing.Point(16, 79);
+            this.confirmButton.Margin = new System.Windows.Forms.Padding(4);
+            this.confirmButton.Name = "ConfirmButton";
+            this.confirmButton.Size = new System.Drawing.Size(100, 28);
+            this.confirmButton.TabIndex = 2;
+            this.confirmButton.Text = "Accept";
+            this.confirmButton.UseVisualStyleBackColor = true;
+            this.confirmButton.Click += new System.EventHandler(this.ConfirmButtonClick);
             // 
             // CancelButton
             // 
-            this.CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelButton.Location = new System.Drawing.Point(179, 79);
-            this.CancelButton.Margin = new System.Windows.Forms.Padding(4);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(100, 28);
-            this.CancelButton.TabIndex = 3;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButtonClick);
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.Location = new System.Drawing.Point(179, 79);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
+            this.cancelButton.Name = "CancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(100, 28);
+            this.cancelButton.TabIndex = 3;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
             // userIdLabel
             // 
@@ -80,23 +80,23 @@
             // 
             // ErrorLabel
             // 
-            this.ErrorLabel.AutoSize = true;
-            this.ErrorLabel.ForeColor = System.Drawing.Color.Red;
-            this.ErrorLabel.Location = new System.Drawing.Point(16, 59);
-            this.ErrorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ErrorLabel.Name = "ErrorLabel";
-            this.ErrorLabel.Size = new System.Drawing.Size(0, 17);
-            this.ErrorLabel.TabIndex = 5;
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(16, 59);
+            this.errorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.errorLabel.Name = "ErrorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(0, 17);
+            this.errorLabel.TabIndex = 5;
             // 
             // UserIDBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(295, 122);
-            this.Controls.Add(this.ErrorLabel);
+            this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.userIdLabel);
-            this.Controls.Add(this.CancelButton);
-            this.Controls.Add(this.ConfirmButton);
+            this.Controls.Add(this.cancelButton);
+            this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.userIdTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -112,10 +112,10 @@
         #endregion
 
         private System.Windows.Forms.TextBox userIdTextBox;
-        private System.Windows.Forms.Button ConfirmButton;
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button confirmButton;
+        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label userIdLabel;
-        private System.Windows.Forms.Label ErrorLabel;
+        private System.Windows.Forms.Label errorLabel;
 
         //Extra properties
         private string getInputFromTextbox { get { return userIdTextBox.Text; } }

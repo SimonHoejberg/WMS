@@ -16,8 +16,8 @@ namespace WMS.GUI
             //Langauge
             Text = core.Lang.CONFIRM;
             userIdLabel.Text = core.Lang.USER_ID;
-            ConfirmButton.Text = core.Lang.ACCEPT;
-            CancelButton.Text = core.Lang.CANCEL;
+            confirmButton.Text = core.Lang.ACCEPT;
+            cancelButton.Text = core.Lang.CANCEL;
         }
 
         //The userId from this dialog
@@ -51,11 +51,11 @@ namespace WMS.GUI
             if (stringList.Contains(getInputFromTextbox))
             {
                 DialogResult = DialogResult.OK; //Returns the dialogResult Okay
-                ErrorLabel.Text = "";
+                errorLabel.Text = "";
             }
             else
             {
-                ErrorLabel.Text = core.Lang.INVILD_USER_ID; //Tells the user that the user id does not exist
+                errorLabel.Text = core.Lang.INVILD_USER_ID; //Tells the user that the user id does not exist
             }
         }
 
