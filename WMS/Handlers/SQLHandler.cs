@@ -94,9 +94,10 @@ namespace WMS.Handlers
         public void LogOperation(string itemNo, string description, string date, string user, string operation, int amount)
         {
             ResetConnection();
+            string selectInfo = $"(SELECT inStock FROM information WHERE itemNo = {itemNo})";
             MySqlCommand command = connection.CreateCommand();
-            string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount)"+ 
-                         $"VALUES ({ itemNo }, '{ description }', '{date}', '{user }', '{operation}', {amount})";
+            string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount, prevQuantity, newQuantity)"+ 
+                         $"VALUES ({ itemNo }, '{ description }', '{date}', '{user }', '{operation}', {amount}, {selectInfo}, {selectInfo})";
             command.CommandText = sql;
             command.ExecuteNonQuery();
         }
