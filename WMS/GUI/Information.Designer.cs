@@ -41,7 +41,7 @@
             this.usageLabelHead = new System.Windows.Forms.Label();
             this.locationLabelHead = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
-            this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.itemInfoPanel.SuspendLayout();
             this.SuspendLayout();
@@ -193,21 +193,21 @@
             // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Location = new System.Drawing.Point(47, 7);
-            this.SearchTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(171, 22);
-            this.SearchTextBox.TabIndex = 5;
-            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBoxTextChanged);
-            this.SearchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
-            this.SearchTextBox.Leave += new System.EventHandler(this.SearchTextBoxLeave);
+            this.searchTextBox.Location = new System.Drawing.Point(47, 7);
+            this.searchTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.searchTextBox.Name = "SearchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(171, 22);
+            this.searchTextBox.TabIndex = 5;
+            this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBoxTextChanged);
+            this.searchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
+            this.searchTextBox.Leave += new System.EventHandler(this.SearchTextBoxLeave);
             // 
             // Information
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.SearchTextBox);
+            this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.itemInfoPanel);
             this.Controls.Add(this.viewItemButton);
             this.Controls.Add(this.dataGridView);
@@ -237,7 +237,7 @@
         private System.Windows.Forms.Label usageLabel;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label nameLabelHead;
-        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.ListView logListView;
         private System.Windows.Forms.Label itemNoLabelHead;
         private System.Windows.Forms.Label itemNoLabel;

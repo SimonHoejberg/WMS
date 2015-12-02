@@ -30,13 +30,18 @@ namespace WMS.GUI
             logListView.Columns.Add(core.Lang.OPERATION, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.AMOUNT, 20, HorizontalAlignment.Left);
             logListView.Columns.Add(core.Lang.USER, 20, HorizontalAlignment.Left);
-            //Makes the label word warp kind of
+            //Makes the label word warp
             locationLabel.AutoSize = false;
             locationLabel.MaximumSize = new Size(150, 0);
             locationLabel.AutoSize = true;
             UpdateLang(); //Sets the text on buttons, labels etc.
         }
 
+        /// <summary>
+        /// When the form is show it fills in data to prevent errors
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InformationLoad(object sender, System.EventArgs e)
         {
             MaximizeBox = false;
@@ -149,12 +154,12 @@ namespace WMS.GUI
 
         #region Language
         /// <summary>
-        /// Updates the buttons, labels tex to the correct lang
+        /// Updates the buttons, labels text to the correct lang
         /// </summary>
         public void UpdateLang()
         {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
+            searchTextBox.TextChanged -= SearchTextBoxTextChanged;
+            searchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
             Text = core.Lang.INFORMATION;
             closeButton.Text = core.Lang.CLOSE;
             viewItemButton.Text = core.Lang.VIEW_ITEM;
@@ -175,37 +180,53 @@ namespace WMS.GUI
             logListView.Columns[3].Text = core.Lang.USER;
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             logListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
+            searchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
         #endregion
 
         #region Search Textbox Events
+        /// <summary>
+        /// When the user types something in the search textbox it it filters the dataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
-            int a = 0;
-            data?.Clear();
-            if (int.TryParse(SearchTextBox.Text, out a))
+            int outValue = 0; //use for the int try parse only
+            data.Clear();
+            //Determines if search should search by item no or description
+            if (int.TryParse(searchTextBox.Text, out outValue))
             {
-                core.DataHandler.Search(SearchTextBox.Text, INFOMATION_DB, ITEM).Fill(data);
+                core.DataHandler.Search(searchTextBox.Text, INFOMATION_DB, ITEM).Fill(data);
             }
             else
             {
-                core.DataHandler.Search(SearchTextBox.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
+                core.DataHandler.Search(searchTextBox.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
             }
         }
 
+        /// <summary>
+        /// When the user focuses the textbox it removes the predefined text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTextBoxEnter(object sender, EventArgs e)
         {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = "";
-            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
+            searchTextBox.TextChanged -= SearchTextBoxTextChanged; //Stops the event from fireing
+            searchTextBox.Text = ""; //Removes text
+            searchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
 
+        /// <summary>
+        /// When the user leaves the control it resets the predefined text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchTextBoxLeave(object sender, EventArgs e)
         {
-            SearchTextBox.TextChanged -= SearchTextBoxTextChanged;
-            SearchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}";
-            SearchTextBox.TextChanged += SearchTextBoxTextChanged;
+            searchTextBox.TextChanged -= SearchTextBoxTextChanged; //Stops the event from fireing
+            searchTextBox.Text = $"{core.Lang.ITEM_NO}/{core.Lang.DESCRIPTION}"; //Sets the text
+            searchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
     }
 
