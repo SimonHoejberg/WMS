@@ -46,16 +46,17 @@ namespace WMS.GUI
             core.DataHandler.GetDataFromOrderNo(orderNo).Fill(data); //Fills the dataGridView with data from the server
 
             //Sets up what the columns based on the data from the server with the correct headerText
-            dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = core.Lang.ORDER_NO;
-            dataGridView.Columns[2].HeaderText = core.Lang.ITEM_NO;
-            dataGridView.Columns[3].HeaderText = core.Lang.DESCRIPTION;
-            dataGridView.Columns[4].HeaderText = core.Lang.EXPECTED_AMOUNT;
+            dataGridView.Columns["id"].Visible = false;
+            dataGridView.Columns["orderNo"].HeaderText = core.Lang.ORDER_NO;
+            dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns["expectedQuantity"].HeaderText = core.Lang.EXPECTED_AMOUNT;
             
             //Adds a new column that is no on the database if doesnot already exist
             if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
                 data.Columns.Add(core.Lang.AMOUNT);
+                dataGridView.Columns[5].Name = "amount";
             }
 
             //Sets the auto size mode and sets the columns to read only
@@ -71,7 +72,7 @@ namespace WMS.GUI
             //Sets the amount from the order to the expected amount
             for (int i = 0; i < dataGridView.RowCount; i++)
             {
-                dataGridView[5, i].Value = dataGridView[4, i].Value;
+                dataGridView["amount", i].Value = dataGridView["expectedQuantity", i].Value;
             }
 
             dataGridView.CellValueChanged += DataGridViewCellValueChanged; //Resubscribes to the event
@@ -208,12 +209,12 @@ namespace WMS.GUI
                 int count = dataGridView.RowCount;
                 for (int i = 0; i < count; i++)
                 {
-                    if (dataGridView[5, i].Value != null)
+                    if (dataGridView["amount", i].Value != null)
                     {
                         //Gets the diffent values
-                        string itemNo = dataGridView[2, i].Value.ToString();
-                        string description = dataGridView[3, i].Value.ToString();
-                        int quantity = int.Parse(dataGridView[5, i].Value.ToString());
+                        string itemNo = dataGridView["itemNo", i].Value.ToString();
+                        string description = dataGridView["description", i].Value.ToString();
+                        int quantity = int.Parse(dataGridView["amount", i].Value.ToString());
 
                         //Makes a new item from the order values, and gets the usage if the item has been used before and adds it to the list
                         Item item = new Item(itemNo, description, quantity, null, core.DataHandler.GetUsage(itemNo));
@@ -247,11 +248,11 @@ namespace WMS.GUI
             searchButton.Text = core.Lang.SEARCH;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[1].HeaderText = core.Lang.ORDER_NO;
-                dataGridView.Columns[2].HeaderText = core.Lang.ITEM_NO;
-                dataGridView.Columns[3].HeaderText = core.Lang.DESCRIPTION;
-                dataGridView.Columns[4].HeaderText = core.Lang.EXPECTED_AMOUNT;
-                dataGridView.Columns[5].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Columns["orderNo"].HeaderText = core.Lang.ORDER_NO;
+                dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns["expectedQuantity"].HeaderText = core.Lang.EXPECTED_AMOUNT;
+                dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
             }
             dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }

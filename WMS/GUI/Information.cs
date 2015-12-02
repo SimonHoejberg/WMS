@@ -60,11 +60,11 @@ namespace WMS.GUI
             core.DataHandler.GetData(INFOMATION_DB).Fill(data);
 
             //Sets headertext and visiblity
-            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-            dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
-            dataGridView.Columns[4].Visible = false;
+            dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+            dataGridView.Columns["location1"].HeaderText = core.Lang.LOCATION;
+            dataGridView.Columns["itemUsage"].Visible = false;
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //Auto sizes colums
@@ -209,10 +209,10 @@ namespace WMS.GUI
             usageLabelHead.Text = core.Lang.USAGE;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                dataGridView.Columns[3].HeaderText = core.Lang.LOCATION;
+                dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns["location1"].HeaderText = core.Lang.LOCATION;
             }
             logListView.Columns[0].Text = core.Lang.TIMESTAMP;
             logListView.Columns[1].Text = core.Lang.OPERATION;

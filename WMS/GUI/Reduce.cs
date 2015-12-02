@@ -50,27 +50,29 @@ namespace WMS.GUI
         {
             dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
             //Sets the header text on the columns
-            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-            dataGridView.Columns[3].Visible = false;
-            dataGridView.Columns[4].Visible = false;
+            dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+            dataGridView.Columns["location1"].Visible = false;
+            dataGridView.Columns["itemUsage"].Visible = false;
 
             //Adds the location and amount columns if they have not already been made
             if (!data.Columns.Contains(core.Lang.LOCATION))
             {
                 data.Columns.Add(core.Lang.LOCATION);
+                dataGridView.Columns[5].Name = "location";
             }
             if (!data.Columns.Contains(core.Lang.AMOUNT))
             {
                 data.Columns.Add(core.Lang.AMOUNT);
+                dataGridView.Columns[6].Name = "amount";
             }
 
             //Sets all columns except the Amount to readonly
             //We do it this way because if the datagridview is readonly we cant change one column to not be readonly
             for (int i = 0; i < dataGridView.ColumnCount; i++)
             {
-                if (!dataGridView.Columns[i].HeaderText.Equals(core.Lang.AMOUNT))
+                if (!(dataGridView.Columns[i].Name == "amount"))
                 {
                     dataGridView.Columns[i].ReadOnly = true;
                 }
@@ -129,9 +131,9 @@ namespace WMS.GUI
                         //Gets the location id from the location list
                         string locationId = locationList.Find(x => x.LocationString.Equals(dataGridView[5, i].Value.ToString())).Id;
                         //Sends the data to the mysql server
-                        core.DataHandler.ActionOnItem('-', dataGridView[0, i].Value.ToString(),
-                                                      dataGridView[1, i].Value.ToString(),
-                                                      dataGridView[6, i].Value.ToString(),
+                        core.DataHandler.ActionOnItem('-', dataGridView["itemNo", i].Value.ToString(),
+                                                      dataGridView["description", i].Value.ToString(),
+                                                      dataGridView["amount", i].Value.ToString(),
                                                       core.Lang.REDUCED, locationId);
                     }
                 }
@@ -172,7 +174,7 @@ namespace WMS.GUI
                 {
                     //Unbinds the event and fills the location cell with the one location of the item and rebinds the event
                     dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
-                    dataGridView[5, dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
                     dataGridView.CellValueChanged += dataGridViewCellValueChanged;
                 }
             }
@@ -206,7 +208,7 @@ namespace WMS.GUI
             dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
             locationPanel.Visible = false; //Hides the location panel so you only can choose once 
             searchTextBox.Focus();
-            dataGridView[5, dataGridView.RowCount - 1].Value = locationListBox.SelectedItem; //Sets the value in the cell
+            dataGridView["location", dataGridView.RowCount - 1].Value = locationListBox.SelectedItem; //Sets the value in the cell
             dataGridView.CellValueChanged += dataGridViewCellValueChanged;
         }
 
@@ -304,11 +306,11 @@ namespace WMS.GUI
             searchTextBox.Text = core.Lang.ITEM_NO;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = core.Lang.IN_STOCK;
-                dataGridView.Columns[5].HeaderText = core.Lang.LOCATION;
-                dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns["inStock"].HeaderText = core.Lang.IN_STOCK;
+                dataGridView.Columns["location"].HeaderText = core.Lang.LOCATION;
+                dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
             }
             dataGridView.CellValueChanged += dataGridViewCellValueChanged;
         }

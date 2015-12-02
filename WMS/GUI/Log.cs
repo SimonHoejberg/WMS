@@ -61,20 +61,20 @@ namespace WMS.GUI
             data.Clear(); //Clears the dataGridView
             core.DataHandler.GetData(LOG_DB).Fill(data); //Fills with data
             //Sets headerText on every column
-            dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-            dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-            dataGridView.Columns[2].HeaderText = core.Lang.TIMESTAMP;
-            dataGridView.Columns[3].HeaderText = core.Lang.USER;
-            dataGridView.Columns[4].HeaderText = core.Lang.OPERATION;
-            dataGridView.Columns[5].HeaderText = core.Lang.ORDER_NO;
-            dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
-            dataGridView.Columns[7].HeaderText = core.Lang.OLD_QUANTITY;
-            dataGridView.Columns[8].HeaderText = core.Lang.NEW_QUANTITY;
+            dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+            dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.Columns["date"].HeaderText = core.Lang.TIMESTAMP;
+            dataGridView.Columns["user"].HeaderText = core.Lang.USER;
+            dataGridView.Columns["operation"].HeaderText = core.Lang.OPERATION;
+            dataGridView.Columns["orderNo"].HeaderText = core.Lang.ORDER_NO;
+            dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
+            dataGridView.Columns["prevQuantity"].HeaderText = core.Lang.OLD_QUANTITY;
+            dataGridView.Columns["newQuantity"].HeaderText = core.Lang.NEW_QUANTITY;
 
             //If there is data in the dataGridView sets the sort order on the timestamp column to descending 
             if (dataGridView.RowCount != 0 && dataGridView[0, 0].Value != null)
             {
-                dataGridView.Sort(dataGridView.Columns[2], ListSortDirection.Descending);
+                dataGridView.Sort(dataGridView.Columns["date"], ListSortDirection.Descending);
             }
 
             //Auto sizes the columns and disables the headercell click sort
@@ -215,15 +215,15 @@ namespace WMS.GUI
             usageLabelHead.Text = core.Lang.USAGE;
             if (dataGridView.ColumnCount > 0)
             {
-                dataGridView.Columns[0].HeaderText = core.Lang.ITEM_NO;
-                dataGridView.Columns[1].HeaderText = core.Lang.DESCRIPTION;
-                dataGridView.Columns[2].HeaderText = core.Lang.TIMESTAMP;
-                dataGridView.Columns[3].HeaderText = core.Lang.USER;
-                dataGridView.Columns[4].HeaderText = core.Lang.OPERATION;
-                dataGridView.Columns[5].HeaderText = core.Lang.ORDER_NO;
-                dataGridView.Columns[6].HeaderText = core.Lang.AMOUNT;
-                dataGridView.Columns[7].HeaderText = core.Lang.OLD_QUANTITY;
-                dataGridView.Columns[8].HeaderText = core.Lang.NEW_QUANTITY;
+                dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
+                dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
+                dataGridView.Columns["date"].HeaderText = core.Lang.TIMESTAMP;
+                dataGridView.Columns["user"].HeaderText = core.Lang.USER;
+                dataGridView.Columns["operation"].HeaderText = core.Lang.OPERATION;
+                dataGridView.Columns["orderNo"].HeaderText = core.Lang.ORDER_NO;
+                dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
+                dataGridView.Columns["prevQuantity"].HeaderText = core.Lang.OLD_QUANTITY;
+                dataGridView.Columns["newQuantity"].HeaderText = core.Lang.NEW_QUANTITY;
             }
             logListView.Columns[0].Text = core.Lang.TIMESTAMP;
             logListView.Columns[1].Text = core.Lang.OPERATION;
