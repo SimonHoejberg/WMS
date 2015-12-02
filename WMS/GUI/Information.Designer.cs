@@ -31,6 +31,9 @@
             this.viewItemButton = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.itemInfoPanel = new System.Windows.Forms.Panel();
+            this.itemNoLabel = new System.Windows.Forms.Label();
+            this.itemNoLabelHead = new System.Windows.Forms.Label();
+            this.logListView = new System.Windows.Forms.ListView();
             this.nameLabel = new System.Windows.Forms.Label();
             this.nameLabelHead = new System.Windows.Forms.Label();
             this.locationLabel = new System.Windows.Forms.Label();
@@ -38,11 +41,7 @@
             this.usageLabelHead = new System.Windows.Forms.Label();
             this.locationLabelHead = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
-            this.logButton = new System.Windows.Forms.Button();
-            this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.logListView = new System.Windows.Forms.ListView();
-            this.itemNoLabelHead = new System.Windows.Forms.Label();
-            this.itemNoLabel = new System.Windows.Forms.Label();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.itemInfoPanel.SuspendLayout();
             this.SuspendLayout();
@@ -83,7 +82,6 @@
             this.itemInfoPanel.Controls.Add(this.usageLabelHead);
             this.itemInfoPanel.Controls.Add(this.locationLabelHead);
             this.itemInfoPanel.Controls.Add(this.closeButton);
-            this.itemInfoPanel.Controls.Add(this.logButton);
             this.itemInfoPanel.Location = new System.Drawing.Point(411, 47);
             this.itemInfoPanel.Margin = new System.Windows.Forms.Padding(4);
             this.itemInfoPanel.Name = "itemInfoPanel";
@@ -91,10 +89,41 @@
             this.itemInfoPanel.TabIndex = 4;
             this.itemInfoPanel.Visible = false;
             // 
+            // itemNoLabel
+            // 
+            this.itemNoLabel.AutoSize = true;
+            this.itemNoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.itemNoLabel.Location = new System.Drawing.Point(176, 29);
+            this.itemNoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.itemNoLabel.Name = "itemNoLabel";
+            this.itemNoLabel.Size = new System.Drawing.Size(41, 20);
+            this.itemNoLabel.TabIndex = 16;
+            this.itemNoLabel.Text = "Text";
+            // 
+            // itemNoLabelHead
+            // 
+            this.itemNoLabelHead.AutoSize = true;
+            this.itemNoLabelHead.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.itemNoLabelHead.Location = new System.Drawing.Point(12, 29);
+            this.itemNoLabelHead.Name = "itemNoLabelHead";
+            this.itemNoLabelHead.Size = new System.Drawing.Size(71, 20);
+            this.itemNoLabelHead.TabIndex = 15;
+            this.itemNoLabelHead.Text = "Item No.";
+            // 
+            // logListView
+            // 
+            this.logListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.logListView.Location = new System.Drawing.Point(15, 234);
+            this.logListView.MultiSelect = false;
+            this.logListView.Name = "logListView";
+            this.logListView.Size = new System.Drawing.Size(420, 268);
+            this.logListView.TabIndex = 14;
+            this.logListView.UseCompatibleStateImageBehavior = false;
+            // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(123, 59);
+            this.nameLabel.Location = new System.Drawing.Point(177, 59);
             this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(35, 17);
@@ -114,7 +143,7 @@
             // locationLabel
             // 
             this.locationLabel.AutoSize = true;
-            this.locationLabel.Location = new System.Drawing.Point(123, 140);
+            this.locationLabel.Location = new System.Drawing.Point(177, 110);
             this.locationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.locationLabel.Name = "locationLabel";
             this.locationLabel.Size = new System.Drawing.Size(35, 17);
@@ -124,7 +153,7 @@
             // usageLabel
             // 
             this.usageLabel.AutoSize = true;
-            this.usageLabel.Location = new System.Drawing.Point(123, 172);
+            this.usageLabel.Location = new System.Drawing.Point(177, 84);
             this.usageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.usageLabel.Name = "usageLabel";
             this.usageLabel.Size = new System.Drawing.Size(35, 17);
@@ -134,7 +163,7 @@
             // usageLabelHead
             // 
             this.usageLabelHead.AutoSize = true;
-            this.usageLabelHead.Location = new System.Drawing.Point(8, 172);
+            this.usageLabelHead.Location = new System.Drawing.Point(12, 84);
             this.usageLabelHead.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.usageLabelHead.Name = "usageLabelHead";
             this.usageLabelHead.Size = new System.Drawing.Size(53, 17);
@@ -144,7 +173,7 @@
             // locationLabelHead
             // 
             this.locationLabelHead.AutoSize = true;
-            this.locationLabelHead.Location = new System.Drawing.Point(8, 140);
+            this.locationLabelHead.Location = new System.Drawing.Point(13, 110);
             this.locationLabelHead.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.locationLabelHead.Name = "locationLabelHead";
             this.locationLabelHead.Size = new System.Drawing.Size(66, 17);
@@ -153,7 +182,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(193, 524);
+            this.closeButton.Location = new System.Drawing.Point(335, 524);
             this.closeButton.Margin = new System.Windows.Forms.Padding(4);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(100, 28);
@@ -162,65 +191,23 @@
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
-            // logButton
-            // 
-            this.logButton.Location = new System.Drawing.Point(331, 524);
-            this.logButton.Margin = new System.Windows.Forms.Padding(4);
-            this.logButton.Name = "logButton";
-            this.logButton.Size = new System.Drawing.Size(100, 28);
-            this.logButton.TabIndex = 4;
-            this.logButton.Text = "Log";
-            this.logButton.UseVisualStyleBackColor = true;
-            this.logButton.Click += new System.EventHandler(this.LogButtonClick);
-            // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Location = new System.Drawing.Point(47, 7);
-            this.SearchTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(171, 22);
-            this.SearchTextBox.TabIndex = 5;
-            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBoxTextChanged);
-            this.SearchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
-            this.SearchTextBox.Leave += new System.EventHandler(this.SearchTextBoxLeave);
-            // 
-            // logListView
-            // 
-            this.logListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.logListView.Location = new System.Drawing.Point(15, 234);
-            this.logListView.MultiSelect = false;
-            this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(420, 268);
-            this.logListView.TabIndex = 14;
-            this.logListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // itemNoLabelHead
-            // 
-            this.itemNoLabelHead.AutoSize = true;
-            this.itemNoLabelHead.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.itemNoLabelHead.Location = new System.Drawing.Point(12, 29);
-            this.itemNoLabelHead.Name = "itemNoLabelHead";
-            this.itemNoLabelHead.Size = new System.Drawing.Size(71, 20);
-            this.itemNoLabelHead.TabIndex = 15;
-            this.itemNoLabelHead.Text = "Item No.";
-            // 
-            // itemNoLabel
-            // 
-            this.itemNoLabel.AutoSize = true;
-            this.itemNoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.itemNoLabel.Location = new System.Drawing.Point(123, 29);
-            this.itemNoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.itemNoLabel.Name = "itemNoLabel";
-            this.itemNoLabel.Size = new System.Drawing.Size(41, 20);
-            this.itemNoLabel.TabIndex = 16;
-            this.itemNoLabel.Text = "Text";
+            this.searchTextBox.Location = new System.Drawing.Point(47, 7);
+            this.searchTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.searchTextBox.Name = "SearchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(171, 22);
+            this.searchTextBox.TabIndex = 5;
+            this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBoxTextChanged);
+            this.searchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
+            this.searchTextBox.Leave += new System.EventHandler(this.SearchTextBoxLeave);
             // 
             // Information
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 690);
-            this.Controls.Add(this.SearchTextBox);
+            this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.itemInfoPanel);
             this.Controls.Add(this.viewItemButton);
             this.Controls.Add(this.dataGridView);
@@ -246,12 +233,11 @@
         private System.Windows.Forms.Label usageLabelHead;
         private System.Windows.Forms.Label locationLabelHead;
         private System.Windows.Forms.Button closeButton;
-        private System.Windows.Forms.Button logButton;
         private System.Windows.Forms.Label locationLabel;
         private System.Windows.Forms.Label usageLabel;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label nameLabelHead;
-        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.ListView logListView;
         private System.Windows.Forms.Label itemNoLabelHead;
         private System.Windows.Forms.Label itemNoLabel;

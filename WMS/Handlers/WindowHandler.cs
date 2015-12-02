@@ -44,11 +44,6 @@ namespace WMS.Handlers
             CreateWindow(new Log(core));
         }
 
-        public void OpenLog(string itemNo)
-        {
-            CreateWindow(new Log(core, itemNo));
-        }
-
         public void OpenMove()
         {
             CreateWindow(new Move(core));
