@@ -40,17 +40,20 @@ namespace WMS.WH
             List<Location> temp = core.DataHandler.LocationToList();
             foreach (Location location in temp)
             {
-                locations[location.BestLocation, (int.Parse(location.Space) - 1)] = location;
-                if (!location.ItemNo.Equals("0"))
+                if (location.Quantity != 0)
                 {
-                    if (!quickPlace.ContainsKey(location.ItemNo))
+                    locations[location.BestLocation, (int.Parse(location.Space) - 1)] = location;
+                    if (!location.ItemNo.Equals("0"))
                     {
-                        quickPlace.Add(location.ItemNo, location.BestLocation);
-                    }
-                    else
-                    {
-                        quickPlace.Remove(location.ItemNo);
-                        quickPlace.Add(location.ItemNo, location.BestLocation);
+                        if (!quickPlace.ContainsKey(location.ItemNo))
+                        {
+                            quickPlace.Add(location.ItemNo, location.BestLocation);
+                        }
+                        else
+                        {
+                            quickPlace.Remove(location.ItemNo);
+                            quickPlace.Add(location.ItemNo, location.BestLocation);
+                        }
                     }
                 }
             }

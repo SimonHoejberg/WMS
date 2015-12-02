@@ -1,6 +1,7 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
-using WMS.Reference;
+using static WMS.Reference.DataBases;
+using static WMS.Reference.SearchTerms;
 using WMS.Interfaces;
 
 namespace WMS.Handlers
@@ -78,7 +79,7 @@ namespace WMS.Handlers
             {
                 temp = 0;
             }
-            return GetItemInfo(DataBases.LOG_DB, Reference.SearchTerms.ITEM, itemNo, (temp).ToString(), "10");
+            return GetItemInfo(LOG_DB, ITEM, itemNo, (temp).ToString(), "10");
         }
 
         public MySqlDataReader GetDataForList(string db)
@@ -200,8 +201,8 @@ namespace WMS.Handlers
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = "SELECT bestLocation FROM location";
-            ResetConnection();
             command.CommandText = sql;
+            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
@@ -210,8 +211,8 @@ namespace WMS.Handlers
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = "SELECT space FROM location";
-            ResetConnection();
             command.CommandText = sql;
+            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }

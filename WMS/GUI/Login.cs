@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WMS.Interfaces;
 
@@ -21,42 +15,61 @@ namespace WMS.GUI
             InitializeComponent();
         }
 
-        private void UserIDBox_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Disables maximize and minimize button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserIDBoxLoad(object sender, EventArgs e)
         {
             MaximizeBox = false;
             MinimizeBox = false;
         }
 
-        private void cancelButtonClick(object sender, EventArgs e)
+        /// <summary>
+        /// Closes the form when the user click on cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CancelButtonClick(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void userLoginButtonClick(object sender, EventArgs e)
+        /// <summary>
+        /// Checks if the user exist on the database and logges in
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoginButtonClick(object sender, EventArgs e)
         {
-            var stringList = core.DataHandler.GetUser().OfType<string>();
+            List<string> stringList = core.DataHandler.GetUser(); // Gets the user from the database
 
-            if (stringList.Contains(userIDTextbox.Text))
+            if (stringList.Contains(userTextbox.Text))
             {
-                core.UserName = core.DataHandler.GetUserName(userIDTextbox.Text);
-                DialogResult = DialogResult.OK;
-                userIDError_lbl.Text = "";
+                core.UserName = core.DataHandler.GetUserName(userTextbox.Text); //Sets the user name in the core to the user who is logged in
+                DialogResult = DialogResult.OK; //returns a result
             }
             else
             {
-                userIDError_lbl.Text = "Wrong username";
+                ErrorLabel.Text = core.Lang.INVILD_USER_ID; //Tells the user that the user id does not exist
             }
         }
 
-        private void userIDTextboxKeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// When a button is pressed on the textbox it checks if the key is enter or escape and fires an event based on the key
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserTextboxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                userLoginButtonClick(this, new EventArgs());
+                LoginButtonClick(sender, new EventArgs());
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                cancelButtonClick(this, new EventArgs());
+                CancelButtonClick(sender, new EventArgs());
             }
         }
     }

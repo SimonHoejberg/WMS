@@ -22,7 +22,7 @@ namespace WMS.WH
             Usage = usage;
         }
 
-        public string LocationString => ToString();
+        public string LocationString => ToString(); //For use in dataGridComboBoxView, it can not use ToString(), it needs a property;
 
         public override string ToString() => $"{Shelf}.{Space}";
 

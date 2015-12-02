@@ -57,6 +57,16 @@ namespace WMS.GUI
         }
         #endregion
 
+        /// <summary>
+        /// When main changes location it brings main to front
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainLocationChanged(object sender, EventArgs e)
+        {
+            BringToFront();
+        }
+
         private void MainFormClosing(object sender, FormClosingEventArgs e)
         {
             //When main form closes disconnect from the database
@@ -97,9 +107,15 @@ namespace WMS.GUI
             loggedInLabel.Text = Core.Lang.LOGGED_IN_AS;
         }
 
-        private void flagButtonClick(object sender, EventArgs e)
+        /// <summary>
+        /// When the flag is pressed it tells the core to change language
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FlagButtonClick(object sender, EventArgs e)
         {
             Core.changeLang();
         }
+
     }
 }

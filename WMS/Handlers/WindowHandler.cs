@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WMS.Interfaces;
 using WMS.GUI;
 using WMS.Lang;
@@ -14,26 +12,27 @@ namespace WMS.Handlers
     {
         private ICore core;
         private Form main;
-        private List<IGui> windowsOpen = new List<IGui>();
-        private ILang lang = new LangDa();
-        private bool da = true;
+        private List<IGui> windowsOpen = new List<IGui>(); //The windows that are open
+        private ILang lang = new LangDa(); //The start Language
+        private bool da = true; //If the start language is danish
 
         public WindowHandler(ICore core, IMain main)
         {
-            this.core = core;
-            main.Core = core;
-            this.main = (Form)main;
-            main.UpdateLang();
-            this.main.LocationChanged += MainLocationChanged;
+            this.core = core; 
+            main.Core = core; //Sets the core for main
+            this.main = (Form)main; 
+            main.UpdateLang(); //Sets the language for main
         }
 
-        public List<IGui> WindowsOpen { get { return windowsOpen; } }
-
+        /// <summary>
+        /// Runs the main window
+        /// </summary>
         public void Run()
         {
             Application.Run(main);
         }
 
+        #region Open new windows
         public void OpenInformation()
         {
             CreateWindow(new Information(core));
@@ -63,27 +62,33 @@ namespace WMS.Handlers
         {
             CreateWindow(new Waste(core));
         }
+        #endregion
 
-        private void CreateWindow(IGui gui)
+        /// <summary>
+        /// Creates or shows the given form based on if a window of the same type is already open
+        /// </summary>
+        /// <param name="igui"></param>
+        private void CreateWindow(IGui igui)
         {
-            if (CanCreateForm(gui))
+            if (CanCreateForm(igui))
             {
-                Form temp = (Form)gui;
-                temp.FormClosing += FormClosing;
-                windowsOpen.Add(gui);
-                temp.Move += Temp_Move;
-                temp.Show();
-                temp.Focus();
-            }
+                // Casts it to a form and adds the events
+                Form gui = (Form)igui;
+                gui.FormClosing += IGuiClosingEvent;
+                gui.Move += IGuiMoveEvent;
+                windowsOpen.Add(igui); //Adds it to the windows open list
+                gui.Show(); 
+                gui.Focus();
+            } 
             else
             {
-                Form form = ((Form)windowsOpen.Find(x => x.ToString().Equals(gui.ToString())));
+                Form form = ((Form)windowsOpen.Find(x => x.ToString().Equals(igui.ToString())));
                 form?.BringToFront();
                 form?.Focus();
             }
         }
 
-        private void Temp_Move(object sender, EventArgs e)
+        private void IGuiMoveEvent(object sender, EventArgs e)
         {
             IGui gui = ((IGui)sender);
             Form form = ((Form)sender);
@@ -91,7 +96,7 @@ namespace WMS.Handlers
             main.Top = form.Top;
         }
 
-        private void FormClosing(object sender, FormClosingEventArgs e)
+        private void IGuiClosingEvent(object sender, FormClosingEventArgs e)
         {
             if (sender is IGui)
             {
@@ -99,14 +104,9 @@ namespace WMS.Handlers
             }
         }
 
-        private void MainLocationChanged(object sender, EventArgs e)
+        private bool CanCreateForm(object form)
         {
-            main.BringToFront();
-        }
-
-        private bool CanCreateForm(object type)
-        {
-            if ((windowsOpen.Count(x => x.ToString().Equals(type.ToString())) < 1))
+            if ((windowsOpen.Count(x => x.ToString().Equals(form.ToString())) < 1))
             {
                 return true;
             }
@@ -119,7 +119,7 @@ namespace WMS.Handlers
 
         public void Update(object caller)
         {
-            foreach (var item in WindowsOpen.FindAll(x => !(x.Equals(caller))))
+            foreach (var item in windowsOpen.FindAll(x => !(x.Equals(caller))))
             {
                 item.UpdateGuiElements();
             }
@@ -127,15 +127,15 @@ namespace WMS.Handlers
 
         public void Exit(string error)
         {
-                MessageBox.Show(error, lang.ERROR);
-                Environment.Exit(0);
+            MessageBox.Show(error, lang.ERROR);
+            Environment.Exit(0);
         }
 
         public void ChangeLang(ILang lang)
         {
             this.lang = lang;
             ((IMain)main).UpdateLang();
-            foreach (var item in WindowsOpen)
+            foreach (var item in windowsOpen)
             {
                 item.UpdateLang();
             }

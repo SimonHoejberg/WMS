@@ -46,15 +46,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.informationButton)).BeginInit();
             this.SuspendLayout();
             // 
-            // langButton
+            // flagButton
             // 
             this.flagButton.BackgroundImage = global::WMS.Properties.Resources.union_jack_30x18;
             this.flagButton.Location = new System.Drawing.Point(11, 2);
-            this.flagButton.Name = "langButton";
+            this.flagButton.Name = "flagButton";
             this.flagButton.Size = new System.Drawing.Size(30, 18);
             this.flagButton.TabIndex = 7;
             this.flagButton.TabStop = false;
-            this.flagButton.Click += new System.EventHandler(this.flagButtonClick);
+            this.flagButton.Click += new System.EventHandler(this.FlagButtonClick);
             // 
             // reduceButton
             // 
@@ -128,20 +128,20 @@
             this.informationButton.TabStop = false;
             this.informationButton.Click += new System.EventHandler(this.InformationButtonClick);
             // 
-            // label1
+            // loggedInLabel
             // 
             this.loggedInLabel.AutoSize = true;
             this.loggedInLabel.Location = new System.Drawing.Point(13, 526);
-            this.loggedInLabel.Name = "label1";
+            this.loggedInLabel.Name = "loggedInLabel";
             this.loggedInLabel.Size = new System.Drawing.Size(46, 17);
             this.loggedInLabel.TabIndex = 8;
             this.loggedInLabel.Text = "label1";
             // 
-            // label2
+            // userNameLabel
             // 
             this.userNameLabel.AutoSize = true;
             this.userNameLabel.Location = new System.Drawing.Point(13, 546);
-            this.userNameLabel.Name = "label2";
+            this.userNameLabel.Name = "userNameLabel";
             this.userNameLabel.Size = new System.Drawing.Size(46, 17);
             this.userNameLabel.TabIndex = 9;
             this.userNameLabel.Text = "label2";
@@ -165,6 +165,7 @@
             this.Text = "Menu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.Load += new System.EventHandler(this.MainLoad);
+            this.LocationChanged += new System.EventHandler(this.MainLocationChanged);
             ((System.ComponentModel.ISupportInitialize)(this.flagButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reduceButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wasteButton)).EndInit();

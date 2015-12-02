@@ -1,6 +1,6 @@
 ﻿namespace WMS.GUI
 {
-    partial class RigisterFeedBack
+    partial class RegisterFeedBack
     {
         /// <summary>
         /// Required designer variable.
