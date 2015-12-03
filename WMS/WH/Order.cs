@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WMS.WH
 {
+    /// <summary>
+    /// A class that holdes a Order No. used only for register in the textbox search fuction 
+    /// </summary>
     public class Order
     {
         private int orderNo;

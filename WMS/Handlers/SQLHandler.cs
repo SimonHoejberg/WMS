@@ -43,7 +43,7 @@ namespace WMS.Handlers
         }
 
         /// <summary>
-        /// Gets one or several items according to the db and the itemNo
+        /// Gets one or several items according to the database and the item No
         /// </summary>
         /// <param name="db"></param>
         /// <param name="searchTerm"></param>

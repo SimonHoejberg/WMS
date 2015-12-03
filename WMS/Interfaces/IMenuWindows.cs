@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WMS.Interfaces
 {
+    /// <summary>
+    /// An interface the contains the definition of the fuction to open windows
+    /// </summary>
     public interface IMenuWindows
     {
         void OpenInformation();

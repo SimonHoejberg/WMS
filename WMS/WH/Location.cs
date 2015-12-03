@@ -1,6 +1,9 @@
 ﻿
 namespace WMS.WH
 {
+    /// <summary>
+    /// A class that can be made object of that holds the different values from the specific location from the database
+    /// </summary>
     public class Location
     {
         public string Id { get; }
@@ -24,7 +27,7 @@ namespace WMS.WH
 
         public string LocationString => ToString(); //For use in dataGridComboBoxView, it can not use ToString(), it needs a property;
 
-        public override string ToString() => $"{Shelf}.{Space}";
+        public override string ToString() => $"{Shelf}.{Space}"; //The way that the location is displayed for reading by the user
 
 
     }

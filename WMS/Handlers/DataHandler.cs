@@ -53,7 +53,7 @@ namespace WMS.Handlers
         public List<string> GetUser() => UserToList();
 
         /// <summary>
-        /// Returns a list of the log with specific itemNo
+        /// Returns a list of the log with specific item No
         /// </summary>
         /// <param name="itemNo"></param>
         /// <returns></returns>
@@ -145,7 +145,7 @@ namespace WMS.Handlers
         }
 
         /// <summary>
-        /// Returns a datadapter containing a number of items either for information or log
+        /// Returns a datadapter containing a number of items either for information or log windows
         /// </summary>
         /// <param name="itemNo"></param>
         /// <param name="db"></param>
