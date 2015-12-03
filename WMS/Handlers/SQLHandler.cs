@@ -255,7 +255,7 @@ namespace WMS.Handlers
                "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)" +
                $"VALUES ({ itemNo }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {itemNo}), (SELECT inStock + {amount} FROM information WHERE itemNo = {itemNo}));" +
                $"UPDATE location SET itemNo = {itemNo}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};" +
-               $"UPDATE register SET expectedQuantity expectedQuantity - {amount} WHERE orderNo = {orderNo} AND itemNo = {itemNo};"+
+               $"UPDATE register SET expectedQuantity = expectedQuantity - {amount} WHERE orderNo = {orderNo} AND itemNo = {itemNo};"+
                $"UPDATE information SET location1 = '{newLocation}' ,inStock = inStock + {amount} WHERE itemNo = '{itemNo}';" +
                "COMMIT;";
             command.CommandText = sql;
