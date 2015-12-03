@@ -7,6 +7,9 @@ using WMS.Interfaces;
 
 namespace WMS.Lang
 {
+    /// <summary>
+    /// This class contains the danish localization
+    /// </summary>
     public class LangDa : ILang
     {
         public LangDa()

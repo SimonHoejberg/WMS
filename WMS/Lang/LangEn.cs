@@ -7,6 +7,9 @@ using WMS.Interfaces;
 
 namespace WMS.Lang
 {
+    /// <summary>
+    /// This class contains the english localization
+    /// </summary>
     public class LangEn : ILang
     {
         public LangEn()

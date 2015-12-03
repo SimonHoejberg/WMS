@@ -241,21 +241,22 @@ namespace WMS.Handlers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="amount"></param>
-        /// <param name="newItem"></param>
+        /// <param name="itemNo"></param>
         /// <param name="usage"></param>
         /// <param name="newLocation"></param>
         /// <param name="orderNo"></param>
         /// <param name="description"></param>
         /// <param name="user"></param>
         /// <param name="operation"></param>
-        public void PlaceItem(string id, string amount, string newItem, string usage, string newLocation, string orderNo, string description, string user, string operation)
+        public void PlaceItem(string id, string amount, string itemNo, string usage, string newLocation, string orderNo, string description, string user, string operation)
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = "START TRANSACTION;" +
                "INSERT INTO log (itemNo, description, date, user, operation, orderNo, amount, prevQuantity, newQuantity)" +
-               $"VALUES ({ newItem }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {newItem}), (SELECT inStock + {amount} FROM information WHERE itemNo = {newItem}));" +
-               $"UPDATE location SET itemNo = {newItem}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};" +
-               $"UPDATE information SET location1 = '{newLocation}' ,inStock = inStock + {amount} WHERE itemNo = '{newItem}';" +
+               $"VALUES ({ itemNo }, '{ description }', '{core.GetTimeStamp()}', '{user}', '{operation}', '{orderNo}', {amount} , (SELECT inStock FROM information WHERE itemNo = {itemNo}), (SELECT inStock + {amount} FROM information WHERE itemNo = {itemNo}));" +
+               $"UPDATE location SET itemNo = {itemNo}, itemUsage = {usage}, quantity = quantity + {amount} WHERE ID = {id};" +
+               $"UPDATE register SET expectedQuantity expectedQuantity - {amount} WHERE orderNo = {orderNo} AND itemNo = {itemNo};"+
+               $"UPDATE information SET location1 = '{newLocation}' ,inStock = inStock + {amount} WHERE itemNo = '{itemNo}';" +
                "COMMIT;";
             command.CommandText = sql;
             ResetConnection();
