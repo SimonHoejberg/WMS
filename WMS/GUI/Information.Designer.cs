@@ -48,10 +48,9 @@
             // 
             // viewItemButton
             // 
-            this.viewItemButton.Location = new System.Drawing.Point(1196, 647);
-            this.viewItemButton.Margin = new System.Windows.Forms.Padding(4);
+            this.viewItemButton.Location = new System.Drawing.Point(897, 526);
             this.viewItemButton.Name = "viewItemButton";
-            this.viewItemButton.Size = new System.Drawing.Size(100, 28);
+            this.viewItemButton.Size = new System.Drawing.Size(75, 23);
             this.viewItemButton.TabIndex = 3;
             this.viewItemButton.Text = "View Item";
             this.viewItemButton.UseVisualStyleBackColor = true;
@@ -64,11 +63,11 @@
             this.dataGridView.AllowUserToResizeColumns = false;
             this.dataGridView.AllowUserToResizeRows = false;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(16, 39);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridView.Location = new System.Drawing.Point(12, 32);
             this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(1280, 572);
+            this.dataGridView.Size = new System.Drawing.Size(960, 465);
             this.dataGridView.TabIndex = 2;
+            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewCellDoubleClick);
             // 
             // itemInfoPanel
             // 
@@ -82,10 +81,9 @@
             this.itemInfoPanel.Controls.Add(this.usageLabelHead);
             this.itemInfoPanel.Controls.Add(this.locationLabelHead);
             this.itemInfoPanel.Controls.Add(this.closeButton);
-            this.itemInfoPanel.Location = new System.Drawing.Point(411, 47);
-            this.itemInfoPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.itemInfoPanel.Location = new System.Drawing.Point(308, 38);
             this.itemInfoPanel.Name = "itemInfoPanel";
-            this.itemInfoPanel.Size = new System.Drawing.Size(451, 556);
+            this.itemInfoPanel.Size = new System.Drawing.Size(338, 452);
             this.itemInfoPanel.TabIndex = 4;
             this.itemInfoPanel.Visible = false;
             // 
@@ -93,10 +91,9 @@
             // 
             this.itemNoLabel.AutoSize = true;
             this.itemNoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.itemNoLabel.Location = new System.Drawing.Point(176, 29);
-            this.itemNoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.itemNoLabel.Location = new System.Drawing.Point(132, 24);
             this.itemNoLabel.Name = "itemNoLabel";
-            this.itemNoLabel.Size = new System.Drawing.Size(41, 20);
+            this.itemNoLabel.Size = new System.Drawing.Size(35, 17);
             this.itemNoLabel.TabIndex = 16;
             this.itemNoLabel.Text = "Text";
             // 
@@ -104,99 +101,93 @@
             // 
             this.itemNoLabelHead.AutoSize = true;
             this.itemNoLabelHead.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.itemNoLabelHead.Location = new System.Drawing.Point(12, 29);
+            this.itemNoLabelHead.Location = new System.Drawing.Point(9, 24);
+            this.itemNoLabelHead.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.itemNoLabelHead.Name = "itemNoLabelHead";
-            this.itemNoLabelHead.Size = new System.Drawing.Size(71, 20);
+            this.itemNoLabelHead.Size = new System.Drawing.Size(60, 17);
             this.itemNoLabelHead.TabIndex = 15;
             this.itemNoLabelHead.Text = "Item No.";
             // 
             // logListView
             // 
             this.logListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.logListView.Location = new System.Drawing.Point(15, 234);
+            this.logListView.Location = new System.Drawing.Point(11, 190);
+            this.logListView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.logListView.MultiSelect = false;
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(420, 268);
+            this.logListView.Size = new System.Drawing.Size(316, 218);
             this.logListView.TabIndex = 14;
             this.logListView.UseCompatibleStateImageBehavior = false;
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(177, 59);
-            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.nameLabel.Location = new System.Drawing.Point(133, 48);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(35, 17);
+            this.nameLabel.Size = new System.Drawing.Size(28, 13);
             this.nameLabel.TabIndex = 13;
             this.nameLabel.Text = "Text";
             // 
             // nameLabelHead
             // 
             this.nameLabelHead.AutoSize = true;
-            this.nameLabelHead.Location = new System.Drawing.Point(12, 59);
-            this.nameLabelHead.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.nameLabelHead.Location = new System.Drawing.Point(9, 48);
             this.nameLabelHead.Name = "nameLabelHead";
-            this.nameLabelHead.Size = new System.Drawing.Size(49, 17);
+            this.nameLabelHead.Size = new System.Drawing.Size(38, 13);
             this.nameLabelHead.TabIndex = 12;
             this.nameLabelHead.Text = "Name:";
             // 
             // locationLabel
             // 
             this.locationLabel.AutoSize = true;
-            this.locationLabel.Location = new System.Drawing.Point(177, 110);
-            this.locationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.locationLabel.Location = new System.Drawing.Point(133, 89);
             this.locationLabel.Name = "locationLabel";
-            this.locationLabel.Size = new System.Drawing.Size(35, 17);
+            this.locationLabel.Size = new System.Drawing.Size(28, 13);
             this.locationLabel.TabIndex = 10;
             this.locationLabel.Text = "Text";
             // 
             // usageLabel
             // 
             this.usageLabel.AutoSize = true;
-            this.usageLabel.Location = new System.Drawing.Point(177, 84);
-            this.usageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.usageLabel.Location = new System.Drawing.Point(133, 68);
             this.usageLabel.Name = "usageLabel";
-            this.usageLabel.Size = new System.Drawing.Size(35, 17);
+            this.usageLabel.Size = new System.Drawing.Size(28, 13);
             this.usageLabel.TabIndex = 9;
             this.usageLabel.Text = "Text";
             // 
             // usageLabelHead
             // 
             this.usageLabelHead.AutoSize = true;
-            this.usageLabelHead.Location = new System.Drawing.Point(12, 84);
-            this.usageLabelHead.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.usageLabelHead.Location = new System.Drawing.Point(9, 68);
             this.usageLabelHead.Name = "usageLabelHead";
-            this.usageLabelHead.Size = new System.Drawing.Size(53, 17);
+            this.usageLabelHead.Size = new System.Drawing.Size(41, 13);
             this.usageLabelHead.TabIndex = 8;
             this.usageLabelHead.Text = "Usage:";
             // 
             // locationLabelHead
             // 
             this.locationLabelHead.AutoSize = true;
-            this.locationLabelHead.Location = new System.Drawing.Point(13, 110);
-            this.locationLabelHead.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.locationLabelHead.Location = new System.Drawing.Point(10, 89);
             this.locationLabelHead.Name = "locationLabelHead";
-            this.locationLabelHead.Size = new System.Drawing.Size(66, 17);
+            this.locationLabelHead.Size = new System.Drawing.Size(51, 13);
             this.locationLabelHead.TabIndex = 7;
             this.locationLabelHead.Text = "Location:";
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(335, 524);
-            this.closeButton.Margin = new System.Windows.Forms.Padding(4);
+            this.closeButton.Location = new System.Drawing.Point(251, 426);
             this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(100, 28);
+            this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 5;
             this.closeButton.Text = "Close";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
-            // SearchTextBox
+            // searchTextBox
             // 
-            this.searchTextBox.Location = new System.Drawing.Point(47, 7);
-            this.searchTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.searchTextBox.Name = "SearchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(171, 22);
+            this.searchTextBox.Location = new System.Drawing.Point(35, 6);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(129, 20);
             this.searchTextBox.TabIndex = 5;
             this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBoxTextChanged);
             this.searchTextBox.Enter += new System.EventHandler(this.SearchTextBoxEnter);
@@ -204,15 +195,14 @@
             // 
             // Information
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1312, 690);
+            this.ClientSize = new System.Drawing.Size(984, 561);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.itemInfoPanel);
             this.Controls.Add(this.viewItemButton);
             this.Controls.Add(this.dataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Information";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Information";
