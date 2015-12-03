@@ -91,7 +91,7 @@ namespace WMS.GUI
 
             //Finds all the locations where the item is stored
             //And makes a string ("location : amount",) for each location  
-            List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo));
+            List<Location> locationList = core.DataHandler.LocationToList().FindAll(x => x.ItemNo.Equals(itemNo) && x.Quantity > 0);
             string locationString = "";
             foreach (var location in locationList)
             {
