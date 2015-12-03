@@ -230,7 +230,7 @@ namespace WMS.Handlers
         public void moveItem(string id, string newQuantity, string newItem)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = quantity + {newQuantity} WHERE ID = '{id}'";
+            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = {newQuantity} WHERE ID = '{id}'";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
