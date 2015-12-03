@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WMS.WH
 {
+    /// <summary>
+    /// A class that can be made object of that holds the different values from a line in the log for a item 
+    /// </summary>
     public class LogItem
     {
 
@@ -26,10 +24,7 @@ namespace WMS.WH
             User = user;
         }
 
-        public override string ToString()
-        {
-            return $"{Date} {Operation} {Amount} {User}";
-        }
+        public override string ToString() => $"{Date} {Operation} {Amount} {User}";
 
     }
 }

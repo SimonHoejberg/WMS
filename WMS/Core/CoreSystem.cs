@@ -58,8 +58,8 @@ namespace WMS.Core
         /// <returns></returns>
         public List<Item> SortNewItems(List<Item> items,string orderNo, out Dictionary<Item,Location> itemPlaced)
         {
-            warehouse.CreateWH(orderNo); //Creates the warehouse with the locations from the database
-            return warehouse.FindOptimalLocation(items, out itemPlaced);
+            warehouse.CreateWarehouse(orderNo); //Creates the warehouse with the locations from the database
+            return warehouse.FindOptimalLocationForNewItems(items, out itemPlaced);
         }
 
         /// <summary>

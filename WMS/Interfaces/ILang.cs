@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WMS.Interfaces
 {
+    /// <summary>
+    /// A interface which can be used to create localization for languages
+    /// </summary>
     public interface ILang
     {
         string INFORMATION { get; }

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace WMS.Interfaces
 {
+    /// <summary>
+    /// An interface the a core class must implement 
+    /// </summary>
     public interface ICore
     {
         void Run();
