@@ -9,6 +9,8 @@ using WMS.WH;
 
 namespace WMS.GUI
 {
+    //ToDo
+    //Usage is not moved with the item when moved
     public partial class Move : Form, IGui
     {
         private ICore core;
@@ -20,6 +22,7 @@ namespace WMS.GUI
         private string idColumnString = "ItemIDColumn", descriptionColumnString = "DescriptionColumn", quantityColumnString = "QuantityColumn", locationColumnString = "LocationColumn", 
             newLocationColumnString = "NewLocationColumn", actionColumnString = "ActionColumn";
 
+        #region Constructor
         public Move(ICore core)
         {
             InitializeComponent();
@@ -31,10 +34,12 @@ namespace WMS.GUI
             InitializeDataGridView();
             
         }
+        #endregion
 
+        #region Initialize dataGridView
         private void InitializeDataGridView()
         {
-            //Dictionaries are used for easy reference and to minimize the need to refer to the database
+            //Dictionaries are used for easy reference and to minimize the need to reference to the database
             locationData = new Dictionary<string, Location>();
             itemData = new Dictionary<string, Item>();
             itemListA = new AutoCompleteStringCollection();
@@ -46,53 +51,53 @@ namespace WMS.GUI
             moveAddItemTextBox.AutoCompleteCustomSource = itemListA;
 
             #region 
-            //Creates the Columns that makes up the datagridview
+            //Creates and adds the Columns that makes up the datagridview
             dataGridView.Columns.Add(
-                columnIdentification = new DataGridViewTextBoxColumn() //Column used for showing item number/Name
+                columnIdentification = new DataGridViewTextBoxColumn() //Column used for showing item number
                 {
                     Name = idColumnString,
                     HeaderText = core.Lang.ITEM_NO,
                     Width = 300,
                     ReadOnly = true
                 });
+
             dataGridView.Columns.Add(
-                columnDescription = new DataGridViewTextBoxColumn() //Column used for showing item number/Name
+                columnDescription = new DataGridViewTextBoxColumn() //Column used for showing item Name
                 {
                     Name = descriptionColumnString,
                     HeaderText = core.Lang.DESCRIPTION,
                     Width = 300,
                     ReadOnly = true
                 });
+
             dataGridView.Columns.Add(
-                comboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations to move from
+                comboColumnLocation = new DataGridViewComboBoxColumn() //Column used for showing locations on which the item exists
                 {
                     Name = locationColumnString,
                     ValueMember = "LocationString",
                     HeaderText = core.Lang.LOCATION,
-                    
-
                 });
+
             dataGridView.Columns.Add(
-                columnQuantity = new DataGridViewTextBoxColumn() //Column used for showing quantity to move
+                columnQuantity = new DataGridViewTextBoxColumn() //Column used for showing the quantity the user wants to move
                 {
                     Name = quantityColumnString,
-                    HeaderText = core.Lang.AMOUNT,
-                    
+                    HeaderText = core.Lang.AMOUNT,                    
                 });
+
             dataGridView.Columns.Add(
-                comboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing location to move to
+                comboColumnNewLocation = new DataGridViewComboBoxColumn() //Column used for showing the location the item will be moved to
                 {
                     Name = newLocationColumnString,
                     ValueMember = "LocationString",
-                    HeaderText = core.Lang.NEW_LOCATION,
-                    
+                    HeaderText = core.Lang.NEW_LOCATION,                    
                 });
+
             dataGridView.Columns.Add(
                 columnAction = new DataGridViewTextBoxColumn() //Column used for showing what action is made (move to new location / combine locations)
                 {
                     Name = actionColumnString,
                     HeaderText = core.Lang.DESCRIPTION,
-                    
                     ReadOnly = true
                 });
             #endregion
@@ -103,9 +108,11 @@ namespace WMS.GUI
             dataGridView.CellValueChanged += new DataGridViewCellEventHandler(DataGridViewCellValueChanged);
             dataGridView.CurrentCellDirtyStateChanged += new EventHandler(DataGridViewCurrentCellDirtyStateChanged);
         }
+        #endregion
 
+        #region DirtyStateChanged event
         /// <summary>
-        /// This event handler manually raises the CellValueChanged event by calling the CommitEdit method.
+        /// This handler manually raises the CellValueChanged event by calling the CommitEdit method.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -117,15 +124,17 @@ namespace WMS.GUI
                 dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
+        #endregion
 
+        #region CellValueChanged event
         /// <summary>
-        /// Fires when changes have been comitted to a cell in dataGridView
+        /// This event Fires when changes have been comitted to a cell in dataGridView. It is used for updataing info for the adjacent cells
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            //If the cell that changed had a rowindex of -1, we want to do nothing, as that cell is a headerCell
+            //If the cell that was changed had a rowindex of -1, we want to do nothing, as that cell is a headerCell
             if(e.RowIndex != -1)
             {
                 if (dataGridView[e.ColumnIndex, e.RowIndex].OwningColumn == comboColumnLocation)
@@ -204,7 +213,9 @@ namespace WMS.GUI
                 }
             }
         }
+        #endregion
 
+        #region Get lists for udating combobox items
         /// <summary>
         /// Returns a list of locations that contain the same item as the item chosen in the eventCell
         /// </summary>
@@ -244,115 +255,9 @@ namespace WMS.GUI
             }
             return returnList;
         }
+        #endregion
 
-        /// <summary>
-        /// Event that fires when the Cancel button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CancelButtonClick(object sender, EventArgs e)
-        {
-            CancelBox cancel = new CancelBox(core.Lang);
-            cancel.Owner = this;
-            DialogResult a = cancel.ShowDialog();
-
-            if (a.Equals(DialogResult.OK))
-            {
-                ClearDataGridView();
-            }
-        }
-
-        /// <summary>
-        /// Event that fires when the Confirm button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ConfirmButtonClick(object sender, EventArgs e)
-        {
-            //Check if there is any problems that prevent a commit to the database
-            bool noProblemsEncountered = true;
-            string problemList = checkRowsForProblems(out noProblemsEncountered);
-
-            if (noProblemsEncountered == true) //Commit changes if no problems.
-            {
-                //Prompt the user with a final confirmation box
-                DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
-                if (a.Equals(DialogResult.OK))
-                {
-                    int rowCount = dataGridView.Rows.Count;
-                    string oldLocNewQuantity = "0";
-                    string itemName = "0";
-                    int quantityColumnInt = 0;
-                    Location tempOldLoc;
-                    Location tempNewLoc;
-
-                    for (int i = 0; i < rowCount; i++)
-                    {
-                        tempOldLoc = locationData[dataGridView.Rows[i].Cells[locationColumnString].Value.ToString()];
-                        tempNewLoc = locationData[dataGridView.Rows[i].Cells[newLocationColumnString].Value.ToString()];
-
-                        itemName = core.DataHandler.GetItemFromItemNo(tempOldLoc.ItemNo).Description;
-                        quantityColumnInt = Convert.ToInt32(dataGridView.Rows[i].Cells[quantityColumnString].Value);
-                        oldLocNewQuantity = (tempOldLoc.Quantity - quantityColumnInt).ToString();
-                        
-
-                        if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo))
-                        {
-                            //Update old location with new values
-                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, tempOldLoc.ItemNo.ToString());
-
-                            //Update new location with new values
-                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (quantityColumnInt + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString());
-
-                            //Update the item information database with new values
-                            core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
-
-                            //save changes to the log
-                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, itemName, core.GetTimeStamp(), quantityColumnInt, core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
-                        }
-                        else
-                        {
-                            //Update old location with new values
-                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, tempOldLoc.ItemNo.ToString());
-
-                            //Update old location with new values
-                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), quantityColumnInt.ToString(), tempOldLoc.ItemNo.ToString());
-
-                            //Update the item information database with new values
-                            core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
-
-                            //save changes to the log
-                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, itemName, core.GetTimeStamp(), quantityColumnInt, core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
-                        }
-                        
-                    }
-
-                    ClearDataGridView();
-                    populateItemDictionary(itemListA, itemData);
-                    PopulateLocationDictionary(locationData);
-                    core.WindowHandler.Update(this);
-                    
-                }
-            }
-            //give error message if commit could not be done
-            else if (noProblemsEncountered == false)
-            {
-                MessageBox.Show(problemList, core.Lang.ERROR);
-            }
-        }
-
-        /// <summary>
-        /// Clears all rows from the dataGridView
-        /// </summary>
-        private void ClearDataGridView()
-        {
-            int rowCount = dataGridView.Rows.Count;
-            for (int i = 0; i < rowCount; i++)
-            {
-                dataGridView.Rows.RemoveAt(0);
-            }
-        }
-
+        #region Check rows before commit
         /// <summary>
         /// Checks if there is any problems in the datagridview's rows that would prevent a commit
         /// </summary>
@@ -388,6 +293,113 @@ namespace WMS.GUI
             noPro = noProblems;
             return listOfProblems;
         }
+        #endregion
+
+        #region Button events
+
+        #region ConfirmButton event
+        /// <summary>
+        /// Event that fires when the Confirm button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConfirmButtonClick(object sender, EventArgs e)
+        {
+            //Check if there is any problems that prevent a commit to the database
+            bool noProblemsEncountered = true;
+            string problemList = checkRowsForProblems(out noProblemsEncountered);
+
+            if (noProblemsEncountered == true) //Commit changes if no problems.
+            {
+                //Prompt the user with a final confirmation box
+                DialogResult a = MessageBox.Show(core.Lang.CONFIRM_TEXT, core.Lang.CONFIRM, MessageBoxButtons.OKCancel);
+                if (a.Equals(DialogResult.OK))
+                {
+                    int rowCount = dataGridView.Rows.Count;
+                    string oldLocNewQuantity = "0";
+                    string itemName = "0";
+                    string oldLocNewItemNumber = "0";
+                    int quantityColumnInt = 0;
+                    Location tempOldLoc;
+                    Location tempNewLoc;
+
+                    for (int i = 0; i < rowCount; i++)
+                    {
+                        tempOldLoc = locationData[dataGridView.Rows[i].Cells[locationColumnString].Value.ToString()];
+                        tempNewLoc = locationData[dataGridView.Rows[i].Cells[newLocationColumnString].Value.ToString()];
+
+                        itemName = core.DataHandler.GetItemFromItemNo(tempOldLoc.ItemNo).Description;
+                        quantityColumnInt = Convert.ToInt32(dataGridView.Rows[i].Cells[quantityColumnString].Value);
+                        oldLocNewQuantity = (tempOldLoc.Quantity - quantityColumnInt).ToString();
+
+                        if (Convert.ToInt32(oldLocNewQuantity) != quantityColumnInt)
+                        {
+                            oldLocNewItemNumber = tempOldLoc.ItemNo;
+                        }
+
+                        //If we move to a location containing the same item
+                        if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo) && tempNewLoc.Quantity != 0)
+                        {
+                            //Update old location with new values
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, oldLocNewItemNumber);
+
+                            //Update new location with new values
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (quantityColumnInt + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString());
+
+                            //Update the item information database with new values
+                            core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
+
+                            //save changes to the log
+                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, itemName, core.GetTimeStamp(), quantityColumnInt, core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
+                        }
+                        else
+                        {
+                            //Update old location with new values
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, oldLocNewItemNumber);
+
+                            //Update new location with new values
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), quantityColumnInt.ToString(), tempOldLoc.ItemNo.ToString());
+
+                            //Update the item information database with new values
+                            core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
+
+                            //save changes to the log
+                            core.DataHandler.MoveActionOnItem(tempOldLoc.ItemNo, itemName, core.GetTimeStamp(), quantityColumnInt, core.UserName, $"{tempOldLoc.LocationString} -> {tempNewLoc.LocationString}");
+                        }
+
+                    }
+
+                    ClearDataGridView();
+                    populateItemDictionary(itemListA, itemData);
+                    PopulateLocationDictionary(locationData);
+                    core.WindowHandler.Update(this);
+
+                }
+            }
+            //give error message if commit could not be done
+            else if (noProblemsEncountered == false)
+            {
+                MessageBox.Show(problemList, core.Lang.ERROR);
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Event that fires when the Cancel button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CancelButtonClick(object sender, EventArgs e)
+        {
+            CancelBox cancel = new CancelBox(core.Lang);
+            cancel.Owner = this;
+            DialogResult a = cancel.ShowDialog();
+
+            if (a.Equals(DialogResult.OK))
+            {
+                ClearDataGridView();
+            }
+        }
 
         /// <summary>
         /// Removes the currently selected row in the dataGridView
@@ -396,28 +408,10 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void RemoveRowButtonClick(object sender, EventArgs e)
         {
-            if(dataGridView.CurrentRow != null)
+            if (dataGridView.CurrentRow != null)
             {
                 dataGridView.Rows.Remove(dataGridView.CurrentRow);
             }
-        }
-
-        /// <summary>
-        /// Updates all GUI elemets with respect to the chosen language.
-        /// </summary>
-        public void UpdateLang()
-        {
-            confirmButton.Text = core.Lang.CONFIRM;
-            cancelButton.Text = core.Lang.CANCEL;
-            moveAddItemButton.Text = core.Lang.ADD;
-            rmoveRowButton.Text = core.Lang.REMOVE_ROW;
-            Text = core.Lang.MOVE;
-            dataGridView.Columns[quantityColumnString].HeaderText = core.Lang.AMOUNT;
-            comboColumnLocation.HeaderText = core.Lang.LOCATION;
-            comboColumnNewLocation.HeaderText = core.Lang.NEW_LOCATION;
-            columnIdentification.HeaderText = core.Lang.ITEM_NO;
-            columnDescription.HeaderText = core.Lang.DESCRIPTION;
-            columnAction.HeaderText = core.Lang.DESCRIPTION;
         }
 
         /// <summary>
@@ -463,15 +457,9 @@ namespace WMS.GUI
                 moveSearchLabel.Visible = true;
             }
         }
+        #endregion
 
-        private void moveAddItemTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                moveAddItemButton_Click(this, e);
-            }
-        }
-
+        #region Populate dictionaries
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
         {
             dic.Clear();
@@ -494,6 +482,50 @@ namespace WMS.GUI
                 dic.Add(item.Identification, item);
             }
         }
+        #endregion
+
+        #region ClearDataGridView and MoveAddItemTextBox_KeyUp
+        private void moveAddItemTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                moveAddItemButton_Click(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Clears all rows from the dataGridView
+        /// </summary>
+        private void ClearDataGridView()
+        {
+            int rowCount = dataGridView.Rows.Count;
+            for (int i = 0; i < rowCount; i++)
+            {
+                dataGridView.Rows.RemoveAt(0);
+            }
+        }
+        #endregion
+
+        #region GUI update functions
+        /// <summary>
+        /// Updates all GUI elemets with respect to the chosen language.
+        /// </summary>
+        public void UpdateLang()
+        {
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
+            confirmButton.Text = core.Lang.CONFIRM;
+            cancelButton.Text = core.Lang.CANCEL;
+            moveAddItemButton.Text = core.Lang.ADD;
+            rmoveRowButton.Text = core.Lang.REMOVE_ROW;
+            Text = core.Lang.MOVE;
+            dataGridView.Columns[quantityColumnString].HeaderText = core.Lang.AMOUNT;
+            comboColumnLocation.HeaderText = core.Lang.LOCATION;
+            comboColumnNewLocation.HeaderText = core.Lang.NEW_LOCATION;
+            columnIdentification.HeaderText = core.Lang.ITEM_NO;
+            columnDescription.HeaderText = core.Lang.DESCRIPTION;
+            columnAction.HeaderText = core.Lang.DESCRIPTION;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
+        }
 
         private void MoveLoad(object sender, EventArgs e)
         {
@@ -505,5 +537,6 @@ namespace WMS.GUI
             populateItemDictionary(itemListA, itemData);
             PopulateLocationDictionary(locationData);
         }
+        #endregion
     }
 }

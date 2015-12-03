@@ -107,6 +107,16 @@ namespace WMS.GUI
         }
 
         /// <summary>
+        /// Opens the view item panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataGridViewCellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ViewItemButtonClick(sender, e);
+        }
+
+        /// <summary>
         /// Fills the logListView with logItems from the dataBase
         /// </summary>
         /// <param name="itemNo"></param>
@@ -223,6 +233,7 @@ namespace WMS.GUI
             searchTextBox.TextChanged += SearchTextBoxTextChanged;
         }
         #endregion
+
     }
 }
 
