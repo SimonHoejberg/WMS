@@ -9,7 +9,7 @@ namespace WMS.WH
         public string ItemNo { get; set; }
         public int Quantity { get; set; }
         public int BestLocation { get; }
-        public int Usage { get; }
+        public int Usage { get; set; }
 
         public Location(string id, string shelf, string space, string itemNo, int quantity, int bestLocation, int usage)
         {
