@@ -341,10 +341,10 @@ namespace WMS.GUI
                         if (tempOldLoc.ItemNo.Equals(tempNewLoc.ItemNo) && tempNewLoc.Quantity != 0)
                         {
                             //Update old location with new values
-                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, oldLocNewItemNumber);
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, oldLocNewItemNumber, '-');
 
                             //Update new location with new values
-                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (quantityColumnInt + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), (quantityColumnInt + tempNewLoc.Quantity).ToString(), tempOldLoc.ItemNo.ToString(), '+');
 
                             //Update the item information database with new values
                             core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
@@ -355,10 +355,10 @@ namespace WMS.GUI
                         else
                         {
                             //Update old location with new values
-                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, oldLocNewItemNumber);
+                            core.DataHandler.ItemMove(tempOldLoc.Id.ToString(), oldLocNewQuantity, oldLocNewItemNumber, '-');
 
                             //Update new location with new values
-                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), quantityColumnInt.ToString(), tempOldLoc.ItemNo.ToString());
+                            core.DataHandler.ItemMove(tempNewLoc.Id.ToString(), quantityColumnInt.ToString(), tempOldLoc.ItemNo.ToString(), '+');
 
                             //Update the item information database with new values
                             core.DataHandler.ItemMove(tempNewLoc.ItemNo, tempNewLoc.LocationString);
