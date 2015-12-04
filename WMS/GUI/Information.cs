@@ -48,6 +48,7 @@ namespace WMS.GUI
         /// </summary>
         public void UpdateGuiElements()
         {
+            data.Clear();
             UpdateInfo();
         }
 
