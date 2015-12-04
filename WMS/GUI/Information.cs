@@ -7,6 +7,7 @@ using WMS.Interfaces;
 using WMS.WH;
 using static WMS.Reference.SearchTerms;
 using static WMS.Reference.DataBases;
+using System.Text.RegularExpressions;
 
 namespace WMS.GUI
 {
@@ -164,6 +165,7 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
+            Regex specialChars = new Regex("^[a-åA-Å0-9]*.");
             int outValue = 0; //use for the int try parse only
             data.Clear();
             //Determines if search should search by item no or description
@@ -171,9 +173,13 @@ namespace WMS.GUI
             {
                 core.DataHandler.Search(searchTextBox.Text, INFOMATION_DB, ITEM).Fill(data);
             }
-            else
+            else if (searchTextBox.Text.Equals(specialChars))
             {
                 core.DataHandler.Search(searchTextBox.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
+            }
+            else
+            {
+                core.DataHandler.GetData(INFOMATION_DB);
             }
         }
 
