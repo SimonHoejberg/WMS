@@ -209,7 +209,7 @@ namespace WMS.GUI
                 int count = dataGridView.RowCount;
                 for (int i = 0; i < count; i++)
                 {
-                    if (dataGridView["amount", i].Value != null)
+                    if (dataGridView["amount", i].Value != null && (int.Parse(dataGridView["amount", i].Value.ToString()) > 0))
                     {
                         //Gets the diffent values
                         string itemNo = dataGridView["itemNo", i].Value.ToString();
