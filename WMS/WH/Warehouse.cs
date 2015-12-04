@@ -112,7 +112,7 @@ namespace WMS.WH
         private bool ItemOnLocationSameAsNewItem(int shelf, int space,Item item)
         {
             Location location = locations[shelf, space]; //Gets the location
-            return (location.ItemNo.Equals(item.ItemNo) && location.Quantity <= 100); //Returns true if it the same item and it has room for more items
+            return (location.ItemNo.Equals(item.ItemNo) && (location.Quantity+item.InStock) <= 100); //Returns true if it the same item and it has room for more items
         }
 
         /// <summary>
