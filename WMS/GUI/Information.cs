@@ -180,7 +180,7 @@ namespace WMS.GUI
             }
             else
             {
-                core.DataHandler.GetData(INFOMATION_DB);
+                core.DataHandler.GetData(INFOMATION_DB).Fill(data);
             }
         }
 
