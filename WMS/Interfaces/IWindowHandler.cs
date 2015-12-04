@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WMS.Interfaces
 {
+    /// <summary>
+    /// An interface that a windowhandler must implement, which implements the IMenuWindows interface
+    /// </summary>
     public interface IWindowHandler : IMenuWindows
     {
         void Update(object caller);

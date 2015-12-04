@@ -2,6 +2,9 @@
 
 namespace WMS.WH
 {
+    /// <summary>
+    /// A class that can be made object of that holds the different values from the specific item from the database
+    /// </summary>
     public class Item : IComparable
     {
         public string ItemNo { get; }
@@ -19,10 +22,11 @@ namespace WMS.WH
             Usage = itemUsage;
         }
 
-        public string Identification => $"{ItemNo}: {Description}";
+        public string Identification => $"{ItemNo}: {Description}"; //Returns the two strings identifing the item
 
         public override string ToString() => $"{ItemNo}: {Description}: {InStock}:";
 
+        //Compare fuction used in warehouse to sort the item by its usage in descending order
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;

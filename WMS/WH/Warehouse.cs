@@ -81,7 +81,7 @@ namespace WMS.WH
         private void PlaceItem(Location location, Item item)
         {
             //Places the item on the location on the database
-            core.DataHandler.PlaceItem(location.Id, location.Shelf, item.InStock.ToString(), item.ItemNo, item.Usage.ToString(), orderNo, item.Description);
+            core.DataHandler.PlaceItem(location.Id, location.LocationString, item.InStock.ToString(), item.ItemNo, item.Usage.ToString(), orderNo, item.Description);
             //Fills in the location on the virtuel warehouse  
             location.ItemNo = item.ItemNo;
             location.Quantity = item.InStock;

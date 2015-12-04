@@ -43,7 +43,7 @@ namespace WMS.Handlers
         }
 
         /// <summary>
-        /// Gets one or several items according to the db and the itemNo
+        /// Gets one or several items according to the database and the item No
         /// </summary>
         /// <param name="db"></param>
         /// <param name="searchTerm"></param>
@@ -52,7 +52,7 @@ namespace WMS.Handlers
         public MySqlDataAdapter GetDataForItemNo(string db, string searchTerm, string itemNo)
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlC = "SELECT * FROM " + db + " WHERE " + searchTerm + " = " + itemNo;
+            string sqlC = $"SELECT * FROM {db} WHERE {searchTerm} = {itemNo}";
             ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             return MyDA;
@@ -66,7 +66,7 @@ namespace WMS.Handlers
         public MySqlDataAdapter GetAllDataFromDataBase(string db)
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
-            string sqlCom = string.Format("SELECT * FROM {0}", db);
+            string sqlCom = $"SELECT * FROM {db}";
             ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
             return MyDA;
@@ -101,7 +101,7 @@ namespace WMS.Handlers
         public MySqlDataReader GetItemInfo(string db, string searchTerm, string i)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = "SELECT * FROM " + db + " WHERE "+ searchTerm + " = " + i;
+            string sql = $"SELECT * FROM {db} WHERE {searchTerm} = {i}";
             command.CommandText = sql;
             ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
@@ -116,7 +116,7 @@ namespace WMS.Handlers
         public MySqlDataReader GetItemLatestLog(string itemNo)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = "SELECT COUNT(*) FROM log  WHERE itemNo = " + itemNo;
+            string sql = $"SELECT COUNT(*) FROM log  WHERE itemNo = {itemNo}";
             command.CommandText = sql;
             ResetConnection();
             int i = int.Parse(command.ExecuteScalar().ToString());
@@ -136,7 +136,7 @@ namespace WMS.Handlers
         public MySqlDataReader GetDataForList(string db)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = "SELECT * FROM " + db;
+            string sql = $"SELECT * FROM {db}";
             command.CommandText = sql;
             ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
@@ -227,10 +227,10 @@ namespace WMS.Handlers
         /// <param name="id"></param>
         /// <param name="newQuantity"></param>
         /// <param name="newItem"></param>
-        public void moveItem(string id, string newQuantity, string newItem)
+        public void moveItem(string id, string newQuantity, string newItem, char op)
         {
             MySqlCommand command = connection.CreateCommand();
-            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = quantity + {newQuantity} WHERE ID = '{id}'";
+            string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = {newQuantity} WHERE ID = '{id}'";
             command.CommandText = sql;
             ResetConnection();
             command.ExecuteNonQuery();
