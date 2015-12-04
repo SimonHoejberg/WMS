@@ -15,9 +15,10 @@ namespace UnitTestProject1
     [TestClass]
     public class ItemTest
     {
-       
+
+        //Check GetTimeStamp() don`t return null
         [TestMethod]
-        public void TestMethodTimeStamp()
+        public void GetTimeStamp()
         {
             
             IMain main = new Main();
@@ -28,10 +29,25 @@ namespace UnitTestProject1
             
             Assert.IsNotNull(temp);
         }
+        
 
-
+        //Check if GetData() don`t return null
         [TestMethod]
-        public void TestMethodGetUser()
+        public void GetData()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            MySqlDataAdapter output;
+
+            output = temp.GetData("Information");
+
+            Assert.IsNotNull(output);
+        }
+
+        //Check if GetUserName() returns the rigth name
+        [TestMethod]
+        public void GetUserName()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -46,41 +62,97 @@ namespace UnitTestProject1
             Assert.AreEqual("DonF", name2);
         }
 
-
+        //Check if InfoToList() returns a list that`s not null and 11 in size
         [TestMethod]
-        public void TestMethodUserToList()
+        public void InfoToList()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            List<Item> output;
+          
+            output = temp.InfoToList();
+
+            Assert.AreEqual(output.Count, 11);
+            Assert.IsNotNull(output);
+        }
+
+        //Check if UserToList() returns a list that`s not null and 5 in size
+        [TestMethod]
+        public void UserToList()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
             List<string> output;
-            List<string> test = new List<string>();
-
+        
             output = temp.UserToList();
 
             Assert.IsNotNull(output);
             Assert.AreEqual(output.Count, 5);
         }
 
-
-
+        //Check if UserToList() returns a list that`s not null and 2 in size
         [TestMethod]
-        public void TestMethodMaxSpace()
+        public void OrderToList()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            int test = 0;
+            List<Order> output = new List<Order>();
+        
+            output = temp.OrderToList();
 
-            test = temp.GetMaxSpace();
-
-            Assert.AreEqual(test, 5);
+            Assert.AreEqual(output.Count, 2);
+            Assert.IsNotNull(output);
         }
 
 
 
         [TestMethod]
-        public void TestMethodGetDataFromItemNo()
+        public void LocationToList()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            List<Location> output;
+        
+            output = temp.LocationToList();
+
+            Assert.AreEqual(output.Count, 30);
+            Assert.IsNotNull(output);
+        }
+
+        [TestMethod]
+        public void LogToListTest()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            string tempString = "2011600";
+            List<LogItem> output;
+
+            output = temp.LogToList(tempString);
+
+            Assert.IsNotNull(output);
+        }
+
+        [TestMethod()]
+        public void GetItemFromItemNo()
+        {
+            IMain main = new Main();
+            ICore core = new CoreSystem(main);
+            DataHandler temp = new DataHandler(core);
+            string tempString = "2011600";
+            Item output;
+
+            output = temp.GetItemFromItemNo(tempString);
+
+            Assert.IsNotNull(output);
+        }
+
+        [TestMethod]
+        public void GetDataFromItemNo()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
@@ -94,67 +166,48 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestMethodGetData()
+        public void GetUsage()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            MySqlDataAdapter output;
-            MySqlDataAdapter test = new MySqlDataAdapter();
 
-            output = temp.GetData("Information");
+            int output = temp.GetUsage("2011600");
 
             Assert.IsNotNull(output);
-        }
-
-        [TestMethod]
-        public void TestMethodLocationToList()
-        {
-            IMain main = new Main();
-            ICore core = new CoreSystem(main);
-            DataHandler temp = new DataHandler(core);
-            List<Location> output;
-            List<Order> test = new List<Order>();
-
-            output = temp.LocationToList();
-
-            Assert.AreEqual(output.Count, 30);
-            Assert.IsNotNull(output);
+            Assert.AreEqual(output, 84);
         }
 
 
         [TestMethod]
-        public void TestMethodOrderToList()
+        public void GetMaxShelf()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            List<Order> output = new List<Order>();
-            List<Order> test = new List<Order>();
 
-            output = temp.OrderToList();
+            int output = temp.GetMaxShelf();
 
-            Assert.AreEqual(output.Count, 3);
+            Assert.AreEqual(output, 6);
             Assert.IsNotNull(output);
         }
 
-
-
+        
         [TestMethod]
-        public void TestMethodInfoToList()
+        public void GetMaxSpace()
         {
             IMain main = new Main();
             ICore core = new CoreSystem(main);
             DataHandler temp = new DataHandler(core);
-            List<Item> output;
-            List<Item> test = new List<Item>();
+            int test = 0;
 
+            test = temp.GetMaxSpace();
 
-            output = temp.InfoToList();
-
-            Assert.AreEqual(output.Count, 11);
-            Assert.IsNotNull(output);
+            Assert.AreEqual(test, 5);
         }
+
+        //-----------------------------------------------------//   
+
 
     }
 
