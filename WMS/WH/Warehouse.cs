@@ -125,13 +125,13 @@ namespace WMS.WH
             items.Sort(); //Sorts the items by their compare fuction
             foreach (Item item in items)
             {
-                int shelf = 0, space = 0; //Values used for the start of the recursive fuction
+                int shelf = 0, space = 0; //Values used for the start of the recursive method
                 //If a item has a quickPlace value it gets it and used that as a shelf
                 if (quickPlace.ContainsKey(item.ItemNo))
                 {
                     quickPlace.TryGetValue(item.ItemNo, out shelf);
                 }
-                FindAvaliableSpace(item, shelf, space); //Calls the recursive fuction
+                FindAvaliableSpace(item, shelf, space); //Calls the recursive method
             }
             itemsPlaced = this.itemsPlaced; //Assigns the item placed list to the out parameter
             return itemsNotPlaced; //Returns the not placed list
