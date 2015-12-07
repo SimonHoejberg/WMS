@@ -19,26 +19,6 @@ namespace WMS.WH
         }
 
         /// <summary>
-        /// Gets the max count of spaces on a row on a shelf
-        /// </summary>
-        /// <returns></returns>
-        private int MaxSpace()
-        {
-            maxSpace = core.DataHandler.GetMaxSpace();
-            return maxSpace;
-        }
-
-        /// <summary>
-        /// Gets the max count of rows
-        /// </summary>
-        /// <returns></returns>
-        private int MaxShelf()
-        {
-            maxShelf = core.DataHandler.GetMaxShelf();
-            return maxShelf;
-        }
-
-        /// <summary>
         /// Creates a virtuel representation of the items on the locations in the warehouse
         /// </summary>
         /// <param name="orderNo"></param>
@@ -55,7 +35,7 @@ namespace WMS.WH
                 //If the is no quantity on a location there is no items on that location
                 if (location.Quantity <= 0)
                 {
-                    locations[location.BestLocation, space].ItemNo = "0"; 
+                    locations[location.BestLocation, space].ItemNo = "0";
                 }
                 //If an item exist on a location add its latest bestLocation to the quickPlace dictonary
                 if (!location.ItemNo.Equals("0"))
@@ -87,32 +67,6 @@ namespace WMS.WH
             location.Quantity = item.InStock;
             location.Usage = item.Usage;
             itemsPlaced.Add(item, location); //Adds the item and location to the return list of placed items
-
-        }
-
-        /// <summary>
-        /// Checks if the location is empty
-        /// </summary>
-        /// <param name="shelf"></param>
-        /// <param name="space"></param>
-        /// <returns></returns>
-        private bool LocationEmpty(int shelf, int space)
-        {
-            Location location = locations[shelf, space]; //Gets the location
-            return location.ItemNo.Equals("0");
-        }
-
-        /// <summary>
-        /// Checks if the item is the same on the location as the new item
-        /// </summary>
-        /// <param name="shelf"></param>
-        /// <param name="space"></param>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        private bool ItemOnLocationSameAsNewItem(int shelf, int space,Item item)
-        {
-            Location location = locations[shelf, space]; //Gets the location
-            return (location.ItemNo.Equals(item.ItemNo) && (location.Quantity+item.InStock) <= 250); //Returns true if it the same item and it has room for more items
         }
 
         /// <summary>
@@ -158,7 +112,6 @@ namespace WMS.WH
             }
         }
 
-
         /// <summary>
         /// Finds and places new items registered in the warehouse and returns two list a not placed list by return and a placed list by out
         /// </summary>
@@ -184,7 +137,52 @@ namespace WMS.WH
             return itemsNotPlaced; //Returns the not placed list
         }
 
+        #region Helper Methods
+        /// <summary>
+        /// Gets the max count of spaces on a row on a shelf
+        /// </summary>
+        /// <returns></returns>
+        private int MaxSpace()
+        {
+            maxSpace = core.DataHandler.GetMaxSpace();
+            return maxSpace;
+        }
+
+        /// <summary>
+        /// Gets the max count of rows
+        /// </summary>
+        /// <returns></returns>
+        private int MaxShelf()
+        {
+            maxShelf = core.DataHandler.GetMaxShelf();
+            return maxShelf;
+        }
+
+        /// <summary>
+        /// Checks if the location is empty
+        /// </summary>
+        /// <param name="shelf"></param>
+        /// <param name="space"></param>
+        /// <returns></returns>
+        private bool LocationEmpty(int shelf, int space)
+        {
+            Location location = locations[shelf, space]; //Gets the location
+            return location.ItemNo.Equals("0");
+        }
+
+        /// <summary>
+        /// Checks if the item is the same on the location as the new item
+        /// </summary>
+        /// <param name="shelf"></param>
+        /// <param name="space"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool ItemOnLocationSameAsNewItem(int shelf, int space, Item item)
+        {
+            Location location = locations[shelf, space]; //Gets the location
+            return (location.ItemNo.Equals(item.ItemNo) && (location.Quantity + item.InStock) <= 250); //Returns true if it the same item and it has room for more items
+        }
+        #endregion
+
     }
-
-
 }

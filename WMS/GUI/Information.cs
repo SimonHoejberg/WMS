@@ -166,7 +166,7 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
-            Regex specialChars = new Regex("^[a-åA-Å0-9]*.");
+            Regex specialChars = new Regex("^[a-åA-Å0-9]+$");
             int outValue = 0; //use for the int try parse only
             data.Clear();
             //Determines if search should search by item no or description
@@ -174,7 +174,7 @@ namespace WMS.GUI
             {
                 core.DataHandler.Search(searchTextBox.Text, INFOMATION_DB, ITEM).Fill(data);
             }
-            else if (searchTextBox.Text.Equals(specialChars))
+            else if (specialChars.IsMatch(searchTextBox.Text))
             {
                 core.DataHandler.Search(searchTextBox.Text, INFOMATION_DB, DESCRIPTION).Fill(data);
             }
