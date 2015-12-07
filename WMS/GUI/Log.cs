@@ -173,7 +173,7 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void SearchTextBoxTextChanged(object sender, EventArgs e)
         {
-            Regex specialChar = new Regex("^[a-åA-Å0-9]+$");
+            Regex specialChar = new Regex("^[a-åA-Å0-9].+$");
             int outValue = 0; //use for the int try parse only
             data.Clear();
             //Determines if search should search by item no or description
