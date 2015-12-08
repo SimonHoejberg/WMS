@@ -6,7 +6,7 @@ using WMS.Interfaces;
 
 namespace WMS.Handlers
 {
-    public class SqlHandler
+    public class SqlHandler : IDataBaseHandler
     {
         private ICore core;
 
@@ -34,8 +34,6 @@ namespace WMS.Handlers
             string sql = $"SELECT name FROM user WHERE userId = '{userId}'";
             //Sets the command text to the sql string
             command.CommandText = sql;
-            //Resets the connection to the server
-            ResetConnection();
             //Execute the MySqlDataReader
             MySqlDataReader reader = command.ExecuteReader();
             //returns the MySqlDataReader(reader)
@@ -53,7 +51,6 @@ namespace WMS.Handlers
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sqlC = $"SELECT * FROM {db} WHERE {searchTerm} = {itemNo}";
-            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sqlC, connection);
             return MyDA;
         }
@@ -67,7 +64,6 @@ namespace WMS.Handlers
         {
             MySqlDataAdapter MyDA = new MySqlDataAdapter();
             string sqlCom = $"SELECT * FROM {db}";
-            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sqlCom, connection);
             return MyDA;
         }
@@ -86,7 +82,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = $"SELECT * FROM {db} WHERE {searchTerm} = {i} limit {fromLimit} ,{amount}";
             command.CommandText = sql;
-            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
@@ -103,7 +98,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = $"SELECT * FROM {db} WHERE {searchTerm} = {i}";
             command.CommandText = sql;
-            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
@@ -118,7 +112,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = $"SELECT COUNT(*) FROM log  WHERE itemNo = {itemNo}";
             command.CommandText = sql;
-            ResetConnection();
             int i = int.Parse(command.ExecuteScalar().ToString());
             int temp = i - 10;
             if(temp < 0)
@@ -138,7 +131,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = $"SELECT * FROM {db}";
             command.CommandText = sql;
-            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
@@ -160,7 +152,6 @@ namespace WMS.Handlers
             string sql = "INSERT INTO log (itemNo, description, date, user, operation, amount, prevQuantity, newQuantity)"+ 
                          $"VALUES ({itemNo}, '{description}', '{date}', '{user}', '{operation}', {amount}, {selectInfo}, {selectInfo})";
             command.CommandText = sql;
-            ResetConnection();
             command.ExecuteNonQuery();
         }
 
@@ -185,7 +176,6 @@ namespace WMS.Handlers
                          $"UPDATE information SET inStock = inStock {op} {quantity} WHERE itemNo = {itemNo};"+
                          "COMMIT;";
             command.CommandText = sql;
-            ResetConnection();
             command.ExecuteNonQuery();
         }
 
@@ -202,7 +192,6 @@ namespace WMS.Handlers
             //The LIKE in the sql string is used like where but is not as specific
             //The % is used to tell that what comes next is unkwown
             string sql = $"SELECT * FROM {db} WHERE {searchTerm} LIKE '{itemNo}%'";
-            ResetConnection();
             MyDA.SelectCommand = new MySqlCommand(sql, connection);
             return MyDA;
         }
@@ -217,7 +206,6 @@ namespace WMS.Handlers
             MySqlCommand command2 = connection.CreateCommand();
             string sql2 = $"UPDATE information SET location1 = '{newLocation}' WHERE itemNo = '{Item}'";
             command2.CommandText = sql2;
-            ResetConnection();
             command2.ExecuteNonQuery();
         }
 
@@ -232,7 +220,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = {newQuantity} WHERE ID = '{id}'";
             command.CommandText = sql;
-            ResetConnection();
             command.ExecuteNonQuery();
         }
 
@@ -259,7 +246,6 @@ namespace WMS.Handlers
                $"UPDATE information SET location1 = '{newLocation}' ,inStock = inStock + {amount} WHERE itemNo = '{itemNo}';" +
                "COMMIT;";
             command.CommandText = sql;
-            ResetConnection();
             command.ExecuteNonQuery();
         }
 
@@ -272,7 +258,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = "SELECT bestLocation FROM location";
             command.CommandText = sql;
-            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
@@ -286,7 +271,6 @@ namespace WMS.Handlers
             MySqlCommand command = connection.CreateCommand();
             string sql = "SELECT space FROM location";
             command.CommandText = sql;
-            ResetConnection();
             MySqlDataReader reader = command.ExecuteReader();
             return reader;
         }
@@ -326,15 +310,6 @@ namespace WMS.Handlers
         public void CloseConnection()
         {
             connection.Close();
-        }
-
-        /// <summary>
-        /// Closes the connection and opens it again
-        /// </summary>
-        private void ResetConnection()
-        {
-            CloseConnection();
-            OpenConnection();
         }
     }
 

@@ -12,7 +12,7 @@ namespace WMS.Handlers
     public class DataHandler
     {
         private ICore core;
-        private SqlHandler sql;
+        private IDataBaseHandler sql;
         public DataHandler(ICore core)
         {
             this.core = core;
@@ -43,6 +43,7 @@ namespace WMS.Handlers
             {
                 userName = reader["name"].ToString();
             }
+            reader.Close();
             return userName;
         }
 
@@ -72,6 +73,7 @@ namespace WMS.Handlers
                 temp.Add(new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location1"].ToString(), int.Parse(reader["itemUsage"].ToString())));
 
             }
+            reader.Close();
             return temp;
         }
 
@@ -87,6 +89,7 @@ namespace WMS.Handlers
             {
                 temp.Add(reader["userId"].ToString());
             }
+            reader.Close();
             return temp;
         }
 
@@ -110,6 +113,7 @@ namespace WMS.Handlers
                 }
 
             }
+            reader.Close();
             return temp;
         }
 
@@ -125,6 +129,7 @@ namespace WMS.Handlers
             {
                 temp.Add(new Location(reader["ID"].ToString(), reader["shelf"].ToString(), reader["space"].ToString(), reader["itemNo"].ToString(), int.Parse(reader["quantity"].ToString()),int.Parse(reader["bestLocation"].ToString()), int.Parse(reader["itemUsage"].ToString())));
             }
+            reader.Close();
             return temp;
         }
 
@@ -141,6 +146,7 @@ namespace WMS.Handlers
             {
                 temp.Add(new LogItem(reader["itemNo"].ToString(), reader["description"].ToString(), reader["date"].ToString(), reader["operation"].ToString(),reader["amount"].ToString(), reader["user"].ToString()));
             }
+            reader.Close();
             return temp;
         }
 
@@ -166,6 +172,7 @@ namespace WMS.Handlers
             {
                 item = new Item(reader["itemNo"].ToString(), reader["description"].ToString(), int.Parse(reader["inStock"].ToString()), reader["location1"].ToString(), int.Parse(reader["itemUsage"].ToString()));
             }
+            reader.Close();
             return item;        
         }
 
@@ -279,6 +286,7 @@ namespace WMS.Handlers
             {
                 usage = int.Parse(reader["itemUsage"].ToString());
             }
+            reader.Close();
             return usage;
         }
 
@@ -299,6 +307,7 @@ namespace WMS.Handlers
                 }
             }
             res++;
+            reader.Close();
             return res;
         }
 
@@ -318,6 +327,7 @@ namespace WMS.Handlers
                     res = temp;
                 }
             }
+            reader.Close();
             return res;
         }
 
