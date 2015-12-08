@@ -6,7 +6,7 @@ using WMS.Interfaces;
 
 namespace WMS.Handlers
 {
-    public class SqlHandler : IDataBaseHandler
+    public class SqlHandler
     {
         private ICore core;
 

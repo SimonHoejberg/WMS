@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WMS.Interfaces;
 using MySql.Data.MySqlClient;
@@ -12,7 +11,7 @@ namespace WMS.Handlers
     public class DataHandler
     {
         private ICore core;
-        private IDataBaseHandler sql;
+        private SqlHandler sql;
         public DataHandler(ICore core)
         {
             this.core = core;
