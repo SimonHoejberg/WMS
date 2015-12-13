@@ -48,7 +48,7 @@ namespace WMS.GUI
         /// </summary>
         private void MakeDataGridView()
         {
-            dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             //Sets the header text on the columns
             dataGridView.Columns["itemNo"].HeaderText = core.Lang.ITEM_NO;
             dataGridView.Columns["description"].HeaderText = core.Lang.DESCRIPTION;
@@ -79,7 +79,7 @@ namespace WMS.GUI
                 //Sets the size of all columns to automatically resize
                 dataGridView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
-            dataGridView.CellValueChanged += dataGridViewCellValueChanged;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
 
         /// <summary>
@@ -87,27 +87,33 @@ namespace WMS.GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView.CellValueChanged -= dataGridViewCellValueChanged; //Then event should only fire one time so we disable it if there is a eror
-            string amount = dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged; //Then event should only fire one time so we disable it if there is a eror
+            string amountString = dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            string instockString = dataGridView["inStock", e.RowIndex].Value.ToString();
+            int inStock = int.Parse(instockString);
 
-            int output = 0;
+            int amount = 0;
             //Check if the input amount is null, if it is an int and if it is greater than 0
-            if (amount != null)
+            if (amountString != null)
             {
-                if (!int.TryParse(amount, out output))
+                if (!int.TryParse(amountString, out amount))
                 {
                     MessageBox.Show(core.Lang.MUST_BE_A_NUMER, core.Lang.ERROR); //Tells the user that only numbers is allowed
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null; //Removes the value in the cell
                 }
-                else if (output < 0)
+                else if (amount < 0)
                 {
                     MessageBox.Show(core.Lang.MUST_BE_A_POSITIVE, core.Lang.ERROR); //Tells the user that only positive numbers is allowed
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null; //Removes the value in the cell
                 }
+                else if(amount > inStock)
+                {
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = inStock;
+                }
             }
-            dataGridView.CellValueChanged += dataGridViewCellValueChanged; //Rebind the event
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged; //Rebind the event
         }
         #endregion
 
@@ -167,15 +173,16 @@ namespace WMS.GUI
                     //If more locations it finds all the locations and lists them in a listBox
                     //Shows the panel and giv the listBox focus
                     locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationListBox.DisplayMember = "LocationAndQuantity";
                     locationPanel.Visible = true; 
                     locationListBox.Focus();
                 }
                 else
                 {
                     //Unbinds the event and fills the location cell with the one location of the item and rebinds the event
-                    dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
+                    dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
                     dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
-                    dataGridView.CellValueChanged += dataGridViewCellValueChanged;
+                    dataGridView.CellValueChanged += DataGridViewCellValueChanged;
                 }
             }
             else
@@ -210,11 +217,12 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void ChooseLocationButtonClick(object sender, EventArgs e)
         {
-            dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             locationPanel.Visible = false; //Hides the location panel so you only can choose once 
             searchTextBox.Focus();
             dataGridView["location", dataGridView.RowCount - 1].Value = locationListBox.SelectedItem; //Sets the value in the cell
-            dataGridView.CellValueChanged += dataGridViewCellValueChanged;
+            dataGridView["inStock", dataGridView.RowCount - 1].Value = ((Location)locationListBox.SelectedItem).Quantity;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
 
         /// <summary>
@@ -302,7 +310,7 @@ namespace WMS.GUI
         #region Language
         public void UpdateLang()
         {
-            dataGridView.CellValueChanged -= dataGridViewCellValueChanged;
+            dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
             searchButton.Text = core.Lang.ADD;
             Text = core.Lang.REDUCE;
             confirmBtn.Text = core.Lang.CONFIRM;
@@ -317,7 +325,7 @@ namespace WMS.GUI
                 dataGridView.Columns["location"].HeaderText = core.Lang.LOCATION;
                 dataGridView.Columns["amount"].HeaderText = core.Lang.AMOUNT;
             }
-            dataGridView.CellValueChanged += dataGridViewCellValueChanged;
+            dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
         #endregion
     }

@@ -97,17 +97,24 @@ namespace WMS.GUI
             //Checks if the amount column has changed
             if (dataGridView.Columns[e.ColumnIndex].Equals(dataGridView.Columns["amount"]))
             {
-                int output = 0;
+                string instockString = dataGridView["inStock", e.RowIndex].Value.ToString();
+                int inStock = int.Parse(instockString);
+                int amount = 0;
                 //Checks if the input is an integer and if its less than 0
-                if (!int.TryParse(dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out output))
+                if (!int.TryParse(dataGridView[e.ColumnIndex, e.RowIndex].Value.ToString(), out amount))
                 {
                     MessageBox.Show(core.Lang.MUST_BE_A_NUMER, core.Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
                 }
-                else if (output < 0)
+                else if (amount < 0)
                 {
                     MessageBox.Show(core.Lang.MUST_BE_A_POSITIVE, core.Lang.ERROR);
                     dataGridView[e.ColumnIndex, e.RowIndex].Value = null;
+                }
+                else if(amount > inStock)
+                {
+                    dataGridView.CellValueChanged += DataGridViewCellValueChanged;
+                    dataGridView[e.ColumnIndex, e.RowIndex].Value = inStock;
                 }
                 else
                 {
@@ -212,7 +219,7 @@ namespace WMS.GUI
             locationPanel.Visible = false;
             dataGridView.Focus();
             dataGridView["location", dataGridView.RowCount - 1].Value = locationListBox.SelectedItem;
-            Location location = ((Location)locationListBox.SelectedItem);
+            dataGridView["inStock", dataGridView.RowCount - 1].Value = ((Location)locationListBox.SelectedItem).Quantity;
             searchTextBox.Focus();
             dataGridView.CellValueChanged += DataGridViewCellValueChanged;
         }
@@ -267,6 +274,7 @@ namespace WMS.GUI
                 if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
                 {
                     locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationListBox.DisplayMember = "LocationAndQuantity";
                     locationPanel.Visible = true;
                     locationListBox.Focus();
                 }

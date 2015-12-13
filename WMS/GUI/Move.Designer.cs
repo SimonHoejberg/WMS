@@ -40,7 +40,7 @@
             // cancelButton
             // 
             this.cancelButton.Location = new System.Drawing.Point(1088, 647);
-            this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 28);
             this.cancelButton.TabIndex = 7;
@@ -51,7 +51,7 @@
             // confirmButton
             // 
             this.confirmButton.Location = new System.Drawing.Point(1196, 647);
-            this.confirmButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.confirmButton.Margin = new System.Windows.Forms.Padding(4);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(100, 28);
             this.confirmButton.TabIndex = 5;
@@ -69,7 +69,7 @@
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView.Location = new System.Drawing.Point(16, 65);
-            this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.Size = new System.Drawing.Size(1280, 544);
             this.dataGridView.TabIndex = 4;
@@ -80,27 +80,27 @@
             this.moveAddItemTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.moveAddItemTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.moveAddItemTextBox.Location = new System.Drawing.Point(16, 15);
-            this.moveAddItemTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.moveAddItemTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.moveAddItemTextBox.Name = "moveAddItemTextBox";
             this.moveAddItemTextBox.Size = new System.Drawing.Size(360, 22);
             this.moveAddItemTextBox.TabIndex = 8;
-            this.moveAddItemTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.moveAddItemTextBoxKeyUp);
+            this.moveAddItemTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MoveAddItemTextBoxKeyDown);
             // 
             // moveAddItemButton
             // 
             this.moveAddItemButton.Location = new System.Drawing.Point(385, 15);
-            this.moveAddItemButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.moveAddItemButton.Margin = new System.Windows.Forms.Padding(4);
             this.moveAddItemButton.Name = "moveAddItemButton";
             this.moveAddItemButton.Size = new System.Drawing.Size(100, 28);
             this.moveAddItemButton.TabIndex = 9;
             this.moveAddItemButton.Text = "Add Line";
             this.moveAddItemButton.UseVisualStyleBackColor = true;
-            this.moveAddItemButton.Click += new System.EventHandler(this.moveAddItemButton_Click);
+            this.moveAddItemButton.Click += new System.EventHandler(this.MoveAddItemButtonClick);
             // 
             // rmoveRowButton
             // 
             this.rmoveRowButton.Location = new System.Drawing.Point(905, 647);
-            this.rmoveRowButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rmoveRowButton.Margin = new System.Windows.Forms.Padding(4);
             this.rmoveRowButton.Name = "rmoveRowButton";
             this.rmoveRowButton.Size = new System.Drawing.Size(119, 28);
             this.rmoveRowButton.TabIndex = 11;
@@ -120,7 +120,7 @@
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.dataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Move";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Move";

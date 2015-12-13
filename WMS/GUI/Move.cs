@@ -34,7 +34,19 @@ namespace WMS.GUI
             
         }
 
-        #region Initialize dataGridView
+        private void MoveLoad(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
+
+        public void UpdateGuiElements()
+        {
+            populateItemDictionary(itemListA, itemData);
+            PopulateLocationDictionary(locationData);
+        }
+
+
+        #region DataGridView events and methods
         private void InitializeDataGridView()
         {
             //Dictionaries are used for easy reference and to minimize the need to reference to the database
@@ -106,20 +118,58 @@ namespace WMS.GUI
             dataGridView.CellValueChanged += new DataGridViewCellEventHandler(DataGridViewCellValueChanged);
             dataGridView.CurrentCellDirtyStateChanged += new EventHandler(DataGridViewCurrentCellDirtyStateChanged);
         }
+
+        /// <summary>
+        /// Checks if there is any problems in the datagridview's rows that would prevent a commit
+        /// </summary>
+        /// <param name="noPro"></param>
+        /// <returns></returns>
+        private string CheckRowsForProblems(out bool noPro)
+        {
+            string listOfProblems = "";
+            bool noProblems = true;
+
+            foreach (DataGridViewRow dgvRow in dataGridView.Rows)
+            {
+                if (dgvRow.Index == dataGridView.Rows.Count)//We don't want the last and empty row
+                {
+                    break;
+                }
+                if (dgvRow.Cells[newLocationColumnString].Value == DBNull.Value)
+                {
+                    noProblems = false;
+                    listOfProblems += ($"\n{core.Lang.VALUE_IN_NEW_LOCATION} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
+                }
+                if (dgvRow.Cells[quantityColumnString].Value == DBNull.Value)
+                {
+                    noProblems = false;
+                    listOfProblems += ($"\n{core.Lang.VALUE_IN_AMOUNT} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
+                }
+                if (dgvRow.Cells[idColumnString].Value == DBNull.Value)
+                {
+                    noProblems = false;
+                    listOfProblems += ($"\n{core.Lang.VALUE_IN_ITEM_ID} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
+                }
+            }
+            noPro = noProblems;
+            return listOfProblems;
+        }
+
+        /// <summary>
+        /// Clears all rows from the dataGridView
+        /// </summary>
+        private void ClearDataGridView()
+        {
+            int rowCount = dataGridView.Rows.Count;
+            for (int i = 0; i < rowCount; i++)
+            {
+                dataGridView.Rows.RemoveAt(0);
+            }
+        }
+
         #endregion
 
-        private void MoveLoad(object sender, EventArgs e)
-        {
-            MaximizeBox = false;
-        }
-
-        public void UpdateGuiElements()
-        {
-            populateItemDictionary(itemListA, itemData);
-            PopulateLocationDictionary(locationData);
-        }
-
-        #region DirtyStateChanged event
+        #region State and cell changed events
         /// <summary>
         /// This handler manually raises the CellValueChanged event by calling the CommitEdit method.
         /// </summary>
@@ -133,9 +183,7 @@ namespace WMS.GUI
                 dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
-        #endregion
 
-        #region CellValueChanged event
         /// <summary>
         /// This event Fires when changes have been comitted to a cell in dataGridView. It is used for updataing info for the adjacent cells
         /// </summary>
@@ -224,7 +272,7 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region Get lists for udating combobox items
+        #region Locations list methods
         /// <summary>
         /// Returns a list of locations that contain the same item as the item chosen in the eventCell
         /// </summary>
@@ -266,47 +314,8 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region Check rows before commit
-        /// <summary>
-        /// Checks if there is any problems in the datagridview's rows that would prevent a commit
-        /// </summary>
-        /// <param name="noPro"></param>
-        /// <returns></returns>
-        private string checkRowsForProblems(out bool noPro)
-        {
-            string listOfProblems = "";
-            bool noProblems = true;
+        #region Button and TextBox events
 
-            foreach (DataGridViewRow dgvRow in dataGridView.Rows)
-            {
-                if (dgvRow.Index == dataGridView.Rows.Count)//We don't want the last and empty row
-                {
-                    break;
-                }
-                if (dgvRow.Cells[newLocationColumnString].Value == DBNull.Value)
-                {
-                    noProblems = false;
-                    listOfProblems += ($"\n{core.Lang.VALUE_IN_NEW_LOCATION} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
-                }
-                if (dgvRow.Cells[quantityColumnString].Value == DBNull.Value)
-                {
-                    noProblems = false;
-                    listOfProblems += ($"\n{core.Lang.VALUE_IN_AMOUNT} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
-                }
-                if (dgvRow.Cells[idColumnString].Value == DBNull.Value)
-                {
-                    noProblems = false;
-                    listOfProblems += ($"\n{core.Lang.VALUE_IN_ITEM_ID} {(dgvRow.Index + 1)} {core.Lang.IS_EMPTY}");
-                }
-            }
-            noPro = noProblems;
-            return listOfProblems;
-        }
-        #endregion
-
-        #region Button events
-
-        #region ConfirmButton event
         /// <summary>
         /// Event that fires when the Confirm button is clicked
         /// </summary>
@@ -316,7 +325,7 @@ namespace WMS.GUI
         {
             //Check if there is any problems that prevent a commit to the database
             bool noProblemsEncountered = true;
-            string problemList = checkRowsForProblems(out noProblemsEncountered);
+            string problemList = CheckRowsForProblems(out noProblemsEncountered);
 
             if (noProblemsEncountered == true) //Commit changes if no problems.
             {
@@ -391,7 +400,6 @@ namespace WMS.GUI
                 MessageBox.Show(problemList, core.Lang.ERROR);
             }
         }
-        #endregion
 
         /// <summary>
         /// Event that fires when the Cancel button is clicked
@@ -428,7 +436,7 @@ namespace WMS.GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void moveAddItemButton_Click(object sender, EventArgs e)
+        private void MoveAddItemButtonClick(object sender, EventArgs e)
         {
             int tempOutValue = 0;
             if (int.TryParse(moveAddItemTextBox.Text, out tempOutValue))
@@ -466,14 +474,23 @@ namespace WMS.GUI
             }
             else
             {
-                MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
                 moveAddItemTextBox.Text = "";
+                MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
+                
             }
 
         }
+
+        private void MoveAddItemTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                MoveAddItemButtonClick(this, e);
+            }
+        }
         #endregion
 
-        #region Populate dictionaries
+        #region Populate dictionaries methods
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
         {
             dic.Clear();
@@ -492,30 +509,8 @@ namespace WMS.GUI
             dic.Clear();
             foreach (Item item in core.DataHandler.InfoToList())
             { 
-                itemList.Add(item.Identification);
-                dic.Add(item.Identification, item);
-            }
-        }
-        #endregion
-
-        #region ClearDataGridView and MoveAddItemTextBoxKeyUp
-        private void moveAddItemTextBoxKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                moveAddItemButton_Click(this, e);
-            }
-        }
-
-        /// <summary>
-        /// Clears all rows from the dataGridView
-        /// </summary>
-        private void ClearDataGridView()
-        {
-            int rowCount = dataGridView.Rows.Count;
-            for (int i = 0; i < rowCount; i++)
-            {
-                dataGridView.Rows.RemoveAt(0);
+                itemList.Add(item.ItemNo);
+                dic.Add(item.ItemNo, item);
             }
         }
         #endregion
