@@ -77,6 +77,7 @@ namespace WMS.Interfaces
         string VALUE_IN_NEW_LOCATION { get; }
         string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; }
         string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; }
+        string ITEM_DOES_NOT_EXIST { get; }
 
         string OLD_QUANTITY { get; }
         string NEW_QUANTITY { get; }

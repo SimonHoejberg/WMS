@@ -22,7 +22,6 @@ namespace WMS.GUI
         private string idColumnString = "ItemIDColumn", descriptionColumnString = "DescriptionColumn", quantityColumnString = "QuantityColumn", locationColumnString = "LocationColumn", 
             newLocationColumnString = "NewLocationColumn", actionColumnString = "ActionColumn";
 
-        #region Constructor
         public Move(ICore core)
         {
             InitializeComponent();
@@ -34,7 +33,6 @@ namespace WMS.GUI
             InitializeDataGridView();
             
         }
-        #endregion
 
         #region Initialize dataGridView
         private void InitializeDataGridView()
@@ -109,6 +107,17 @@ namespace WMS.GUI
             dataGridView.CurrentCellDirtyStateChanged += new EventHandler(DataGridViewCurrentCellDirtyStateChanged);
         }
         #endregion
+
+        private void MoveLoad(object sender, EventArgs e)
+        {
+            MaximizeBox = false;
+        }
+
+        public void UpdateGuiElements()
+        {
+            populateItemDictionary(itemListA, itemData);
+            PopulateLocationDictionary(locationData);
+        }
 
         #region DirtyStateChanged event
         /// <summary>
@@ -421,41 +430,46 @@ namespace WMS.GUI
         /// <param name="e"></param>
         private void moveAddItemButton_Click(object sender, EventArgs e)
         {
-            if (itemData.ContainsKey(moveAddItemTextBox.Text))
+            int tempOutValue = 0;
+            if (int.TryParse(moveAddItemTextBox.Text, out tempOutValue))
             {
-                //Set Item in added row
-                dataGridView.Rows.Add(new DataGridViewRow());
-                dataGridView.Rows[dataGridView.RowCount - 1].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
-                dataGridView.Rows[dataGridView.RowCount - 1].Cells[descriptionColumnString].Value = itemData[moveAddItemTextBox.Text].Description;
-
-                //Set Location and location list in added row
-                var LocationCell = dataGridView.Rows[dataGridView.RowCount - 1].Cells[locationColumnString] as DataGridViewComboBoxCell;
-                LocationCell.Items.Clear();
-
-                //Sets the list for the CoboboxCell LocationCell which contains the items. This is done in a foreach loop as datasource causes problems.
-                List<Location> locList = LocationList(dataGridView.Rows[dataGridView.RowCount - 1].Cells[idColumnString], locationData);
-                foreach (Location lc in locList)
+                if (itemData.ContainsKey(moveAddItemTextBox.Text))
                 {
-                    LocationCell.Items.Add(lc);
+                    //Set Item in added row
+                    dataGridView.Rows.Add(new DataGridViewRow());
+                    dataGridView.Rows[dataGridView.RowCount - 1].Cells[idColumnString].Value = itemData[moveAddItemTextBox.Text].ItemNo;
+                    dataGridView.Rows[dataGridView.RowCount - 1].Cells[descriptionColumnString].Value = itemData[moveAddItemTextBox.Text].Description;
+
+                    //Set Location and location list in added row
+                    var LocationCell = dataGridView.Rows[dataGridView.RowCount - 1].Cells[locationColumnString] as DataGridViewComboBoxCell;
+                    LocationCell.Items.Clear();
+
+                    //Sets the list for the CobomboxCell LocationCell which contains the items. This is done in a foreach loop as datasource causes problems.
+                    List<Location> locList = LocationList(dataGridView.Rows[dataGridView.RowCount - 1].Cells[idColumnString], locationData);
+                    foreach (Location lc in locList)
+                    {
+                        LocationCell.Items.Add(lc);
+                    }
+                    //If items exist in the´location list set the selected value in the LocationCell to item nr. 1
+                    if (LocationCell.Items.Count != 0)
+                    {
+                        LocationCell.Value = LocationCell.Items[0];
+                    }
+
+                    //Reset search box
+                    moveAddItemTextBox.Text = "";
+
+                    //Sets the quantity to 0 to make sure a null reference can't happen.
+                    dataGridView.Rows[dataGridView.RowCount - 1].Cells[quantityColumnString].Value = 0;
+
                 }
-                //If items exist in the´location list set the selected value in the LocationCell to item nr. 1
-                if (LocationCell.Items.Count != 0)
-                {
-                    LocationCell.Value = LocationCell.Items[0];
-                }
-
-                //Reset search box
-                moveSearchLabel.Visible = false;
-                moveAddItemTextBox.Text = "";
-
-                //Sets the quantity to 0 to make sure a null reference can't happen.
-                dataGridView.Rows[dataGridView.RowCount - 1].Cells[quantityColumnString].Value = 0;
-
             }
             else
             {
-                moveSearchLabel.Visible = true;
+                MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
+                moveAddItemTextBox.Text = "";
             }
+
         }
         #endregion
 
@@ -484,8 +498,8 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region ClearDataGridView and MoveAddItemTextBox_KeyUp
-        private void moveAddItemTextBox_KeyUp(object sender, KeyEventArgs e)
+        #region ClearDataGridView and MoveAddItemTextBoxKeyUp
+        private void moveAddItemTextBoxKeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -506,7 +520,7 @@ namespace WMS.GUI
         }
         #endregion
 
-        #region GUI update functions
+        #region Language
         /// <summary>
         /// Updates all GUI elemets with respect to the chosen language.
         /// </summary>
@@ -525,17 +539,6 @@ namespace WMS.GUI
             columnDescription.HeaderText = core.Lang.DESCRIPTION;
             columnAction.HeaderText = core.Lang.DESCRIPTION;
             dataGridView.CellValueChanged += DataGridViewCellValueChanged;
-        }
-
-        private void MoveLoad(object sender, EventArgs e)
-        {
-            MaximizeBox = false;
-        }
-
-        public void UpdateGuiElements()
-        {
-            populateItemDictionary(itemListA, itemData);
-            PopulateLocationDictionary(locationData);
         }
         #endregion
     }

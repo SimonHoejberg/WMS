@@ -82,6 +82,7 @@ namespace WMS.Lang
         public string VALUE_IN_NEW_LOCATION { get; } = "Værdi i ny lokation i række";
         public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; } = "Forsøgt at flytte fra samme lokation to gange";
         public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; } = "Forsøgt at flytte flere varer til samme lokation";
+        public string ITEM_DOES_NOT_EXIST { get; } = "Varen findes ikke";
 
         public string LOGGED_IN_AS { get; } = "Logget ind som:";
 

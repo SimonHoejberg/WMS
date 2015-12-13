@@ -178,6 +178,11 @@ namespace WMS.GUI
                     dataGridView.CellValueChanged += dataGridViewCellValueChanged;
                 }
             }
+            else
+            {
+                MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
+                searchTextBox.Text = "";
+            }
         }
 
         /// <summary>

@@ -277,6 +277,11 @@ namespace WMS.GUI
                     searchTextBox.Focus();
                 }
             }
+            else
+            {
+                MessageBox.Show(core.Lang.ONLY_NUMBERS, core.Lang.ERROR);
+                searchTextBox.Text = "";
+            }
         }
 
         /// <summary>

@@ -87,6 +87,7 @@ namespace WMS.Lang
         public string VALUE_IN_NEW_LOCATION { get; } = "Value in New Location on row";
         public string ATTEMPT_TO_MOVE_FROM_SAME_LOCATION_TWICE { get; } = "Attempt to move from same location twice";
         public string ATTEMPT_TO_MOVE_MUTIPLE_ITEM_TO_SAME_LOCATION { get; } = "Attempt to move multiple items to the same location";
+        public string ITEM_DOES_NOT_EXIST { get; } = "Item does not exist";
 
         public string LOGGED_IN_AS { get; } = "Logged in as:";
 
