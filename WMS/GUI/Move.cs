@@ -442,7 +442,8 @@ namespace WMS.GUI
         }
 
         /// <summary>
-        /// 
+        /// Adds a row to the datagridview and fill it with the respective values for the chosen item.
+        /// Then: Reset search box, Set the location combobox to item with index 0, set quantity box value to 0.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
