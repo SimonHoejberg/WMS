@@ -80,12 +80,11 @@ namespace WMS.WH
             //Gets the usage of the first and last space on a shelf 
             int max = locations[shelf, 0].Usage;
             /* 
-                If there is no items on the first location on the shelf
-                or the item has a lower usage then the first item and the location is empty
+                If there is no items on the location
                 or the item on the location is the same item as the new item
                 it then places the item
             */
-            if ((LocationEmpty(shelf, 0)) || (max > item.Usage && LocationEmpty(shelf, space)) || (ItemOnLocationSameAsNewItem(shelf, space, item)))
+            if (LocationEmpty(shelf, space) || (ItemOnLocationSameAsNewItem(shelf, space, item)))
             {
                 PlaceItem(locations[shelf, space], item);
                 return; //Stops the algorithm
