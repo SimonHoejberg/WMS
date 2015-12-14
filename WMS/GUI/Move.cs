@@ -22,6 +22,10 @@ namespace WMS.GUI
         private string idColumnString = "ItemIDColumn", descriptionColumnString = "DescriptionColumn", quantityColumnString = "QuantityColumn", locationColumnString = "LocationColumn", 
             newLocationColumnString = "NewLocationColumn", actionColumnString = "ActionColumn";
 
+        /// <summary>
+        /// Constructor for move
+        /// </summary>
+        /// <param name="core"></param>
         public Move(ICore core)
         {
             InitializeComponent();
@@ -39,6 +43,9 @@ namespace WMS.GUI
             MaximizeBox = false;
         }
 
+        /// <summary>
+        /// Repopulates the item and location dictionaries. This should refresh items and locations for the dataGridView comboboxes.
+        /// </summary>
         public void UpdateGuiElements()
         {
             populateItemDictionary(itemListA, itemData);
@@ -47,6 +54,9 @@ namespace WMS.GUI
 
 
         #region DataGridView events and methods
+        /// <summary>
+        /// Creates and adds all GUI elements to the dataGridView
+        /// </summary>
         private void InitializeDataGridView()
         {
             //Dictionaries are used for easy reference and to minimize the need to reference to the database
@@ -481,6 +491,11 @@ namespace WMS.GUI
 
         }
 
+        /// <summary>
+        /// Calls the event for the MoveAddItemButton when the enter key is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoveAddItemTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -491,6 +506,10 @@ namespace WMS.GUI
         #endregion
 
         #region Populate dictionaries methods
+        /// <summary>
+        /// Adds all locations to the input dictionary
+        /// </summary>
+        /// <param name="dic"></param>
         private void PopulateLocationDictionary(Dictionary<string, Location> dic)
         {
             dic.Clear();
@@ -503,6 +522,11 @@ namespace WMS.GUI
             }
         }
         
+        /// <summary>
+        /// Add all item-strings to the input AutoCompleteStringCollection, and all items to the input dictionary
+        /// </summary>
+        /// <param name="itemList"></param>
+        /// <param name="dic"></param>
         private void populateItemDictionary(AutoCompleteStringCollection itemList, Dictionary<string, Item> dic)
         {
             itemList.Clear();
