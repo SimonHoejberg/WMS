@@ -281,7 +281,7 @@ namespace WMS.GUI
                 //If there is only 1 location it just inputs that in the datagridview
                 else
                 {
-                    dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo) && x.Quantity != 0);
                     searchTextBox.Focus();
                 }
             }

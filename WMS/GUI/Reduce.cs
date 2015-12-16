@@ -181,7 +181,7 @@ namespace WMS.GUI
                 {
                     //Unbinds the event and fills the location cell with the one location of the item and rebinds the event
                     dataGridView.CellValueChanged -= DataGridViewCellValueChanged;
-                    dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo));
+                    dataGridView["location", dataGridView.RowCount - 1].Value = locationList.Find(x => x.ItemNo.Equals(itemNo) && x.Quantity != 0);
                     dataGridView.CellValueChanged += DataGridViewCellValueChanged;
                 }
             }
