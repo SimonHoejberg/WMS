@@ -30,6 +30,7 @@ namespace WMS.GUI
         {
             InitializeComponent();
             this.core = core;
+            moveAddItemButton.Text = core.Lang.ADD;
             confirmButton.Text = core.Lang.CONFIRM;
             cancelButton.Text = core.Lang.CANCEL;
             rmoveRowButton.Text = core.Lang.REMOVE_ROW;
