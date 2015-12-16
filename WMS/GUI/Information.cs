@@ -137,6 +137,7 @@ namespace WMS.GUI
                 items.Add(lvi);
             }
             logListView.Items.Clear();
+            items.Reverse();
             //Adds them to the logListView
             foreach (var lviItem in items)
             {
