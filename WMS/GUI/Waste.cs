@@ -271,9 +271,9 @@ namespace WMS.GUI
                 //Creates a list with all locations from the database
                 locationList = core.DataHandler.LocationToList();
                 //Checks how many locations an item has and if it has more than 1 it opens the locationPanel
-                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
+                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo) && x.Quantity != 0).Count > 1)
                 {
-                    locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo) && x.Quantity != 0);
                     locationListBox.DisplayMember = "LocationAndQuantity";
                     locationPanel.Visible = true;
                     locationListBox.Focus();

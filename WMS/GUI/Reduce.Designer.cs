@@ -86,7 +86,7 @@
             // 
             // searchTextBox
             // 
-            this.searchTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.searchTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.searchTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.searchTextBox.Location = new System.Drawing.Point(12, 27);
             this.searchTextBox.Name = "searchTextBox";

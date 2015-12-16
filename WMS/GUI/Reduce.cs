@@ -168,11 +168,11 @@ namespace WMS.GUI
                 core.DataHandler.GetDataFromItemNo(itemNo, INFOMATION_DB).Fill(data); //Fills the data from the item no in to the dataGridView
                 MakeDataGridView(); //And Names the columns
                 //Determines if the item has one or more locations
-                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo)).Count > 1)
+                if (locationList.FindAll(x => x.ItemNo.Equals(itemNo) && x.Quantity != 0).Count > 1)
                 {
                     //If more locations it finds all the locations and lists them in a listBox
                     //Shows the panel and giv the listBox focus
-                    locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo));
+                    locationListBox.DataSource = locationList.FindAll(x => x.ItemNo.Equals(itemNo) && x.Quantity != 0);
                     locationListBox.DisplayMember = "LocationAndQuantity";
                     locationPanel.Visible = true; 
                     locationListBox.Focus();
