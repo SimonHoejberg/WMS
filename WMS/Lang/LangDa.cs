@@ -55,7 +55,7 @@ namespace WMS.Lang
 
         public string ERROR { get; } = "Fejl";
         public string MUST_BE_A_POSITIVE { get; } = "Skal være et positivt tal";
-        public string ONLY_NUMBERS { get; } = "Skal kun tal";
+        public string ONLY_NUMBERS { get; } = "Skal kun være tal";
         public string MUST_BE_A_NUMER { get; } = "Skal være et nummer";
         public string SEARCH { get; } = "Søg";
 
