@@ -199,9 +199,9 @@ namespace WMS.Handlers
         /// <param name="id"></param>
         /// <param name="newQuantity"></param>
         /// <param name="newItem"></param>
-        public void ItemMove(string id, string newQuantity, string newItem, char op)
+        public void ItemMove(string id, string newQuantity, string newItem)
         {
-            sql.moveItem(id, newQuantity, newItem, op);
+            sql.moveItem(id, newQuantity, newItem);
         }
 
         /// <summary>

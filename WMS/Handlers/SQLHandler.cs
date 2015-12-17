@@ -215,7 +215,7 @@ namespace WMS.Handlers
         /// <param name="id"></param>
         /// <param name="newQuantity"></param>
         /// <param name="newItem"></param>
-        public void moveItem(string id, string newQuantity, string newItem, char op)
+        public void moveItem(string id, string newQuantity, string newItem)
         {
             MySqlCommand command = connection.CreateCommand();
             string sql = $"UPDATE location SET itemNo = '{newItem}', quantity = {newQuantity} WHERE ID = '{id}'";
