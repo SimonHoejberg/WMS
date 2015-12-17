@@ -77,8 +77,6 @@ namespace WMS.WH
         /// <param name="space"></param>
         private void FindAvaliableSpace(Item item, int shelf, int space)
         {
-            //Gets the usage of the first and last space on a shelf 
-            int max = locations[shelf, 0].Usage;
             /* 
                 If there is no items on the location
                 or the item on the location is the same item as the new item
